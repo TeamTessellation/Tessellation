@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/DebugConsole/console.uss?fileID=7433441132597879392&amp;guid=7504d2bddc19be94794b4a44948171b3&amp;type=3#console" />
+    <ui:VisualElement name="Root" class="console-root" style="height: 344px; bottom: -1px; width: 857px; align-items: stretch; background-color: rgb(0, 0, 0);">
+        <ui:VisualElement name="TopBar" class="top-bar">
+            <ui:Label name="Title" text="Debug Console" class="title" />
+            <ui:Label name="Hint" text="` to toggle • TAB to autocomplete • ENTER to run" focusable="false" parse-escape-sequences="false" class="hint" />
+        </ui:VisualElement>
+        <ui:ScrollView name="HistoryContainer" vertical-scroller-visibility="Auto" class="history" />
+        <ui:ScrollView name="PreviewContainer" mode="Horizontal" vertical-scroller-visibility="AlwaysVisible" horizontal-scroller-visibility="Auto" class="preview" />
+        <ui:TextField name="InputField" isDelayed="true" focusable="true" is-delayed="false" auto-correction="false" class="input" style="flex-direction: row-reverse;" />
+        <ui:VisualElement name="resize-east" class="resize-handle-east" />
+        <ui:VisualElement name="resize-south" class="resize-handle-south" />
+        <ui:VisualElement name="resize-southeast" class="resize-handle-se" />
+    </ui:VisualElement>
+</ui:UXML>
