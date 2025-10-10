@@ -37,8 +37,7 @@ namespace Stage
         public UniTask<PlayerInputData> WaitForPlayerReady(CancellationToken token);
 
         public bool IsPlayerCanDoAction();
-
-
+        
     }
     
     /// <summary>
@@ -220,7 +219,7 @@ namespace Stage
                     if(StageManager.CheckStageClear())
                     {
                         LogEx.Log("Stage Cleared!");
-                        StageManager.EndStageAsync().Forget();
+                        StageManager.EndStage();
                         return;
                     }
                 }

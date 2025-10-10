@@ -73,7 +73,7 @@ namespace Stage
              
         }
         
-        public async UniTask EndStageAsync()
+        private async UniTask EndStageAsync()
         {
             if (token == default)
             {
