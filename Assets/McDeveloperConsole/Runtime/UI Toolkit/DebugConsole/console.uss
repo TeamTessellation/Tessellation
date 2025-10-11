@@ -1,0 +1,215 @@
+.console-root {
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    background-color: rgba(18, 18, 18, 0.92);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    opacity: 0.95;
+    flex-wrap: nowrap;
+}
+
+.top-bar {
+    height: 22px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    color: rgb(201, 209, 217);
+    unity-font-style: bold;
+    font-size: 12px;
+    opacity: 0.95;
+}
+
+.hint {
+    color: rgb(139, 148, 158);
+    font-size: 11px;
+}
+
+.history {
+    flex-grow: 1;
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.25);
+    padding: 6px;
+}
+
+.history .log-line {
+    color: rgb(209, 215, 224);
+    margin-bottom: 2px;
+    white-space: normal;
+}
+
+.history .log-line.message {
+    color: rgb(255, 255, 255);
+}
+
+.history .log-line.message.default {
+    color: rgb(209, 215, 224);
+}
+
+.history .log-line.message.info {
+    color: rgb(184, 212, 255);
+}
+
+.history .log-line.message.warn {
+    color: rgb(255, 211, 122);
+}
+
+.history .log-line.message.error {
+    color: rgb(255, 138, 138);
+}
+
+.history .log-line.message.success {
+    color: rgb(137, 255, 163);
+}
+
+.history .log-line.message.white {
+    color: rgb(255, 255, 255);
+}
+
+.history .log-line.message.gray {
+    color: rgb(139, 148, 158);
+}
+
+.history .log-line.message.cyan {
+    color: rgb(121, 192, 255);
+}
+
+.history .log-line.message.debug {
+    color: rgb(137, 255, 163);
+}
+
+.history .log-line.info {
+    color: rgb(184, 212, 255);
+}
+
+.history .log-line.warn {
+    color: rgb(255, 211, 122);
+}
+
+.history .log-line.error {
+    color: rgb(255, 138, 138);
+}
+
+.preview {
+    min-height: 34px;
+    max-height: 82px;
+    /*overflow: hidden;*/
+    flex-direction: column;
+    /*flex-wrap: wrap;*/
+    gap: 6px;
+    padding: 4px;
+}
+
+#PreviewContainer .unity-scroll-view__content-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: flex-start;
+    min-height: 24px;
+    max-height: 48px;
+}
+
+.preview .suggest {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    min-height: 20px;
+    background-color: rgb(35, 42, 47);
+    color: rgb(137, 255, 163);
+    border-width: 1px;
+    border-color: rgb(53, 91, 59);
+    border-left-width: 2px;
+    border-left-color: rgb(67, 160, 71);
+}
+
+.preview .suggest:hover {
+    background-color: rgb(45, 61, 52);
+    color: rgb(234, 255, 234);
+}
+
+.preview .suggest.selected {
+    background-color: rgb(53, 91, 59);
+    color: rgb(234, 255, 234);
+}
+
+/* 리사이즈 핸들 공통 */
+.resize-handle-east,
+.resize-handle-south,
+.resize-handle-se {
+    position: absolute;
+    picking-mode: position;        /* 마우스 이벤트 받기 */
+    background-color: rgba(0,0,0,0); /* 눈에 안 보이게, 클릭 영역만 */
+}
+
+/* 오른쪽 테두리 드래그 */
+.resize-handle-east {
+    right: 0;
+    top: 0;
+    width: 8px;
+    height: 100%;
+}
+
+/* 아래 테두리 드래그 */
+.resize-handle-south {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 8px;
+}
+
+/* 오른쪽-아래 모서리 드래그 */
+.resize-handle-se {
+    right: 0;
+    bottom: 0;
+    width: 16px;
+    height: 16px;
+}
+
+
+
+#HistoryContainer {
+    overflow: hidden; /* 레이아웃 안정 */
+}
+
+#HistoryContainer .unity-scroller__low-button,
+#HistoryContainer .unity-scroller__high-button {
+    display: none;
+}
+
+/* 프리뷰: 가로 스크롤만 */
+#PreviewContainer {
+    overflow: hidden; /* 세로 스크롤 숨김 */
+}
+/* 프리뷰의 컨텐츠를 가로로 배치 + 줄바꿈 없음 */
+#PreviewContainer .unity-scroll-view__content-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;      /* 가로 스크롤 유도 */
+    gap: 6px;
+    align-items: flex-start;
+}
+
+#PreviewContainer .unity-scroller__low-button,
+#PreviewContainer .unity-scroller__high-button {
+    visibility: hidden;
+    display: none;
+    width: 0;
+    height: 0;
+}
+#PreviewContainer .unity-scroller--horizontal {
+    height: 1px;
+}
