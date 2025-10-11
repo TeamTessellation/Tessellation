@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 #if UNITY_EDITOR
 using System.Text.RegularExpressions;
 using UnityEditor;
@@ -35,6 +36,7 @@ namespace Machamy.Utils
             Info,
             Warning,
             Error,
+            Assert,
             NoLog,
         }
 
@@ -86,6 +88,9 @@ namespace Machamy.Utils
                     break;
                 case LogLevel.Error:
                     UnityEngine.Debug.LogError(logMessage);
+                    break;
+                case LogLevel.Assert:
+                    UnityEngine.Debug.LogAssertion(logMessage);
                     break;
             }
         }
@@ -151,7 +156,6 @@ namespace Machamy.Utils
         { 
             Log(ex, depth + 1);
         }
-        
         
 #if UNITY_EDITOR
         [OnOpenAsset(0)]
