@@ -1,0 +1,16 @@
+{
+    "name": "McDeveloperConsole.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:94672a84951269a40a23208327d1bf00"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
