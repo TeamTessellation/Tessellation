@@ -160,7 +160,7 @@ namespace Stage
         /// </summary>
         private async UniTask TurnLoop(CancellationToken token)
         {
-            _turnCount++;
+            
             LogEx.Log($"Turn {_turnCount} started.");
             
             if (fieldTurnLogic == null)
@@ -176,6 +176,7 @@ namespace Stage
 
             while (true)
             {
+                _turnCount++;
                 if (token.IsCancellationRequested)
                 {
                     LogEx.Log("Turn loop cancelled.");
