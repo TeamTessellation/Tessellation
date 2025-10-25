@@ -209,6 +209,13 @@ public static class Pool
         objPool.IsReady = true;
     }
 
+    /// <summary>
+    /// ObjPool을 세팅한다.
+    /// 필수적으로 최초 1회 호출해줘야한다.
+    /// </summary>
+    /// <param name="target">풀링하기 원하는 오브젝트 원형</param>
+    /// <param name="key">저장 될 key 값 (기본값 - 오브젝트 이름)</param>
+    /// <param name="size">기본 크기 (기본값 - 5)</param>
     public static void InitObjPool(GameObject target, string key = "", int size = 5)
     {
         if (key == "") key = target.name;
