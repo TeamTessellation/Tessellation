@@ -1,5 +1,6 @@
 ﻿using System;
 using Collections;
+using DataAnalysis;
 using Machamy.Utils;
 using SaveLoad;
 using UnityEngine;
@@ -11,9 +12,7 @@ namespace Test
 {
     public class TestScripts : MonoBehaviour, ISavable
     {
-        public SerializableDictionary<string, int> testDictionary = new SerializableDictionary<string, int>();
-        public SerializableDictionary<string, Sprite> spriteDictionary = new SerializableDictionary<string, Sprite>();
-        public SerializableDictionary<string, ScriptableObject> scriptableObjectDictionary = new SerializableDictionary<string, ScriptableObject>();
+      
         public VariableContainer variableContainer = new VariableContainer();
 
 
@@ -23,7 +22,17 @@ namespace Test
         {
             SaveManager.RegisterPendingSavable(this);
         }
-
+        
+        [ContextMenu("TrackGameStart")]
+        public void TrackGameStart()
+        {
+            AnalyticsManager.Instance.TrackGameStart();
+        }
+        [ContextMenu("TrackGameOver")]
+        public void TrackGameOver()
+        {
+            AnalyticsManager.Instance.TrackGameOver(true, 120, "TestPlayer");
+        }
 
         public void LoadData(SaveData data)
         {
@@ -70,6 +79,19 @@ namespace Test
                 return;
             }
             var testScripts = target as TestScripts;
+            using (new EditorGUILayout.VerticalScope("box"))
+            {
+                if (GUILayout.Button("Track Game Start"))
+                {
+                    testScripts.TrackGameStart();
+                }
+
+                if (GUILayout.Button("Track Game Over"))
+                {
+                    testScripts.TrackGameOver();
+                }
+            }
+            
             using (new EditorGUILayout.HorizontalScope())
             {
                 if (GUILayout.Button("Save Test Data"))

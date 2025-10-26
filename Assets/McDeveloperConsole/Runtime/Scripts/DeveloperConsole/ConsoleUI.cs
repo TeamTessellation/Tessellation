@@ -92,6 +92,7 @@ namespace Machamy.DeveloperConsole
                 return;
             }
             _instance = this;
+            DontDestroyOnLoad(this.gameObject);
             
             if (consolePanel == null)
             {
