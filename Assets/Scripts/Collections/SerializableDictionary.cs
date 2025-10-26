@@ -9,6 +9,7 @@ namespace Collections
 {
     /// <summary>
     /// Unity에서 직렬화 가능한 딕셔너리입니다.
+    /// 주의사항 : TKey와 TValue는 Unity에서 직렬화 가능한 타입이어야 합니다. 아닌 경우 Editor에서 오류가 발생할 수 있습니다.
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
@@ -290,7 +291,7 @@ namespace Collections
 
                     // Value (아래 전체 폭)
                     EditorGUI.BeginProperty(valRect, GUIContent.none, val);
-                    EditorGUIUtility.labelWidth = Mathf.Min(90f, valRect.width * 0.18f);
+                    EditorGUIUtility.labelWidth = Mathf.Min(90f, valRect.width * 0.4f);
                     EditorGUI.PropertyField(valRect, val, new GUIContent("Value"), true);
                     EditorGUI.EndProperty();
 
