@@ -117,7 +117,7 @@ namespace Stage
         }
         
 
-        private void Awake()
+        protected override void AfterAwake()
         {
             if (_cancellationTokenSource == null)
             {
