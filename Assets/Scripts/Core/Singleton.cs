@@ -14,7 +14,7 @@ namespace Core
         /// </summary>
         public abstract bool IsDontDestroyOnLoad { get; }
         
-        private static T _instance;
+        protected static T _instance;
 
         public static T Instance
         {
