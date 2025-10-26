@@ -173,7 +173,7 @@ namespace Collections
 
         private float GetListHeight(SerializedProperty items)
         {
-            float h = 6f; // 상단/하단 패딩 포함
+            float h = 6f; // 상하 패딩
             for (int i = 0; i < items.arraySize; i++)
             {
                 var elem = items.GetArrayElementAtIndex(i);
@@ -182,10 +182,14 @@ namespace Collections
 
                 float keyH = EditorGUI.GetPropertyHeight(key, true);
                 float valH = EditorGUI.GetPropertyHeight(val, true);
-                float rowH = Mathf.Max(keyH, valH) + 8f; // 패딩
+                bool singleLine = Mathf.Max(keyH, valH) <= EditorGUIUtility.singleLineHeight + 2f;
+
+                float rowH = singleLine
+                    ? Mathf.Max(keyH, valH) + 8f        // 한 줄
+                    : keyH + valH + 12f;                 // 두 줄 (Key + Value)
                 h += rowH;
             }
-            return h + 4f;
+            return h + 4f; // 하단 패딩
         }
 
         private void DrawList(Rect rect, SerializedProperty items, ref int selectedIndex)
@@ -195,6 +199,7 @@ namespace Collections
             float x = rect.x + 6f;
             float w = rect.width - 12f;
 
+            float accumulatedHeight = 0f;
             for (int i = 0; i < items.arraySize; i++)
             {
                 var elem = items.GetArrayElementAtIndex(i);
@@ -206,7 +211,7 @@ namespace Collections
                 float rowH = Mathf.Max(keyH, valH) + 8f;
 
                 Rect rowRect = new Rect(x, y, w, rowH);
-
+                
                 // 선택 배경
                 bool isSelected = (i == selectedIndex);
                 if (Event.current.type == EventType.Repaint && isSelected)
@@ -216,35 +221,81 @@ namespace Collections
 
 
 
-                // 내부 레이아웃: Key | Value | (Trash)
+                // 내부 레이아웃: 한 줄이면 "Key | Value | Trash", 두 줄이면 "Key(왼)+Trash(오) / Value(아래 전체)"
                 float trashW = 20f;
-                float col = (rowRect.width - trashW - 6f) * 0.5f;
+                float pad = 4f;
+                
+                bool singleLine = Mathf.Max(keyH, valH) <= EditorGUIUtility.singleLineHeight + 2f;
 
-                Rect keyRect = new Rect(rowRect.x, rowRect.y + 4f, col - 4f, keyH);
-                Rect valRect = new Rect(rowRect.x + col + 4f, rowRect.y + 4f, col - 4f, valH);
-                Rect trashRect = new Rect(rowRect.x + col * 2 + 8f, rowRect.y + 4f, trashW, EditorGUIUtility.singleLineHeight);
-
-                float keyLabelW = keyRect.width * 0.3f;
-                float valLabelW = valRect.width * 0.3f;
-                // Key
-                EditorGUI.BeginProperty(keyRect, GUIContent.none, key);
-                EditorGUIUtility.labelWidth = keyLabelW;
-                EditorGUI.PropertyField(keyRect, key, new GUIContent("Key"), true);
-                EditorGUI.EndProperty();
-                // Value
-                EditorGUI.BeginProperty(valRect, GUIContent.none, val);
-                EditorGUIUtility.labelWidth = valLabelW;
-                EditorGUI.PropertyField(valRect, val, new GUIContent("Value"), true);
-                EditorGUI.EndProperty();
-
-                // 엔트리별 삭제 버튼
-                if (GUI.Button(trashRect, EditorGUIUtility.IconContent("TreeEditor.Trash"), GUIStyle.none))
+                if (singleLine)
                 {
-                    items.DeleteArrayElementAtIndex(i);
-                    selectedIndex = -1;
-                    // 즉시 반영
-                    items.serializedObject.ApplyModifiedProperties();
-                    return; // 레이아웃 꼬임 방지
+                    // Key | Value | Trash
+                    float col = (rowRect.width - trashW - 6f) * 0.5f;
+
+                    Rect keyRect   = new Rect(rowRect.x,                 rowRect.y + pad, col - 4f, keyH);
+                    Rect valRect   = new Rect(rowRect.x + col + 4f,      rowRect.y + pad, col - 4f, valH);
+                    Rect trashRect = new Rect(rowRect.x + col * 2 + 8f,  rowRect.y + pad, trashW,   EditorGUIUtility.singleLineHeight);
+
+                    float prevLW = EditorGUIUtility.labelWidth;
+                    float keyLabelW = keyRect.width * 0.3f;
+                    float valLabelW = valRect.width * 0.3f;
+
+                    // Key
+                    EditorGUI.BeginProperty(keyRect, GUIContent.none, key);
+                    EditorGUIUtility.labelWidth = keyLabelW;
+                    EditorGUI.PropertyField(keyRect, key, new GUIContent("Key"), true);
+                    EditorGUI.EndProperty();
+
+                    // Value
+                    EditorGUI.BeginProperty(valRect, GUIContent.none, val);
+                    EditorGUIUtility.labelWidth = valLabelW;
+                    EditorGUI.PropertyField(valRect, val, new GUIContent("Value"), true);
+                    EditorGUI.EndProperty();
+
+                    // Trash
+                    if (GUI.Button(trashRect, EditorGUIUtility.IconContent("TreeEditor.Trash"), GUIStyle.none))
+                    {
+                        items.DeleteArrayElementAtIndex(i);
+                        selectedIndex = -1;
+                        items.serializedObject.ApplyModifiedProperties();
+                        return; // 레이아웃 꼬임 방지
+                    }
+
+                    EditorGUIUtility.labelWidth = prevLW;
+                    y += rowH;
+                }
+                else
+                {
+                    // 두 줄: 1) Key(왼) + Trash(오)  2) Value(아래 전체폭)
+                    Rect keyRect   = new Rect(rowRect.x,                     rowRect.y + pad, rowRect.width - trashW - 6f, keyH);
+                    Rect trashRect = new Rect(rowRect.xMax - trashW - 2f,    rowRect.y + pad, trashW,                      EditorGUIUtility.singleLineHeight);
+                    Rect valRect   = new Rect(rowRect.x,     keyRect.yMax + 4f,              rowRect.width,               valH);
+
+                    float prevLW = EditorGUIUtility.labelWidth;
+
+                    // Key
+                    EditorGUI.BeginProperty(keyRect, GUIContent.none, key);
+                    EditorGUIUtility.labelWidth = Mathf.Min(90f, keyRect.width * 0.35f);
+                    EditorGUI.PropertyField(keyRect, key, new GUIContent("Key"), true);
+                    EditorGUI.EndProperty();
+
+                    // Trash
+                    if (GUI.Button(trashRect, EditorGUIUtility.IconContent("TreeEditor.Trash"), GUIStyle.none))
+                    {
+                        items.DeleteArrayElementAtIndex(i);
+                        selectedIndex = -1;
+                        items.serializedObject.ApplyModifiedProperties();
+                        return;
+                    }
+
+                    // Value (아래 전체 폭)
+                    EditorGUI.BeginProperty(valRect, GUIContent.none, val);
+                    EditorGUIUtility.labelWidth = Mathf.Min(90f, valRect.width * 0.18f);
+                    EditorGUI.PropertyField(valRect, val, new GUIContent("Value"), true);
+                    EditorGUI.EndProperty();
+
+                    EditorGUIUtility.labelWidth = prevLW;
+                    y += keyH + valH + 12f;
                 }
 
 
@@ -257,7 +308,7 @@ namespace Collections
                     Event.current.Use();
                 }
                 
-                y += rowH;
+                
             }
         }
 
