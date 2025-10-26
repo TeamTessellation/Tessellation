@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -29,7 +30,7 @@ namespace Collections
             }
         }
         
-        [SerializeField] private TKey defaultKey = default;
+        [SerializeField][UsedImplicitly] private TKey defaultKey = default;
         [SerializeField] private List<SerializableKeyValuePair> _items = new List<SerializableKeyValuePair>();
         
         
@@ -200,7 +201,6 @@ namespace Collections
             float x = rect.x + 6f;
             float w = rect.width - 12f;
 
-            float accumulatedHeight = 0f;
             for (int i = 0; i < items.arraySize; i++)
             {
                 var elem = items.GetArrayElementAtIndex(i);

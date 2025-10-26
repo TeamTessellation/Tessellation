@@ -3,6 +3,7 @@ using Collections;
 using Machamy.Utils;
 using SaveLoad;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -54,11 +55,18 @@ namespace Test
     [CustomEditor(typeof(TestScripts))]
     public class TestScriptsEditor : Editor
     {
+        static int appCounter = 0;
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
             if (!Application.isPlaying)
             {
+                appCounter = 0;
+                return;
+            }
+            if (appCounter < 3)
+            {
+                appCounter++;
                 return;
             }
             var testScripts = target as TestScripts;

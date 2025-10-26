@@ -125,6 +125,7 @@ namespace SaveLoad
     /// <summary>
     /// 데이터를 저장하고 불러오는 기능을 관리하는 클래스입니다.
     /// </summary>
+    [DefaultExecutionOrder(-1000)]
     public class SaveManager : Singleton<SaveManager>
     {
         public override bool IsDontDestroyOnLoad => false;
@@ -134,7 +135,7 @@ namespace SaveLoad
         private static readonly List<ISavable> _pendingSavables = new();
         public static void RegisterPendingSavable(ISavable savable)
         {
-            if (Instance != null)
+            if (_instance != null)
             {
                 Instance.RegisterSavable(savable);
             }
@@ -148,6 +149,7 @@ namespace SaveLoad
         protected override void AfterAwake()
         {
             base.AfterAwake();
+            
             // 대기 중인 ISavable들을 등록합니다.
             foreach (var savable in _pendingSavables)
             {
