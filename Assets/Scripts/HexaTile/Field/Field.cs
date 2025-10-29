@@ -18,12 +18,20 @@ public class Field : MonoBehaviour
         }
     }
 
-    private Transform _cellRoot;
+    [HideInInspector] public Transform CellRoot;
+    [HideInInspector] public Transform CellBGRoot;
 
     private static Field _instance;
-
     private Dictionary<Coordinate, Cell> _allCell;
-    private int _size = 5;
+
+    public Vector2 TileOffset { get { return transform.position; } set { transform.position = value; } }
+
+#if UNITY_EDITOR
+    [Header("For Debug")]
+    public int Debug_Size = 4;
+#endif
+
+    private int _size = 4;
     private bool _isInit = false;
 
     // 타일 배치, 라인 클리어 시 호출 이벤트
@@ -64,16 +72,42 @@ public class Field : MonoBehaviour
         _isInit = true;
 
         _allCell = new();
+
         var childs = transform.GetComponentsInChildren<Transform>();
         for (int i = 0; i < childs.Length; i++)
+        {
             if (childs[i].name == "@CellRoot")
-                { _cellRoot = childs[i]; break; }
+            { CellRoot = childs[i]; continue; }
+            else if (childs[i].name == "@CellBGRoot")
+            { CellBGRoot = childs[i]; continue; }
+        }
 
         SetFieldBySize(_size);
     }
 
+    private void RemoveCell(Coordinate coor)
+    {
+        _allCell[coor].Remove();
+        _allCell.Remove(coor);
+    }
+
+#if UNITY_EDITOR
+    [ContextMenu("Debug_ChangeSize")]
+    public void Debug_SetFieldBySize() => SetFieldBySize(Debug_Size);
+#endif
     private void SetFieldBySize(int size)
     {
+        // 범위에 벗어나는 타일은 제거 - size가 작아지는 경우
+        List<Coordinate> removeTargetCell = new();
+        foreach(var cell in _allCell.Keys)
+        {
+            if (!CheckAbleCoor(cell, size))
+                removeTargetCell.Add(cell);
+        }
+        for (int i = 0; i < removeTargetCell.Count; i++)
+            RemoveCell(removeTargetCell[i]);
+
+        // 배경 타일 세팅 & allCell에 Cell이 없다면 할당
         for (int x = -size; x <= size; x++)
         {
             for (int y = -size; y <= size; y++)
@@ -84,11 +118,7 @@ public class Field : MonoBehaviour
 
                 var coor = new Coordinate(x, y, z);
                 if (!_allCell.ContainsKey(coor))
-                    _allCell[coor] = new Cell();
-                var a = Pool<Tile>.Get();
-                a.Coor = coor;
-                _allCell[coor].Set(a);
-                a.name = coor.ToString();
+                    { _allCell[coor] = new Cell(); _allCell[coor].Init(coor, CellBGRoot); }
             }
         }
     }

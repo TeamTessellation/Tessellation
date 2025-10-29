@@ -17,6 +17,7 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
     public Cell Oner;
     public bool IsPlace => Oner != null;
     public Direction Direction;
+    public TileOption Option;
     /// <summary>
     /// ÇØ´ç Tile Data
     /// </summary>
@@ -26,6 +27,8 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
     public void Set(TileData data)
     {
         _tileData = data;
+        gameObject.transform.localScale = Vector3.one * data.Scale;
+        Option = data.Option;
     }
 
     public void Reset()
