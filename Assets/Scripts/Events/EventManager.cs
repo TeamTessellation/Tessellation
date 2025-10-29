@@ -1,4 +1,5 @@
 ﻿
+using System;
 using Cardevil.Events;
 using Core;
 using Events.Core;
@@ -16,15 +17,18 @@ namespace Cardevil.Events
 
         protected override void AfterAwake()
         {
-            Initialize();
+        
         }
         
+        /// <summary>
+        /// 점수 변경 이벤트
+        /// </summary>
+        /// <code>
+        /// 0 : 기본. 
+        /// 10000 : UI 업데이트.
+        /// </code>
         PriorityEvent<ScoreChangedEventArgs> _scoreChangedEvent = new PriorityEvent<ScoreChangedEventArgs>();
-
-        protected void Initialize()
-        {
-            _scoreChangedEvent = new PriorityEvent<ScoreChangedEventArgs>();
-        }
+        
 
         public void Clear()
         {
