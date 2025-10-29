@@ -74,11 +74,26 @@ public struct Coordinate
 
 public static class CoorExtension
 {
+    public static string ToShortString(this Coordinate coor)
+    {
+        return $"({coor.Pos3D.x}, {coor.Pos3D.y}. {coor.Pos3D.z})";
+    }
+
     public static Vector2 ToWorld(this Coordinate coor)
     {
         float x = coor.Pos3D.x * Mathf.Sqrt(3) + coor.Pos3D.y * Mathf.Sqrt(3) * 0.5f;
         float y = -coor.Pos3D.y * 1.5f;
         return new Vector2(x, y);
+    }
+
+    public static Vector2 ToWorld(this Coordinate coor, Vector2 offset, float size = 1)
+    {
+        return ToWorld(coor) * size + offset;
+    }
+
+    public static Coordinate ToCoor(this Vector2 world, Vector2 offset, float size = 1)
+    {
+        return ToCoor((world - offset) / size);
     }
 
     public static Coordinate ToCoor(this Vector2 world)

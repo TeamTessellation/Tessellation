@@ -9,6 +9,7 @@ using System.Collections.Generic;
 public class TileSet : MonoBehaviour, IPoolAble<TileSetData>
 {
     public List<Tile> Tiles = new();
+    public Direction Rotation;
     private TileSetData _data;
 
     public void Reset()
