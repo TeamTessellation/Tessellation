@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 턴 결과를 담는 데이터 Info
+// 전체 턴 결과를 담는 데이터 Info
+// 아직 어떻게 활용할지.. 구조 미정
 public class TurnResultInfo
 {
     public List<Tile> PlacedTiles; // 이번턴에 배치한 타일에 대한 정보
@@ -13,79 +14,139 @@ public class TurnResultInfo
     public int ClearedLineCount; // 이번턴에 완성된 줄의 수
 }
 
-/*
- * 
- */
+public enum eTileEventType
+{
+    Place,
+    Remove,
+    Burst,
+    LineClear,
+}
+
+// 타일에 대한 모든 이벤트를 TileEvent 클래스로 정의
+public class TileEvent
+{
+    public readonly List<Tile> Tiles;
+    public eTileEventType TileEventType;
+    
+    public TileEvent(List<Tile> newTiles)
+    {
+        Tiles = newTiles;
+    }
+}
+
+public class TilePlaceEvent : TileEvent
+{ 
+    public TilePlaceEvent(List<Tile> newTiles) : base(newTiles)
+    {
+        TileEventType = eTileEventType.Place;
+    }
+}
+
+public class TileRemoveEvent : TileEvent
+{
+    public TileRemoveEvent(List<Tile> newTiles) : base(newTiles)
+    {
+        TileEventType = eTileEventType.Remove;
+    }
+}
+
+public class LineClearEvent : TileEvent
+{
+    public readonly int ClearedLineCount;
+    public LineClearEvent(int clearedCount, List<Tile> newTiles) : base(newTiles)
+    {
+        TileEventType = eTileEventType.LineClear;
+        ClearedLineCount = clearedCount;
+    }
+}
+
+public class TileBurstEvent : TileEvent
+{
+    public TileBurstEvent(List<Tile> newTiles) : base(newTiles)
+    {
+        TileEventType = eTileEventType.Burst;
+    }
+}
+
+
+// 플레이어 입력 후처리 해주는 클래스
 public class TilePlaceHandler : MonoBehaviour
 {
-    // * Delegates
-    
+    // === Actions ===
     public event Action<TurnResultInfo> OnTilePlacedDelegate;
-
     public event Action<TurnResultInfo> OnTileRemovedDelegate;
-
     public event Action<TurnResultInfo> OnLineClearedDelegate;
-
     public event Action<TurnResultInfo> OnTileBurstDelegate;
-
     public event Action<TurnResultInfo> OnTurnProcessedDelegate;
     
-    // end Delegates
-    
-    // Field
+    // === Properties ===
+    private Queue<TileEvent> _eventQueue = new Queue<TileEvent>();
     private TurnResultInfo _turnResultInfo;
     
-    // * Function
+    // === Functions ===
     
-    // Ingame에서 Delegate 생성해서 해당 함수를 부르게 해도 좋다
-    public void ProcessTilePlacement(List<Tile> tiles)
+    // 첫 배치 때 불릴 함수
+    public void FirstTilePlaced(List<Tile> tiles)
     {
-        // 1. _turnResultInfo 초기화
         _turnResultInfo = new TurnResultInfo();
-        _turnResultInfo.PlacedTiles = tiles;
+        _eventQueue.Clear();
         
-        // 2. 타일 배치 처리
-        ProcessTilePlaced();
-        OnTilePlacedDelegate?.Invoke(_turnResultInfo);
-        
-        // 3. 타일 삭제 처리
-        ProcessTileRemoved();
-        OnTileRemovedDelegate?.Invoke(_turnResultInfo);
-        
-        // 4. 라인 클리어 처리
-        CheckLineCompleted();
-        if (_turnResultInfo.ClearedLineCount >= 0)
+        _eventQueue.Enqueue(new TilePlaceEvent(tiles));
+
+        ProcessTileEventQueue();
+    }
+
+    private void ProcessTileEventQueue()
+    {
+        while (_eventQueue.Count > 0)
         {
-            ProcessLineCompleted();
-            OnLineClearedDelegate?.Invoke(_turnResultInfo);
+            TileEvent currentEvent = _eventQueue.Dequeue();
+
+            switch (currentEvent.TileEventType)
+            {
+                case eTileEventType.Burst:
+                    ProcessTileBurst((TileBurstEvent)currentEvent);
+                    break;
+                case eTileEventType.Place:
+                    ProcessTilePlaced((TilePlaceEvent)currentEvent);
+                    break;
+                case eTileEventType.Remove:
+                    ProcessTileRemoved((TileRemoveEvent)currentEvent);
+                    break;
+                case eTileEventType.LineClear:
+                    ProcessLineCompleted((LineClearEvent)currentEvent);
+                    break;
+            }
         }
         
-        // 5. 타일 폭발 처리
-        ProcessTileBurst();
-        OnTileBurstDelegate?.Invoke(_turnResultInfo);
-        
-        // 6. 턴 종료 Broadcast
+        // Queue가 비게 되면 턴 종료. TurnProcessedDelegate 끝
         OnTurnProcessedDelegate?.Invoke(_turnResultInfo);
     }
+    
 
-    private void ProcessTilePlaced()
+    private void ProcessTilePlaced(TilePlaceEvent placeEvent)
     {
+        // TODO
+        // 즐 완성 판정
+        CheckLineCompleted();
+        // 줄 완성되면 줄 수와 타일 기록해서 새로운 TileRemoveEvent 생성, Enqueue
         
+        OnTilePlacedDelegate?.Invoke(_turnResultInfo);
     }
     
-    private void ProcessTileRemoved()
+    private void ProcessTileRemoved(TileRemoveEvent removeEvent)
     {
-        
+        OnTileRemovedDelegate?.Invoke(_turnResultInfo);
     }
 
-    private void ProcessTileBurst()
+    private void ProcessTileBurst(TileBurstEvent burstEvent)
     {
-        
+        OnTileBurstDelegate?.Invoke(_turnResultInfo);
     }
     
-    private void ProcessLineCompleted()
+    private void ProcessLineCompleted(LineClearEvent lineClearEvent)
     {
-        
+        OnLineClearedDelegate?.Invoke(_turnResultInfo);
     }
 
     private void CheckLineCompleted()
@@ -100,6 +161,4 @@ public class TilePlaceHandler : MonoBehaviour
         _turnResultInfo.ClearedLineCount = clearedLineCount;
         _turnResultInfo.ClearedTiles = clearedTiles;
     }
-    
-    // end Functions
 }
