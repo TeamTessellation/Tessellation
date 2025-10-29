@@ -224,7 +224,7 @@ namespace Stage
                         return;
                     }
                 }
-                
+                 
 
             
                 LogEx.Log($"Turn {_turnCount} ended.");
