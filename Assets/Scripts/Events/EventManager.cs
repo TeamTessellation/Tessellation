@@ -12,7 +12,7 @@ namespace Cardevil.Events
     /// </summary>
     public class EventManager : Singleton<EventManager>, IClearable
     {
-        public override bool IsDontDestroyOnLoad { get; }
+        public override bool IsDontDestroyOnLoad => false;
 
         protected override void AfterAwake()
         {
