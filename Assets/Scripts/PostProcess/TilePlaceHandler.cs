@@ -6,12 +6,21 @@ using UnityEngine;
 // 아직 어떻게 활용할지.. 구조 미정
 public class TurnResultInfo
 {
-    public List<Tile> PlacedTiles; // 이번턴에 배치한 타일에 대한 정보
-    public List<Tile> RemovedTiles; // 이번턴에 삭제될 타일에 대한 정보
-    public List<Tile> BurstTiles; // 폭발되어 사라질 타일에 대한 정보 
-    public List<Tile> ClearedTiles; // 완성되어 사라질 타일에 대한 정보
-    
+    public readonly List<Tile> PlacedTiles; // 이번턴에 배치한 타일에 대한 정보
+    public readonly List<Tile> RemovedTiles; // 이번턴에 삭제될 타일에 대한 정보
+    public readonly List<Tile> BurstTiles; // 폭발되어 사라질 타일에 대한 정보 
+    public readonly List<Tile> ClearedTiles; // 완성되어 사라질 타일에 대한 정보
     public int ClearedLineCount; // 이번턴에 완성된 줄의 수
+
+    public TurnResultInfo()
+    {
+        PlacedTiles = new List<Tile>();
+        RemovedTiles = new List<Tile>();
+        BurstTiles = new List<Tile>();
+        ClearedTiles = new List<Tile>();
+        
+        ClearedLineCount = 0;
+    }
 }
 
 public enum eTileEventType
@@ -30,7 +39,11 @@ public class TileEvent
     
     public TileEvent(List<Tile> newTiles)
     {
-        Tiles = newTiles;
+        if (newTiles != null)
+        {
+            Tiles = newTiles;
+        }
+        else Tiles = new List<Tile>();
     }
 }
 
@@ -126,30 +139,44 @@ public class TilePlaceHandler : MonoBehaviour
 
     private void ProcessTilePlaced(TilePlaceEvent placeEvent)
     {
+        _turnResultInfo.PlacedTiles.AddRange(placeEvent.Tiles);
+        
         // TODO
         // 즐 완성 판정
-        CheckLineCompleted();
-        // 줄 완성되면 줄 수와 타일 기록해서 새로운 TileRemoveEvent 생성, Enqueue
+        int lineClearedCount;
+        List<Tile> clearedTiles;
+        (lineClearedCount, clearedTiles) = CheckLineCompleted();
+        
+        // 머시기 한다
         
         OnTilePlacedDelegate?.Invoke(_turnResultInfo);
+
+        if (lineClearedCount > 0)
+        {
+            _eventQueue.Enqueue(new LineClearEvent(lineClearedCount, clearedTiles));
+        }
     }
     
     private void ProcessTileRemoved(TileRemoveEvent removeEvent)
     {
+        _turnResultInfo.RemovedTiles.AddRange(removeEvent.Tiles);
         OnTileRemovedDelegate?.Invoke(_turnResultInfo);
     }
 
     private void ProcessTileBurst(TileBurstEvent burstEvent)
     {
+        _turnResultInfo.BurstTiles.AddRange(burstEvent.Tiles);
         OnTileBurstDelegate?.Invoke(_turnResultInfo);
     }
     
     private void ProcessLineCompleted(LineClearEvent lineClearEvent)
     {
+        _turnResultInfo.ClearedLineCount += lineClearEvent.ClearedLineCount;
+        _turnResultInfo.ClearedTiles.AddRange(lineClearEvent.Tiles);
         OnLineClearedDelegate?.Invoke(_turnResultInfo);
     }
 
-    private void CheckLineCompleted()
+    private (int, List<Tile>) CheckLineCompleted()
     {
         int clearedLineCount = 0;
         
@@ -158,7 +185,6 @@ public class TilePlaceHandler : MonoBehaviour
         // TODO
         // xyz 3축 사용해서 이래저래 확인하고..
 
-        _turnResultInfo.ClearedLineCount = clearedLineCount;
-        _turnResultInfo.ClearedTiles = clearedTiles;
+        return (clearedLineCount, clearedTiles);
     }
 }
