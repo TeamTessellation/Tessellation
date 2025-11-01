@@ -134,7 +134,7 @@ public class Generator_Manager : MonoBehaviour
     private void SetBoxObj()
     {
         var obj = Instantiate(BoxPrefab);
-        Pool.InitObjPool(obj, "Box");
+        RTPool.InitObjPool(obj, "Box");
         Destroy(obj);
     }
 
@@ -158,9 +158,9 @@ public class Generator_Manager : MonoBehaviour
             }
         }
         for (int i = 0; i < oldBoxs.Count; i++)
-            Pool.Return(oldBoxs[i]);
+            RTPool.Return(oldBoxs[i]);
 
-        var addBox = Pool.Get("Box");
+        var addBox = RTPool.Get("Box");
         addBox.transform.SetParent(DeckUIRoot, false);
         var entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
         entry.callback.AddListener((data) => AddBoxLast(new DeckData()));
@@ -185,7 +185,7 @@ public class Generator_Manager : MonoBehaviour
 
     private void AddBox(DeckData data, int index)
     {
-        var obj = Pool.Get("Box");
+        var obj = RTPool.Get("Box");
         var entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
         entry.callback.AddListener((data) => TileSetBoxClick(index));
         var trigger = obj.GetComponent<EventTrigger>();

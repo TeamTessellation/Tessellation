@@ -11,9 +11,9 @@ public class Tester : MonoBehaviour
         Tile obj2 = Pool<Tile, TileData>.Get(test);
         // Tile은 PoolAble<TData> 를 받아왔음으로 데이터 세팅 풀링도 가능하다
         b = obj;
-        Pool.InitObjPool(obj.gameObject, "Test");
+        RTPool.InitObjPool(obj.gameObject, "Test");
         // 런타임에서 받아온 Tile 오브젝트를 기반으로 풀링 생성한다
-        a = Pool.Get("Test");
+        a = RTPool.Get("Test");
         // 풀링을 받아온다
     }
 
@@ -22,7 +22,7 @@ public class Tester : MonoBehaviour
 
     private void Awakev()
     {
-        Pool.Return(a);
+        RTPool.Return(a);
         Pool<Tile>.Return(b);
     }
 
