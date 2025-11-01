@@ -16,4 +16,5 @@ public enum TileOption
     Double, // 점수 두배
     Gold, // 돈 추가
     Force, // 강제 배치
+    End,
 }

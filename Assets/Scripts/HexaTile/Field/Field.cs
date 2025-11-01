@@ -116,7 +116,7 @@ public class Field : MonoBehaviour
                 if (Mathf.Abs(z) > size)
                     continue;
 
-                var coor = new Coordinate(x, y, z);
+                var coor = new Coordinate(x, y);
                 if (!_allCell.ContainsKey(coor))
                     { _allCell[coor] = new Cell(); _allCell[coor].Init(coor, CellBGRoot); }
             }
