@@ -167,7 +167,6 @@ public class Field : MonoBehaviour
         {
             var tileInfo = tileSet.Tiles[i];
             Coordinate correctCoor = coor + tileSet.Tiles[i].transform.localPosition.ToCoor();
-            Debug.Log(correctCoor);
             if (!CanPlace(tileSet.Tiles[i], correctCoor))
                 return false;
         }
