@@ -1,4 +1,5 @@
-﻿public class TileData
+﻿[System.Serializable]
+public class TileData
 {
     /// <summary>
     /// 옵션

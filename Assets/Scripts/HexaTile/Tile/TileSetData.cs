@@ -7,20 +7,33 @@ using System.Threading.Tasks;
 [System.Serializable]
 public class TileSetData
 {
-    public List<(Coordinate coor, TileData tileData)> Data;
+    public List<OffsetTileData> Data = new();
+    public float Size;
+    public float Offset;
 }
 
 [System.Serializable]
-public class GroupTileSetData
+public class OffsetTileData
+{
+    public Coordinate Coor;
+    public TileData TileData = new();
+}
+
+[System.Serializable]
+public class DeckData
 {
     public TileSetData TileSet;
     public int Count;
-    public string Id;
 
-    public GroupTileSetData(TileSetData tileSet)
+    public DeckData(TileSetData tileSet)
     {
         TileSet = tileSet;
         Count = 1;
-        Id = "";
+    }
+
+    public DeckData()
+    {
+        TileSet = new();
+        Count = 1;
     }
 }

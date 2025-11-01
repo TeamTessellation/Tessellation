@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5193452960650638913}
+  - component: {fileID: 1197680944562493853}
   m_Layer: 0
   m_Name: TIleSet
   m_TagString: Untagged
@@ -32,6 +33,20 @@ Transform:
   - {fileID: 4575744340049431732}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1197680944562493853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136995194312488172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0369ceb6a024042a685cbb55bb206e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TileSet
+  Tiles: []
+  Rotation: 0
 --- !u!1 &4698048771471433641
 GameObject:
   m_ObjectHideFlags: 0

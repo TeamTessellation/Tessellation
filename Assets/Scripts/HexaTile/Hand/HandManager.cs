@@ -4,13 +4,31 @@ using UnityEngine;
 
 public class HandManager : MonoBehaviour
 {
-    public TileSetGroupSO GroupSO;
+    public DeckSO DeckSO;
+    public GameObject HandBox;
 
-    public TileSetData[] GetRadomTileSetDataInGroup(int dataCount = 1)
+
+    private void Start()
+    {
+        SetHand(3);
+    }
+
+    private void 
+
+    public void SetHand(int handSize)
+    {
+        var tileSetDatas = GetRadomTileSetDataInGroup(handSize);
+        for (int i = 0; i < tileSetDatas.Length; i++)
+        {
+            Pool<TileSet, TileSetData>.Get(tileSetDatas[i]);
+        }
+    }
+
+    private TileSetData[] GetRadomTileSetDataInGroup(int dataCount = 1)
     {
         TileSetData[] result = new TileSetData[dataCount];
-        var group = GroupSO.Group;
-        List<TileSetData> list = group.Select(x => x.TileSet).ToList();
+        var deck = DeckSO.Deck;
+        List<TileSetData> list = deck.Select(x => x.TileSet).ToList();
 
         if (list.Count <= dataCount)
             return list.ToArray();
@@ -18,10 +36,10 @@ public class HandManager : MonoBehaviour
         Dictionary<int, TileSetData> groupDic = new();
 
         int count = 0;
-        for (int i = 0; i < group.Count; i++)
+        for (int i = 0; i < deck.Count; i++)
         {
-            for (int j = 0; j < group[i].Count; j++)
-                { groupDic[count] = group[i].TileSet; count++; }
+            for (int j = 0; j < deck[i].Count; j++)
+                { groupDic[count] = deck[i].TileSet; count++; }
         }
         List<int> targetIndexs = new();
         var targetList = groupDic.Keys.ToList();

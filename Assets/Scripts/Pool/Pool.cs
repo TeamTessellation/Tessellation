@@ -225,6 +225,7 @@ public static class Pool
         objPool.Size = size;
         var oriObj = GameObject.Instantiate(target);
         oriObj.transform.SetParent(PoolManager.S_OriObjRoot);
+        oriObj.name = target.name;
         objPool.OriObj = oriObj;
         objPool.Pool = new();
         _objPool[key] = objPool;

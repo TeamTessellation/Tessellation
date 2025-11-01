@@ -18,14 +18,23 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
     public bool IsPlace => Oner != null;
     public Direction Direction;
     public TileOption Option;
+    private Sprite _defualtSprite;
     /// <summary>
     /// ÇØ´ç Tile Data
     /// </summary>
     public TileData TileData { get; }
     private TileData _tileData;
+    private SpriteRenderer _sr;
+
+    public void ChangeSprite(Sprite sprite)
+    {
+        _sr.sprite = sprite;
+    }
 
     public void Set(TileData data)
     {
+        _sr = GetComponent<SpriteRenderer>();
+        _defualtSprite = _sr.sprite;
         _tileData = data;
         gameObject.transform.localScale = Vector3.one * data.Scale;
         Option = data.Option;
@@ -33,5 +42,6 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
 
     public void Reset()
     {
+        _sr.sprite = _defualtSprite;
     }
 }

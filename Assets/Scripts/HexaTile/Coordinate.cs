@@ -1,16 +1,18 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[System.Serializable]
 public struct Coordinate
 {
     /// <summary>
     /// 2D 좌펴계 기준 좌표, 사실상 3D의 x, y만 가져오는거와 동일
     /// </summary>
-    public Vector2Int Pos { get { return new Vector2Int(Pos3D.x, Pos3D.y); } }
+    public Vector2Int Pos;
     /// <summary>
     /// 3D 좌표계 기준 좌표
     /// </summary>
-    public Vector3Int Pos3D;
+    public Vector3Int Pos3D { get { return new Vector3Int(Pos.x, Pos.y, -(Pos.x + Pos.y)); } }
     /// <summary>
     /// 본인이 속한 Circle 반지름
     /// </summary>
@@ -18,22 +20,17 @@ public struct Coordinate
 
     public Coordinate(int x, int y)
     {
-        Pos3D = new Vector3Int(x, y, -(x + y));
-    }
-
-    public Coordinate(int x, int y, int z)
-    {
-        Pos3D = new Vector3Int(x, y, z);
+        Pos = new Vector2Int(x, y);
     }
 
     public Coordinate(Vector2 pos)
     {
-        Pos3D = new Vector3Int((int)pos.x, (int)pos.y, -((int)pos.x + (int)pos.y));
+        Pos = new Vector2Int((int)pos.x, (int)pos.y);
     }
 
     public Coordinate(Vector3 pos)
     {
-        Pos3D = new Vector3Int((int)pos.x, (int)pos.y, (int)pos.z);
+        Pos = new Vector2Int((int)pos.x, (int)pos.y);
     }
 
     public static Coordinate operator +(Coordinate c, Direction dir)
@@ -53,7 +50,7 @@ public struct Coordinate
 
     public static Coordinate operator +(Coordinate c, Coordinate other)
     {
-        return new() { Pos3D = c.Pos3D + other.Pos3D };
+        return new() { Pos = c.Pos + other.Pos };
     }
 
     public static Coordinate operator +(Coordinate c, Vector2 other)
@@ -63,12 +60,33 @@ public struct Coordinate
 
     public static Coordinate operator -(Coordinate c, Coordinate other)
     {
-        return new() { Pos3D = c.Pos3D - other.Pos3D };
+        return new() { Pos = c.Pos - other.Pos };
+    }
+
+    public static bool operator ==(Coordinate left, Coordinate right)
+    {
+        return (left.Pos == right.Pos);
+    }
+
+    public static bool operator !=(Coordinate left, Coordinate right)
+    {
+        return !(left == right);
     }
 
     public override string ToString()
     {
         return $"Coor(x {Pos3D.x}, y {Pos3D.y}, z {Pos3D.z} / 속한 테두리 - {CircleRadius})";
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is Coordinate coordinate &&
+               Pos.Equals(coordinate.Pos);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Pos);
     }
 }
 
@@ -79,11 +97,11 @@ public static class CoorExtension
         return $"({coor.Pos3D.x}, {coor.Pos3D.y}. {coor.Pos3D.z})";
     }
 
-    public static Vector2 ToWorld(this Coordinate coor)
+    public static Vector2 ToWorld(this Coordinate coor, float size = 1)
     {
         float x = coor.Pos3D.x * Mathf.Sqrt(3) + coor.Pos3D.y * Mathf.Sqrt(3) * 0.5f;
         float y = -coor.Pos3D.y * 1.5f;
-        return new Vector2(x, y);
+        return new Vector2(x, y) * size;
     }
 
     public static Vector2 ToWorld(this Coordinate coor, Vector2 offset, float size = 1)
@@ -96,8 +114,9 @@ public static class CoorExtension
         return ToCoor((world - offset) / size);
     }
 
-    public static Coordinate ToCoor(this Vector2 world)
+    public static Coordinate ToCoor(this Vector2 world, float size = 1)
     {
+        world /= size;
         float cy = -world.y / 1.5f;
         float cx = (world.x / Mathf.Sqrt(3f)) - (cy * 0.5f);
         float cz = -(cx + cy);
@@ -117,7 +136,7 @@ public static class CoorExtension
         else
             rz = -rx - ry;
 
-        return new Coordinate(rx, ry, rz);
+        return new Coordinate(rx, ry);
     }
 
     public static Coordinate ToCoor(this Vector3 world)
