@@ -118,7 +118,7 @@ public class Field : MonoBehaviour
 
                 var coor = new Coordinate(x, y);
                 if (!_allCell.ContainsKey(coor))
-                    { _allCell[coor] = new Cell(); _allCell[coor].Init(coor, CellBGRoot); }
+                    { _allCell[coor] = new Cell(); _allCell[coor].Init(coor, CellBGRoot, CellRoot); }
             }
         }
     }
@@ -133,14 +133,15 @@ public class Field : MonoBehaviour
     {
         if (CanPlace(tileSet, coor))
         {
-            PlaceTileSetStartEvent.Invoke(coor);
+            PlaceTileSetStartEvent?.Invoke(coor);
             for (int i = 0; i < tileSet.Tiles.Count; i++)
             {
                 var tileInfo = tileSet.Tiles[i].transform.localPosition;
-                Coordinate correctCoor = coor + tileSet.Tiles[i].transform.localPosition;
-                SetTileOnCell(tileSet.Tiles[i], coor);
+                Coordinate correctCoor = coor + tileSet.Tiles[i].transform.localPosition.ToCoor();
+                SetTileOnCell(tileSet.Tiles[i], correctCoor);
             }
-            PlaceTileSetEndEvent.Invoke(coor);
+            tileSet.Use();
+            PlaceTileSetEndEvent?.Invoke(coor);
             return true;
         }
         return false;
@@ -165,7 +166,8 @@ public class Field : MonoBehaviour
         for (int i = 0; i < tileSet.Tiles.Count; i++)
         {
             var tileInfo = tileSet.Tiles[i];
-            Coordinate correctCoor = coor + tileSet.Tiles[i].transform.localPosition;
+            Coordinate correctCoor = coor + tileSet.Tiles[i].transform.localPosition.ToCoor();
+            Debug.Log(correctCoor);
             if (!CanPlace(tileSet.Tiles[i], correctCoor))
                 return false;
         }

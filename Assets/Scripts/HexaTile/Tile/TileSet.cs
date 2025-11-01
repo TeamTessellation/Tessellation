@@ -18,6 +18,8 @@ public class TileSet : MonoBehaviour, IPoolAble<TileSetData>
         _tileRoot = transform.GetChild(0);
     }
 
+    public void Use() => Tiles.Clear();
+
     public void Reset()
     {
         _data = null;
