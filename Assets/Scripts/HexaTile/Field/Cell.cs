@@ -3,25 +3,28 @@ using UnityEngine;
 
 public class Cell
 {
-    public Tile BG { get; private set; }
+    public GameObject BG { get; private set; }
     public Tile Tile { get; private set; }
     public bool IsEmpty => Tile == null;
     public Coordinate Coor { get; private set; }
 
+    private Transform _cellRoot;
+
     // 최소 Cell 세팅
-    public void Init(Coordinate coor, Transform bgRoot)
+    public void Init(Coordinate coor, Transform bgRoot, Transform cellRoot)
     {
         Coor = coor;
-        BG = Pool<Tile>.Get();
+        BG = Pool.Get("BGTile");
         BG.transform.SetParent(bgRoot);
         BG.transform.localPosition = coor.ToWorld();
         Tile = null;
+        _cellRoot = cellRoot;
     }
 
     public void Remove()
     {
         UnSet();
-        Pool<Tile>.Return(BG);
+        Pool.Return(BG);
     }
 
     public void SetCoor(Coordinate coor) => Coor = coor;
@@ -42,6 +45,7 @@ public class Cell
     public void Set(Tile tile)
     {
         Tile = tile;
+        tile.transform.SetParent(_cellRoot, true);
         tile.gameObject.transform.position = tile.Coor.ToWorld();
     }
 }

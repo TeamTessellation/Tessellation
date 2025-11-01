@@ -6,13 +6,13 @@ using UnityEngine;
 /// <summary>
 /// TileSetµÈ¿« Group
 /// </summary>
-[CreateAssetMenu(fileName = "TileSet", menuName = "TileSet/TileSetGroup", order = 0)]
-public class TileSetGroupSO : ScriptableObject
+[CreateAssetMenu(fileName = "Deck", menuName = "HexaSystem", order = 0)]
+public class DeckSO : ScriptableObject
 {
-    public List<GroupTileSetData> Group { get; private set; }
+    public List<DeckData> Deck;
 
     public void SaveTileSet(List<TileSetData> tileSet)
     {
-        Group = tileSet.Select(x => { return new GroupTileSetData(x); }).ToList();
+        Deck = tileSet.Select(x => { return new DeckData(x); }).ToList();
     }
 }

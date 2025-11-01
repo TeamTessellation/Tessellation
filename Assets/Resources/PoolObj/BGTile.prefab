@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4073278926183028711}
   - component: {fileID: 1641515931288478175}
-  - component: {fileID: 6382392969851576845}
   m_Layer: 0
-  m_Name: Tile
+  m_Name: BGTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,8 +78,8 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ca0fbea733e4c334c9bb30cac5a270d5, type: 3}
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -91,20 +90,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6382392969851576845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1582213639526098280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
