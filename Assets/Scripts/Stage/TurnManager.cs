@@ -9,7 +9,14 @@ using UnityEngine;
 
 namespace Stage
 {
-    
+    public enum TurnState
+    {
+        Field,
+        Etc,
+        Player,
+        Item,
+    }
+
     /// <summary>
     /// 턴의 기본적인 시작과 종료를 처리하는 인터페이스입니다.
     /// </summary>
@@ -62,19 +69,24 @@ namespace Stage
         
         [SerializeField]private int _turnCount = 0;
         public int TurnCount => _turnCount;
-
+        public TurnState State { get; private set; }
         
         [Header("Logics/Handlers")]
-        [SerializeReference] private IFieldTurnLogic fieldTurnLogic;
-        [SerializeReference] private IPlayerTurnLogic playerTurnLogic;
-        [SerializeReference] private IPlayerInputHandler playerInputHandler;
-        [SerializeReference] private IBasicTurnLogic[] basicTurnLogics;
+        private IFieldTurnLogic fieldTurnLogic;
+        private IPlayerTurnLogic playerTurnLogic;
+        private IPlayerInputHandler playerInputHandler;
+        private IBasicTurnLogic[] basicTurnLogics;
 
         private StageManager StageManager => StageManager.Instance;
 
         private CancellationTokenSource _cancellationTokenSource;
 
         private void Reset()
+        {
+            FindLogics();
+        }
+
+        private void Start()
         {
             FindLogics();
         }
@@ -119,10 +131,7 @@ namespace Stage
 
         protected override void AfterAwake()
         {
-            if (_cancellationTokenSource == null)
-            {
-                _cancellationTokenSource = new CancellationTokenSource();
-            }
+            _cancellationTokenSource = null;
         }
         
         /// <summary>
@@ -185,12 +194,14 @@ namespace Stage
                  * 타일셋 뽑기
                  */
                 LogEx.Log("Field phase...");
+                State = TurnState.Field;
                 await fieldTurnLogic.TileSetDraw(token);
                 
                 /*
                  * 기타 턴 시작 단계
                  */
                 LogEx.Log("etc. phase...");
+                State = TurnState.Etc;
                 foreach (var basicTurnLogic in basicTurnLogics)
                 {
                     if (basicTurnLogic == null) continue;
@@ -200,6 +211,7 @@ namespace Stage
                  * 유저
                  */
                 LogEx.Log("Player phase...");
+                State = TurnState.Player;
                 while (playerTurnLogic.IsPlayerCanDoAction())
                 {
                     // 플레이어가 행동할 수 있는 동안 반복
@@ -227,6 +239,7 @@ namespace Stage
 
             
                 LogEx.Log($"Turn {_turnCount} ended.");
+                State = TurnState.Item;
                 /*
                  * 턴 마무리 단계
                  * ex) 아이템 같은거?

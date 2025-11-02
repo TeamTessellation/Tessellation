@@ -28,7 +28,6 @@ namespace Cardevil.Events
         /// 0 : 기본. 
         /// 10000 : UI 업데이트.
         /// </code>
-        AsyncPriorityEvent<ScoreChangedEventArgs> _scoreChangedEvent = new ();
         
 
         public void Clear()

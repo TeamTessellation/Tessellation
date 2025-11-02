@@ -1,0 +1,153 @@
+using Cysharp.Threading.Tasks;
+using Player;
+using Stage;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class HandManager : MonoBehaviour, IFieldTurnLogic
+{
+    public DeckSO DeckSO;
+
+    private Transform _handRoot;
+    private HandBox[] _hand;
+
+    private HandBox _targetHandBox;
+    private bool _dragTileSet;
+    private Camera _cam;
+    private Vector3 _tileSetOriScale;
+    private int _remainHand = 0;
+
+    public bool IsPlayerInputEnabled => throw new NotImplementedException();
+
+    private void Awake()
+    {
+        _hand = new HandBox[0];
+        _handRoot = GameObject.FindWithTag("HandRoot").transform;
+        _dragTileSet = false;
+        _cam = Camera.main;
+        _remainHand = 0;
+    }
+
+    void Update()
+    {
+        if (_dragTileSet)
+        {
+            Vector2 screenPos = Mouse.current.position.ReadValue();
+            Vector2 worldPos = _cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _cam.nearClipPlane));
+
+            _targetHandBox.HoldTileSet.transform.position = worldPos;
+
+            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            {
+                PlaceTileSet(worldPos);
+            }
+        }
+    }
+
+    private void PlaceTileSet(Vector2 worldPos)
+    {
+        if(Field.Instance.TryPlace(_targetHandBox.HoldTileSet, worldPos.ToCoor(Field.Instance.TileOffset)))
+        {
+            _remainHand--;
+            if (_remainHand <= 0)
+                UseAllHand();
+
+            InputManager.Instance.PlaceTileSet(worldPos, _targetHandBox);
+        }
+        else
+            FailPlace();
+
+        _targetHandBox = null;
+        _dragTileSet = false;
+    }
+
+    private void FailPlace()
+    {
+        _targetHandBox.HoldTileSet.transform.localPosition = Vector3.zero;
+        int maxRadius = 0;
+        for (int j = 0; j < _targetHandBox.HoldTileSet.Data.Data.Count; j++)
+        {
+            maxRadius = Mathf.Max(_targetHandBox.HoldTileSet.Data.Data[j].Coor.CircleRadius, maxRadius);
+        }
+        float size = (maxRadius * 2 + 1 > 3) ? 5 / (Mathf.Sqrt(3) * (maxRadius * 2 + 1)) : 1;
+        _targetHandBox.HoldTileSet.transform.localScale = Vector2.one * size;
+    }
+
+    private void UseAllHand()
+    {
+        _targetHandBox = null;
+        _dragTileSet = false;
+        SetHand(3);
+    }
+
+    private void HandBoxMouseDown(HandBox target)
+    {
+        if (target.IsUsed || TurnManager.Instance.State != TurnState.Player)
+            return;
+
+        _targetHandBox = target;
+        _dragTileSet = true;
+        _tileSetOriScale = _targetHandBox.HoldTileSet.transform.localScale;
+        _targetHandBox.HoldTileSet.transform.localScale = Vector3.one;
+    }
+
+    public void SetHand(int handSize = 3)
+    {
+        _remainHand = handSize;
+        for (int i = 0; i < _hand.Length; i++)
+            Pool<HandBox>.Return(_hand[i]);
+
+        _hand = new HandBox[handSize];
+        var tileSetDatas = GetRadomTileSetDataInGroup(handSize);
+        for (int i = 0; i < tileSetDatas.Length; i++)
+        {
+            var handBox = Pool<HandBox, TileSetData>.Get(tileSetDatas[i]);
+            handBox.transform.SetParent(_handRoot, false);
+            handBox.RegisterClickEvent(HandBoxMouseDown);
+            _hand[i] = handBox;
+        }
+    }
+
+    private TileSetData[] GetRadomTileSetDataInGroup(int dataCount = 1)
+    {
+        TileSetData[] result = new TileSetData[dataCount];
+        var deck = DeckSO.Deck;
+        List<TileSetData> list = deck.Select(x => x.TileSet).ToList();
+
+        if (list.Count <= dataCount)
+            return list.ToArray();
+
+        Dictionary<int, TileSetData> groupDic = new();
+
+        int count = 0;
+        for (int i = 0; i < deck.Count; i++)
+        {
+            for (int j = 0; j < deck[i].Count; j++)
+                { groupDic[count] = deck[i].TileSet; count++; }
+        }
+        List<int> targetIndexs = new();
+        var targetList = groupDic.Keys.ToList();
+
+        while (targetIndexs.Count < dataCount)
+        {
+            int randomNum = UnityEngine.Random.Range(0, targetList.Count);
+            int target = targetList[randomNum];
+            targetList.RemoveAt(randomNum);
+            targetIndexs.Add(target);
+        }
+        result = targetIndexs.Select(x => groupDic[x]).ToArray();
+
+        return result;
+    }
+
+    public async UniTask TileSetDraw(CancellationToken token)
+    {
+        SetHand();
+        await UniTask.CompletedTask;
+    }
+}
