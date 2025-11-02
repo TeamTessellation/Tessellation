@@ -1,14 +1,19 @@
+using Cysharp.Threading.Tasks;
+using Player;
+using Stage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class HandManager : MonoBehaviour
+public class HandManager : MonoBehaviour, IFieldTurnLogic
 {
     public DeckSO DeckSO;
-    public Transform HandRoot;
 
+    private Transform _handRoot;
     private HandBox[] _hand;
 
     private HandBox _targetHandBox;
@@ -17,13 +22,15 @@ public class HandManager : MonoBehaviour
     private Vector3 _tileSetOriScale;
     private int _remainHand = 0;
 
-    private void Start()
+    public bool IsPlayerInputEnabled => throw new NotImplementedException();
+
+    private void Awake()
     {
         _hand = new HandBox[0];
+        _handRoot = GameObject.FindWithTag("HandRoot").transform;
         _dragTileSet = false;
         _cam = Camera.main;
         _remainHand = 0;
-        SetHand(3);
     }
 
     void Update()
@@ -46,10 +53,11 @@ public class HandManager : MonoBehaviour
     {
         if(Field.Instance.TryPlace(_targetHandBox.HoldTileSet, worldPos.ToCoor()))
         {
-            _targetHandBox.Use();
             _remainHand--;
             if (_remainHand <= 0)
                 UseAllHand();
+
+            InputManager.Instance.PlaceTileSet(worldPos, _targetHandBox);
         }
         else
             FailPlace();
@@ -79,7 +87,7 @@ public class HandManager : MonoBehaviour
 
     private void HandBoxMouseDown(HandBox target)
     {
-        if (target.IsUsed)
+        if (target.IsUsed || TurnManager.Instance.State != TurnState.Player)
             return;
 
         _targetHandBox = target;
@@ -88,7 +96,7 @@ public class HandManager : MonoBehaviour
         _targetHandBox.HoldTileSet.transform.localScale = Vector3.one;
     }
 
-    public void SetHand(int handSize)
+    public void SetHand(int handSize = 3)
     {
         _remainHand = handSize;
         for (int i = 0; i < _hand.Length; i++)
@@ -99,7 +107,7 @@ public class HandManager : MonoBehaviour
         for (int i = 0; i < tileSetDatas.Length; i++)
         {
             var handBox = Pool<HandBox, TileSetData>.Get(tileSetDatas[i]);
-            handBox.transform.SetParent(HandRoot, false);
+            handBox.transform.SetParent(_handRoot, false);
             handBox.RegisterClickEvent(HandBoxMouseDown);
             _hand[i] = handBox;
         }
@@ -135,5 +143,11 @@ public class HandManager : MonoBehaviour
         result = targetIndexs.Select(x => groupDic[x]).ToArray();
 
         return result;
+    }
+
+    public async UniTask TileSetDraw(CancellationToken token)
+    {
+        SetHand();
+        await UniTask.CompletedTask;
     }
 }
