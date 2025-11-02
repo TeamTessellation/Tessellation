@@ -42,38 +42,42 @@ namespace Test
             LogEx.Log($"Invoking TestExecEvent with Value: {args.Value}");
             await ExecEventBus<TestExecEventArgs>.Invoke(args);
         }
+        
+        private ExecAction<TestExecEventArgs> _highPriorityAction = async (args) =>
+        {
+            await UniTask.Delay(50);
+            LogEx.Log($"High Priority Action Executed with Value: {args.Value}");
+        };
+        private ExecAction<TestExecEventArgs> _firstPriorityAction = async (args) =>
+        {
+            await UniTask.Delay(100);
+            LogEx.Log($"First Priority Action Executed with Value: {args.Value}");
+        };
+
+        private ExecAction<TestExecEventArgs> _secondPriorityAction = async (args) =>
+        {
+            await UniTask.Delay(150);
+            LogEx.Log($"Second Priority Action Executed with Value: {args.Value}");
+        };
+        private ExecAction<TestExecEventArgs> _thirdPriorityAction = async (args) =>
+        {
+            await UniTask.Delay(200);
+            LogEx.Log($"Third Priority Action Executed with Value: {args.Value}");
+        };
+        
         public void OnTestEvent(ExecQueue<TestExecEventArgs> queue, TestExecEventArgs args)
         {
             LogEx.Log($"Received TestExecEvent with Value: {args.Value}");
-            async UniTask FirstPriorityAction(TestExecEventArgs args)
-            {
-                await UniTask.Delay(100);
-                LogEx.Log($"First Priority Action Executed with Value: {args.Value}");
-            }
-            async UniTask SecondPriorityAction(TestExecEventArgs args)
-            {
-                await UniTask.Delay(200);
-                LogEx.Log($"Second Priority Action Executed with Value: {args.Value}");
-            }
-            async UniTask ThirdPriorityAction(TestExecEventArgs args)
-            {
-                await UniTask.Delay(100);
-                LogEx.Log($"Third Priority Action Executed with Value: {args.Value}");
-            }
-            queue.Enqueue(2, SecondPriorityAction);
-            queue.Enqueue(1, FirstPriorityAction);
-            queue.Enqueue(3, ThirdPriorityAction);
+            
+            queue.Enqueue(2, _secondPriorityAction);
+            queue.Enqueue(1, _firstPriorityAction);
+            queue.Enqueue(3, _thirdPriorityAction);
         }
         
         public void OnTestEvent2(ExecQueue<TestExecEventArgs> queue, TestExecEventArgs args)
         {
             LogEx.Log($"Received TestExecEvent with Value: {args.Value}");
-            async UniTask HighPriorityAction(TestExecEventArgs args)
-            {
-                await UniTask.Delay(50);
-                LogEx.Log($"High Priority Action Executed with Value: {args.Value}");
-            }
-            queue.Enqueue(0, HighPriorityAction);
+            queue.Enqueue(0, _highPriorityAction);
         }
 
         [ContextMenu("TrackGameStart")]
