@@ -2,6 +2,7 @@
 using System;
 using Cardevil.Events;
 using Core;
+using Events.AsyncPriorityEvent;
 using Events.Core;
 using Events.PriorityEvent;
 
@@ -27,7 +28,7 @@ namespace Cardevil.Events
         /// 0 : 기본. 
         /// 10000 : UI 업데이트.
         /// </code>
-        PriorityEvent<ScoreChangedEventArgs> _scoreChangedEvent = new PriorityEvent<ScoreChangedEventArgs>();
+        AsyncPriorityEvent<ScoreChangedEventArgs> _scoreChangedEvent = new ();
         
 
         public void Clear()
