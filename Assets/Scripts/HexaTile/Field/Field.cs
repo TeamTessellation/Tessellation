@@ -174,11 +174,11 @@ public class Field : MonoBehaviour
 
         for (int i = 0; i < newTile.Count; i++)
         {
-            if (!xCheckList.Contains(newTile[i].Coor.Pos3D.x))
+            if (!xCheckList.Contains(newTile[i].Coor.Pos3D.y))
             {
                 CheckAxis(xCheckList, newTile[i].Coor.Pos3D.y, Axis.X, newTile[i], clearLines);
             }
-            if (!yCheckList.Contains(newTile[i].Coor.Pos3D.y))
+            if (!yCheckList.Contains(newTile[i].Coor.Pos3D.x))
             {
                 CheckAxis(yCheckList, newTile[i].Coor.Pos3D.x, Axis.Y, newTile[i], clearLines);
             }
