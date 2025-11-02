@@ -6,15 +6,15 @@ using UnityEngine;
 public struct Coordinate
 {
     /// <summary>
-    /// 2D ÁÂÆì°è ±âÁØ ÁÂÇ¥, »ç½Ç»ó 3DÀÇ x, y¸¸ °¡Á®¿À´Â°Å¿Í µ¿ÀÏ
+    /// 2D ì¢Œí´ê³„ ê¸°ì¤€ ì¢Œí‘œ, ì‚¬ì‹¤ìƒ 3Dì˜ x, yë§Œ ê°€ì ¸ì˜¤ëŠ”ê±°ì™€ ë™ì¼
     /// </summary>
     public Vector2Int Pos;
     /// <summary>
-    /// 3D ÁÂÇ¥°è ±âÁØ ÁÂÇ¥
+    /// 3D ì¢Œí‘œê³„ ê¸°ì¤€ ì¢Œí‘œ
     /// </summary>
     public Vector3Int Pos3D { get { return new Vector3Int(Pos.x, Pos.y, -(Pos.x + Pos.y)); } }
     /// <summary>
-    /// º»ÀÎÀÌ ¼ÓÇÑ Circle ¹İÁö¸§
+    /// ë³¸ì¸ì´ ì†í•œ Circle ë°˜ì§€ë¦„
     /// </summary>
     public int CircleRadius { get { return Mathf.Max(Mathf.Abs(Pos3D.x), Mathf.Abs(Pos3D.y), Mathf.Abs(Pos3D.z)); } }
 
@@ -75,7 +75,7 @@ public struct Coordinate
 
     public override string ToString()
     {
-        return $"Coor(x {Pos3D.x}, y {Pos3D.y}, z {Pos3D.z} / ¼ÓÇÑ Å×µÎ¸® - {CircleRadius})";
+        return $"Coor(x {Pos3D.x}, y {Pos3D.y}, z {Pos3D.z} / ì†í•œ í…Œë‘ë¦¬ - {CircleRadius})";
     }
 
     public override bool Equals(object obj)
