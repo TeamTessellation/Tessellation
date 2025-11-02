@@ -1,5 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using Player;
+using Stage;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // 전체 턴 결과를 담는 데이터 Info
@@ -83,7 +88,7 @@ public class TileBurstEvent : TileEvent
 
 
 // 플레이어 입력 후처리 해주는 클래스
-public class TilePlaceHandler : MonoBehaviour
+public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
 {
     // === Actions ===
     public event Action<TurnResultInfo> OnTilePlacedDelegate;
@@ -97,6 +102,19 @@ public class TilePlaceHandler : MonoBehaviour
     private TurnResultInfo _turnResultInfo;
     
     // === Functions ===
+    public async UniTask HandlePlayerInput(PlayerInputData inputData, CancellationToken token)
+    {
+        if (inputData.Type == PlayerInputData.InputType.TilePlace)
+        {
+            FirstTilePlaced(inputData.PlacedTile);
+        }
+        else if (inputData.Type == PlayerInputData.InputType.UseItem)
+        {
+            // TODO
+            // ProcessUseItem(어쩌고) .. 
+        }
+        await UniTask.CompletedTask;
+    }
     
     // 첫 배치 때 불릴 함수
     public void FirstTilePlaced(List<Tile> tiles)
