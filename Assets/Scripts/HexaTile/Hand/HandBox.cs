@@ -21,6 +21,11 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
         _eventTrigger = GetComponent<EventTrigger>();
     }
 
+    public void Rotate()
+    {
+
+    }
+
     public void Use()
     {
         Pool<TileSet>.Return(HoldTileSet);

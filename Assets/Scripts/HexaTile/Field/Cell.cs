@@ -47,6 +47,6 @@ public class Cell
         Tile = tile;
         tile.Coor = Coor;
         tile.transform.SetParent(_cellRoot, true);
-        tile.gameObject.transform.position = tile.Coor.ToWorld();
+        tile.gameObject.transform.position = tile.Coor.ToWorld(Field.Instance.TileOffset);
     }
 }

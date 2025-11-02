@@ -51,7 +51,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
 
     private void PlaceTileSet(Vector2 worldPos)
     {
-        if(Field.Instance.TryPlace(_targetHandBox.HoldTileSet, worldPos.ToCoor()))
+        if(Field.Instance.TryPlace(_targetHandBox.HoldTileSet, worldPos.ToCoor(Field.Instance.TileOffset)))
         {
             _remainHand--;
             if (_remainHand <= 0)

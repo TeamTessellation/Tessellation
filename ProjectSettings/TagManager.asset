@@ -48,6 +48,9 @@ TagManager:
   - name: FieldUI
     uniqueID: 2979393063
     locked: 0
+  - name: InGameUI
+    uniqueID: 1339770911
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1
