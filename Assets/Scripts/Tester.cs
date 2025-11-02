@@ -6,15 +6,15 @@ public class Tester : MonoBehaviour
     void Start()
     {
         Tile obj = Pool<Tile>.Get();
-        // PoolAble¸¦ »ó¼Ó¹ŞÀº Tile Ç®¸µ ÇØ¼­ ¹Ş¾Æ¿Â´Ù
+        // PoolAbleë¥¼ ìƒì†ë°›ì€ Tile í’€ë§ í•´ì„œ ë°›ì•„ì˜¨ë‹¤
         TileData test = new();
         Tile obj2 = Pool<Tile, TileData>.Get(test);
-        // TileÀº PoolAble<TData> ¸¦ ¹Ş¾Æ¿ÔÀ½À¸·Î µ¥ÀÌÅÍ ¼¼ÆÃ Ç®¸µµµ °¡´ÉÇÏ´Ù
+        // Tileì€ PoolAble<TData> ë¥¼ ë°›ì•„ì™”ìŒìœ¼ë¡œ ë°ì´í„° ì„¸íŒ… í’€ë§ë„ ê°€ëŠ¥í•˜ë‹¤
         b = obj;
         RTPool.InitObjPool(obj.gameObject, "Test");
-        // ·±Å¸ÀÓ¿¡¼­ ¹Ş¾Æ¿Â Tile ¿ÀºêÁ§Æ®¸¦ ±â¹İÀ¸·Î Ç®¸µ »ı¼ºÇÑ´Ù
+        // ëŸ°íƒ€ì„ì—ì„œ ë°›ì•„ì˜¨ Tile ì˜¤ë¸Œì íŠ¸ë¥¼ ê¸°ë°˜ìœ¼ë¡œ í’€ë§ ìƒì„±í•œë‹¤
         a = RTPool.Get("Test");
-        // Ç®¸µÀ» ¹Ş¾Æ¿Â´Ù
+        // í’€ë§ì„ ë°›ì•„ì˜¨ë‹¤
     }
 
     GameObject a;
