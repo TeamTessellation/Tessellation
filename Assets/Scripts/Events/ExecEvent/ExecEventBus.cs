@@ -12,7 +12,9 @@ namespace PriortyExecEvent
     {
         private static List<ExecEventHandler<TEvent>> _handlers = new List<ExecEventHandler<TEvent>>();
         private static readonly ExecQueue<TEvent> _execQueue = new ExecQueue<TEvent>();
+        private static bool _isExecuting = false;
         
+        public static bool IsExecuting => _isExecuting;
         public static IReadOnlyList<ExecEventHandler<TEvent>> Handlers => _handlers;
         
         
@@ -33,13 +35,16 @@ namespace PriortyExecEvent
         
         public static async UniTask Invoke(TEvent eventArgs)
         {
+            _isExecuting = true;
             _execQueue.Clear();
+            _execQueue.SetCapacity(_handlers.Count);
             foreach (var handler in _handlers)
             {
                 handler.Invoke(_execQueue, eventArgs);
             }
             _execQueue.SortByPriority();
             await _execQueue.ExecuteAll(eventArgs);
+            _isExecuting = false;
         }
     }
 }
