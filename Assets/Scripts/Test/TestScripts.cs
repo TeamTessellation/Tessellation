@@ -45,23 +45,23 @@ namespace Test
         
         private ExecAction<TestExecEventArgs> _highPriorityAction = async (args) =>
         {
-            await UniTask.Delay(50);
+            await UniTask.Delay(1000);
             LogEx.Log($"High Priority Action Executed with Value: {args.Value}");
         };
         private ExecAction<TestExecEventArgs> _firstPriorityAction = async (args) =>
         {
-            await UniTask.Delay(100);
+            await UniTask.Delay(1000);
             LogEx.Log($"First Priority Action Executed with Value: {args.Value}");
         };
 
         private ExecAction<TestExecEventArgs> _secondPriorityAction = async (args) =>
         {
-            await UniTask.Delay(150);
+            await UniTask.Delay(1000);
             LogEx.Log($"Second Priority Action Executed with Value: {args.Value}");
         };
         private ExecAction<TestExecEventArgs> _thirdPriorityAction = async (args) =>
         {
-            await UniTask.Delay(200);
+            await UniTask.Delay(1000);
             LogEx.Log($"Third Priority Action Executed with Value: {args.Value}");
         };
         
