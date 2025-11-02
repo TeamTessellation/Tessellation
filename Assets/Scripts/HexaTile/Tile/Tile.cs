@@ -14,16 +14,17 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
     /// <summary>
     /// 속한 Cell
     /// </summary>
-    public Cell Oner;
-    public bool IsPlace => Oner != null;
+    public Cell Owner;
+    public bool IsPlace => Owner != null;
     public Direction Direction;
     public TileOption Option;
-    private Sprite _defualtSprite;
+    private Sprite _defaultSprite;
+
     /// <summary>
     /// 해당 Tile Data
     /// </summary>
-    public TileData TileData { get; }
-    private TileData _tileData;
+    public TileData Data { get; private set; }
+
     private SpriteRenderer _sr;
 
     public void ChangeSprite(Sprite sprite)
@@ -34,14 +35,14 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
     public void Set(TileData data)
     {
         _sr = GetComponent<SpriteRenderer>();
-        _defualtSprite = _sr.sprite;
-        _tileData = data;
+        _defaultSprite = _sr.sprite;
+        Data = data;
         gameObject.transform.localScale = Vector3.one * data.Scale;
         Option = data.Option;
     }
 
     public void Reset()
     {
-        _sr.sprite = _defualtSprite;
+        _sr.sprite = _defaultSprite;
     }
 }

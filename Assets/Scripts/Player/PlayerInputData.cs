@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
+using UnityEngine;
 
 namespace Player
 {
@@ -9,17 +11,15 @@ namespace Player
             TilePlace,
             UseItem,
         }
-        public Vector2 StartPosition { get; }
-        public Vector2 EndPosition { get; }
+        
         public InputType Type { get; }
-        // public TileData PlacedTile { get; set;}
+        public List<Tile> PlacedTile { get; }
         // public Item UsedItem { get; set;}
         
-        public PlayerInputData(Vector2 startPosition, Vector2 endPosition, InputType type)
+        public PlayerInputData(List<Tile> tiles)
         {
-            StartPosition = startPosition;
-            EndPosition = endPosition;
-            Type = type;
+            Type = InputType.TilePlace;
+            PlacedTile = tiles;
         }
         
     }

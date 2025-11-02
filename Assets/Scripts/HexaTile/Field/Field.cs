@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Stage;
 using UnityEngine;
 
 public class Field : MonoBehaviour
@@ -354,7 +355,7 @@ public class Field : MonoBehaviour
                 Coordinate correctCoor = coor + tileSet.Tiles[i].transform.localPosition.ToCoor();
                 SetTileOnCell(tileSet.Tiles[i], correctCoor);
             }
-
+            
             var clearLines = CheckLineClear(tileSet.Tiles);
             tileSet.Use();
             PlaceTileSetEndEvent?.Invoke(coor);
@@ -402,7 +403,7 @@ public class Field : MonoBehaviour
         if (CheckAbleCoor(coor)) // 원형 범위 안에 있는지 체크
         {
             // 안에 있다면 타일 체크 해야겠지~
-            if (!_allCell[coor].IsEmpty && tile.TileData.Option != TileOption.Force)
+            if (!_allCell[coor].IsEmpty && tile.Data.Option != TileOption.Force)
                 return false;
         }
         else

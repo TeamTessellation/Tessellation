@@ -65,10 +65,10 @@ namespace Stage
 
         
         [Header("Logics/Handlers")]
-        [SerializeReference] private IFieldTurnLogic fieldTurnLogic;
-        [SerializeReference] private IPlayerTurnLogic playerTurnLogic;
-        [SerializeReference] private IPlayerInputHandler playerInputHandler;
-        [SerializeReference] private IBasicTurnLogic[] basicTurnLogics;
+        private IFieldTurnLogic fieldTurnLogic;
+        private IPlayerTurnLogic playerTurnLogic;
+        private IPlayerInputHandler playerInputHandler;
+        private IBasicTurnLogic[] basicTurnLogics;
 
         private StageManager StageManager => StageManager.Instance;
 
