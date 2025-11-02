@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Events.Core;
 using Machamy.Utils;
+using UnityEngine.Pool;
 
 namespace PriortyExecEvent
 {
@@ -83,13 +84,16 @@ namespace PriortyExecEvent
         
         public async UniTask ExecuteAll(TEventArgs eventArgs)
         {
-            SortedSet<ActionWrapper<TEventArgs>> snapshot = new SortedSet<ActionWrapper<TEventArgs>>(_actionWrappers);
+            var snapshot = ListPool<ActionWrapper<TEventArgs>>.Get();
+            snapshot.AddRange(_actionWrappers);
+            snapshot.Sort();
             foreach (var wrapper in snapshot)
             {
                 LogEx.Log($"({wrapper.PrimaryPriority})Executing action {wrapper.action}");
                 await wrapper.action.Invoke(eventArgs);
             }
             LogEx.Log($"[ExecQueue<{typeof(TEventArgs).Name}>] Executed {snapshot.Count} actions.");
+            ListPool<ActionWrapper<TEventArgs>>.Release(snapshot);
         }
     }
 }

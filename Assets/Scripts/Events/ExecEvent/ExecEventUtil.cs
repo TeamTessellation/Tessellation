@@ -18,8 +18,6 @@ namespace PriortyExecEvent
     /// </summary>
     public static class ExecEventUtil
     {
-        
-
         public static IReadOnlyList<Type> EventTypes;
         public static IReadOnlyList<Type> EventBusTypes;
 

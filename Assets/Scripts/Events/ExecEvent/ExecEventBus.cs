@@ -12,7 +12,7 @@ namespace PriortyExecEvent
     {
         private static List<ExecEventHandler<TEvent>> _handlers = new List<ExecEventHandler<TEvent>>();
         private static readonly ExecQueue<TEvent> _execQueue = new ExecQueue<TEvent>();
-            
+        
         public static IReadOnlyList<ExecEventHandler<TEvent>> Handlers => _handlers;
         
         
