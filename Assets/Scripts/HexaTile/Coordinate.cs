@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -157,5 +158,10 @@ public static class CoorExtension
     public static Coordinate FromYZ(this Vector2Int yz)
     {
         return new Coordinate(-yz.x - yz.y, yz.x);
+    }
+
+    public static Coordinate RotateR60(this Coordinate coor)
+    {
+        return new Coordinate(-coor.Pos3D.y, -coor.Pos3D.z);
     }
 }

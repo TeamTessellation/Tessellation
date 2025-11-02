@@ -28,6 +28,18 @@ public class TileSet : MonoBehaviour, IPoolAble<TileSetData>
         Tiles.Clear();
     }
 
+    /// <summary>
+    /// 60도 만큼 우측으로 회전시킨다.
+    /// </summary>
+    [ContextMenu("Rotate")]
+    public void Rotate()
+    {
+        for(int i = 0; i < Tiles.Count; i++)
+        {
+            Tiles[i].transform.localPosition = Tiles[i].transform.localPosition.ToCoor().RotateR60().ToWorld();
+        }
+    }
+
     public void Set(TileSetData data)
     {
         Data = data;
