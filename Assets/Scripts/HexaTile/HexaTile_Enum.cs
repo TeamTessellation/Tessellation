@@ -10,12 +10,12 @@ public enum Direction
 
 public enum TileOption
 {
-    Defaut, // ±âº»
-    Boom, // ·¡Á¦ ´©³ª..
-    Bonus, // Á¡¼ö Ãß°¡
-    Double, // Á¡¼ö µÎ¹è
-    Gold, // µ· Ãß°¡
-    Force, // °­Á¦ ¹èÄ¡
+    Defaut, // ê¸°ë³¸
+    Boom, // ë˜ì œ ëˆ„ë‚˜..
+    Bonus, // ì ìˆ˜ ì¶”ê°€
+    Double, // ì ìˆ˜ ë‘ë°°
+    Gold, // ëˆ ì¶”ê°€
+    Force, // ê°•ì œ ë°°ì¹˜
     End,
 }
 

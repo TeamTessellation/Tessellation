@@ -64,33 +64,33 @@ public class Field : MonoBehaviour
     private int _size = 4;
     private bool _isInit = false;
 
-    // Å¸ÀÏ ¹èÄ¡, ¶óÀÎ Å¬¸®¾î ½Ã È£Ãâ ÀÌº¥Æ®
+    // íƒ€ì¼ ë°°ì¹˜, ë¼ì¸ í´ë¦¬ì–´ ì‹œ í˜¸ì¶œ ì´ë²¤íŠ¸
     /// <summary>
-    /// Å¸ÀÏ ¹èÄ¡ ½ÃÀÛ ( ¹èÄ¡¸¦ ½ÃÀÛ¸¸ ÇÏ°í ½ÇÁúÀûÀÎ ¹èÄ¡´Â ¾ÆÁ÷ ¾ÈÇÔ )
+    /// íƒ€ì¼ ë°°ì¹˜ ì‹œì‘ ( ë°°ì¹˜ë¥¼ ì‹œì‘ë§Œ í•˜ê³  ì‹¤ì§ˆì ì¸ ë°°ì¹˜ëŠ” ì•„ì§ ì•ˆí•¨ )
     /// </summary>
     public Action<Coordinate> PlaceTileStartEvent;
     /// <summary>
-    /// Å¸ÀÏ º£Ä¡ ³¡ ( ½ÇÁúÀûÀÎ Å¸ÀÏÀ» ¸Ê¿¡ ¹èÄ¡ÇÔ )
+    /// íƒ€ì¼ ë² ì¹˜ ë ( ì‹¤ì§ˆì ì¸ íƒ€ì¼ì„ ë§µì— ë°°ì¹˜í•¨ )
     /// </summary>
     public Action<Coordinate> PlaceTileEndEvent;
     /// <summary>
-    /// Å¸ÀÏ¼Â ¹èÄ¡ ½ÃÀÛ ( ¹èÄ¡¸¦ ½ÃÀÛ¸¸ ÇÏ°í ½ÇÁúÀûÀÎ ¹èÄ¡´Â ¾ÆÁ÷ ¾ÈÇÔ )
+    /// íƒ€ì¼ì…‹ ë°°ì¹˜ ì‹œì‘ ( ë°°ì¹˜ë¥¼ ì‹œì‘ë§Œ í•˜ê³  ì‹¤ì§ˆì ì¸ ë°°ì¹˜ëŠ” ì•„ì§ ì•ˆí•¨ )
     /// </summary>
     public Action<Coordinate> PlaceTileSetStartEvent;
     /// <summary>
-    /// Å¸ÀÏ¼Â º£Ä¡ ³¡ ( ½ÇÁúÀûÀÎ Å¸ÀÏ¼ÂÀ» ¸Ê¿¡ ¹èÄ¡ÇÔ )
+    /// íƒ€ì¼ì…‹ ë² ì¹˜ ë ( ì‹¤ì§ˆì ì¸ íƒ€ì¼ì…‹ì„ ë§µì— ë°°ì¹˜í•¨ )
     /// </summary>
     public Action<Coordinate> PlaceTileSetEndEvent;
     /// <summary>
-    /// ¶óÀÎ Å¬¸®¾î ½ÃÀÛ ( ÁÙÀ» ÀüºÎ Ã¤¿ö Æ¯Á¤ ¶óÀÎÀ» Áö¿ì±â ½ÃÀÛÇÔ )
+    /// ë¼ì¸ í´ë¦¬ì–´ ì‹œì‘ ( ì¤„ì„ ì „ë¶€ ì±„ì›Œ íŠ¹ì • ë¼ì¸ì„ ì§€ìš°ê¸° ì‹œì‘í•¨ )
     /// </summary>
     public Action<Coordinate> LineClearStartEvent;
     /// <summary>
-    /// ¶óÀÎ Å¬¸®¾î ³¡ ( ÁÙ¿¡ Á¸ÀçÇÏ´Â Å¸ÀÏÀ» ÀüºÎ Á¦°ÅÇÔ )
+    /// ë¼ì¸ í´ë¦¬ì–´ ë ( ì¤„ì— ì¡´ì¬í•˜ëŠ” íƒ€ì¼ì„ ì „ë¶€ ì œê±°í•¨ )
     /// </summary>
     public Action<Coordinate> LineClearEndEvent;
 
-    private void Awake() // ½Ì±ÛÅæÀº ¾Æ´Ô
+    private void Awake() // ì‹±ê¸€í†¤ì€ ì•„ë‹˜
     {
         _instance = this;
         InitField();
@@ -138,7 +138,7 @@ public class Field : MonoBehaviour
 #endif
     private void SetFieldBySize(int size)
     {
-        // ¹üÀ§¿¡ ¹ş¾î³ª´Â Å¸ÀÏÀº Á¦°Å - size°¡ ÀÛ¾ÆÁö´Â °æ¿ì
+        // ë²”ìœ„ì— ë²—ì–´ë‚˜ëŠ” íƒ€ì¼ì€ ì œê±° - sizeê°€ ì‘ì•„ì§€ëŠ” ê²½ìš°
         List<Coordinate> removeTargetCell = new();
         foreach (var cell in _allCell.Keys)
         {
@@ -148,7 +148,7 @@ public class Field : MonoBehaviour
         for (int i = 0; i < removeTargetCell.Count; i++)
             RemoveCell(removeTargetCell[i]);
 
-        // ¹è°æ Å¸ÀÏ ¼¼ÆÃ & allCell¿¡ CellÀÌ ¾ø´Ù¸é ÇÒ´ç
+        // ë°°ê²½ íƒ€ì¼ ì„¸íŒ… & allCellì— Cellì´ ì—†ë‹¤ë©´ í• ë‹¹
         for (int x = -size; x <= size; x++)
         {
             for (int y = -size; y <= size; y++)
@@ -294,7 +294,7 @@ public class Field : MonoBehaviour
 
     private void EndAllLineClear(List<Line> line)
     {
-        Debug.Log("Line Å¬¸®¾î");
+        Debug.Log("Line í´ë¦¬ì–´");
     }
 
     private bool CheckLine(Axis axis, Coordinate start)
@@ -338,11 +338,11 @@ public class Field : MonoBehaviour
     }
 
     /// <summary>
-    /// ¹èÄ¡¸¦ ½ÃµµÇÑ´Ù °¡´ÉÇÏ¸é ¹èÄ¡ ºÒ°¡´ÉÇÒ ½Ã ¹èÄ¡ X
+    /// ë°°ì¹˜ë¥¼ ì‹œë„í•œë‹¤ ê°€ëŠ¥í•˜ë©´ ë°°ì¹˜ ë¶ˆê°€ëŠ¥í•  ì‹œ ë°°ì¹˜ X
     /// </summary>
-    /// <param name="tileSet">¹èÄ¡ÇÒ Å¸ÀÏ¼Â</param>
-    /// <param name="coor">¹èÄ¡¸¦ ¿øÇÏ´Â À§Ä¡</param>
-    /// <returns>¹èÄ¡ ¼º°ø ¿©ºÎ</returns>
+    /// <param name="tileSet">ë°°ì¹˜í•  íƒ€ì¼ì…‹</param>
+    /// <param name="coor">ë°°ì¹˜ë¥¼ ì›í•˜ëŠ” ìœ„ì¹˜</param>
+    /// <returns>ë°°ì¹˜ ì„±ê³µ ì—¬ë¶€</returns>
     public bool TryPlace(TileSet tileSet, Coordinate coor)
     {
         if (CanPlace(tileSet, coor))
@@ -366,10 +366,10 @@ public class Field : MonoBehaviour
     }
 
     /// <summary> 
-    /// TileÀ» coor¿¡ ¹èÄ¡ÇÑ´Ù.
+    /// Tileì„ coorì— ë°°ì¹˜í•œë‹¤.
     /// </summary>
-    /// <param name="tile">¹èÄ¡ÇÒ Å¸ÀÏ</param>
-    /// <param name="coor">¹èÄ¡¸¦ ¿øÇÏ´Â À§Ä¡</param>
+    /// <param name="tile">ë°°ì¹˜í•  íƒ€ì¼</param>
+    /// <param name="coor">ë°°ì¹˜ë¥¼ ì›í•˜ëŠ” ìœ„ì¹˜</param>
     public void TryPlace(Tile tile, Coordinate coor)
     {
         if(CanPlace(tile, coor))
@@ -377,7 +377,7 @@ public class Field : MonoBehaviour
     }
 
     /// <summary>
-    /// Å¸ÀÏ¼ÂÀÌ coor¿¡ ¹èÄ¡ °¡´ÉÇÑ°¡?
+    /// íƒ€ì¼ì…‹ì´ coorì— ë°°ì¹˜ ê°€ëŠ¥í•œê°€?
     /// </summary>
     public bool CanPlace(TileSet tileSet, Coordinate coor)
     {
@@ -392,16 +392,16 @@ public class Field : MonoBehaviour
     }
 
     /// <summary>
-    /// Å¸ÀÏÀÌ coor¿¡ ¹èÄ¡ °¡´ÉÇÑ°¡?
+    /// íƒ€ì¼ì´ coorì— ë°°ì¹˜ ê°€ëŠ¥í•œê°€?
     /// </summary>
     /// <param name="tile"></param>
     /// <param name="coor"></param>
     /// <returns></returns>
     public bool CanPlace(Tile tile, Coordinate coor)
     {
-        if (CheckAbleCoor(coor)) // ¿øÇü ¹üÀ§ ¾È¿¡ ÀÖ´ÂÁö Ã¼Å©
+        if (CheckAbleCoor(coor)) // ì›í˜• ë²”ìœ„ ì•ˆì— ìˆëŠ”ì§€ ì²´í¬
         {
-            // ¾È¿¡ ÀÖ´Ù¸é Å¸ÀÏ Ã¼Å© ÇØ¾ß°ÚÁö~
+            // ì•ˆì— ìˆë‹¤ë©´ íƒ€ì¼ ì²´í¬ í•´ì•¼ê² ì§€~
             if (!_allCell[coor].IsEmpty && tile.TileData.Option != TileOption.Force)
                 return false;
         }
@@ -411,7 +411,7 @@ public class Field : MonoBehaviour
     }
 
     /// <summary>
-    /// ¹èÄ¡ °úÁ¤À» ÅëÇÕÇÒ ÇÊ¿ä°¡ ÀÖÀ»°Å°°¾Æ¼­ µû·Î ÇÔ¼ö ¸¸µé¾î¼­ °ü¸®ÇÏ°Ú¾¸
+    /// ë°°ì¹˜ ê³¼ì •ì„ í†µí•©í•  í•„ìš”ê°€ ìˆì„ê±°ê°™ì•„ì„œ ë”°ë¡œ í•¨ìˆ˜ ë§Œë“¤ì–´ì„œ ê´€ë¦¬í•˜ê² ì”€
     /// </summary>
     /// <param name="tile"></param>
     /// <param name="coor"></param>
@@ -424,11 +424,11 @@ public class Field : MonoBehaviour
     }
 
     /// <summary>
-    /// coor À§Ä¡¿¡ tileÀ» °¡Á®¿Â´Ù
+    /// coor ìœ„ì¹˜ì— tileì„ ê°€ì ¸ì˜¨ë‹¤
     /// </summary>
-    /// <param name="coor">¿øÇÏ´Â À§Ä¡</param>
-    /// <param name="tile">¼º°ø ½Ã ÇÒ´ç</param>
-    /// <returns>¼º°ø ¿©ºÎ</returns>
+    /// <param name="coor">ì›í•˜ëŠ” ìœ„ì¹˜</param>
+    /// <param name="tile">ì„±ê³µ ì‹œ í• ë‹¹</param>
+    /// <returns>ì„±ê³µ ì—¬ë¶€</returns>
     public bool TryGetTile(Coordinate coor, out Tile tile)
     {
         tile = GetTile(coor);
@@ -436,16 +436,16 @@ public class Field : MonoBehaviour
     }
 
     /// <summary>
-    /// coor cell¿¡ ÇÒ´ç µÈ tileÀ» °¡Á®¿Â´Ù
+    /// coor cellì— í• ë‹¹ ëœ tileì„ ê°€ì ¸ì˜¨ë‹¤
     /// </summary>
-    /// <param name="coor">¿øÇÏ´Â À§Ä¡</param>
-    /// <returns>¹èÄ¡ µÈ Å¸ÀÏ (¾øÀ¸¸é null)</returns>
+    /// <param name="coor">ì›í•˜ëŠ” ìœ„ì¹˜</param>
+    /// <returns>ë°°ì¹˜ ëœ íƒ€ì¼ (ì—†ìœ¼ë©´ null)</returns>
     public Tile GetTile(Coordinate coor) => _allCell[coor].Tile;
 
     /// <summary>
-    /// ÇØ´ç coorÀÌ ¸Ê ¾È¿¡ À§Ä¡ÇÑÁö ÆÇº°ÇÑ´Ù
+    /// í•´ë‹¹ coorì´ ë§µ ì•ˆì— ìœ„ì¹˜í•œì§€ íŒë³„í•œë‹¤
     /// </summary>
-    /// <param name="coor">¿øÇÏ´Â À§Ä¡</param>
+    /// <param name="coor">ì›í•˜ëŠ” ìœ„ì¹˜</param>
     public bool CheckAbleCoor(Coordinate coor) => coor.CircleRadius <= _size;
     public static bool CheckAbleCoor(Coordinate coor, int size) => coor.CircleRadius <= size;
 }

@@ -2,8 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
-/// Tile ¹­À½ ²Ù·¯¹Ì
-/// ¼­·Î ¾î¶² ¾êµéÀÌ ¿¬°á µÇ¾ú´ÂÁö¸¸ ¾Ë ¼ö ÀÖ´Ù
+/// Tile ë¬¶ìŒ ê¾¸ëŸ¬ë¯¸
+/// ì„œë¡œ ì–´ë–¤ ì–˜ë“¤ì´ ì—°ê²° ë˜ì—ˆëŠ”ì§€ë§Œ ì•Œ ìˆ˜ ìˆë‹¤
 /// </summary>
 [PoolSize(5)]
 public class TileSet : MonoBehaviour, IPoolAble<TileSetData>

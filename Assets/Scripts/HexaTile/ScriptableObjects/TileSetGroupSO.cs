@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// TileSetµéÀÇ Group
+/// TileSetë“¤ì˜ Group
 /// </summary>
 [CreateAssetMenu(fileName = "Deck", menuName = "HexaSystem", order = 0)]
 public class DeckSO : ScriptableObject

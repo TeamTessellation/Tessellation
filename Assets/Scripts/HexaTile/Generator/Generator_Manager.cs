@@ -40,7 +40,7 @@ public class Generator_Manager : MonoBehaviour
 
         SetBoxObj();
         if (TargetDeck == null)
-            { Debug.LogWarning("DeckÀÌ ÇÒ´çÀÌ ¾ÈµÇ¾ú½À´Ï´Ù."); return; }
+            { Debug.LogWarning("Deckì´ í• ë‹¹ì´ ì•ˆë˜ì—ˆìŠµë‹ˆë‹¤."); return; }
         _fieldClickManager.RegisterClickEvent(ClickTile);
     }
 
@@ -67,7 +67,7 @@ public class Generator_Manager : MonoBehaviour
                     TargetData.Data.Remove(_targetTileOffsetData);
                     Pool<Tile>.Return(_tileDic[_targetTileOffsetData.Coor]);
                     _targetTileOffsetData = null;
-                    Debug.Log("»èÁ¦");
+                    Debug.Log("ì‚­ì œ");
                     continue;
                 }
                 TileOption option = (TileOption)(i - 1);
@@ -122,7 +122,7 @@ public class Generator_Manager : MonoBehaviour
             if (TargetData.Data[i].Coor == coor)
             {
                 _targetTileOffsetData = TargetData.Data[i];
-                Debug.Log($"{coor.ToShortString()} Å¬¸¯ µÊ");
+                Debug.Log($"{coor.ToShortString()} í´ë¦­ ë¨");
                 return;
             }
         }
@@ -137,7 +137,7 @@ public class Generator_Manager : MonoBehaviour
         Sprite sprite = Sprites[0];
         _tileDic[coor].ChangeSprite(sprite);
 
-        Debug.Log($"{coor.ToShortString()} »ı¼º µÊ");
+        Debug.Log($"{coor.ToShortString()} ìƒì„± ë¨");
     }
 
     private void SetBoxObj()
