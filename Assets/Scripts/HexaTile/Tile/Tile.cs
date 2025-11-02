@@ -4,22 +4,22 @@ using UnityEngine;
 public class Tile : MonoBehaviour, IPoolAble<TileData>
 {
     /// <summary>
-    /// ¸Ê Àı´ë Å¸ÀÏ ÁÂÇ¥
+    /// ë§µ ì ˆëŒ€ íƒ€ì¼ ì¢Œí‘œ
     /// </summary>
     public Coordinate Coor;
     /// <summary>
-    /// ¿ø·¡ ¼ÓÇß´ø TileSet
+    /// ì›ë˜ ì†í–ˆë˜ TileSet
     /// </summary>
     public TileSet Group;
     /// <summary>
-    /// ¼ÓÇÑ Cell
+    /// ì†í•œ Cell
     /// </summary>
     public Cell Oner;
     public bool IsPlace => Oner != null;
     public Direction Direction;
     public TileOption Option;
     /// <summary>
-    /// ÇØ´ç Tile Data
+    /// í•´ë‹¹ Tile Data
     /// </summary>
     public TileData TileData { get; }
     private TileData _tileData;
