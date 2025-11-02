@@ -53,4 +53,5 @@ namespace Events.Core
             Release();
         }
     }
+    
 }
