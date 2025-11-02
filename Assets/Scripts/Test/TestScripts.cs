@@ -38,7 +38,7 @@ namespace Test
         [ContextMenu("InvokeTestEvent")]
         public async void InvokeTestEvent()
         {
-            var args = new TestExecEventArgs() { Value = UnityEngine.Random.Range(0, 100) };
+            using var args = new TestExecEventArgs { Value = UnityEngine.Random.Range(1, 100) };
             LogEx.Log($"Invoking TestExecEvent with Value: {args.Value}");
             await ExecEventBus<TestExecEventArgs>.Invoke(args);
         }

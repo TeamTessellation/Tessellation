@@ -47,6 +47,15 @@ namespace PriortyExecEvent
 
         private List<ActionWrapper<TEventArgs>> _actionWrappers = new List<ActionWrapper<TEventArgs>>();
         
+        /// <summary>
+        /// 우선순위에 따라 액션을 큐에 추가합니다.
+        /// </summary>
+        /// <param name="priority"></param>
+        /// <param name="action"></param>
+        public void Enqueue(ExecPriority priority, ExecAction<TEventArgs> action)
+        {
+            Enqueue((int)priority, action);
+        }
         
         /// <summary>
         /// 우선순위에 따라 액션을 큐에 추가합니다.
