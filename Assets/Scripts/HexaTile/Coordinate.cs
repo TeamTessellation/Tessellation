@@ -143,4 +143,19 @@ public static class CoorExtension
     {
         return ((Vector2)world).ToCoor();
     }
+
+    public static Coordinate FromXY(this Vector2Int xy)
+    {
+        return new Coordinate(xy.x, xy.y);
+    }
+
+    public static Coordinate FromXZ(this Vector2Int xz)
+    {
+        return new Coordinate(xz.x, -xz.x -xz.y);
+    }
+
+    public static Coordinate FromYZ(this Vector2Int yz)
+    {
+        return new Coordinate(-yz.x - yz.y, yz.x);
+    }
 }

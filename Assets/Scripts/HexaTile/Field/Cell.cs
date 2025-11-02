@@ -45,6 +45,7 @@ public class Cell
     public void Set(Tile tile)
     {
         Tile = tile;
+        tile.Coor = Coor;
         tile.transform.SetParent(_cellRoot, true);
         tile.gameObject.transform.position = tile.Coor.ToWorld();
     }

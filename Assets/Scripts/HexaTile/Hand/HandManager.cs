@@ -15,12 +15,14 @@ public class HandManager : MonoBehaviour
     private bool _dragTileSet;
     private Camera _cam;
     private Vector3 _tileSetOriScale;
+    private int _remainHand = 0;
 
     private void Start()
     {
         _hand = new HandBox[0];
         _dragTileSet = false;
         _cam = Camera.main;
+        _remainHand = 0;
         SetHand(3);
     }
 
@@ -45,6 +47,9 @@ public class HandManager : MonoBehaviour
         if(Field.Instance.TryPlace(_targetHandBox.HoldTileSet, worldPos.ToCoor()))
         {
             _targetHandBox.Use();
+            _remainHand--;
+            if (_remainHand <= 0)
+                UseAllHand();
         }
         else
             FailPlace();
@@ -56,7 +61,20 @@ public class HandManager : MonoBehaviour
     private void FailPlace()
     {
         _targetHandBox.HoldTileSet.transform.localPosition = Vector3.zero;
-        _targetHandBox.HoldTileSet.transform.localScale = _tileSetOriScale;
+        int maxRadius = 0;
+        for (int j = 0; j < _targetHandBox.HoldTileSet.Data.Data.Count; j++)
+        {
+            maxRadius = Mathf.Max(_targetHandBox.HoldTileSet.Data.Data[j].Coor.CircleRadius, maxRadius);
+        }
+        float size = (maxRadius * 2 + 1 > 3) ? 5 / (Mathf.Sqrt(3) * (maxRadius * 2 + 1)) : 1;
+        _targetHandBox.HoldTileSet.transform.localScale = Vector2.one * size;
+    }
+
+    private void UseAllHand()
+    {
+        _targetHandBox = null;
+        _dragTileSet = false;
+        SetHand(3);
     }
 
     private void HandBoxMouseDown(HandBox target)
@@ -70,9 +88,9 @@ public class HandManager : MonoBehaviour
         _targetHandBox.HoldTileSet.transform.localScale = Vector3.one;
     }
 
-
     public void SetHand(int handSize)
     {
+        _remainHand = handSize;
         for (int i = 0; i < _hand.Length; i++)
             Pool<HandBox>.Return(_hand[i]);
 
@@ -83,6 +101,7 @@ public class HandManager : MonoBehaviour
             var handBox = Pool<HandBox, TileSetData>.Get(tileSetDatas[i]);
             handBox.transform.SetParent(HandRoot, false);
             handBox.RegisterClickEvent(HandBoxMouseDown);
+            _hand[i] = handBox;
         }
     }
 

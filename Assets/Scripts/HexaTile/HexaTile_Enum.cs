@@ -18,3 +18,10 @@ public enum TileOption
     Force, // 강제 배치
     End,
 }
+
+public enum Axis
+{
+    X,
+    Y,
+    Z
+}

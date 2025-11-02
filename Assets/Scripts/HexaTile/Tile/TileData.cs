@@ -1,21 +1,15 @@
 ﻿[System.Serializable]
-public class TileData
+public struct TileData
 {
     /// <summary>
     /// 옵션
     /// </summary>
-    public TileOption Option = TileOption.Defaut;
-    public float Scale = 1f;
+    public TileOption Option;
+    public float Scale;
 
     public TileData(TileOption option, float scale)
     {
         Option = option;
         Scale = scale;
-    }
-
-    public TileData()
-    {
-        Option = TileOption.Defaut;
-        Scale = 1f;
     }
 }

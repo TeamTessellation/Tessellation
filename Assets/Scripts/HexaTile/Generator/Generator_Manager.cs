@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -41,6 +42,13 @@ public class Generator_Manager : MonoBehaviour
         if (TargetDeck == null)
             { Debug.LogWarning("Deck이 할당이 안되었습니다."); return; }
         _fieldClickManager.RegisterClickEvent(ClickTile);
+    }
+
+    private void OnDisable()
+    {
+        EditorUtility.SetDirty(TargetDeck);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
     }
 
     private void Update()
@@ -98,6 +106,7 @@ public class Generator_Manager : MonoBehaviour
             tile.ChangeSprite(sprite);
 
             _fieldTile.Add(tile);
+            Debug.Log(offsetData.Coor);
             _tileDic[offsetData.Coor] = tile;
             tile.transform.localPosition = offsetData.Coor.ToWorld();
         }
