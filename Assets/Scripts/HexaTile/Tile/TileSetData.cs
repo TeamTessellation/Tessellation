@@ -16,7 +16,7 @@ public class TileSetData
 public class OffsetTileData
 {
     public Coordinate Coor;
-    public TileData TileData = new();
+    public TileData TileData = new(TileOption.Defaut, 1);
 }
 
 [System.Serializable]

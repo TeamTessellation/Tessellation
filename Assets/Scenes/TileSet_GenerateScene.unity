@@ -129,7 +129,6 @@ GameObject:
   m_Component:
   - component: {fileID: 32189901}
   - component: {fileID: 32189903}
-  - component: {fileID: 32189902}
   m_Layer: 0
   m_Name: Tile(Clone) (48)
   m_TagString: Untagged
@@ -152,23 +151,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &32189902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 32189900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &32189903
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -215,7 +197,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -237,7 +219,6 @@ GameObject:
   m_Component:
   - component: {fileID: 76655229}
   - component: {fileID: 76655231}
-  - component: {fileID: 76655230}
   m_Layer: 0
   m_Name: Tile(Clone) (58)
   m_TagString: Untagged
@@ -260,23 +241,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &76655230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 76655228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &76655231
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -323,7 +287,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -478,7 +442,6 @@ GameObject:
   m_Component:
   - component: {fileID: 92487039}
   - component: {fileID: 92487041}
-  - component: {fileID: 92487040}
   m_Layer: 0
   m_Name: Tile(Clone) (5)
   m_TagString: Untagged
@@ -501,23 +464,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &92487040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 92487038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &92487041
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -564,7 +510,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -586,7 +532,6 @@ GameObject:
   m_Component:
   - component: {fileID: 121962361}
   - component: {fileID: 121962363}
-  - component: {fileID: 121962362}
   m_Layer: 0
   m_Name: Tile(Clone) (50)
   m_TagString: Untagged
@@ -609,23 +554,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &121962362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 121962360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &121962363
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -672,7 +600,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -694,7 +622,6 @@ GameObject:
   m_Component:
   - component: {fileID: 178412691}
   - component: {fileID: 178412693}
-  - component: {fileID: 178412692}
   m_Layer: 0
   m_Name: Tile(Clone) (53)
   m_TagString: Untagged
@@ -717,23 +644,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &178412692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178412690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &178412693
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -780,7 +690,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -935,7 +845,6 @@ GameObject:
   m_Component:
   - component: {fileID: 185910147}
   - component: {fileID: 185910149}
-  - component: {fileID: 185910148}
   m_Layer: 0
   m_Name: Tile(Clone) (26)
   m_TagString: Untagged
@@ -958,23 +867,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &185910148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185910146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &185910149
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1021,7 +913,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1175,7 +1067,6 @@ GameObject:
   m_Component:
   - component: {fileID: 195640458}
   - component: {fileID: 195640460}
-  - component: {fileID: 195640459}
   m_Layer: 0
   m_Name: Tile(Clone) (24)
   m_TagString: Untagged
@@ -1198,23 +1089,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &195640459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 195640457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &195640460
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1261,7 +1135,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1283,7 +1157,6 @@ GameObject:
   m_Component:
   - component: {fileID: 195744002}
   - component: {fileID: 195744004}
-  - component: {fileID: 195744003}
   m_Layer: 0
   m_Name: Tile(Clone) (45)
   m_TagString: Untagged
@@ -1306,23 +1179,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &195744003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 195744001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &195744004
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1369,7 +1225,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1391,7 +1247,6 @@ GameObject:
   m_Component:
   - component: {fileID: 197348874}
   - component: {fileID: 197348876}
-  - component: {fileID: 197348875}
   m_Layer: 0
   m_Name: Tile(Clone) (57)
   m_TagString: Untagged
@@ -1414,23 +1269,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &197348875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 197348873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &197348876
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1477,7 +1315,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1499,7 +1337,6 @@ GameObject:
   m_Component:
   - component: {fileID: 257141162}
   - component: {fileID: 257141164}
-  - component: {fileID: 257141163}
   m_Layer: 0
   m_Name: Tile(Clone) (35)
   m_TagString: Untagged
@@ -1522,23 +1359,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &257141163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 257141161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &257141164
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1585,7 +1405,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1686,7 +1506,6 @@ GameObject:
   m_Component:
   - component: {fileID: 265396140}
   - component: {fileID: 265396142}
-  - component: {fileID: 265396141}
   m_Layer: 0
   m_Name: Tile(Clone) (42)
   m_TagString: Untagged
@@ -1709,23 +1528,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &265396141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 265396139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &265396142
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1772,7 +1574,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1930,7 +1732,6 @@ GameObject:
   m_Component:
   - component: {fileID: 315318419}
   - component: {fileID: 315318421}
-  - component: {fileID: 315318420}
   m_Layer: 0
   m_Name: Tile(Clone) (55)
   m_TagString: Untagged
@@ -1953,23 +1754,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &315318420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 315318418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &315318421
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2016,7 +1800,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2038,7 +1822,6 @@ GameObject:
   m_Component:
   - component: {fileID: 318180447}
   - component: {fileID: 318180449}
-  - component: {fileID: 318180448}
   m_Layer: 0
   m_Name: Tile(Clone) (28)
   m_TagString: Untagged
@@ -2061,23 +1844,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &318180448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 318180446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &318180449
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2124,7 +1890,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2136,51 +1902,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &375683085
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 375683087}
-  - component: {fileID: 375683086}
-  m_Layer: 0
-  m_Name: '@HandManager'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &375683086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 375683085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 421e043786eb35641996ca67c067ba9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HandManager
-  DeckSO: {fileID: 0}
---- !u!4 &375683087
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 375683085}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 242.98914, y: 1803.5991, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &415440818
 GameObject:
   m_ObjectHideFlags: 0
@@ -2191,7 +1912,6 @@ GameObject:
   m_Component:
   - component: {fileID: 415440819}
   - component: {fileID: 415440821}
-  - component: {fileID: 415440820}
   m_Layer: 0
   m_Name: Tile(Clone) (6)
   m_TagString: Untagged
@@ -2214,23 +1934,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &415440820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 415440818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &415440821
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2277,7 +1980,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2299,7 +2002,6 @@ GameObject:
   m_Component:
   - component: {fileID: 453044990}
   - component: {fileID: 453044992}
-  - component: {fileID: 453044991}
   m_Layer: 0
   m_Name: Tile(Clone) (54)
   m_TagString: Untagged
@@ -2322,23 +2024,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &453044991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 453044989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &453044992
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2385,7 +2070,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2407,7 +2092,6 @@ GameObject:
   m_Component:
   - component: {fileID: 454015463}
   - component: {fileID: 454015465}
-  - component: {fileID: 454015464}
   m_Layer: 0
   m_Name: Tile(Clone) (51)
   m_TagString: Untagged
@@ -2430,23 +2114,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &454015464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454015462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &454015465
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2493,7 +2160,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2515,7 +2182,6 @@ GameObject:
   m_Component:
   - component: {fileID: 460913156}
   - component: {fileID: 460913158}
-  - component: {fileID: 460913157}
   m_Layer: 0
   m_Name: Tile(Clone) (16)
   m_TagString: Untagged
@@ -2538,23 +2204,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &460913157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 460913155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &460913158
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2601,7 +2250,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2623,7 +2272,6 @@ GameObject:
   m_Component:
   - component: {fileID: 521823695}
   - component: {fileID: 521823697}
-  - component: {fileID: 521823696}
   m_Layer: 0
   m_Name: Tile(Clone) (49)
   m_TagString: Untagged
@@ -2646,23 +2294,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &521823696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 521823694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &521823697
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2709,7 +2340,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2731,7 +2362,6 @@ GameObject:
   m_Component:
   - component: {fileID: 543312918}
   - component: {fileID: 543312920}
-  - component: {fileID: 543312919}
   m_Layer: 0
   m_Name: Tile(Clone) (18)
   m_TagString: Untagged
@@ -2754,23 +2384,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &543312919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543312917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &543312920
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2817,7 +2430,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2839,7 +2452,6 @@ GameObject:
   m_Component:
   - component: {fileID: 555106570}
   - component: {fileID: 555106572}
-  - component: {fileID: 555106571}
   m_Layer: 0
   m_Name: Tile(Clone) (25)
   m_TagString: Untagged
@@ -2862,23 +2474,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &555106571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555106569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &555106572
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2925,7 +2520,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2947,7 +2542,6 @@ GameObject:
   m_Component:
   - component: {fileID: 557442155}
   - component: {fileID: 557442157}
-  - component: {fileID: 557442156}
   m_Layer: 0
   m_Name: Tile(Clone) (8)
   m_TagString: Untagged
@@ -2970,23 +2564,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &557442156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 557442154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &557442157
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3033,7 +2610,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3055,7 +2632,6 @@ GameObject:
   m_Component:
   - component: {fileID: 569035025}
   - component: {fileID: 569035027}
-  - component: {fileID: 569035026}
   m_Layer: 0
   m_Name: Tile(Clone) (1)
   m_TagString: Untagged
@@ -3078,23 +2654,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &569035026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 569035024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &569035027
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3141,7 +2700,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3163,7 +2722,6 @@ GameObject:
   m_Component:
   - component: {fileID: 591518149}
   - component: {fileID: 591518151}
-  - component: {fileID: 591518150}
   m_Layer: 0
   m_Name: Tile(Clone) (20)
   m_TagString: Untagged
@@ -3186,23 +2744,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &591518150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 591518148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &591518151
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3249,7 +2790,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3590,7 +3131,6 @@ GameObject:
   m_Component:
   - component: {fileID: 826098151}
   - component: {fileID: 826098153}
-  - component: {fileID: 826098152}
   m_Layer: 0
   m_Name: Tile(Clone) (59)
   m_TagString: Untagged
@@ -3613,23 +3153,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &826098152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 826098150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &826098153
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3676,7 +3199,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3698,7 +3221,6 @@ GameObject:
   m_Component:
   - component: {fileID: 868740839}
   - component: {fileID: 868740841}
-  - component: {fileID: 868740840}
   m_Layer: 0
   m_Name: Tile(Clone) (33)
   m_TagString: Untagged
@@ -3721,23 +3243,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &868740840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868740838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &868740841
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3784,7 +3289,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3806,7 +3311,6 @@ GameObject:
   m_Component:
   - component: {fileID: 913454946}
   - component: {fileID: 913454948}
-  - component: {fileID: 913454947}
   m_Layer: 0
   m_Name: Tile(Clone) (13)
   m_TagString: Untagged
@@ -3829,23 +3333,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &913454947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 913454945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &913454948
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3892,7 +3379,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3914,7 +3401,6 @@ GameObject:
   m_Component:
   - component: {fileID: 920296166}
   - component: {fileID: 920296168}
-  - component: {fileID: 920296167}
   m_Layer: 0
   m_Name: Tile(Clone) (17)
   m_TagString: Untagged
@@ -3937,23 +3423,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &920296167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 920296165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &920296168
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4000,7 +3469,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4022,7 +3491,6 @@ GameObject:
   m_Component:
   - component: {fileID: 936268692}
   - component: {fileID: 936268694}
-  - component: {fileID: 936268693}
   m_Layer: 0
   m_Name: Tile(Clone) (30)
   m_TagString: Untagged
@@ -4045,23 +3513,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &936268693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 936268691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &936268694
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4108,7 +3559,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4130,7 +3581,6 @@ GameObject:
   m_Component:
   - component: {fileID: 968739961}
   - component: {fileID: 968739963}
-  - component: {fileID: 968739962}
   m_Layer: 0
   m_Name: Tile(Clone) (34)
   m_TagString: Untagged
@@ -4153,23 +3603,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &968739962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 968739960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &968739963
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4216,7 +3649,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4238,7 +3671,6 @@ GameObject:
   m_Component:
   - component: {fileID: 972386202}
   - component: {fileID: 972386204}
-  - component: {fileID: 972386203}
   m_Layer: 0
   m_Name: Tile(Clone) (40)
   m_TagString: Untagged
@@ -4261,23 +3693,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &972386203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 972386201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &972386204
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4324,7 +3739,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4346,7 +3761,6 @@ GameObject:
   m_Component:
   - component: {fileID: 997337939}
   - component: {fileID: 997337941}
-  - component: {fileID: 997337940}
   m_Layer: 0
   m_Name: Tile(Clone) (29)
   m_TagString: Untagged
@@ -4369,23 +3783,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &997337940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 997337938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &997337941
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4432,7 +3829,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4454,7 +3851,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1025407745}
   - component: {fileID: 1025407747}
-  - component: {fileID: 1025407746}
   m_Layer: 0
   m_Name: Tile(Clone) (2)
   m_TagString: Untagged
@@ -4477,23 +3873,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1025407746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025407744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1025407747
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4540,7 +3919,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4562,7 +3941,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1025564058}
   - component: {fileID: 1025564060}
-  - component: {fileID: 1025564059}
   m_Layer: 0
   m_Name: Tile(Clone) (3)
   m_TagString: Untagged
@@ -4585,23 +3963,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1025564059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025564057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1025564060
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4648,7 +4009,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4806,7 +4167,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1161855402}
   - component: {fileID: 1161855404}
-  - component: {fileID: 1161855403}
   m_Layer: 0
   m_Name: Tile(Clone) (36)
   m_TagString: Untagged
@@ -4829,23 +4189,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1161855403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1161855401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1161855404
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4892,7 +4235,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4914,7 +4257,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1205008417}
   - component: {fileID: 1205008419}
-  - component: {fileID: 1205008418}
   m_Layer: 0
   m_Name: Tile(Clone) (46)
   m_TagString: Untagged
@@ -4937,23 +4279,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1205008418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1205008416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1205008419
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5000,7 +4325,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5022,7 +4347,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1226979874}
   - component: {fileID: 1226979876}
-  - component: {fileID: 1226979875}
   m_Layer: 0
   m_Name: Tile(Clone) (56)
   m_TagString: Untagged
@@ -5045,23 +4369,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1226979875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1226979873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1226979876
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5108,7 +4415,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5267,7 +4574,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1306921413}
   - component: {fileID: 1306921415}
-  - component: {fileID: 1306921414}
   m_Layer: 0
   m_Name: Tile(Clone) (19)
   m_TagString: Untagged
@@ -5290,23 +4596,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1306921414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1306921412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1306921415
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5353,7 +4642,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5375,7 +4664,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1317229323}
   - component: {fileID: 1317229325}
-  - component: {fileID: 1317229324}
   m_Layer: 0
   m_Name: Tile(Clone) (27)
   m_TagString: Untagged
@@ -5398,23 +4686,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1317229324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1317229322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1317229325
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5461,7 +4732,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5620,7 +4891,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1384750294}
   - component: {fileID: 1384750296}
-  - component: {fileID: 1384750295}
   m_Layer: 0
   m_Name: Tile(Clone) (52)
   m_TagString: Untagged
@@ -5643,23 +4913,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1384750295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384750293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1384750296
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5706,7 +4959,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5728,7 +4981,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1387160970}
   - component: {fileID: 1387160972}
-  - component: {fileID: 1387160971}
   m_Layer: 0
   m_Name: Tile(Clone) (41)
   m_TagString: Untagged
@@ -5751,23 +5003,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1387160971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387160969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1387160972
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5814,7 +5049,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5836,7 +5071,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1400314102}
   - component: {fileID: 1400314104}
-  - component: {fileID: 1400314103}
   m_Layer: 0
   m_Name: Tile(Clone) (44)
   m_TagString: Untagged
@@ -5859,23 +5093,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1400314103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1400314101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1400314104
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5922,7 +5139,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5944,7 +5161,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1411220150}
   - component: {fileID: 1411220152}
-  - component: {fileID: 1411220151}
   m_Layer: 0
   m_Name: Tile(Clone) (14)
   m_TagString: Untagged
@@ -5967,23 +5183,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1411220151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1411220149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1411220152
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6030,7 +5229,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6052,7 +5251,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1431337526}
   - component: {fileID: 1431337528}
-  - component: {fileID: 1431337527}
   m_Layer: 0
   m_Name: Tile(Clone) (7)
   m_TagString: Untagged
@@ -6075,23 +5273,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1431337527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1431337525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1431337528
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6138,7 +5319,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6160,7 +5341,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1474012525}
   - component: {fileID: 1474012527}
-  - component: {fileID: 1474012526}
   m_Layer: 0
   m_Name: Tile(Clone) (37)
   m_TagString: Untagged
@@ -6183,23 +5363,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1474012526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1474012524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1474012527
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6246,7 +5409,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6268,7 +5431,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1494443527}
   - component: {fileID: 1494443529}
-  - component: {fileID: 1494443528}
   m_Layer: 0
   m_Name: Tile(Clone) (60)
   m_TagString: Untagged
@@ -6291,23 +5453,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1494443528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1494443526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1494443529
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6354,7 +5499,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6436,7 +5581,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1595043730}
   - component: {fileID: 1595043732}
-  - component: {fileID: 1595043731}
   m_Layer: 0
   m_Name: Tile(Clone) (43)
   m_TagString: Untagged
@@ -6459,23 +5603,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1595043731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1595043729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1595043732
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6522,7 +5649,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6544,7 +5671,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1599230365}
   - component: {fileID: 1599230367}
-  - component: {fileID: 1599230366}
   m_Layer: 0
   m_Name: Tile(Clone) (10)
   m_TagString: Untagged
@@ -6567,23 +5693,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1599230366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1599230364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1599230367
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6630,7 +5739,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6652,7 +5761,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1608922614}
   - component: {fileID: 1608922616}
-  - component: {fileID: 1608922615}
   m_Layer: 0
   m_Name: Tile(Clone) (23)
   m_TagString: Untagged
@@ -6675,23 +5783,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1608922615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1608922613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1608922616
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6738,7 +5829,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6760,7 +5851,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1615306224}
   - component: {fileID: 1615306226}
-  - component: {fileID: 1615306225}
   m_Layer: 0
   m_Name: Tile(Clone) (31)
   m_TagString: Untagged
@@ -6783,23 +5873,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1615306225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1615306223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1615306226
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6846,7 +5919,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6868,7 +5941,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1640954881}
   - component: {fileID: 1640954883}
-  - component: {fileID: 1640954882}
   m_Layer: 0
   m_Name: Tile(Clone) (21)
   m_TagString: Untagged
@@ -6891,23 +5963,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1640954882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1640954880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1640954883
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6954,7 +6009,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6976,7 +6031,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1714251906}
   - component: {fileID: 1714251908}
-  - component: {fileID: 1714251907}
   m_Layer: 0
   m_Name: Tile(Clone) (15)
   m_TagString: Untagged
@@ -6999,23 +6053,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1714251907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1714251905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1714251908
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7062,7 +6099,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7084,7 +6121,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1741513887}
   - component: {fileID: 1741513889}
-  - component: {fileID: 1741513888}
   m_Layer: 0
   m_Name: Tile(Clone) (47)
   m_TagString: Untagged
@@ -7107,23 +6143,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1741513888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741513886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1741513889
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7170,7 +6189,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7192,7 +6211,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1742897152}
   - component: {fileID: 1742897154}
-  - component: {fileID: 1742897153}
   m_Layer: 0
   m_Name: Tile(Clone) (11)
   m_TagString: Untagged
@@ -7215,23 +6233,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1742897153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1742897151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1742897154
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7278,7 +6279,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7300,7 +6301,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1787198287}
   - component: {fileID: 1787198289}
-  - component: {fileID: 1787198288}
   m_Layer: 0
   m_Name: Tile(Clone) (12)
   m_TagString: Untagged
@@ -7323,23 +6323,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1787198288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1787198286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1787198289
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7386,7 +6369,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7408,7 +6391,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1802994449}
   - component: {fileID: 1802994451}
-  - component: {fileID: 1802994450}
   m_Layer: 0
   m_Name: Tile(Clone) (4)
   m_TagString: Untagged
@@ -7431,23 +6413,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1802994450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1802994448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1802994451
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7494,7 +6459,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7516,7 +6481,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1925444953}
   - component: {fileID: 1925444955}
-  - component: {fileID: 1925444954}
   m_Layer: 0
   m_Name: Tile(Clone) (22)
   m_TagString: Untagged
@@ -7539,23 +6503,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1925444954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1925444952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1925444955
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7602,7 +6549,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7624,7 +6571,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1925934335}
   - component: {fileID: 1925934337}
-  - component: {fileID: 1925934336}
   m_Layer: 0
   m_Name: Tile(Clone) (32)
   m_TagString: Untagged
@@ -7647,23 +6593,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1925934336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1925934334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1925934337
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7710,7 +6639,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7732,7 +6661,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1977086418}
   - component: {fileID: 1977086420}
-  - component: {fileID: 1977086419}
   m_Layer: 0
   m_Name: Tile(Clone) (39)
   m_TagString: Untagged
@@ -7755,23 +6683,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1977086419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1977086417}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1977086420
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7818,7 +6729,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7840,7 +6751,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1985126719}
   - component: {fileID: 1985126721}
-  - component: {fileID: 1985126720}
   m_Layer: 0
   m_Name: Tile(Clone)
   m_TagString: Untagged
@@ -7863,23 +6773,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1985126720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985126718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1985126721
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7926,7 +6819,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7948,7 +6841,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1987576840}
   - component: {fileID: 1987576842}
-  - component: {fileID: 1987576841}
   m_Layer: 0
   m_Name: Tile(Clone) (38)
   m_TagString: Untagged
@@ -7971,23 +6863,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1987576841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1987576839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &1987576842
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8034,7 +6909,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -8119,7 +6994,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2017246249}
   - component: {fileID: 2017246251}
-  - component: {fileID: 2017246250}
   m_Layer: 0
   m_Name: Tile(Clone) (9)
   m_TagString: Untagged
@@ -8142,23 +7016,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6850983059059522491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2017246250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017246248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba81c1f9d056784ba484615d864b6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Coor:
-    Pos: {x: 0, y: 0}
-  Group: {fileID: 0}
-  Direction: 0
-  Option: 0
 --- !u!212 &2017246251
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8205,7 +7062,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1307112341
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9b3a1143d204cff4da78a92416c7eaf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -8579,5 +7436,4 @@ SceneRoots:
   - {fileID: 1673399160417448673}
   - {fileID: 1257889225}
   - {fileID: 265389216}
-  - {fileID: 375683087}
   - {fileID: 674611086}

@@ -12,7 +12,8 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
 
     public void Reset()
     {
-        Pool<TileSet>.Return(HoldTileSet);
+        if (!IsUsed)
+            Pool<TileSet>.Return(HoldTileSet);
     }
 
     private void Awake()
@@ -20,7 +21,11 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
         _eventTrigger = GetComponent<EventTrigger>();
     }
 
-    public void Use() => HoldTileSet = null;
+    public void Use()
+    {
+        Pool<TileSet>.Return(HoldTileSet);
+        HoldTileSet = null;
+    }
 
     public void RegisterClickEvent(Action<HandBox> clickEvent) => _clickEvent += clickEvent;
 
@@ -40,7 +45,7 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
 
         var entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
         entry.callback.AddListener((data) => _clickEvent(this));
-        _eventTrigger.triggers.Clear();
+        _eventTrigger.triggers = null;
         _eventTrigger.triggers.Add(entry);
     }
 }
