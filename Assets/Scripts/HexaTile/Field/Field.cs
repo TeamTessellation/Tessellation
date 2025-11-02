@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -6,6 +7,35 @@ using UnityEngine;
 
 public class Field : MonoBehaviour
 {
+    public struct Line
+    {
+        public Axis Axis;
+        public Coordinate Start;
+        public int Number;
+
+        public Line(Axis axis, Coordinate coor)
+        {
+            Axis = axis;
+            Start = coor;
+
+            switch (axis)
+            {
+                case Axis.X:
+                    Number = coor.Pos3D.y;
+                    break;
+                case Axis.Y:
+                    Number = coor.Pos3D.x;
+                    break;
+                case Axis.Z:
+                    Number = coor.Pos3D.z;
+                    break;
+                default:
+                    Number = -1;
+                    break;
+            }
+        }
+    }
+
     public static Field Instance {
         get
         {
@@ -91,6 +121,17 @@ public class Field : MonoBehaviour
         _allCell.Remove(coor);
     }
 
+    private void RemoveTile(Coordinate coor)
+    {
+        _allCell[coor].UnSet();
+    }
+
+    private void SafeRemoveTile(Coordinate coor)
+    {
+        if (CheckAbleCoor(coor))
+            _allCell[coor].UnSet();
+    }
+
 #if UNITY_EDITOR
     [ContextMenu("Debug_ChangeSize")]
     public void Debug_SetFieldBySize() => SetFieldBySize(Debug_Size);
@@ -99,7 +140,7 @@ public class Field : MonoBehaviour
     {
         // 범위에 벗어나는 타일은 제거 - size가 작아지는 경우
         List<Coordinate> removeTargetCell = new();
-        foreach(var cell in _allCell.Keys)
+        foreach (var cell in _allCell.Keys)
         {
             if (!CheckAbleCoor(cell, size))
                 removeTargetCell.Add(cell);
@@ -116,11 +157,184 @@ public class Field : MonoBehaviour
                 if (Mathf.Abs(z) > size)
                     continue;
 
-                var coor = new Coordinate(x, y, z);
+                var coor = new Coordinate(x, y);
                 if (!_allCell.ContainsKey(coor))
-                    { _allCell[coor] = new Cell(); _allCell[coor].Init(coor, CellBGRoot); }
+                { _allCell[coor] = new Cell(); _allCell[coor].Init(coor, CellBGRoot, CellRoot); }
             }
         }
+    }
+
+    private List<Line> CheckLineClear(List<Tile> newTile)
+    {
+        HashSet<int> xCheckList = new();
+        HashSet<int> yCheckList = new();
+        HashSet<int> zCheckList = new();
+
+        List<Line> clearLines = new();
+
+        for (int i = 0; i < newTile.Count; i++)
+        {
+            if (!xCheckList.Contains(newTile[i].Coor.Pos3D.x))
+            {
+                CheckAxis(xCheckList, newTile[i].Coor.Pos3D.y, Axis.X, newTile[i], clearLines);
+            }
+            if (!yCheckList.Contains(newTile[i].Coor.Pos3D.y))
+            {
+                CheckAxis(yCheckList, newTile[i].Coor.Pos3D.x, Axis.Y, newTile[i], clearLines);
+            }
+            if (!zCheckList.Contains(newTile[i].Coor.Pos3D.z))
+            {
+                CheckAxis(zCheckList, newTile[i].Coor.Pos3D.z, Axis.Z, newTile[i], clearLines);
+            }
+        }
+
+        return clearLines;
+    }
+
+    private void CheckAxis(HashSet<int> checkList, int key, Axis axis, Tile tile, List<Line> clearLines)
+    {
+        checkList.Add(key);
+        if (CheckLine(axis, tile.Coor))
+            clearLines.Add(new(axis, tile.Coor));
+    }
+
+    private void ClearLine(Line line)
+    {
+        Direction up = Direction.R;
+        Direction down = Direction.L;
+
+        switch (line.Axis)
+        {
+            case Axis.X:
+                up = Direction.R;
+                down = Direction.L;
+                break;
+            case Axis.Y:
+                up = Direction.RD;
+                down = Direction.LU;
+                break;
+            case Axis.Z:
+                up = Direction.RU;
+                down = Direction.LD;
+                break;
+        }
+
+        Coordinate correctCoor = line.Start;
+
+        RemoveTile(correctCoor);
+        while (CheckAbleCoor(correctCoor))
+        {
+            correctCoor += up;
+            RemoveTile(correctCoor);
+        }
+
+        correctCoor = line.Start;
+        while (CheckAbleCoor(correctCoor))
+        {
+            correctCoor += down;
+            RemoveTile(correctCoor);
+        }
+        EndLineClear(line);
+    }
+
+    private async UniTask ClearLineAsync(Line line, float interval = 1f)
+    {
+        Direction up = Direction.R;
+        Direction down = Direction.L;
+
+        switch (line.Axis)
+        {
+            case Axis.X:
+                up = Direction.R;
+                down = Direction.L;
+                break;
+            case Axis.Y:
+                up = Direction.RD;
+                down = Direction.LU;
+                break;
+            case Axis.Z:
+                up = Direction.RU;
+                down = Direction.LD;
+                break;
+        }
+
+        Coordinate upCorrect = line.Start;
+        Coordinate downCorrect = line.Start;
+
+        RemoveTile(line.Start);
+        await UniTask.WaitForSeconds(interval);
+        while (CheckAbleCoor(upCorrect) || CheckAbleCoor(downCorrect))
+        {
+            upCorrect += up;
+            downCorrect += down;
+            await UniTask.WaitForSeconds(interval);
+            SafeRemoveTile(upCorrect);
+            SafeRemoveTile(downCorrect);
+        }
+        EndLineClear(line);
+    }
+
+    private async UniTask ClearLinesAsync(List<Line> line, float interval = 1f)
+    {
+        UniTask[] tasks = new UniTask[line.Count];
+
+        for (int i = 0; i < line.Count; i++)
+        {
+            tasks[i] = ClearLineAsync(line[i], interval);
+        }
+        await UniTask.WhenAll(tasks);
+        await UniTask.WaitForSeconds(interval);
+        EndAllLineClear(line);
+    }
+
+    private void EndLineClear(Line line)
+    {
+
+    }
+
+    private void EndAllLineClear(List<Line> line)
+    {
+        Debug.Log("Line 클리어");
+    }
+
+    private bool CheckLine(Axis axis, Coordinate start)
+    {
+        Direction up = Direction.R;
+        Direction down = Direction.L;
+
+        switch (axis)
+        {
+            case Axis.X:
+                up = Direction.R;
+                down = Direction.L;
+                break;
+            case Axis.Y:
+                up = Direction.RD;
+                down = Direction.LU;
+                break;
+            case Axis.Z:
+                up = Direction.RU;
+                down = Direction.LD;
+                break;
+        }
+
+        Coordinate correctCoor = start;
+        while (CheckAbleCoor(correctCoor) && !_allCell[correctCoor].IsEmpty)
+        {
+            correctCoor += up;
+        }
+        if (correctCoor.CircleRadius <= _size)
+            return false;
+
+        correctCoor = start;
+        while (CheckAbleCoor(correctCoor) && !_allCell[correctCoor].IsEmpty)
+        {
+            correctCoor += down;
+        }
+        if (correctCoor.CircleRadius <= _size)
+            return false;
+
+        return true;
     }
 
     /// <summary>
@@ -133,14 +347,19 @@ public class Field : MonoBehaviour
     {
         if (CanPlace(tileSet, coor))
         {
-            PlaceTileSetStartEvent.Invoke(coor);
+            PlaceTileSetStartEvent?.Invoke(coor);
             for (int i = 0; i < tileSet.Tiles.Count; i++)
             {
                 var tileInfo = tileSet.Tiles[i].transform.localPosition;
-                Coordinate correctCoor = coor + tileSet.Tiles[i].transform.localPosition;
-                SetTileOnCell(tileSet.Tiles[i], coor);
+                Coordinate correctCoor = coor + tileSet.Tiles[i].transform.localPosition.ToCoor();
+                SetTileOnCell(tileSet.Tiles[i], correctCoor);
             }
-            PlaceTileSetEndEvent.Invoke(coor);
+
+            var clearLines = CheckLineClear(tileSet.Tiles);
+            tileSet.Use();
+            PlaceTileSetEndEvent?.Invoke(coor);
+            if (clearLines.Count > 0)
+                ClearLinesAsync(clearLines, 0.5f).Forget();
             return true;
         }
         return false;
@@ -165,7 +384,7 @@ public class Field : MonoBehaviour
         for (int i = 0; i < tileSet.Tiles.Count; i++)
         {
             var tileInfo = tileSet.Tiles[i];
-            Coordinate correctCoor = coor + tileSet.Tiles[i].transform.localPosition;
+            Coordinate correctCoor = coor + tileSet.Tiles[i].transform.localPosition.ToCoor();
             if (!CanPlace(tileSet.Tiles[i], correctCoor))
                 return false;
         }

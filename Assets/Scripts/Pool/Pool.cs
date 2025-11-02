@@ -157,13 +157,128 @@ public static class Pool
         public Transform Root;
         public Transform ActiveRoot;
         public Transform PoolRoot;
-        public GameObject OriObj;
+        public GameObject Prefab;
         public bool IsReady = false;
     }
 
     private static Dictionary<string, ObjPool> _objPool;
 
     static Pool() => _objPool = new();
+
+    private static ObjPool GetObjPool(string key)
+    {
+        if (_objPool.TryGetValue(key, out ObjPool objPool)) return objPool;
+        else
+        {
+            Debug.LogWarning($"{key}값에는 ObjPool이 할당되어있지않습니다.");
+            return null;
+        }
+    }
+
+    private static void Generate(ObjPool objPool)
+    {
+        GameObject obj = GameObject.Instantiate(objPool.Prefab, objPool.Root);
+        obj.name = $"{obj.name}_{objPool.Key}";
+        obj.SetActive(false);
+        obj.transform.SetParent(objPool.PoolRoot);
+        objPool.Pool.Push(obj);
+    }
+
+    private static void InitRoot(ObjPool objPool)
+    {
+        string poolName = $"@{objPool.Key}";
+        objPool.Root = new GameObject($"{poolName}_Root").transform;
+        objPool.Root.SetParent(PoolManager.S_GlobalRoot);
+        objPool.ActiveRoot = new GameObject($"@Active").transform;
+        objPool.PoolRoot = new GameObject($"@Pool").transform;
+        objPool.ActiveRoot.SetParent(objPool.Root);
+        objPool.PoolRoot.SetParent(objPool.Root);
+    }
+
+    /// <summary>
+    /// Pool 기본 세팅, 가능 / 불가능 여부를 체크한 뒤 size만큼 기본 오브젝트를 생성한다.
+    /// </summary>
+    /// <param name="size">Init 사이즈</param>
+    private static void InitPool(ObjPool objPool)
+    {
+        if (objPool.IsReady) return;
+
+        for (int i = 0; i < objPool.Size; i++)
+            Generate(objPool);
+
+        objPool.IsReady = true;
+    }
+
+    private static void InitObjPool(string key = "", int size = 5)
+    {
+        ObjPool objPool = new();
+        objPool.Prefab = Resources.Load<GameObject>($"{PoolManager.Obj_Root}{key}");
+        objPool.Key = key;
+        objPool.Size = size;
+        objPool.Pool = new();
+        _objPool[key] = objPool;
+
+        InitRoot(objPool);
+        InitPool(objPool);
+    }
+
+    /// <summary>
+    /// 풀에 저장 된 오브젝트를 받는다.
+    /// </summary>
+    public static GameObject Get(string key, int size = 5)
+    {
+        if (!_objPool.ContainsKey(key))
+            InitObjPool(key, size);
+
+        var objPool = GetObjPool(key);
+        if (objPool == null) return null;
+
+        while (objPool.Pool.Count <= 0) Generate(objPool);
+        var obj = objPool.Pool.Pop();
+        obj.SetActive(true);
+        obj.transform.SetParent(objPool.ActiveRoot);
+        return obj;
+    }
+
+    /// <summary>
+    /// 사용이 끝난 오브젝트를 반환한다.
+    /// </summary>
+    public static void Return(GameObject obj)
+    {
+        string key = obj.name.Split("_").Last();
+        obj.SetActive(false);
+
+        var objPool = GetObjPool(key);
+        if (objPool == null)
+        {
+            GameObject.Destroy(obj);
+            Debug.LogWarning("런타임에서 생성한 ObjPool에서 Get한 오브젝트의 이름을 변경하면 안됩니다." +
+                "\n소속을 찾을 수 없어서 제거합니다.");
+            return;
+        }
+
+        obj.transform.SetParent(objPool.PoolRoot);
+        objPool.Pool.Push(obj);
+    }
+}
+
+public static class RTPool
+{
+    private class ObjPool
+    {
+        public string Key;
+        public int Size;
+        public Stack<GameObject> Pool;
+        public Transform Root;
+        public Transform ActiveRoot;
+        public Transform PoolRoot;
+        public GameObject OriObj;
+        public bool IsReady = false;
+    }
+
+    private static Dictionary<string, ObjPool> _objPool;
+
+    static RTPool() => _objPool = new();
 
     private static ObjPool GetObjPool(string key)
     {
@@ -225,6 +340,7 @@ public static class Pool
         objPool.Size = size;
         var oriObj = GameObject.Instantiate(target);
         oriObj.transform.SetParent(PoolManager.S_OriObjRoot);
+        oriObj.name = target.name;
         objPool.OriObj = oriObj;
         objPool.Pool = new();
         _objPool[key] = objPool;
