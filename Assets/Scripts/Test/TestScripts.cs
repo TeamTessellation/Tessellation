@@ -1,8 +1,11 @@
 ﻿using System;
 using Collections;
+using Cysharp.Threading.Tasks;
 using DataAnalysis;
 using Machamy.Utils;
+using PriortyExecEvent;
 using SaveLoad;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
@@ -21,8 +24,62 @@ namespace Test
         private void OnEnable()
         {
             SaveManager.RegisterPendingSavable(this);
+            
+            ExecEventBus<TestExecEventArgs>.Register(OnTestEvent);
+            ExecEventBus<TestExecEventArgs>.Register(OnTestEvent2);
+        }
+
+        private void OnDisable()
+        {
+            ExecEventBus<TestExecEventArgs>.Unregister(OnTestEvent);
+            ExecEventBus<TestExecEventArgs>.Unregister(OnTestEvent2);
+        }
+
+        [ContextMenu("InvokeTestEvent")]
+        public async void InvokeTestEvent()
+        {
+            using var args = new TestExecEventArgs { Value = UnityEngine.Random.Range(1, 100) };
+            LogEx.Log($"Invoking TestExecEvent with Value: {args.Value}");
+            await ExecEventBus<TestExecEventArgs>.Invoke(args);
         }
         
+        private ExecAction<TestExecEventArgs> _highPriorityAction = async (args) =>
+        {
+            await UniTask.Delay(50);
+            LogEx.Log($"High Priority Action Executed with Value: {args.Value}");
+        };
+        private ExecAction<TestExecEventArgs> _firstPriorityAction = async (args) =>
+        {
+            await UniTask.Delay(100);
+            LogEx.Log($"First Priority Action Executed with Value: {args.Value}");
+        };
+
+        private ExecAction<TestExecEventArgs> _secondPriorityAction = async (args) =>
+        {
+            await UniTask.Delay(150);
+            LogEx.Log($"Second Priority Action Executed with Value: {args.Value}");
+        };
+        private ExecAction<TestExecEventArgs> _thirdPriorityAction = async (args) =>
+        {
+            await UniTask.Delay(200);
+            LogEx.Log($"Third Priority Action Executed with Value: {args.Value}");
+        };
+        
+        public void OnTestEvent(ExecQueue<TestExecEventArgs> queue, TestExecEventArgs args)
+        {
+            LogEx.Log($"Received TestExecEvent with Value: {args.Value}");
+            
+            queue.Enqueue(2, _secondPriorityAction);
+            queue.Enqueue(1, _firstPriorityAction);
+            queue.Enqueue(3, _thirdPriorityAction);
+        }
+        
+        public void OnTestEvent2(ExecQueue<TestExecEventArgs> queue, TestExecEventArgs args)
+        {
+            LogEx.Log($"Received TestExecEvent with Value: {args.Value}");
+            queue.Enqueue(0, _highPriorityAction);
+        }
+
         [ContextMenu("TrackGameStart")]
         public void TrackGameStart()
         {
@@ -33,6 +90,7 @@ namespace Test
         {
             AnalyticsManager.Instance.TrackGameOver(true, 120, "TestPlayer");
         }
+        
 
         public void LoadData(SaveData data)
         {
