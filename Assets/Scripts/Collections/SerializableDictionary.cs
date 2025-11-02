@@ -1,40 +1,31 @@
 ﻿using System.Collections.Generic;
-using JetBrains.Annotations;
-using UnityEngine;
-#if UNITY_EDITOR
 using UnityEditor;
-using UnityEditorInternal;
-#endif
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Collections
 {
-    /// <summary>
-    /// Unity에서 직렬화 가능한 딕셔너리입니다.
-    /// 주의사항 : TKey와 TValue는 Unity에서 직렬화 가능한 타입이어야 합니다. 아닌 경우 Editor에서 오류가 발생할 수 있습니다.
-    /// </summary>
-    /// <typeparam name="TKey"></typeparam>
-    /// <typeparam name="TValue"></typeparam>
     [System.Serializable]
     public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
     {
+        [SerializeField] private TKey defaultKey;
+        
+        
         [System.Serializable]
-        private class SerializableKeyValuePair
+        public class SerializableKeyValuePair
         {
-            public TKey Key;
-            public TValue Value;
-
+            [SerializeField] public TKey Key;
+            [SerializeField] public TValue Value;
+            
             public SerializableKeyValuePair(TKey key, TValue value)
             {
                 Key = key;
                 Value = value;
             }
         }
-        
-        [SerializeField][UsedImplicitly] private TKey defaultKey = default;
+    
         [SerializeField] private List<SerializableKeyValuePair> _items = new List<SerializableKeyValuePair>();
-        
-        
-        
+    
         public void OnBeforeSerialize()
         {
             _items.Clear();
@@ -53,9 +44,20 @@ namespace Collections
                 this[item.Key] = item.Value;
             }
         }
+        
+        public static SerializableDictionary<TKey, TValue> FromDictionary(Dictionary<TKey, TValue> dict)
+        {
+            var serializableDict = new SerializableDictionary<TKey, TValue>();
+            foreach (var kvp in dict)
+            {
+                serializableDict[kvp.Key] = kvp.Value;
+            }
+            return serializableDict;
+        }
+    
     }
     
-#if UNITY_EDITOR
+    #if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(SerializableDictionary<,>), true)]
     public class SerializableDictionaryPropertyDrawer : PropertyDrawer
     {
@@ -168,6 +170,11 @@ namespace Collections
         {
             using (new EditorGUI.IndentLevelScope(1))
             {
+                if (defaultKey == null)
+                {
+                    EditorGUI.LabelField(rect, "Default Key: not serializable");
+                    return;
+                }
                 // “다음 Add에 사용할 Key”
                 EditorGUI.PropertyField(rect, defaultKey, new GUIContent("Next Key (on Add)"), true);
             }
@@ -182,8 +189,8 @@ namespace Collections
                 var key = elem.FindPropertyRelative("Key");
                 var val = elem.FindPropertyRelative("Value");
 
-                float keyH = EditorGUI.GetPropertyHeight(key, true);
-                float valH = EditorGUI.GetPropertyHeight(val, true);
+                float keyH = key != null ? EditorGUI.GetPropertyHeight(key, true) : EditorGUIUtility.singleLineHeight;
+                float valH = val != null ? EditorGUI.GetPropertyHeight(val, true) : EditorGUIUtility.singleLineHeight;
                 bool singleLine = Mathf.Max(keyH, valH) <= EditorGUIUtility.singleLineHeight + 2f;
 
                 float rowH = singleLine
@@ -201,14 +208,15 @@ namespace Collections
             float x = rect.x + 6f;
             float w = rect.width - 12f;
 
+            float accumulatedHeight = 0f;
             for (int i = 0; i < items.arraySize; i++)
             {
                 var elem = items.GetArrayElementAtIndex(i);
                 var key = elem.FindPropertyRelative("Key");
                 var val = elem.FindPropertyRelative("Value");
 
-                float keyH = EditorGUI.GetPropertyHeight(key, true);
-                float valH = EditorGUI.GetPropertyHeight(val, true);
+                float keyH = key != null ? EditorGUI.GetPropertyHeight(key, true) : EditorGUIUtility.singleLineHeight;
+                float valH = val != null ? EditorGUI.GetPropertyHeight(val, true) : EditorGUIUtility.singleLineHeight;
                 float rowH = Mathf.Max(keyH, valH) + 8f;
 
                 Rect rowRect = new Rect(x, y, w, rowH);
@@ -242,17 +250,31 @@ namespace Collections
                     float valLabelW = valRect.width * 0.3f;
 
                     // Key
-                    EditorGUI.BeginProperty(keyRect, GUIContent.none, key);
-                    EditorGUIUtility.labelWidth = keyLabelW;
-                    EditorGUI.PropertyField(keyRect, key, new GUIContent("Key"), true);
-                    EditorGUI.EndProperty();
+                    if (key != null)
+                    {
+                        EditorGUI.BeginProperty(keyRect, GUIContent.none, key);
+                        EditorGUIUtility.labelWidth = keyLabelW;
+                        EditorGUI.PropertyField(keyRect, key, new GUIContent("Key"), true);
+                        EditorGUI.EndProperty();
+                    }
+                    else
+                    {
+                        EditorGUI.LabelField(keyRect, "Key: not serializable");
+                    }
 
                     // Value
-                    EditorGUI.BeginProperty(valRect, GUIContent.none, val);
-                    EditorGUIUtility.labelWidth = valLabelW;
-                    EditorGUI.PropertyField(valRect, val, new GUIContent("Value"), true);
-                    EditorGUI.EndProperty();
+                    if (val != null)
+                    {
+                        EditorGUI.BeginProperty(valRect, GUIContent.none, val);
+                        EditorGUIUtility.labelWidth = valLabelW;
+                        EditorGUI.PropertyField(valRect, val, new GUIContent("Value"), true);
+                        EditorGUI.EndProperty();
+                    }
 
+                    else
+                    {
+                        EditorGUI.LabelField(valRect, "Value: not serializable");
+                    }
                     // Trash
                     if (GUI.Button(trashRect, EditorGUIUtility.IconContent("TreeEditor.Trash"), GUIStyle.none))
                     {
@@ -275,10 +297,18 @@ namespace Collections
                     float prevLW = EditorGUIUtility.labelWidth;
 
                     // Key
-                    EditorGUI.BeginProperty(keyRect, GUIContent.none, key);
-                    EditorGUIUtility.labelWidth = Mathf.Min(90f, keyRect.width * 0.35f);
-                    EditorGUI.PropertyField(keyRect, key, new GUIContent("Key"), true);
-                    EditorGUI.EndProperty();
+                    if (key != null)
+                    {
+                        EditorGUI.BeginProperty(keyRect, GUIContent.none, key);
+                        EditorGUIUtility.labelWidth = Mathf.Min(90f, keyRect.width * 0.35f);
+                        EditorGUI.PropertyField(keyRect, key, new GUIContent("Key"), true);
+                        EditorGUI.EndProperty();
+                    }
+                    else
+                    {
+                        EditorGUI.LabelField(keyRect, "Key: not serializable");
+                    }
+                    
 
                     // Trash
                     if (GUI.Button(trashRect, EditorGUIUtility.IconContent("TreeEditor.Trash"), GUIStyle.none))
@@ -290,10 +320,19 @@ namespace Collections
                     }
 
                     // Value (아래 전체 폭)
-                    EditorGUI.BeginProperty(valRect, GUIContent.none, val);
-                    EditorGUIUtility.labelWidth = Mathf.Min(90f, valRect.width * 0.4f);
-                    EditorGUI.PropertyField(valRect, val, new GUIContent("Value"), true);
-                    EditorGUI.EndProperty();
+                    if (val != null)
+                    {
+                        EditorGUI.BeginProperty(valRect, GUIContent.none, val);
+                        EditorGUIUtility.labelWidth = Mathf.Min(90f, valRect.width * 0.18f);
+                        EditorGUI.PropertyField(valRect, val, new GUIContent("Value"), true);
+                        EditorGUI.LabelField(valRect, "Value: not serializable");
+                        EditorGUI.EndProperty();
+                    }
+                    else
+                    {
+                        EditorGUI.LabelField(valRect, "Value: not serializable");
+                    }
+
 
                     EditorGUIUtility.labelWidth = prevLW;
                     y += keyH + valH + 12f;
@@ -320,6 +359,7 @@ namespace Collections
             {
                 var elem = items.GetArrayElementAtIndex(i);
                 var keyProp = elem.FindPropertyRelative("Key");
+                if (keyProp == null) continue;
                 if (SerializedObjectEqual(keyProp.boxedValue, targetKey))
                     return true;
             }
