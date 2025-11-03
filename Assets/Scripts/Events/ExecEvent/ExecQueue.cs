@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Events.Core;
@@ -11,7 +12,7 @@ namespace PriortyExecEvent
     /// 우선순위 실행 큐 클래스
     /// </summary>
     /// <typeparam name="TEventArgs"></typeparam>
-    public class ExecQueue<TEventArgs> where TEventArgs : ExecEventArgs<TEventArgs> , new()
+    public class ExecQueue<TEventArgs> :IReadOnlyList<ExecAction<TEventArgs>> where TEventArgs : ExecEventArgs<TEventArgs>, new()
     {
         /// <summary>
         /// 우선순위 실행 액션 래퍼 클래스
@@ -83,6 +84,10 @@ namespace PriortyExecEvent
         private List<ActionWrapper<TEventArgs>> _actionWrappers = new List<ActionWrapper<TEventArgs>>();
         private bool _dirty = true;
         private readonly List<ActionWrapper<TEventArgs>> _snapshot = new List<ActionWrapper<TEventArgs>>();
+        private bool _isExecuting = false;
+        
+        
+        public bool IsExecuting => _isExecuting;
         
         /// <summary>
         /// 우선순위에 따라 액션을 큐에 추가합니다.
@@ -105,6 +110,20 @@ namespace PriortyExecEvent
             wrapper.EnqueudOrder = _actionWrappers.Count;
             _actionWrappers.Add(wrapper);
             _dirty = true;
+        }
+        
+        public void Remove(ExecAction<TEventArgs> action)
+        {
+            for (int i = 0; i < _actionWrappers.Count; i++)
+            {
+                if (_actionWrappers[i].action == action)
+                {
+                    _actionWrappers[i].Dispose();
+                    _actionWrappers.RemoveAt(i);
+                    _dirty = true;
+                    return;
+                }
+            }
         }
         
         /// <summary>
@@ -159,6 +178,34 @@ namespace PriortyExecEvent
             }
             LogEx.Log($"[ExecQueue<{typeof(TEventArgs).Name}>] Executed {_snapshot.Count} actions.");
             
+        }
+
+        public IEnumerator<ExecAction<TEventArgs>> GetEnumerator()
+        {
+            foreach (var wrapper in _actionWrappers)
+            {
+                yield return wrapper.action;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public int Count => _actionWrappers.Count;
+
+        public ExecAction<TEventArgs> this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= _actionWrappers.Count)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
+                }
+
+                return _actionWrappers[index].action;
+            }
         }
     }
 }

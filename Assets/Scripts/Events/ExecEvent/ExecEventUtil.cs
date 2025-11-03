@@ -20,6 +20,7 @@ namespace PriortyExecEvent
     {
         public static IReadOnlyList<Type> EventTypes;
         public static IReadOnlyList<Type> EventBusTypes;
+        public static IReadOnlyList<Type> StaticEventBusTypes;
 
         #if UNITY_EDITOR
         public static PlayModeStateChange PlayModeState { get; private set; }
@@ -47,6 +48,7 @@ namespace PriortyExecEvent
             LogEx.Log("Initializing ExecEventUtil");
             EventTypes = ReflectionUtil.GetTypes(typeof(ExecEventArgs<>));
             EventBusTypes = InitializeAllBus();
+            StaticEventBusTypes = InitializeAllStaticBus();
         }
 
         private static List<Type> InitializeAllBus()
@@ -62,6 +64,19 @@ namespace PriortyExecEvent
             return busTypes;
         }
         
+        private static List<Type> InitializeAllStaticBus()
+        {
+            List<Type> staticBusTypes = new List<Type>();
+            var staticBusType = typeof(ExecStaticEventBus<>);
+            foreach (var eventType in EventTypes)
+            {
+                var genericStaticBusType = staticBusType.MakeGenericType(eventType);
+                staticBusTypes.Add(genericStaticBusType);
+                LogEx.Log($"Initialized ExecStaticEventBus for {eventType.Name}");
+            }
+            return staticBusTypes;
+        }
+        
         public static void ClearBus()
         {
             LogEx.Log("Clearing all ExecEventBus handlers");
@@ -75,6 +90,19 @@ namespace PriortyExecEvent
                 else
                 {
                     LogEx.LogWarning($"ClearHandlers method not found in {busType.Name}");
+                }
+            }
+            LogEx.Log("Clearing all ExecStaticEventBus handlers");
+            foreach (var staticBusType in StaticEventBusTypes)
+            {
+                var clearMethod = staticBusType.GetMethod("ClearHandlers", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+                if (clearMethod != null)
+                {
+                    clearMethod.Invoke(null, null);
+                }
+                else
+                {
+                    LogEx.LogWarning($"ClearHandlers method not found in {staticBusType.Name}");
                 }
             }
         }
