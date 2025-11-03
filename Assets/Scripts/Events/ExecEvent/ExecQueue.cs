@@ -9,13 +9,14 @@ using UnityEngine.Pool;
 namespace ExecEvents
 {
     /// <summary>
-    /// 우선순위 실행 큐 클래스
+    /// 우선순위 실행 큐 클래스<br/>
+    /// 각 액션은 우선순위를 지정할 수 있으며, 우선순위에 따라 실행됩니다.
     /// </summary>
     /// <typeparam name="TEventArgs"></typeparam>
     public class ExecQueue<TEventArgs> :IReadOnlyList<ExecQueue<TEventArgs>.ActionWrapper> where TEventArgs : ExecEventArgs<TEventArgs>, new()
     {
         /// <summary>
-        /// 우선순위 실행 액션 래퍼 클래스
+        /// 액션 래퍼 클래스
         /// </summary>
         public class ActionWrapper : IComparable<ActionWrapper>, IComparable, IDisposable
         {
@@ -24,24 +25,48 @@ namespace ExecEvents
                 (() => new ActionWrapper(),
                     actionOnRelease: wrapper => wrapper.Clear());
             
-            internal int PrimaryPriority = (int) ExecPriority.Normal;
-            internal List<int> ExtraPriorities = new List<int>();
-            internal int EnqueuedOrder = int.MaxValue;
+            internal int _primaryPriority = (int) ExecPriority.Normal;
+            internal List<int> _extraPriorities = new List<int>();
+            internal int _enqueuedOrder = int.MaxValue;
             
             internal ExecAction<TEventArgs> action;
+            
+            public int PrimaryPriority => _primaryPriority;
+            public IReadOnlyList<int> ExtraPriorities => _extraPriorities;
+
+            public int EnqueuedOrder
+            {
+                get => _enqueuedOrder;
+                set => _enqueuedOrder = value;
+            }
+            
             
             private ActionWrapper()
             {
             }
             
+            /// <summary>
+            /// 액션 래퍼를 가져옵니다.
+            /// 해당 함수는 ExecQueue외부에서 사용을 상정하지 않습니다.
+            /// </summary>
+            /// <remarks>
+            /// EnqueuedOrder는 자동으로 설정되지 않으므로, 큐에 등록할 때 반드시 설정해야 합니다.
+            /// 풀링을 사용하므로, 사용 후에는 반드시 <see cref="Dispose"/>를 호출하여 반환해야 합니다.
+            /// 또한, 동일한 액션 래퍼를 여러 큐에 등록하지 마십시오.
+            /// </remarks>
+            /// <param name="action"></param>
+            /// <param name="primaryPriority"></param>
+            /// <param name="extraPriorities"></param>
+            /// <returns></returns>
             public static ActionWrapper Get(ExecAction<TEventArgs> action, int primaryPriority, params int[] extraPriorities)
             {
                 var wrapper = _pool.Get();
                 wrapper.action = action;
-                wrapper.PrimaryPriority = primaryPriority;
+                wrapper._primaryPriority = primaryPriority;
+                wrapper._extraPriorities.Clear();
                 if (extraPriorities != null && extraPriorities.Length > 0)
                 {
-                    wrapper.ExtraPriorities.AddRange(extraPriorities);
+                    wrapper._extraPriorities.AddRange(extraPriorities);
                 }
                 return wrapper;
             }
@@ -64,32 +89,32 @@ namespace ExecEvents
                 if (other is null) return 1;
                 
                 // Primary Priority 비교
-                var primaryPriorityComparison = PrimaryPriority.CompareTo(other.PrimaryPriority);
+                var primaryPriorityComparison = _primaryPriority.CompareTo(other._primaryPriority);
                 if (primaryPriorityComparison != 0) return primaryPriorityComparison;
                 
                 // Extra Priorities 비교 (순서대로)
-                int minExtraCount = Math.Min(ExtraPriorities.Count, other.ExtraPriorities.Count);
+                int minExtraCount = Math.Min(_extraPriorities.Count, other._extraPriorities.Count);
                 for (int i = 0; i < minExtraCount; i++)
                 {
-                    var extraComparison = ExtraPriorities[i].CompareTo(other.ExtraPriorities[i]);
+                    var extraComparison = _extraPriorities[i].CompareTo(other._extraPriorities[i]);
                     if (extraComparison != 0) return extraComparison;
                 }
                 
                 // Extra Priorities 개수가 다르면 더 많은 쪽이 뒤로 (더 낮은 우선순위)
-                var extraCountComparison = ExtraPriorities.Count.CompareTo(other.ExtraPriorities.Count);
+                var extraCountComparison = _extraPriorities.Count.CompareTo(other._extraPriorities.Count);
                 if (extraCountComparison != 0) return extraCountComparison;
                 
                 // Enqueued Order 비교
-                return EnqueuedOrder.CompareTo(other.EnqueuedOrder);
+                return _enqueuedOrder.CompareTo(other._enqueuedOrder);
             }
 
 
             public void Clear()
             {
                 action = null;
-                PrimaryPriority = (int) ExecPriority.Normal;
-                ExtraPriorities.Clear();
-                EnqueuedOrder = int.MaxValue;
+                _primaryPriority = (int) ExecPriority.Normal;
+                _extraPriorities.Clear();
+                _enqueuedOrder = int.MaxValue;
             }
             
             public void Dispose()
@@ -130,7 +155,7 @@ namespace ExecEvents
         public void Enqueue(int priority, ExecAction<TEventArgs> action, params int[] extraPriorities)
         {
             var wrapper = ActionWrapper.Get(action, priority, extraPriorities);
-            wrapper.EnqueuedOrder = _actionWrappers.Count;
+            wrapper._enqueuedOrder = _actionWrappers.Count;
             _actionWrappers.Add(wrapper);
             _dirty = true;
         }
@@ -147,7 +172,7 @@ namespace ExecEvents
                 throw new InvalidOperationException("Cannot use EnqueueBinarySearch when the queue is dirty. Please sort the queue first.");
             }
             var wrapper = ActionWrapper.Get(action, priority, extraPriorities);
-            wrapper.EnqueuedOrder = _actionWrappers.Count;
+            wrapper._enqueuedOrder = _actionWrappers.Count;
             int index = _actionWrappers.BinarySearch(wrapper);
             // 음수라면 못찾은 경우.
             if (index < 0)
@@ -253,7 +278,7 @@ namespace ExecEvents
                 }
                 foreach (var wrapper in _snapshot)
                 {
-                    LogEx.Log($"({wrapper.PrimaryPriority})Executing action {wrapper.action}");
+                    LogEx.Log($"({wrapper._primaryPriority})Executing action {wrapper.action}");
                     await wrapper.action.Invoke(eventArgs);
                     
                     if (eventArgs.BreakChain)

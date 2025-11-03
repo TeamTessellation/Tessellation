@@ -10,7 +10,12 @@ namespace ExecEvents
     {
         
         private static bool _isMergedExecuting = false;
+        
+        /// <summary>
+        /// 이벤트 버스가 현재 실행 중인지 여부를 나타냅니다.
+        /// </summary>
         public static bool IsExecuting => ExecDynamicEventBus<TEvent>.IsExecuting || ExecStaticEventBus<TEvent>.IsExecuting || _isMergedExecuting;
+        
         /// <summary>
         /// 동적 핸들러를 등록합니다.
         /// </summary>
@@ -129,13 +134,13 @@ namespace ExecEvents
                     
                     if (dynamicAction.CompareTo(staticAction) <= 0)
                     {
-                        LogEx.Log($"({dynamicAction.PrimaryPriority})Executing Dynamic action {dynamicAction.action}");
+                        LogEx.Log($"({dynamicAction._primaryPriority})Executing Dynamic action {dynamicAction.action}");
                         await dynamicAction.action.Invoke(args);
                         dynamicIndex++;
                     }
                     else
                     {
-                        LogEx.Log($"({staticAction.PrimaryPriority})Executing Static action {staticAction.action}");
+                        LogEx.Log($"({staticAction._primaryPriority})Executing Static action {staticAction.action}");
                         await staticAction.action.Invoke(args);
                         staticIndex++;
                     }
@@ -151,7 +156,7 @@ namespace ExecEvents
                 while (dynamicIndex < dynamicQueue.Count && !args.BreakChain)
                 {
                     var dynamicAction = dynamicQueue[dynamicIndex];
-                    LogEx.Log($"({dynamicAction.PrimaryPriority})Executing Dynamic action {dynamicAction.action}");
+                    LogEx.Log($"({dynamicAction._primaryPriority})Executing Dynamic action {dynamicAction.action}");
                     await dynamicAction.action.Invoke(args);
                     dynamicIndex++;
                 }
@@ -159,7 +164,7 @@ namespace ExecEvents
                 while (staticIndex < staticQueue.Count && !args.BreakChain)
                 {
                     var staticAction = staticQueue[staticIndex];
-                    LogEx.Log($"({staticAction.PrimaryPriority})Executing Static action {staticAction.action}");
+                    LogEx.Log($"({staticAction._primaryPriority})Executing Static action {staticAction.action}");
                     await staticAction.action.Invoke(args);
                     staticIndex++;
                 }
