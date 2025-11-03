@@ -5,7 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Machamy.Utils;
 using Player;
-using PriortyExecEvent;
+using ExecEvents;
 using Stage;
 using Unity.VisualScripting;
 using UnityEngine;

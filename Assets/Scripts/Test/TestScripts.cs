@@ -3,7 +3,7 @@ using Collections;
 using Cysharp.Threading.Tasks;
 using DataAnalysis;
 using Machamy.Utils;
-using PriortyExecEvent;
+using ExecEvents;
 using SaveLoad;
 using Unity.VisualScripting;
 using UnityEngine;

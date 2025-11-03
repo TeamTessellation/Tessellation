@@ -8,7 +8,7 @@ using Util;
 using UnityEditor;
 #endif
 
-namespace PriortyExecEvent
+namespace ExecEvents
 {
     public delegate void ExecEventHandler<TEvent>(ExecQueue<TEvent> queue, TEvent eventArgs) where TEvent : ExecEventArgs<TEvent>, new();
     public delegate UniTask ExecAction<TEvent>(TEvent eventArgs) where TEvent : ExecEventArgs<TEvent>, new();

@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using Machamy.Utils;
 
-namespace PriortyExecEvent
+namespace ExecEvents
 {
     /// <summary>
     /// ExecDynamicEventBus와 ExecStaticEventBus의 기능을 모두 포함하는 이벤트 버스 클래스입니다.

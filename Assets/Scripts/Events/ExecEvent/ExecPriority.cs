@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PriortyExecEvent
+namespace ExecEvents
 {
     public enum ExecPriority
     {

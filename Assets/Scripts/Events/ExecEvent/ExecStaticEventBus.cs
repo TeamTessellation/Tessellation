@@ -2,7 +2,7 @@
 using Cysharp.Threading.Tasks;
 using Events.Core;
 
-namespace PriortyExecEvent
+namespace ExecEvents
 {
     /// <summary>
     /// 우선순위 실행 이벤트 버스 클래스.

@@ -6,7 +6,7 @@ using Events.Core;
 using Machamy.Utils;
 using UnityEngine.Pool;
 
-namespace PriortyExecEvent
+namespace ExecEvents
 {
     /// <summary>
     /// 우선순위 실행 큐 클래스

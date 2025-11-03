@@ -1,8 +1,6 @@
-
-
 using Cysharp.Threading.Tasks;
 using Machamy.Utils;
-using PriortyExecEvent;
+using ExecEvents;
 using Unity.VisualScripting;
 using UnityEngine;
 
