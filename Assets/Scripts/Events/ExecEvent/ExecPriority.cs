@@ -4,12 +4,12 @@ namespace PriortyExecEvent
 {
     public enum ExecPriority
     {
-        VeryHigh = Int32.MinValue,
+        First = Int32.MinValue,
         
         
         Normal = 0,
         
         
-        VeryLow = Int32.MaxValue // UI등등
+        Last = Int32.MaxValue // UI등등
     }
 }

@@ -34,7 +34,7 @@ namespace PriortyExecEvent
         
         private static void OnPlayModeStateChanged(PlayModeStateChange state)
         {
-            state = PlayModeState;
+            PlayModeState = state;
             if (state == PlayModeStateChange.ExitingPlayMode)
             {
                 ClearBus();
@@ -54,7 +54,7 @@ namespace PriortyExecEvent
         private static List<Type> InitializeAllBus()
         {
             List<Type> busTypes = new List<Type>();
-            var busType = typeof(ExecEventBus<>);
+            var busType = typeof(ExecDynamicEventBus<>);
             foreach (var eventType in EventTypes)
             {
                 var genericBusType = busType.MakeGenericType(eventType);
