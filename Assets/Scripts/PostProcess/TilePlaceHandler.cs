@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Machamy.Utils;
 using Player;
 using Stage;
 using Unity.VisualScripting;
@@ -90,12 +92,12 @@ public class TileBurstEvent : TileEvent
 // 플레이어 입력 후처리 해주는 클래스
 public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
 {
-    // === Actions ===
-    public event Action<TurnResultInfo> OnTilePlacedDelegate;
-    public event Action<TurnResultInfo> OnTileRemovedDelegate;
-    public event Action<TurnResultInfo> OnLineClearedDelegate;
-    public event Action<TurnResultInfo> OnTileBurstDelegate;
-    public event Action<TurnResultInfo> OnTurnProcessedDelegate;
+    // === Delegate ===
+    public event Func<TurnResultInfo, UniTask> OnTilePlacedAsync;
+    public event Func<TurnResultInfo, UniTask> OnLineClearedAsync;
+    public event Func<TurnResultInfo, UniTask> OnTileRemovedAsync;
+    public event Func<TurnResultInfo, UniTask> OnTileBurstAsync;
+    public event Func<TurnResultInfo, UniTask> OnTurnProcessedAsync;
     
     // === Properties ===
     private Queue<TileEvent> _eventQueue = new Queue<TileEvent>();
@@ -106,68 +108,66 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
     {
         if (inputData.Type == PlayerInputData.InputType.TilePlace)
         {
-            FirstTilePlaced(inputData.PlacedTile);
+            await FirstTilePlaced(inputData.PlacedTile, token);
         }
         else if (inputData.Type == PlayerInputData.InputType.UseItem)
         {
             // TODO
             // ProcessUseItem(어쩌고) .. 
         }
-        await UniTask.CompletedTask;
     }
     
     // 첫 배치 때 불릴 함수
-    public void FirstTilePlaced(List<Tile> tiles)
+    public async UniTask FirstTilePlaced(List<Tile> tiles, CancellationToken token)
     {
         _turnResultInfo = new TurnResultInfo();
         _eventQueue.Clear();
         
         _eventQueue.Enqueue(new TilePlaceEvent(tiles));
-
-        ProcessTileEventQueue();
+        
+        await ProcessTileEventQueue(token);
     }
-
-    private void ProcessTileEventQueue()
+    
+    private async UniTask ProcessTileEventQueue(CancellationToken token)
     {
         while (_eventQueue.Count > 0)
         {
             TileEvent currentEvent = _eventQueue.Dequeue();
+            LogEx.Log($"Process {currentEvent.TileEventType.ToString()}");
 
             switch (currentEvent.TileEventType)
             {
-                case eTileEventType.Burst:
-                    ProcessTileBurst((TileBurstEvent)currentEvent);
-                    break;
                 case eTileEventType.Place:
-                    ProcessTilePlaced((TilePlaceEvent)currentEvent);
-                    break;
-                case eTileEventType.Remove:
-                    ProcessTileRemoved((TileRemoveEvent)currentEvent);
+                    await ProcessTilePlaced((TilePlaceEvent)currentEvent, token);
                     break;
                 case eTileEventType.LineClear:
-                    ProcessLineCompleted((LineClearEvent)currentEvent);
+                    await ProcessLineCompleted((LineClearEvent)currentEvent, token);
+                    break;
+                case eTileEventType.Burst:
+                    await ProcessTileBurst((TileBurstEvent)currentEvent, token);
+                    break;
+                case eTileEventType.Remove:
+                    await ProcessTileRemoved((TileRemoveEvent)currentEvent, token);
                     break;
             }
         }
         
         // Queue가 비게 되면 턴 종료. TurnProcessedDelegate 끝
-        OnTurnProcessedDelegate?.Invoke(_turnResultInfo);
+        await InvokeTileEventAsync(OnTurnProcessedAsync, _turnResultInfo, token);
     }
     
 
-    private void ProcessTilePlaced(TilePlaceEvent placeEvent)
+    private async UniTask ProcessTilePlaced(TilePlaceEvent placeEvent, CancellationToken token)
     {
         _turnResultInfo.PlacedTiles.AddRange(placeEvent.Tiles);
         
-        // TODO
         // 즐 완성 판정
         int lineClearedCount;
         List<Tile> clearedTiles;
         (lineClearedCount, clearedTiles) = CheckLineCompleted();
         
-        // 머시기 한다
-        
-        OnTilePlacedDelegate?.Invoke(_turnResultInfo);
+        // 패시브 아이템 효과나 점수 추가 등의 로직이 전부 종료될 때까지 대기한다
+        await InvokeTileEventAsync(OnTilePlacedAsync, _turnResultInfo, token);
 
         if (lineClearedCount > 0)
         {
@@ -175,25 +175,41 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         }
     }
     
-    private void ProcessTileRemoved(TileRemoveEvent removeEvent)
+    private async UniTask ProcessLineCompleted(LineClearEvent lineClearEvent, CancellationToken token)
     {
-        _turnResultInfo.RemovedTiles.AddRange(removeEvent.Tiles);
-        OnTileRemovedDelegate?.Invoke(_turnResultInfo);
-    }
-
-    private void ProcessTileBurst(TileBurstEvent burstEvent)
-    {
-        _turnResultInfo.BurstTiles.AddRange(burstEvent.Tiles);
-        OnTileBurstDelegate?.Invoke(_turnResultInfo);
-    }
-    
-    private void ProcessLineCompleted(LineClearEvent lineClearEvent)
-    {
+        Debug.Log("Process Line Complete");
         _turnResultInfo.ClearedLineCount += lineClearEvent.ClearedLineCount;
         _turnResultInfo.ClearedTiles.AddRange(lineClearEvent.Tiles);
-        OnLineClearedDelegate?.Invoke(_turnResultInfo);
+        
+        await InvokeTileEventAsync(OnLineClearedAsync, _turnResultInfo, token);
     }
 
+    private async UniTask ProcessTileRemoved(TileRemoveEvent removeEvent, CancellationToken token)
+    {
+        _turnResultInfo.RemovedTiles.AddRange(removeEvent.Tiles);
+        
+        await InvokeTileEventAsync(OnTileRemovedAsync, _turnResultInfo, token);
+    }
+
+    private async UniTask ProcessTileBurst(TileBurstEvent burstEvent, CancellationToken token)
+    {
+        _turnResultInfo.BurstTiles.AddRange(burstEvent.Tiles);
+        
+        await InvokeTileEventAsync(OnTileBurstAsync, _turnResultInfo, token);
+    }
+    
+    private async UniTask InvokeTileEventAsync(Func<TurnResultInfo, UniTask> eventDelegate,
+        TurnResultInfo info, CancellationToken token)
+    {
+        if (eventDelegate == null) return;
+
+        var tasks = eventDelegate.GetInvocationList()
+            .Cast<Func<TurnResultInfo, UniTask>>()
+            .Select(handler => handler(info).AttachExternalCancellation(token));
+
+        await UniTask.WhenAll(tasks);
+    }
+    
     private (int, List<Tile>) CheckLineCompleted()
     {
         int clearedLineCount = 0;
