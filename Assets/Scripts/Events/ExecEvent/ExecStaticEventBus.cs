@@ -36,7 +36,6 @@ namespace PriortyExecEvent
         
         public static async UniTask Invoke(TEvent eventArgs)
         {
-            _execQueue.SortByPriority();
             await _execQueue.ExecuteAll(eventArgs);
         }
     }
