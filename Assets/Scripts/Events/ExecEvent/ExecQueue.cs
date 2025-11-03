@@ -135,6 +135,43 @@ namespace ExecEvents
             _dirty = true;
         }
         
+        /// <summary>
+        /// 이진탐색을 통해 우선순위에 따라 액션을 큐에 추가합니다.
+        /// dirty플래그를 사용하지 않는 대신, 등록 시간이 오래걸릴 수 있습니다.
+        /// 이미 정렬된 상태에서 소수의 핸들러를 등록할 때 유용합니다.
+        /// </summary>
+        public void EnqueueBinarySearch(int priority, ExecAction<TEventArgs> action, params int[] extraPriorities)
+        {
+            if (_dirty)
+            {
+                throw new InvalidOperationException("Cannot use EnqueueBinarySearch when the queue is dirty. Please sort the queue first.");
+            }
+            var wrapper = ActionWrapper.Get(action, priority, extraPriorities);
+            wrapper.EnqueuedOrder = _actionWrappers.Count;
+            int index = _actionWrappers.BinarySearch(wrapper);
+            // 음수라면 못찾은 경우.
+            if (index < 0)
+            {
+                index = ~index; 
+            }
+            _actionWrappers.Insert(index, wrapper);
+            // _dirty = false; // 이미 정렬된 상태이므로 dirty 플래그를 변경하지 않음
+        }
+        
+        /// <summary>
+        /// 이진탐색을 통해 우선순위에 따라 액션을 큐에 추가합니다.
+        /// </summary>
+        public void EnqueueSafeBinarySearch(int priority, ExecAction<TEventArgs> action, params int[] extraPriorities)
+        {
+            if (_dirty)
+            {
+                SortByPriority();
+            }
+            EnqueueBinarySearch(priority, action, extraPriorities);
+        }
+        
+        
+        
         public void Remove(ExecAction<TEventArgs> action)
         {
             for (int i = 0; i < _actionWrappers.Count; i++)

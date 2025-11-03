@@ -43,6 +43,43 @@ namespace ExecEvents
         }
         
         /// <summary>
+        /// 이진탐색을 통해 핸들러를 우선순위와 함께 등록합니다.
+        /// dirty플래그를 사용하지 않는 대신, 등록 시간이 오래걸릴 수 있습니다.
+        /// 이미 정렬된 상태에서 소수의 핸들러를 등록할 때 유용합니다.
+        /// </summary>
+        /// <code>
+        /// void RegisterHandlers(){
+        ///   ExecStaticEventBus&lt;MyEventArgs&gt;.RegisterBinarySearch(10, OnMyEvent);
+        ///   ExecStaticEventBus&lt;MyEventArgs&gt;.RegisterBinarySearch(10, OnMyEvent2, 5, 3); // Primary가 같으면 5, 3으로 추가 비교
+        /// }
+        /// </code>
+        /// <param name="priority">우선순위</param>
+        /// <param name="handler">실행할 액션</param>
+        /// <param name="extraPriorities">추가 우선순위 (Primary Priority가 같을 때 순서대로 비교됩니다)</param>
+        public static void RegisterBinarySearch(int priority, ExecAction<TEvent> handler, params int[] extraPriorities)
+        {
+            _execQueue.EnqueueBinarySearch(priority, handler, extraPriorities);
+        }
+        
+        /// <summary>
+        /// 이진탐색을 통해 핸들러를 우선순위와 함께 등록합니다.
+        /// 정렬되지 않은 상태라면 자동으로 정렬을 수행한 후 등록합니다.
+        /// </summary>
+        /// <code>
+        /// void RegisterHandlers(){
+        ///   ExecStaticEventBus&lt;MyEventArgs&gt;.RegisterSafeBinarySearch(10, OnMyEvent);
+        ///   ExecStaticEventBus&lt;MyEventArgs&gt;.RegisterSafeBinarySearch(10, OnMyEvent2, 5, 3); // Primary가 같으면 5, 3으로 추가 비교
+        /// }
+        /// </code>
+        /// <param name="priority">우선순위</param>
+        /// <param name="handler">실행할 액션</param>
+        /// <param name="extraPriorities">추가 우선순위 (Primary Priority가 같을 때 순서대로 비교됩니다)</param>
+        public static void RegisterSafeBinarySearch(int priority, ExecAction<TEvent> handler, params int[] extraPriorities)
+        {
+            _execQueue.EnqueueSafeBinarySearch(priority, handler, extraPriorities);
+        }
+        
+        /// <summary>
         /// 핸들러 등록을 해제합니다.
         /// </summary>
         /// <param name="handler"></param>

@@ -35,6 +35,16 @@ namespace ExecEvents
         {
             ExecStaticEventBus<TEvent>.Register(priority, handler, extraPriorities);
         }
+        
+        /// <summary>
+        /// 정적 핸들러를 우선순위와 함께 이진탐색으로 등록합니다.
+        /// </summary>
+        /// <inheritdoc cref="ExecStaticEventBus{TEvent}.RegisterSafeBinarySearch(int, ExecAction{TEvent}, int[])"/>
+        public static void RegisterStaticBinarySearch(int priority, ExecAction<TEvent> handler, params int[] extraPriorities)
+        {
+            ExecStaticEventBus<TEvent>.RegisterSafeBinarySearch(priority, handler, extraPriorities);
+        }
+        
 
         /// <summary>
         /// 정적 핸들러 등록을 해제합니다.
