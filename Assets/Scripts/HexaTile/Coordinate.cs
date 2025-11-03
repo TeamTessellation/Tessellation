@@ -49,6 +49,21 @@ public struct Coordinate
         };
     }
 
+    public static Coordinate operator -(Coordinate c, Direction dir)
+    {
+        return dir switch
+
+        {
+            Direction.RU => c - new Coordinate(1, -1),
+            Direction.R => c - new Coordinate(1, 0),
+            Direction.RD => c - new Coordinate(0, 1),
+            Direction.LD => c - new Coordinate(-1, 1),
+            Direction.L => c - new Coordinate(-1, 0),
+            Direction.LU => c - new Coordinate(0, -1),
+            _ => c
+        };
+    }
+
     public static Coordinate operator +(Coordinate c, Coordinate other)
     {
         return new() { Pos = c.Pos + other.Pos };

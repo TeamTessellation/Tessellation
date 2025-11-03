@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using Stage;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class Field : MonoBehaviour
 {
@@ -124,7 +125,14 @@ public class Field : MonoBehaviour
 
     private void RemoveTile(Coordinate coor)
     {
-        _allCell[coor].UnSet();
+        //_allCell[coor].UnSet();
+        RemoveTileEffect(_allCell[coor]).Forget();
+    }
+
+    private async UniTask RemoveTileEffect(Cell cell)
+    {
+        await UniTask.WaitForSeconds(0.2f);
+        cell.UnSet();
     }
 
     private void SafeRemoveTile(Coordinate coor)
@@ -173,30 +181,32 @@ public class Field : MonoBehaviour
 
         List<Line> clearLines = new();
 
+        int upOrDown = UnityEngine.Random.Range(0, 2); // 0 up 1 down
+
         for (int i = 0; i < newTile.Count; i++)
         {
             if (!xCheckList.Contains(newTile[i].Coor.Pos3D.y))
             {
-                CheckAxis(xCheckList, newTile[i].Coor.Pos3D.y, Axis.X, newTile[i], clearLines);
+                CheckAxis(upOrDown, xCheckList, newTile[i].Coor.Pos3D.y, Axis.X, newTile[i], clearLines);
             }
             if (!yCheckList.Contains(newTile[i].Coor.Pos3D.x))
             {
-                CheckAxis(yCheckList, newTile[i].Coor.Pos3D.x, Axis.Y, newTile[i], clearLines);
+                CheckAxis(upOrDown, yCheckList, newTile[i].Coor.Pos3D.x, Axis.Y, newTile[i], clearLines);
             }
             if (!zCheckList.Contains(newTile[i].Coor.Pos3D.z))
             {
-                CheckAxis(zCheckList, newTile[i].Coor.Pos3D.z, Axis.Z, newTile[i], clearLines);
+                CheckAxis(upOrDown, zCheckList, newTile[i].Coor.Pos3D.z, Axis.Z, newTile[i], clearLines);
             }
         }
 
         return clearLines;
     }
 
-    private void CheckAxis(HashSet<int> checkList, int key, Axis axis, Tile tile, List<Line> clearLines)
+    private void CheckAxis(int upOrDown, HashSet<int> checkList, int key, Axis axis, Tile tile, List<Line> clearLines)
     {
         checkList.Add(key);
-        if (CheckLine(axis, tile.Coor))
-            clearLines.Add(new(axis, tile.Coor));
+        if (CheckLine(upOrDown, axis, tile.Coor, out Coordinate start))
+            clearLines.Add(new(axis, start));
     }
 
     private void ClearLine(Line line)
@@ -298,10 +308,11 @@ public class Field : MonoBehaviour
         Debug.Log("Line 클리어");
     }
 
-    private bool CheckLine(Axis axis, Coordinate start)
+    private bool CheckLine(int upOrDown, Axis axis, Coordinate start, out Coordinate result)
     {
         Direction up = Direction.R;
         Direction down = Direction.L;
+        result = start;
 
         switch (axis)
         {
@@ -327,6 +338,9 @@ public class Field : MonoBehaviour
         if (correctCoor.CircleRadius <= _size)
             return false;
 
+        if (upOrDown == 0)
+            result = correctCoor - up;
+
         correctCoor = start;
         while (CheckAbleCoor(correctCoor) && !_allCell[correctCoor].IsEmpty)
         {
@@ -334,6 +348,9 @@ public class Field : MonoBehaviour
         }
         if (correctCoor.CircleRadius <= _size)
             return false;
+
+        if (upOrDown == 1)
+            result = correctCoor - down;
 
         return true;
     }
@@ -344,23 +361,26 @@ public class Field : MonoBehaviour
     /// <param name="tileSet">배치할 타일셋</param>
     /// <param name="coor">배치를 원하는 위치</param>
     /// <returns>배치 성공 여부</returns>
-    public bool TryPlace(TileSet tileSet, Coordinate coor)
+    public bool TryPlace(TileSet tileSet, Coordinate coor, out List<Tile> placeTiles)
     {
+        placeTiles = null;
         if (CanPlace(tileSet, coor))
         {
+            placeTiles = new();
             PlaceTileSetStartEvent?.Invoke(coor);
             for (int i = 0; i < tileSet.Tiles.Count; i++)
             {
                 var tileInfo = tileSet.Tiles[i].transform.localPosition;
                 Coordinate correctCoor = coor + tileSet.Tiles[i].transform.localPosition.ToCoor();
                 SetTileOnCell(tileSet.Tiles[i], correctCoor);
+                placeTiles.Add(tileSet.Tiles[i]);
             }
-            
+
             var clearLines = CheckLineClear(tileSet.Tiles);
             tileSet.Use();
             PlaceTileSetEndEvent?.Invoke(coor);
             if (clearLines.Count > 0)
-                ClearLinesAsync(clearLines, 0.5f).Forget();
+                ClearLinesAsync(clearLines, 0.1f).Forget();
             return true;
         }
         return false;

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 [PoolSize(5)]
 public class TileSet : MonoBehaviour, IPoolAble<TileSetData>
 {
+    public List<Sprite> RandomTileSprite;
     public List<Tile> Tiles = new();
     public Direction Rotation;
     public TileSetData Data { get; private set; }
@@ -43,6 +44,8 @@ public class TileSet : MonoBehaviour, IPoolAble<TileSetData>
     public void Set(TileSetData data)
     {
         Data = data;
+        var randomSprite = RandomTileSprite[Random.Range(0, RandomTileSprite.Count)];
+
         for (int i = 0; i < data.Data.Count; i++)
         {
             var localPos = data.Data[i].Coor.ToWorld();
@@ -50,6 +53,7 @@ public class TileSet : MonoBehaviour, IPoolAble<TileSetData>
             tile.transform.localPosition = localPos;
             transform.localScale = Vector2.one * data.Size;
             tile.transform.SetParent(_tileRoot, false);
+            tile.ChangeSprite(randomSprite);
             Tiles.Add(tile);
         }
     }
