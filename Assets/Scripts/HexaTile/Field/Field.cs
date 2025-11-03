@@ -381,6 +381,7 @@ public class Field : MonoBehaviour
             PlaceTileSetEndEvent?.Invoke(coor);
             if (clearLines.Count > 0)
                 ClearLinesAsync(clearLines, 0.1f).Forget();
+            
             return true;
         }
         return false;
