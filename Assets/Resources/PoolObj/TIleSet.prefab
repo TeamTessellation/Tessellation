@@ -45,6 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef0369ceb6a024042a685cbb55bb206e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileSet
+  RandomTileSprite:
+  - {fileID: 21300000, guid: ca0fbea733e4c334c9bb30cac5a270d5, type: 3}
+  - {fileID: 21300000, guid: 490774dbbc8430a4d9b15f9a9af3ff04, type: 3}
+  - {fileID: 21300000, guid: 3c55599f2b4eb9f4ca417cdf362b6a59, type: 3}
   Tiles: []
   Rotation: 0
 --- !u!1 &4698048771471433641
