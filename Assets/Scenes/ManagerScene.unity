@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 2025349028}
   - component: {fileID: 2025349027}
   - component: {fileID: 2025349030}
+  - component: {fileID: 2025349031}
   m_Layer: 0
   m_Name: '@TurnManager'
   m_TagString: Untagged
@@ -356,6 +357,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 962176484a4e12d4eb6683c99b1e6da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
+--- !u!114 &2025349031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025349026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc49cbad543fab4faa65a63c5d73142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TilePlaceHandler
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
