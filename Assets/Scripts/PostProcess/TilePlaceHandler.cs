@@ -72,11 +72,13 @@ public class TileRemoveEvent : TileEvent
 
 public class LineClearEvent : TileEvent
 {
+    public readonly List<Field.Line> ClearedLine;
     public readonly int ClearedLineCount;
-    public LineClearEvent(int clearedCount, List<Tile> newTiles) : base(newTiles)
+    public LineClearEvent(List<Field.Line> removedLine, List<Tile> removedTile) : base(removedTile)
     {
         TileEventType = eTileEventType.LineClear;
-        ClearedLineCount = clearedCount;
+        ClearedLine = removedLine;
+        ClearedLineCount = removedLine.Count;
     }
 }
 
@@ -161,18 +163,14 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
     {
         _turnResultInfo.PlacedTiles.AddRange(placeEvent.Tiles);
         
-        // 즐 완성 판정
-        int lineClearedCount;
-        List<Tile> clearedTiles;
-        (lineClearedCount, clearedTiles) = CheckLineCompleted();
-        
         // 패시브 아이템 효과나 점수 추가 등의 로직이 전부 종료될 때까지 대기한다
         await InvokeTileEventAsync(OnTilePlacedAsync, _turnResultInfo, token);
-
-        if (lineClearedCount > 0)
-        {
-            _eventQueue.Enqueue(new LineClearEvent(lineClearedCount, clearedTiles));
-        }
+        
+        // TODO
+        // if (lineClearedCount > 0)
+        // {
+        //     _eventQueue.Enqueue(new LineClearEvent(lineClearedCount, clearedTiles));
+        // }
     }
     
     private async UniTask ProcessLineCompleted(LineClearEvent lineClearEvent, CancellationToken token)

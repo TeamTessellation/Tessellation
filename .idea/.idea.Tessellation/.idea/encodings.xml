@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise">
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/AbilityBase.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/OnlyPlaceAbility.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/Coordinate.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/Field/Field.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/Generator/Generator_Manager.cs" charset="UTF-8" />
