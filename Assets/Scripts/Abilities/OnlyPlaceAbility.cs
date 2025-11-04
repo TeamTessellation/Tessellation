@@ -24,26 +24,22 @@ public class OnlyPlaceAbility : AbilityBase
 
         if (CheckCanActivate(info))
         {
-            Activate();
+            await Activate(info);
         }
     }
-
+    
     protected override bool CheckCanActivate(TurnResultInfo info)
     {
-        if (!base.CheckCanActivate(info)) return false;
-
         bool isLineCleared = info.ClearedLineCount == 0 ? false : true;
 
         if (!isLineCleared)
         {
-            LogEx.LogWarning("순수 배치 턴 확인");
             return true;
         }
-        
         return false;
     }
 
-    protected override async UniTask Activate()
+    protected override async UniTask Activate(TurnResultInfo info)
     {
         if (_scoreManager == null) return;
         
