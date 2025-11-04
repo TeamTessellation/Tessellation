@@ -4,7 +4,14 @@ using Machamy.Utils;
 using Stage;
 using UnityEngine;
 
-public abstract class AbilityBase : MonoBehaviour
+public enum eAbilityType
+{
+    OnlyPlace,
+    WomboCombo,
+    LineClear,
+}
+
+public abstract class AbilityBase
 {
     // === Properties ===
     protected virtual bool ReactsToTilePlaced => false;
