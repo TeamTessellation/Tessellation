@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Text;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 #if UNITY_EDITOR
@@ -75,9 +76,45 @@ namespace Machamy.Utils
             }
             var className = classType?.Name ?? "UnknownClass";
             var method = frame.GetMethod();
-            string logMessage = message.StartsWith('[')
-                ? message
-                : $"[<color=#4FC3F7>{className}</color> :: <color=#FFD54F>{method.Name}</color>] {message}"; switch (level)
+            // [] 가 이미 있으면 []는 분홍색으로
+            // %className% 와 %methodName%은 치환
+            string logMessage;
+
+            string GetPretty(string text)
+            {
+                StringBuilder sb = new StringBuilder(text);
+                sb.Replace("%class%", $"<color=#4FC3F7>{className}</color>");
+                sb.Replace("%method%", $"<color=#FFD54F>{method.Name}</color>");
+                int startIdx = sb.ToString().IndexOf("[", StringComparison.Ordinal);
+                int endIdx = sb.ToString().IndexOf("]", StringComparison.Ordinal);
+                if (startIdx != -1 && endIdx != -1 && endIdx > startIdx)
+                {
+                    string insideBrackets = sb.ToString().Substring(startIdx + 1, endIdx - startIdx - 1);
+                    string coloredInside = $"<color=#FF4081>{insideBrackets}</color>";
+                    sb.Remove(startIdx + 1, endIdx - startIdx - 1);
+                    sb.Insert(startIdx + 1, coloredInside);
+                }
+                return sb.ToString();
+            }
+            
+            if(message.StartsWith("[") && message.Contains("]"))
+            {
+                logMessage = GetPretty(message);
+            }
+            else
+            {
+                logMessage = GetPretty($"[%class% :: %method%] {message}");
+            }
+            
+            // if (message.StartsWith("[") && message.Contains("]"))
+            // {
+            //      
+            // }
+            // else
+            // {
+            //     logMessage = $"[<color=#4FC3F7>{className}</color> :: <color=#FFD54F>{method.Name}</color>] {message}";
+            // }
+            switch (level)
             {
                 case LogLevel.NoLog:
                     break;
