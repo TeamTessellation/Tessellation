@@ -1,47 +1,46 @@
 using Cysharp.Threading.Tasks;
-using Machamy.Utils;
-using ExecEvents;
-using Unity.VisualScripting;
-using UnityEngine;
 
-public class OnlyPlaceAbility : AbilityBase
+namespace Abilities
 {
-    private ScoreManager _scoreManager;
+    public class OnlyPlaceAbility : AbilityBase
+    {
+        private ScoreManager _scoreManager;
     
-    private float _multiplier = 5.0f;
+        private float _multiplier = 5.0f;
 
-    protected void Start()
-    {
-        base.Start();
-        
-        _scoreManager = ScoreManager.Instance;
-    }
-
-    protected override async UniTask HandleTurnProcessedAsync(TurnResultInfo info)
-    {
-        if (_scoreManager == null) return;
-
-        if (CheckCanActivate(info))
+        protected void Start()
         {
-            await Activate(info);
+            base.Start();
+        
+            _scoreManager = ScoreManager.Instance;
         }
-    }
+
+        protected override async UniTask HandleTurnProcessedAsync(TurnResultInfo info)
+        {
+            if (_scoreManager == null) return;
+
+            if (CheckCanActivate(info))
+            {
+                await Activate(info);
+            }
+        }
     
-    protected override bool CheckCanActivate(TurnResultInfo info)
-    {
-        bool isLineCleared = info.ClearedLineCount == 0 ? false : true;
-
-        if (!isLineCleared)
+        protected override bool CheckCanActivate(TurnResultInfo info)
         {
-            return true;
-        }
-        return false;
-    }
+            bool isLineCleared = info.ClearedLineCount == 0 ? false : true;
 
-    protected override async UniTask Activate(TurnResultInfo info)
-    {
-        if (_scoreManager == null) return;
+            if (!isLineCleared)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        protected override async UniTask Activate(TurnResultInfo info)
+        {
+            if (_scoreManager == null) return;
         
-        _scoreManager.AddMultiplier(_multiplier);
+            _scoreManager.AddMultiplier(_multiplier);
+        }
     }
 }
