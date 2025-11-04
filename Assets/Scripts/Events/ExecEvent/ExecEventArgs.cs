@@ -1,6 +1,6 @@
 ﻿using Events.Core;
 
-namespace PriortyExecEvent
+namespace ExecEvents
 {
     /// <summary>
     /// Exec 이벤트 인자.
