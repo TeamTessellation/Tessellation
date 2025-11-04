@@ -5,13 +5,14 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Machamy.Utils;
 using Player;
+using ExecEvents;
 using Stage;
 using Unity.VisualScripting;
 using UnityEngine;
 
 // 전체 턴 결과를 담는 데이터 Info
 // 아직 어떻게 활용할지.. 구조 미정
-public class TurnResultInfo
+public class TurnResultInfo : ExecEventArgs<TurnResultInfo>
 {
     public readonly List<Tile> PlacedTiles; // 이번턴에 배치한 타일에 대한 정보
     public readonly List<Tile> RemovedTiles; // 이번턴에 삭제될 타일에 대한 정보
@@ -200,12 +201,14 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         TurnResultInfo info, CancellationToken token)
     {
         if (eventDelegate == null) return;
+        
+        await ExecEventBus<TurnResultInfo>.InvokeMerged(info);
 
-        var tasks = eventDelegate.GetInvocationList()
-            .Cast<Func<TurnResultInfo, UniTask>>()
-            .Select(handler => handler(info).AttachExternalCancellation(token));
+        // var tasks = eventDelegate.GetInvocationList()
+        //     .Cast<Func<TurnResultInfo, UniTask>>()
+        //     .Select(handler => handler(info).AttachExternalCancellation(token));
 
-        await UniTask.WhenAll(tasks);
+        // await UniTask.WhenAll(tasks);
     }
     
     private (int, List<Tile>) CheckLineCompleted()

@@ -1,4 +1,4 @@
-﻿namespace PriortyExecEvent
+﻿namespace ExecEvents
 {
     public class TestExecEventArgs : ExecEventArgs<TestExecEventArgs>
     {
