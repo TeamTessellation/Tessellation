@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using Core;
 using Cysharp.Threading.Tasks;
+using ExecEvents;
 using Machamy.Utils;
 using UnityEngine;
 
@@ -82,6 +83,9 @@ namespace Stage
             /*
              * 스테이지 종료 처리
              */
+            using var EndStageArgs = StageEndEventArgs.Get();
+            await ExecEventBus<StageEndEventArgs>.InvokeMerged(EndStageArgs);
+            
             await UniTask.Delay(1000);
             // 결과 팝업
             // 상점 파트
