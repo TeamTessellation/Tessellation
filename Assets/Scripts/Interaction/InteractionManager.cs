@@ -9,13 +9,20 @@ namespace Interaction
     public class InteractionManager : Singleton<InteractionManager>, InputSystem_Actions.IPlayerActions
     {
         public override bool IsDontDestroyOnLoad => true;
-
+        
+        InputSystem_Actions inputActions;
+        
         [SerializeField] float clickThreshold = 0.2f;
         private void Start()
         {
-            InputSystem_Actions inputActions = new InputSystem_Actions();
+            inputActions = new InputSystem_Actions();
             inputActions.Player.SetCallbacks(this);
             inputActions.Player.Enable();
+        }
+        
+        private void OnDestroy()
+        {
+            inputActions.Player.Disable();
         }
         
         public event Action<InputAction.CallbackContext> PointerClickEvent;

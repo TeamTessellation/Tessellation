@@ -65,6 +65,7 @@ namespace Stage
                 LogEx.LogError("StageManager: CancellationToken is not set. Cannot start stage.");
                 return;
             }
+            var UM = UIManager.Instance;
             _isStageCleared = false;
             LogEx.Log("Stage Starting...");
             _currentStage = GetNextStage();
@@ -74,8 +75,8 @@ namespace Stage
              
              //TODO 임시 스테이지
 
-             
-             await UIManager.Instance.StageInfoUI.ShowInfoRoutine(CurrentStage);
+             UM.SwitchMainToGameUI();
+             await UM.StageInfoUI.ShowInfoRoutine(CurrentStage);
              
              /*
               * 스테이지 초기화

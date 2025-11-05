@@ -129,7 +129,7 @@ namespace Core
             
             CurrentGameState = GlobalGameState.InGame;
             StageManager.StartStage(_gameCancellationToken);
-            UIManager.SwitchMainToGameUI().Forget();
+            
         }
         
         /// <summary>
@@ -146,7 +146,7 @@ namespace Core
             CurrentGameState = GlobalGameState.MainMenu;
             StageManager.ResetStage();
             UIManager.HidePauseUI();
-            UIManager.SwitchToMainMenu().Forget();
+            UIManager.SwitchToMainMenu();
         }
         
         
