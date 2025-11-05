@@ -138,7 +138,7 @@ public class Field : MonoBehaviour
     private void SafeRemoveTile(Coordinate coor)
     {
         if (CheckAbleCoor(coor))
-            _allCell[coor].UnSet();
+            RemoveTileEffect(_allCell[coor]).Forget();
     }
 
 #if UNITY_EDITOR
@@ -272,7 +272,7 @@ public class Field : MonoBehaviour
         Coordinate upCorrect = line.Start;
         Coordinate downCorrect = line.Start;
 
-        RemoveTile(line.Start);
+        SafeRemoveTile(line.Start);
         await UniTask.WaitForSeconds(interval);
         while (CheckAbleCoor(upCorrect) || CheckAbleCoor(downCorrect))
         {
@@ -287,13 +287,13 @@ public class Field : MonoBehaviour
 
     private async UniTask ClearLinesAsync(List<Line> line, float interval = 1f)
     {
-        UniTask[] tasks = new UniTask[line.Count];
+        //UniTask[] tasks = new UniTask[line.Count];
 
         for (int i = 0; i < line.Count; i++)
         {
-            tasks[i] = ClearLineAsync(line[i], interval);
+            await ClearLineAsync(line[i], interval);
         }
-        await UniTask.WhenAll(tasks);
+        //await UniTask.WhenAll(tasks);
         await UniTask.WaitForSeconds(interval);
         EndAllLineClear(line);
     }
@@ -306,6 +306,24 @@ public class Field : MonoBehaviour
     private void EndAllLineClear(List<Line> line)
     {
         Debug.Log("Line 클리어");
+    }
+
+    /// <summary>
+    /// to다산 Coor 주변 타일을 가져온다. 없으면 null
+    /// </summary>
+    /// <param name="coor">해당 좌표</param>
+    /// <returns></returns>
+    public Dictionary<Direction, Tile> GetAroundTile(Coordinate coor)
+    {
+        Dictionary<Direction, Tile> result = new();
+        for (int i = 0; i <= (int)Direction.LU; i++)
+        {
+            if (CheckAbleCoor(coor + (Direction)i))
+                result[(Direction)i] = GetTile(coor);
+            else
+                result[(Direction)i] = null;
+        }
+        return result;
     }
 
     private bool CheckLine(int upOrDown, Axis axis, Coordinate start, out Coordinate result)
@@ -380,7 +398,7 @@ public class Field : MonoBehaviour
             tileSet.Use();
             PlaceTileSetEndEvent?.Invoke(coor);
             if (clearLines.Count > 0)
-                ClearLinesAsync(clearLines, 0.1f).Forget();
+                ClearLinesAsync(clearLines, 0.06f).Forget();
             return true;
         }
         return false;
