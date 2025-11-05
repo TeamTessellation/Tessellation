@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Events.Core
 {
@@ -10,6 +11,8 @@ namespace Events.Core
         /// </summary>
         public abstract void Clear();
     }
+    
+    [MustDisposeResource]
     public abstract class EventArgs<T> : EventArgs, IDisposable where T : EventArgs<T>, new()
     {
         private static Queue<T> pool = new Queue<T>();
@@ -28,6 +31,7 @@ namespace Events.Core
         /// 이벤트를 풀에서 가져옵니다.
         /// </summary>
         /// <returns></returns>
+        // 반드시 Dispose
         public static T Get()
         {
             var res = pool.Count > 0 ? pool.Dequeue() : new T();
