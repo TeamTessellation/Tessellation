@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Events.Utils;
 using Machamy.Utils;
-using Util;
 
 #if UNITY_EDITOR
 using UnityEditor;

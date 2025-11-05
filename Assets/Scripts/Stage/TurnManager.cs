@@ -2,6 +2,7 @@
 using System.Threading;
 using Core;
 using Cysharp.Threading.Tasks;
+using ExecEvents;
 using Machamy.DeveloperConsole.Attributes;
 using Machamy.Utils;
 using Player;
@@ -184,7 +185,11 @@ namespace Stage
 
             while (true)
             {
+                
                 _turnCount++;
+                using var turnStartArgs = TurnStartEventArgs.Get();
+                await ExecEventBus<TurnStartEventArgs>.InvokeMerged(turnStartArgs);
+                
                 if (token.IsCancellationRequested)
                 {
                     LogEx.Log("Turn loop cancelled.");
@@ -214,6 +219,8 @@ namespace Stage
                 State = TurnState.Player;
                 while (playerTurnLogic.IsPlayerCanDoAction())
                 {
+                    using var playerActionLoopStartArgs = PlayerActionLoopStartEventArgs.Get();
+                    await ExecEventBus<PlayerActionLoopStartEventArgs>.InvokeMerged(playerActionLoopStartArgs);
                     // 플레이어가 행동할 수 있는 동안 반복
                     
                     if (token.IsCancellationRequested)
@@ -225,7 +232,14 @@ namespace Stage
                     playerTurnLogic.SetPlayerInputEnabled(true);
                     var playerInputData = await playerTurnLogic.WaitForPlayerReady(token);
                     playerTurnLogic.SetPlayerInputEnabled(false);
+                    
+                    using var playerActionArgs = BeforePlayerActionEventArgs.Get();
+                    await ExecEventBus<BeforePlayerActionEventArgs>.InvokeMerged(playerActionArgs);
+                    
                     await playerInputHandler.HandlePlayerInput(playerInputData, token);
+                    
+                    using var afterPlayerActionArgs = AfterPlayerActionEventArgs.Get();
+                    await ExecEventBus<AfterPlayerActionEventArgs>.InvokeMerged(afterPlayerActionArgs);
                     
                     // 클리어 체크
                     if(StageManager.CheckStageClear())
@@ -234,6 +248,9 @@ namespace Stage
                         StageManager.EndStage();
                         return;
                     }
+                    using var playerActionLoopEndArgs = PlayerActionLoopEndEventArgs.Get();
+                    await ExecEventBus<PlayerActionLoopEndEventArgs>.InvokeMerged(playerActionLoopEndArgs);
+                    
                 }
                  
 
@@ -249,6 +266,9 @@ namespace Stage
                     if (basicTurnLogic == null) continue;
                     await basicTurnLogic.OnTurnEnd(_turnCount, token);
                 }
+                using var turnEndArgs = TurnEndEventArgs.Get();
+                await ExecEventBus<TurnEndEventArgs>.InvokeMerged(turnEndArgs);
+                
                 LogEx.Log($"Turn {_turnCount} fully ended.");
                 
                 
