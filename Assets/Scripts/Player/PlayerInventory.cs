@@ -10,7 +10,7 @@ public class PlayerInventory : MonoBehaviour
     private List<AbilityBase> _abilities = new List<AbilityBase>();
     private int _currentAbilityCount = 0;
     private int _maxAbilityCount;
-    
+
     private TilePlaceHandler _tilePlaceHandler;
     
     private void Awake()
@@ -28,15 +28,33 @@ public class PlayerInventory : MonoBehaviour
         _tilePlaceHandler = TurnManager.Instance.GetComponent<TilePlaceHandler>();
         if (_tilePlaceHandler == null)
         {
-            LogEx.LogError("TilePlaceHandler에 연결 실패");
+            Debug.LogError("TilePlaceHandler가 할당되지 않음! TurnManager 확인..");
         }
+        
+#if UNITY_EDITOR
+        TestAddAbility();
+#endif
+    }
+
+    /// <summary>
+    /// Will be deprecated
+    /// </summary>
+    private void TestAddAbility()
+    {
+        AddAbility(eAbilityType.OnlyPlace);
+        AddAbility(eAbilityType.OnlyPlace);
+        AddAbility(eAbilityType.OnlyPlace);
+        AddAbility(eAbilityType.OnlyPlace);
     }
 
     private void OnDestroy()
     {
-        if (_tilePlaceHandler == null)
+        for (int i = 0; i < _maxAbilityCount; i++)
         {
-            LogEx.LogError("TilePlaceHandler에 연결 실패");
+            if (_abilities[i] != null)
+            {
+                _abilities[i].OnDestroy(_tilePlaceHandler);
+            }
         }
     }
 
@@ -48,12 +66,15 @@ public class PlayerInventory : MonoBehaviour
             return;
         }
 
+        LogEx.Log($"{abilityType.ToString()} 증강 추가!");
         AbilityBase newAbility = AbilityFactory.Create(abilityType);
         
         if (newAbility == null) return;
+        newAbility.Initialize(_tilePlaceHandler);
         
         _abilities[_currentAbilityCount] = newAbility;
         _currentAbilityCount++;
+        RefreshPriorities();
     }
 
     public void RemoveAbility(int slotIdx)
@@ -67,6 +88,8 @@ public class PlayerInventory : MonoBehaviour
 
         _abilities[_currentAbilityCount + 1] = null;
         _currentAbilityCount--;
+        
+        RefreshPriorities();
     }
 
     public void SwapAbilities(int slotIdx1, int slotIdx2)
@@ -76,5 +99,19 @@ public class PlayerInventory : MonoBehaviour
         if (slotIdx1 == slotIdx2) return;
 
         (_abilities[slotIdx1], _abilities[slotIdx2]) = (_abilities[slotIdx2], _abilities[slotIdx1]);
+        
+        RefreshPriorities();
     }
+
+    private void RefreshPriorities()
+    {
+        for (int i = 0; i < _maxAbilityCount; i++)
+        {
+            if (_abilities[i] != null)
+            {
+                _abilities[i].AbilityPriority = i;
+            }
+        }
+    }
+    
 }
