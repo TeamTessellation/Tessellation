@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Events.Core;
 using Machamy.Utils;
@@ -255,13 +256,14 @@ namespace ExecEvents
             _snapshot.Clear();
             _dirty = true;
         }
-        
+
 
         /// <summary>
         /// 모든 액션을 우선순위에 따라 실행합니다.
         /// </summary>
         /// <param name="eventArgs"></param>
-        public async UniTask ExecuteAll(TEventArgs eventArgs)
+        /// <param name="cancellationToken"></param>
+        public async UniTask ExecuteAll(TEventArgs eventArgs, CancellationToken cancellationToken = default)
         {
             if (_dirty)
             {
@@ -284,6 +286,11 @@ namespace ExecEvents
                     if (eventArgs.BreakChain)
                     {
                         LogEx.Log($"[ExecQueue<{typeof(TEventArgs).Name}>] Chain broken at action {wrapper.action}");
+                        break;
+                    }
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        LogEx.Log($"[ExecQueue<{typeof(TEventArgs).Name}>] Execution cancelled.");
                         break;
                     }
                 }

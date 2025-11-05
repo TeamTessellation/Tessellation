@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
 using Machamy.Utils;
 
 namespace ExecEvents
@@ -10,7 +11,7 @@ namespace ExecEvents
     {
         
         private static bool _isMergedExecuting = false;
-        
+        private static CancellationToken _token = CancellationToken.None;
         /// <summary>
         /// 이벤트 버스가 현재 실행 중인지 여부를 나타냅니다.
         /// </summary>
@@ -92,12 +93,12 @@ namespace ExecEvents
         /// await ExecEventBus&lt;MyEventArgs&gt;.InvokeSequentially(args);
         /// </code>
         /// <param name="args"></param>
-        public static async UniTask InvokeSequentially(TEvent args)
+        public static async UniTask InvokeSequentially(TEvent args, CancellationToken cancellationToken = default)
         {
             LogEx.Log("Invoking Dynamic Event Bus");
-            await ExecDynamicEventBus<TEvent>.Invoke(args);
+            await ExecDynamicEventBus<TEvent>.Invoke(args, cancellationToken);
             LogEx.Log("Invoking Static Event Bus");
-            await ExecStaticEventBus<TEvent>.Invoke(args);
+            await ExecStaticEventBus<TEvent>.Invoke(args, cancellationToken);
         }
 
         /// <summary>
@@ -112,7 +113,7 @@ namespace ExecEvents
         /// await ExecEventBus&lt;MyEventArgs&gt;.InvokeMerged(args);
         /// </code>
         /// <param name="args"></param>
-        public static async UniTask InvokeMerged(TEvent args)
+        public static async UniTask InvokeMerged(TEvent args, CancellationToken cancellationToken = default)
         {
             LogEx.Log("Invoking Merged Event Bus");
             _isMergedExecuting = true;
@@ -129,8 +130,15 @@ namespace ExecEvents
                 // 두 큐를 병합 정렬 방식으로 실행
                 while (dynamicIndex < dynamicQueue.Count && staticIndex < staticQueue.Count)
                 {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        LogEx.Log("Merged Event Bus Invocation Cancelled");
+                        return;
+                    }
+                    
                     var dynamicAction = dynamicQueue[dynamicIndex];
                     var staticAction = staticQueue[staticIndex];
+                    
                     
                     if (dynamicAction.CompareTo(staticAction) <= 0)
                     {
@@ -155,6 +163,11 @@ namespace ExecEvents
                 // 남은 동적 작업 실행
                 while (dynamicIndex < dynamicQueue.Count && !args.BreakChain)
                 {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        LogEx.Log("Merged Event Bus Invocation Cancelled");
+                        return;
+                    }
                     var dynamicAction = dynamicQueue[dynamicIndex];
                     LogEx.Log($"({dynamicAction._primaryPriority})Executing Dynamic action {dynamicAction.action}");
                     await dynamicAction.action.Invoke(args);
@@ -163,6 +176,11 @@ namespace ExecEvents
                 // 남은 정적 작업 실행
                 while (staticIndex < staticQueue.Count && !args.BreakChain)
                 {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        LogEx.Log("Merged Event Bus Invocation Cancelled");
+                        return;
+                    }
                     var staticAction = staticQueue[staticIndex];
                     LogEx.Log($"({staticAction._primaryPriority})Executing Static action {staticAction.action}");
                     await staticAction.action.Invoke(args);

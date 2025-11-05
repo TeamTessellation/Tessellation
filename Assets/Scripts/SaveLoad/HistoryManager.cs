@@ -36,7 +36,7 @@ namespace SaveLoad
         /// 마지막 저장 기록을 불러오고 기록에서 제거합니다.
         /// </summary>
         /// <returns></returns>
-        public SaveData LoadAndPopLastSave()
+        public GameData LoadAndPopLastSave()
         {
             var lastSave = _saveHistory.PopLastSave();
             SaveManager.Instance.LoadSaveData(lastSave);
@@ -53,7 +53,7 @@ namespace SaveLoad
         }
         
         
-        private void AddSave(SaveData data)
+        private void AddSave(GameData data)
         {
             _saveHistory.Add(data);
         }
