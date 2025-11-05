@@ -16,12 +16,16 @@ namespace Events.Core
     public abstract class EventArgs<T> : EventArgs, IDisposable where T : EventArgs<T>, new()
     {
         private static Queue<T> pool = new Queue<T>();
-        protected bool isUsed = false;
+        protected bool isInPool = false;
         
         /// <summary>
-        /// 이벤트가 이미 사용 되었는지 여부
+        /// 이벤트가 풀에 있는지 여부
         /// </summary>
-        public bool IsUsed => isUsed;
+        public bool IsInPool => isInPool;
+        /// <summary>
+        /// 이벤트가 유효한지 여부
+        /// </summary>
+        public bool IsValid => !isInPool;
         
         protected EventArgs()
         {
@@ -35,7 +39,7 @@ namespace Events.Core
         public static T Get()
         {
             var res = pool.Count > 0 ? pool.Dequeue() : new T();
-            res.isUsed = false;
+            res.isInPool = false;
             return res;
         }
 
@@ -46,7 +50,7 @@ namespace Events.Core
         {
             Clear();
             pool.Enqueue((T)this);
-            isUsed = true;
+            isInPool = true;
         }
 
         /// <summary>
