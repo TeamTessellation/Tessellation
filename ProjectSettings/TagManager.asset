@@ -52,6 +52,9 @@ TagManager:
   - name: InGameUI
     uniqueID: 1339770911
     locked: 0
+  - name: TopUI
+    uniqueID: 3015166381
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1
