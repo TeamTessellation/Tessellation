@@ -19,7 +19,7 @@ namespace Utils
         }
         
         private static Dictionary<RandomType, UMRandom> randoms = new Dictionary<RandomType, UMRandom>();
-        private static Dictionary<RandomType, uint> randomSeeds = new Dictionary<RandomType, uint>();
+        private static Dictionary<RandomType, uint> initialRandomSeeds = new Dictionary<RandomType, uint>();
         
         
         private static bool _isInitialized = false;
@@ -40,7 +40,7 @@ namespace Utils
                 setSeed = initialSeed == 0 ? (uint) URandom.Range(int.MinValue, int.MaxValue) : initialSeed;
             }
             randoms[type] = new UMRandom(setSeed);
-            randomSeeds[type] = setSeed;
+            initialRandomSeeds[type] = initialSeed;
         }
         
         public static int GetRandomInt(int min, int max, RandomType type = RandomType.Default)
@@ -114,7 +114,7 @@ namespace Utils
                 saves.Add(new RandomSave
                 {
                     type = kvp.Key,
-                    initialSeed = randomSeeds[kvp.Key],
+                    initialSeed = initialRandomSeeds[kvp.Key],
                     state = kvp.Value.state
                 });
             }
