@@ -13,6 +13,7 @@ namespace Core
         /// 이 싱글톤 인스턴스가 씬 전환 시에도 파괴되지 않도록 설정할지 여부를 나타냅니다.
         /// </summary>
         public abstract bool IsDontDestroyOnLoad { get; }
+        public bool destroyPreExisting = false;
         
         protected static T _instance;
 
@@ -49,7 +50,20 @@ namespace Core
             else if (_instance != this)
             {
                 LogEx.LogWarning($"Instance of {typeof(T).Name} already exists. Destroying duplicate.");
-                Destroy(gameObject);
+                if (destroyPreExisting)
+                {
+                    Destroy(_instance.gameObject);
+                    _instance = this as T;
+                    if (IsDontDestroyOnLoad)
+                    {
+                        DontDestroyOnLoad(gameObject);
+                    }
+                    AfterAwake();
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
         }
         
