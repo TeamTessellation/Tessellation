@@ -119,6 +119,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &326705271
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 326705272}
+  - component: {fileID: 326705273}
+  m_Layer: 0
+  m_Name: '@InteractionManager'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &326705272
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326705271}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &326705273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326705271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 674d8f46876c45c4bb2438bcdb50fb8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Interaction.InteractionManager
+  destroyPreExisting: 0
+  clickThreshold: 0.2
 --- !u!1 &1231704937
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,6 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae8b09c9e9a47e9a97579c5b96149a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataAnalysis.AnalyticsManager
+  destroyPreExisting: 0
 --- !u!4 &1231704939
 Transform:
   m_ObjectHideFlags: 0
@@ -192,6 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 315ec651815e4fa4a4203713a85c6ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveLoad.HistoryManager
+  destroyPreExisting: 0
   _saveHistory:
     _saves: []
 --- !u!4 &1449891191
@@ -240,6 +288,54 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1728006147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1728006149}
+  - component: {fileID: 1728006148}
+  m_Layer: 0
+  m_Name: '@UIManager'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1728006148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728006147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d30a981769747e581b6aadaaf7bd447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.UIManager
+  destroyPreExisting: 0
+  <PauseUI>k__BackingField: {fileID: 0}
+  <MainTitleUI>k__BackingField: {fileID: 0}
+  <GameUI>k__BackingField: {fileID: 0}
+--- !u!4 &1728006149
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728006147}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.69805, y: -1.4869, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1958929999
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,6 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad7a55fcce94e519d17d20400b9a1bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveLoad.SaveManager
+  destroyPreExisting: 0
 --- !u!4 &1958930001
 Transform:
   m_ObjectHideFlags: 0
@@ -329,6 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b65d5bfe8e4242a801fe0c40d21233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stage.TurnManager
+  destroyPreExisting: 0
   _turnCount: 0
 --- !u!4 &2025349029
 Transform:
@@ -374,7 +472,9 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1480622180}
+  - {fileID: 326705272}
   - {fileID: 1958930001}
   - {fileID: 1449891191}
   - {fileID: 1231704939}
   - {fileID: 2025349029}
+  - {fileID: 1728006149}

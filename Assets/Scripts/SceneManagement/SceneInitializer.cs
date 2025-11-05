@@ -1,6 +1,9 @@
-using System;
+
+using System.Runtime.CompilerServices;
+using Core;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 
 namespace SceneManagement{
     
@@ -12,16 +15,12 @@ namespace SceneManagement{
     {
         [SerializeField] private SceneReference[] sceneToLoad;
 
-        private void Awake()
+        private async UniTaskVoid Awake()
         {
-            foreach (var sceneRef in sceneToLoad)
-            {
-                if (sceneRef == null) continue;
-                if (!sceneRef.IsSceneLoaded())
-                {
-                    SceneManager.LoadSceneAsync(sceneRef.SceneName, LoadSceneMode.Additive);
-                }
-            }
+            
+            await SceneUtil.LoadScenesAsync(sceneToLoad);
+            
+            InitialLoader.NotifySceneInitialized();
             Destroy(gameObject);
         }
         

@@ -31,7 +31,7 @@ namespace Stage
         }
         
         /// <summary>
-        /// 스테이지를 종료합니다.
+        /// 스테이지를 정상적으로 종료합니다.
         /// </summary>
         public void EndStage()
         {
@@ -101,6 +101,14 @@ namespace Stage
             // 목표 점수 도달 확인
             // _isStageCleared = true;
             return _isStageCleared;
+        }
+
+        /// <summary>
+        /// 스테이지를 초기 상태로 재설정합니다.
+        /// </summary>
+        public void ResetStage()
+        {
+            
         }
         
         
