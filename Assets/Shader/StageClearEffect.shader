@@ -11,6 +11,7 @@
         _StartX ("X Start", float) = 1
         _EndX ("X End", float) = 2
         _Direction ("Direction (0 = down->up / 1 = up->down)", float) = 1
+        _Angle ("Angle", float) = 0
     }
 
     SubShader
@@ -62,6 +63,7 @@
             float _EndX;
             float _XCount;
             float _Direction;
+            float _Angle;
 
             TEXTURE2D(_BaseMap);
             SAMPLER(sampler_BaseMap);
@@ -112,9 +114,18 @@
                 float p3 = abs(dot(local, n3));
                 float m = max(p1, max(p2, p3));
 
-                const float h = s;
-                if (m > h) return 2.0;
-                return m / h;
+                if (m > s) return 2.0;
+                return m / s;
+            }
+
+            float2 Rotate2D(float2 p, float angleRad)
+            {
+                float s = sin(angleRad);
+                float c = cos(angleRad);
+                return float2(
+                    c * p.x - s * p.y,
+                    s * p.x + c * p.y
+                );
             }
 
             Varyings vert(Attributes IN)
@@ -132,8 +143,8 @@
             half4 frag(Varyings IN) : SV_Target
         {
             float progress = 1 - _Progress;
-            float3 worldPos = IN.worldPos;
-            float3 coor = WorldToCoor(worldPos.xy, _TileSize);
+            float2 worldPos = Rotate2D(IN.worldPos.xy, _Angle);
+            float3 coor = WorldToCoor(worldPos, _TileSize);
             float3 centerPos = CoorToWorld(coor, _TileSize);
             float2 local = (worldPos.xy - centerPos.xy) / _TileSize;
             float hexPercent = HexPercentFromGrid(local);

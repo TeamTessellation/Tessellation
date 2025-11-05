@@ -133,14 +133,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
 
     private void FailPlace()
     {
-        _targetHandBox.HoldTileSet.transform.localPosition = Vector3.zero;
-        int maxRadius = 0;
-        for (int j = 0; j < _targetHandBox.HoldTileSet.Data.Data.Count; j++)
-        {
-            maxRadius = Mathf.Max(_targetHandBox.HoldTileSet.Data.Data[j].Coor.CircleRadius, maxRadius);
-        }
-        float size = (maxRadius * 2 + 1 > 3) ? 5 / (Mathf.Sqrt(3) * (maxRadius * 2 + 1)) : 1;
-        _targetHandBox.HoldTileSet.transform.localScale = Vector2.one * size;
+        _targetHandBox.SetOnHand();
     }
 
     private void UseAllHand()
