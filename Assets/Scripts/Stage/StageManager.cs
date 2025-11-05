@@ -62,6 +62,9 @@ namespace Stage
              // 목표 점수 설정
              // 턴 초기화
              // 제약 적용
+             using var initStageArgs = StageStartEventArgs.Get();
+             await ExecEventBus<StageStartEventArgs>.InvokeMerged(initStageArgs);
+             
             await UniTask.Delay(1000, cancellationToken: token);
              
              LogEx.Log("Stage Initialized.");
@@ -74,7 +77,7 @@ namespace Stage
         
         private async UniTask EndStageAsync()
         {
-            if (token == default)
+            if (token == CancellationToken.None)
             {
                 LogEx.LogError("StageManager: CancellationToken is not set. Cannot end stage.");
                 return;
@@ -83,8 +86,8 @@ namespace Stage
             /*
              * 스테이지 종료 처리
              */
-            using var EndStageArgs = StageEndEventArgs.Get();
-            await ExecEventBus<StageEndEventArgs>.InvokeMerged(EndStageArgs);
+            using var endStageArgs = StageEndEventArgs.Get();
+            await ExecEventBus<StageEndEventArgs>.InvokeMerged(endStageArgs);
             
             await UniTask.Delay(1000);
             // 결과 팝업

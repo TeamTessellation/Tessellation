@@ -232,9 +232,14 @@ namespace Stage
                     playerTurnLogic.SetPlayerInputEnabled(true);
                     var playerInputData = await playerTurnLogic.WaitForPlayerReady(token);
                     playerTurnLogic.SetPlayerInputEnabled(false);
+                    
                     using var playerActionArgs = BeforePlayerActionEventArgs.Get();
                     await ExecEventBus<BeforePlayerActionEventArgs>.InvokeMerged(playerActionArgs);
+                    
                     await playerInputHandler.HandlePlayerInput(playerInputData, token);
+                    
+                    using var afterPlayerActionArgs = AfterPlayerActionEventArgs.Get();
+                    await ExecEventBus<AfterPlayerActionEventArgs>.InvokeMerged(afterPlayerActionArgs);
                     
                     // 클리어 체크
                     if(StageManager.CheckStageClear())

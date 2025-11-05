@@ -42,6 +42,27 @@ namespace Stage
         }
     }
     
+    public class AfterPlayerActionEventArgs : ExecEventArgs<AfterPlayerActionEventArgs>
+    {
+        public AfterPlayerActionEventArgs()
+        {
+
+        }
+    }
+    
+    /// <summary>
+    /// 스테이지 initializing의 마무리 단계에 호출됩니다.
+    /// </summary>
+    public class StageStartEventArgs : ExecEventArgs<StageStartEventArgs>
+    {
+        public StageStartEventArgs()
+        {
+
+        }
+    }
+    
+    
+    
     public class StageEndEventArgs : ExecEventArgs<StageEndEventArgs>
     {
         public bool IsCleared;
