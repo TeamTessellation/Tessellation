@@ -6,11 +6,15 @@ namespace Abilities
     {
         public static AbilityBase Create(eAbilityType abilityType)
         {
+            AbilityBase newAbility;
+            
             switch (abilityType)
             {
                 case eAbilityType.OnlyPlace:
-                    return new OnlyPlaceAbility();
-            
+                {
+                    newAbility = new OnlyPlaceAbility();
+                    break;
+                }
                 case eAbilityType.WomboCombo:
                     LogEx.LogWarning($"미구현 Ability: {abilityType}");
                     return null;
@@ -23,6 +27,9 @@ namespace Abilities
                     LogEx.LogError($"알 수 없는 Ability 타입: {abilityType}");
                     return null;
             }
+
+            newAbility.AbilityType = abilityType;
+            return newAbility;
         }
     }
 }

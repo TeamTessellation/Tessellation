@@ -203,12 +203,12 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         if (eventDelegate == null) return;
         
         await ExecEventBus<TurnResultInfo>.InvokeMerged(info);
-
-        // var tasks = eventDelegate.GetInvocationList()
-        //     .Cast<Func<TurnResultInfo, UniTask>>()
-        //     .Select(handler => handler(info).AttachExternalCancellation(token));
-
-        // await UniTask.WhenAll(tasks);
+        
+        foreach (var handler in eventDelegate.GetInvocationList()
+                     .Cast<Func<TurnResultInfo, UniTask>>())
+        {
+            await handler(info).AttachExternalCancellation(token); // 하나씩 순차 실행
+        }
     }
     
     private (int, List<Tile>) CheckLineCompleted()

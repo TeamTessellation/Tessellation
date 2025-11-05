@@ -6,56 +6,84 @@ using UnityEngine;
 
 namespace Abilities
 {
+    [Serializable]
     public enum eAbilityType
     {
+        // === 기존 ===
         OnlyPlace,
         WomboCombo,
         LineClear,
-    }
     
-        public abstract class AbilityBase
+        // === 액티브 아이템 (Active Items) ===
+        RemoveTileSet,              // 타일셋 제거
+        RedrawHand,                 // 타일셋 다시 뽑기
+        Undo,                       // 되돌리기
+        RotateTileSet,              // 타일셋 회전
+        ConvertToOverwrite,         // 덮어쓰기 타일로 변환
+        CopyTileSet,                // 타일셋 복사
+    
+        // === 폭탄 타일 보조 아이템 (Bomb Synergy) ===
+        IncreaseBombRange,          // 폭발 범위 증가
+        BombLinesClearAsLine,       // 폭발로 사라진 타일을 줄지우기로 간주
+        BombExplodesOnLineClear,    // 지운 줄에 폭탄 포함시 터짐
+        ChainBombExplosion,         // 폭탄 연쇄 폭발
+    
+        // === 체급 증가 (Resource Boost) ===
+        IncreaseTurns,              // 턴수 증가
+        IncreaseActiveItemUses,     // 액티브 아이템 횟수 증가
+        IncreaseTimeLimit,          // 제한 시간 증가
+    
+        // === 필드 크기 변경 (Field Size Modifier) ===
+        DecreaseFieldIncreaseScore, // 필드 크기 감소, 점수 증가
+    
+        // === 조건부 보상 (Conditional Rewards) ===
+        // MoneyPerNLines,          // 줄 n번 지울때마다 돈 (아직 기획중)
+    }
+
+    public abstract class AbilityBase
     {
         // === Properties ===
+        public eAbilityType AbilityType;
+        public int AbilityPriority;
+        public int AbilityLevel = 1;
+        
         protected virtual bool ReactsToTilePlaced => false;
         protected virtual bool ReactsToLineCleared => false;
         protected virtual bool ReactsToTileRemoved => false;
         protected virtual bool ReactsToTileBurst => false;
         protected virtual bool ReactsToTurnProcessed => false;
 
-        private TilePlaceHandler _tilePlaceHandler;
-        
         // === Functions ===
-        protected virtual void Start()
+        public virtual void Initialize(TilePlaceHandler tilePlaceHandler)
         {
-            _tilePlaceHandler = TurnManager.Instance.GetComponent<TilePlaceHandler>();
-            if (_tilePlaceHandler == null)
+            if (tilePlaceHandler == null)
             {
                 LogEx.LogError("TilePlaceHandler에 연결 실패");
                 return;
             }
-            
+
             // TilePlaceHandler의 이벤트에 구독
-            _tilePlaceHandler.OnTilePlacedAsync += HandleTilePlacedAsync;
-            _tilePlaceHandler.OnLineClearedAsync += HandleLineClearedAsync;
-            _tilePlaceHandler.OnTileRemovedAsync += HandleTileRemovedAsync;
-            _tilePlaceHandler.OnTileBurstAsync += HandleTileBurstAsync;
-            _tilePlaceHandler.OnTurnProcessedAsync += HandleTurnProcessedAsync;
+            tilePlaceHandler.OnTilePlacedAsync += HandleTilePlacedAsync;
+            tilePlaceHandler.OnLineClearedAsync += HandleLineClearedAsync;
+            tilePlaceHandler.OnTileRemovedAsync += HandleTileRemovedAsync;
+            tilePlaceHandler.OnTileBurstAsync += HandleTileBurstAsync;
+            tilePlaceHandler.OnTurnProcessedAsync += HandleTurnProcessedAsync;
         }
 
-        protected void OnDestroy()
+        public void OnDestroy(TilePlaceHandler tilePlaceHandler)
         {
-            if (_tilePlaceHandler == null)
+            if (tilePlaceHandler == null)
             {
                 LogEx.LogError("TilePlaceHandler에 연결 실패");
                 return;
             }
             
             // 이벤트 구독 해제
-            _tilePlaceHandler.OnTilePlacedAsync -= HandleTilePlacedAsync;
-            _tilePlaceHandler.OnLineClearedAsync -= HandleLineClearedAsync;
-            _tilePlaceHandler.OnTileRemovedAsync -= HandleTileRemovedAsync;
-            _tilePlaceHandler.OnTileBurstAsync -= HandleTileBurstAsync;
-            _tilePlaceHandler.OnTurnProcessedAsync -= HandleTurnProcessedAsync;
+            tilePlaceHandler.OnTilePlacedAsync -= HandleTilePlacedAsync;
+            tilePlaceHandler.OnLineClearedAsync -= HandleLineClearedAsync;
+            tilePlaceHandler.OnTileRemovedAsync -= HandleTileRemovedAsync;
+            tilePlaceHandler.OnTileBurstAsync -= HandleTileBurstAsync;
+            tilePlaceHandler.OnTurnProcessedAsync -= HandleTurnProcessedAsync;
         }
 
         protected virtual async UniTask HandleTilePlacedAsync(TurnResultInfo info)
