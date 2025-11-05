@@ -38,19 +38,30 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
     public void RegisterEnterEvent(Action<HandBox> enterEvent) => _enterEvent = enterEvent;
     public void RegisterExitEvent(Action<HandBox> exitEvent) => _exitEvent = exitEvent;
 
+    public void SetOnHand()
+    {
+        int maxRadius = 0;
+        for (int j = 0; j < HoldTileSet.Data.Data.Count; j++)
+        {
+            maxRadius = Mathf.Max(HoldTileSet.Data.Data[j].Coor.CircleRadius, maxRadius);
+        }
+        float size = (maxRadius * 2 + 1 > 3) ? 5 / (Mathf.Sqrt(3) * (maxRadius * 2 + 1)) : 0.7f;
+        HoldTileSet.transform.localScale = Vector2.one * size;
+
+        Vector3 center = Vector3.zero;
+        for (int i = 0; i < HoldTileSet.Tiles.Count; i++)
+        {
+            center += HoldTileSet.Tiles[i].transform.localPosition * HoldTileSet.transform.localScale.x;
+        }
+        center /= HoldTileSet.Tiles.Count;
+        HoldTileSet.transform.localPosition = -center;
+    }
+
     public void Set(TileSetData data)
     {
         HoldTileSet = Pool<TileSet, TileSetData>.Get(data);
         HoldTileSet.transform.SetParent(transform, false);
-        HoldTileSet.transform.localPosition = Vector3.zero;
-
-        int maxRadius = 0;
-        for (int j = 0; j < data.Data.Count; j++)
-        {
-            maxRadius = Mathf.Max(data.Data[j].Coor.CircleRadius, maxRadius);
-        }
-        float size = (maxRadius * 2 + 1 > 3) ? 5 / (Mathf.Sqrt(3) * (maxRadius * 2 + 1)) : 1;
-        HoldTileSet.transform.localScale = Vector2.one * size;
+        SetOnHand();
 
         _eventTrigger.triggers = null;
 
