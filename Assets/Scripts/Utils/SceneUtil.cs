@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using SceneManagement;
 
 
-namespace System.Runtime.CompilerServices
+namespace Utils
 {
     public static class SceneUtil
     {
