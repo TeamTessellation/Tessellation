@@ -12,14 +12,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f8b76515cda4d9ca399f352baa6ad1a, type: 3}
   m_Name: StageInfoUISettingSO
   m_EditorClassIdentifier: Assembly-CSharp::UI.UISettings.StageInfoUISettingSO
-  showFadeInDuration: 0.5
+  showFadeInDuration: 2
   showFadeInEase: 9
-  numLengthForLevel: 3
+  showTransitionDirectionType: 1
+  showTransitionFadeType: 0
+  showTransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.5904403
+      outSlope: 0.5904403
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5056275
+      value: 0.29854286
+      inSlope: 1.004662
+      outSlope: 1.004662
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1.4188839
+      outSlope: 1.4188839
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  numLengthForLevel: 1
   levelCountUpDuration: 1
-  levelCountUpEase: 9
   numLengthForTargetScore: 7
   targetScoreCountUpDuration: 1
   targetScoreCountUpEase: 9
   autoHideDelay: 2
-  hideFadeOutDuration: 0.5
+  hideFadeOutDuration: 2
   hideFadeOutEase: 8
+  hideTransitionDirectionType: 0
+  hideTransitionFadeType: 1
+  hideTransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.5904403
+      outSlope: 0.5904403
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5056275
+      value: 0.29854286
+      inSlope: 1.004662
+      outSlope: 1.004662
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1.4188839
+      outSlope: 1.4188839
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

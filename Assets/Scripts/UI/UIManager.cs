@@ -36,10 +36,14 @@ namespace UI
         }
         
 
+        [Header("Main UIs")]
         [field:SerializeField] public MainTitleUI MainTitleUI{ get; private set; }
         [field:SerializeField] public GameUI GameUI{ get; private set; }
+        
+        [Header("Other UIs")]
         [field:SerializeField] public PauseUI PauseUI { get; private set; }
         [field:SerializeField] public StageInfoUI StageInfoUI{ get; private set; }
+        [field:SerializeField] public TransitionUI TransitionUI{ get; private set; }
 
         // ReSharper disable once Unity.IncorrectMethodSignature
         private async UniTaskVoid Start()
@@ -71,6 +75,7 @@ namespace UI
             MainTitleUI = FindUI<MainTitleUI>();
             GameUI = FindUI<GameUI>();
             StageInfoUI = FindUI<StageInfoUI>();
+            TransitionUI = FindUI<TransitionUI>();
         }
 
         public void ShowPauseUI()
@@ -96,7 +101,7 @@ namespace UI
         /// <summary>
         /// 메인 메뉴 UI로 전환합니다.
         /// </summary>
-        public async UniTask SwitchToMainMenu()
+        public async void SwitchToMainMenu()
         {
             // TODO : UniTask이용해서 애니메이션 처리 가능
             GameUI.Hide();
@@ -106,7 +111,7 @@ namespace UI
         /// <summary>
         /// MainUI에서 게임 UI로 전환합니다.
         /// </summary>
-        public async UniTask SwitchMainToGameUI()
+        public async void SwitchMainToGameUI()
         {
             // TODO : UniTask이용해서 애니메이션 처리 가능
             MainTitleUI.Hide();

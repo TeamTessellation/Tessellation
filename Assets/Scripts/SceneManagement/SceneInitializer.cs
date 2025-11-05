@@ -1,8 +1,8 @@
 
-using System.Runtime.CompilerServices;
 using Core;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Utils;
 
 
 namespace SceneManagement{

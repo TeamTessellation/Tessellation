@@ -80,17 +80,7 @@ namespace UI.OtherUIs
             InteractionManager.Instance.ConfirmEvent += OnConfirmed;
             // 보이기
             Show();
-            
-            var fadeInSequence = DOTween.Sequence();
-            fadeInSequence.Append(DOTween.To(() => 0f, x => SetFade(x), 1f, stageInfoUISettingSO.showFadeInDuration)
-                .SetEase(stageInfoUISettingSO.showFadeInEase));
-            currentSequence = fadeInSequence;
-            await fadeInSequence.Play().AsyncWaitForCompletion();
-            
-            await UniTask.WhenAny(
-                UniTask.Delay(500),
-                UniTask.WaitUntil(() => isConfirmed)
-            );
+            await ShowRoutine();
             // 레벨
             var levelSequence = DOTween.Sequence();
             levelSequence.Append(DOTween
@@ -98,7 +88,7 @@ namespace UI.OtherUIs
                     stageInfoUISettingSO.levelCountUpDuration)
                 .SetEase(stageInfoUISettingSO.targetScoreCountUpEase));
             currentSequence = levelSequence;
-            await levelSequence.Play().AsyncWaitForCompletion();
+            await levelSequence.ToUniTask();
 
             await UniTask.WhenAny(
                 UniTask.Delay(500),
@@ -111,7 +101,7 @@ namespace UI.OtherUIs
                     stageInfoUISettingSO.targetScoreCountUpDuration)
                 .SetEase(stageInfoUISettingSO.targetScoreCountUpEase));
             currentSequence = sequence;
-            await sequence.Play().AsyncWaitForCompletion();
+            await sequence.ToUniTask();
             
             await UniTask.WhenAny(
                 UniTask.Delay(500),
@@ -129,12 +119,29 @@ namespace UI.OtherUIs
             await HideRoutine();
         }
         
+        public async UniTask ShowRoutine()
+        {
+            Show();
+            await UIManager.Instance.TransitionUI.PlayHexagonTransition(
+                stageInfoUISettingSO.showFadeInDuration,
+                stageInfoUISettingSO.showTransitionFadeType,
+                stageInfoUISettingSO.showTransitionCurve,
+                stageInfoUISettingSO.showTransitionDirectionType);
+            await DOTween.To(() => 0f, SetFade, 1f, 0.2f)
+                .SetEase(stageInfoUISettingSO.showFadeInEase)
+                .ToUniTask();
+        }
+        
         public async UniTask HideRoutine()
         {
-            var fadeOutSequence = DOTween.Sequence();
-            fadeOutSequence.Append(DOTween.To(() => 1f, x => SetFade(x), 0f, stageInfoUISettingSO.hideFadeOutDuration)
-                .SetEase(stageInfoUISettingSO.hideFadeOutEase));
-            await fadeOutSequence.Play().AsyncWaitForCompletion();
+            await DOTween.To(() => 1f, SetFade, 0f, 0.2f)
+                .SetEase(stageInfoUISettingSO.hideFadeOutEase)
+                .ToUniTask();
+            await UIManager.Instance.TransitionUI.PlayHexagonTransition(
+                stageInfoUISettingSO.hideFadeOutDuration,
+                stageInfoUISettingSO.hideTransitionFadeType,
+                stageInfoUISettingSO.hideTransitionCurve,
+                stageInfoUISettingSO.hideTransitionDirectionType);
             Hide();
         }
 
@@ -163,6 +170,7 @@ namespace UI.OtherUIs
         [ContextMenu("Test Show Info Routine")]
         private async void CtxTestShowInfoRoutine()
         {
+            UIManager.Instance.SwitchMainToGameUI();
             StageManager stageManager = StageManager.Instance;
             StageModel stageModel = stageManager.GetNextStage();
             stageManager.CurrentStage = stageModel;

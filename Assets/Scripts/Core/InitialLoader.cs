@@ -5,6 +5,7 @@ using Unity.Android.Gradle.Manifest;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Utils;
 using Action = System.Action;
 
 namespace Core
