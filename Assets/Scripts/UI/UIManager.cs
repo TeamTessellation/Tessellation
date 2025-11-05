@@ -3,6 +3,7 @@ using Core;
 using Cysharp.Threading.Tasks;
 using Machamy.Utils;
 using UI.MainUIs;
+using UI.OtherUIs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,24 +35,31 @@ namespace UI
             }
         }
         
-        [field:SerializeField] public PauseUI PauseUI { get; private set; }
+
         [field:SerializeField] public MainTitleUI MainTitleUI{ get; private set; }
         [field:SerializeField] public GameUI GameUI{ get; private set; }
+        [field:SerializeField] public PauseUI PauseUI { get; private set; }
+        [field:SerializeField] public StageInfoUI StageInfoUI{ get; private set; }
 
         // ReSharper disable once Unity.IncorrectMethodSignature
         private async UniTaskVoid Start()
         {
             await InitialLoader.WaitUntilInitialized();
             RegisterUIs();
+            SetMainMenu();
         }
 
-        
-        
+
+        [ContextMenu("Register UIs")]
+        public void Ctx()
+        {
+            RegisterUIs();
+        }
         private void RegisterUIs()
         {
             T FindUI<T>() where T : Component
             {
-                var ui = FindAnyObjectByType<T>();
+                var ui = GlobalCanvas.GetComponentInChildren<T>(true);
                 if (ui == null)
                 {
                     LogEx.LogError($"UIManager: {typeof(T).Name} not found in the scene.");
@@ -62,6 +70,7 @@ namespace UI
             PauseUI = FindUI<PauseUI>();
             MainTitleUI = FindUI<MainTitleUI>();
             GameUI = FindUI<GameUI>();
+            StageInfoUI = FindUI<StageInfoUI>();
         }
 
         public void ShowPauseUI()
@@ -73,25 +82,35 @@ namespace UI
         {
             PauseUI.Hide();
         }
+
+        /// <summary>
+        /// 애니메이션 없이 메인 메뉴 UI로 전환합니다.
+        /// </summary>
+        public void SetMainMenu()
+        {
+            GameUI.Hide();
+            MainTitleUI.Show();
+            PauseUI.Hide();
+        }
         
         /// <summary>
         /// 메인 메뉴 UI로 전환합니다.
         /// </summary>
-        public void SwitchToMainMenu()
+        public async UniTask SwitchToMainMenu()
         {
             // TODO : UniTask이용해서 애니메이션 처리 가능
-            GameUI.gameObject.SetActive(false);
-            MainTitleUI.gameObject.SetActive(true);
+            GameUI.Hide();
+            MainTitleUI.Show();
         }
         
         /// <summary>
         /// MainUI에서 게임 UI로 전환합니다.
         /// </summary>
-        public void SwitchMainToGameUI()
+        public async UniTask SwitchMainToGameUI()
         {
             // TODO : UniTask이용해서 애니메이션 처리 가능
-            MainTitleUI.gameObject.SetActive(false);
-            GameUI.gameObject.SetActive(true);
+            MainTitleUI.Hide();
+            GameUI.Show();
         }
         
         

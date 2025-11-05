@@ -37,7 +37,7 @@ namespace Test
         
         private void OnEnable()
         {
-            SaveManager.RegisterPendingSavable(this);
+            SaveLoadManager.RegisterPendingSavable(this);
             
             ExecDynamicEventBus<TestExecEventArgs>.Register(OnTestEvent);
             ExecDynamicEventBus<TestExecEventArgs>.Register(OnTestEvent2);

@@ -29,7 +29,7 @@ namespace SaveLoad
         public void LoadLastSave()
         {
             var lastSave = _saveHistory.GetLastSave();
-            SaveManager.Instance.LoadSaveData(lastSave);
+            SaveLoadManager.Instance.LoadSaveData(lastSave);
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace SaveLoad
         public GameData LoadAndPopLastSave()
         {
             var lastSave = _saveHistory.PopLastSave();
-            SaveManager.Instance.LoadSaveData(lastSave);
+            SaveLoadManager.Instance.LoadSaveData(lastSave);
             return lastSave;
         }
         
@@ -48,7 +48,7 @@ namespace SaveLoad
         /// </summary>
         public void SaveCurrentState()
         {
-            var currentSave = SaveManager.Instance.CreateCurrentSaveData();
+            var currentSave = SaveLoadManager.Instance.CreateCurrentSaveData();
             AddSave(currentSave);
         }
         

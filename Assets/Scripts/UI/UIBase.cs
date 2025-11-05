@@ -8,5 +8,19 @@ namespace UI
     public abstract class UIBase : MonoBehaviour
     {
         
+        public abstract void Show();
+        public abstract void Hide();
+        
+        public void SetVisible(bool visible)
+        {
+            if (visible)
+            {
+                Show();
+            }
+            else
+            {
+                Hide();
+            }
+        }
     }
 }

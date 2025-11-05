@@ -2,6 +2,7 @@
 using Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 namespace Interaction
 {
@@ -21,7 +22,9 @@ namespace Interaction
         public event Action<InputAction.CallbackContext> PointerPressEvent;
         public event Action<InputAction.CallbackContext> PointerReleaseEvent;
         
+        public event Action ConfirmEvent;
         public event Action CancelEvent;
+        
 
         public void OnClick(InputAction.CallbackContext context)
         {
@@ -45,8 +48,17 @@ namespace Interaction
                 CancelEvent?.Invoke();
             }
         }
+        public void OnConfirm(InputAction.CallbackContext context)
+        {
+            if  (context.performed) 
+            {
+                ConfirmEvent?.Invoke();
+            }
+        }
 
         #region 쓰레기통
+        
+
 
         public void OnInteract(InputAction.CallbackContext context)
         {
