@@ -32,28 +32,27 @@ namespace UI
         }
         
         [field:SerializeField] public PauseUI PauseUI { get; private set; }
-        
-        [SerializeField] private MainTitleUI _mainTitleUI;
-        [SerializeField] private GameUI _gameUI;
+        [field:SerializeField] private MainTitleUI MainTitleUI{ get; private set; }
+        [field:SerializeField] private GameUI GameUI{ get; private set; }
         
         
         public void ShowPauseUI()
         {
-            // PauseUI.Show();
+            PauseUI.gameObject.SetActive(true);
         }
         
         public void SwitchToMainMenu()
         {
             // TODO : Unitask이용해서 애니메이션 처리 가능
-            _gameUI.gameObject.SetActive(false);
-            _mainTitleUI.gameObject.SetActive(true);
+            GameUI.gameObject.SetActive(false);
+            MainTitleUI.gameObject.SetActive(true);
         }
         
         public void SwitchToGameUI()
         {
             // TODO : Unitask이용해서 애니메이션 처리 가능
-            _mainTitleUI.gameObject.SetActive(false);
-            _gameUI.gameObject.SetActive(true);
+            MainTitleUI.gameObject.SetActive(false);
+            GameUI.gameObject.SetActive(true);
         }
         
         
