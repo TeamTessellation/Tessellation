@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Util
+namespace Events.Utils
 {
     public static class ReflectionUtil
     {
