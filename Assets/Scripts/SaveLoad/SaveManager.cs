@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Core;
 using Machamy.Utils;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace SaveLoad
     /// 변수 컨테이너가 존재하지만, 내장 변수를 우선적으로 사용해야 합니다.
     /// </summary>
     [System.Serializable]
-    public class SaveData
+    public class GameData
     {
         public int TurnCount;
         public int Score;
@@ -22,7 +23,7 @@ namespace SaveLoad
         /// </summary>
         [field:SerializeField] public VariableContainer Variables { private set; get; }
         
-        public SaveData()
+        public GameData()
         {
             Variables = new VariableContainer();
         }
@@ -104,9 +105,9 @@ namespace SaveLoad
             }
         }
         
-        public SaveData Clone()
+        public GameData Clone()
         {
-            SaveData cloned = MemberwiseClone() as SaveData;
+            GameData cloned = MemberwiseClone() as GameData;
             cloned.Variables = this.Variables.Clone();
             return cloned;
         }
@@ -115,10 +116,20 @@ namespace SaveLoad
     /// <summary>
     /// 데이터를 저장하고 불러오는 기능을 제공하는 인터페이스입니다.
     /// </summary>
-    public interface ISavable
+    public interface ISaveTarget
     {
-        void LoadData(SaveData data);
-        void SaveData(ref SaveData data);
+        Guid Guid { get; init; }
+        void LoadData(GameData data);
+        void SaveData(ref GameData data);
+    }
+    
+    /// <summary>
+    /// 데이터가 저장될 수 있는 단위입니다.
+    /// Guid를 통해 고유하게 식별됩니다.
+    /// </summary>
+    public interface ISaveData
+    {
+        Guid Guid { get; init; }
     }
 
 
@@ -130,19 +141,19 @@ namespace SaveLoad
     {
         public override bool IsDontDestroyOnLoad => false;
 
-        private List<ISavable> _savables = new();
+        private List<ISaveTarget> _savables = new();
         
-        private static readonly List<ISavable> _pendingSavables = new();
-        public static void RegisterPendingSavable(ISavable savable)
+        private static readonly List<ISaveTarget> _pendingSavables = new();
+        public static void RegisterPendingSavable(ISaveTarget saveTarget)
         {
             if (_instance != null)
             {
-                Instance.RegisterSavable(savable);
+                Instance.RegisterSaveTarget(saveTarget);
             }
             else
             {
                 // 인스턴스가 아직 생성되지 않은 경우, 나중에 등록하도록 대기합니다.
-                _pendingSavables.Add(savable);
+                _pendingSavables.Add(saveTarget);
             }
         }
 
@@ -153,33 +164,33 @@ namespace SaveLoad
             // 대기 중인 ISavable들을 등록합니다.
             foreach (var savable in _pendingSavables)
             {
-                RegisterSavable(savable);
+                RegisterSaveTarget(savable);
             }
         }
 
-        public void RegisterSavable(ISavable savable)
+        public void RegisterSaveTarget(ISaveTarget saveTarget)
         {
-            if (!_savables.Contains(savable))
+            if (!_savables.Contains(saveTarget))
             {
-                _savables.Add(savable);
+                _savables.Add(saveTarget);
             }
         }
-        public void UnregisterSavable(ISavable savable)
+        public void UnregisterSaveTarget(ISaveTarget saveTarget)
         {
-            if (_savables.Contains(savable))
+            if (_savables.Contains(saveTarget))
             {
-                _savables.Remove(savable);
+                _savables.Remove(saveTarget);
             }
         }
-        public void UnregisterAllSavables()
+        public void UnregisterAllSaveTarget()
         {
             _savables.Clear();
         }
         
         
-        public SaveData CreateCurrentSaveData()
+        public GameData CreateCurrentSaveData()
         {
-            SaveData data = new SaveData();
+            GameData data = new GameData();
             LogEx.Log($"Creating Save Data from {_savables.Count} savables.");
             foreach (var savable in _savables)
             {
@@ -188,7 +199,7 @@ namespace SaveLoad
             return data;
         }
         
-        public void LoadSaveData(SaveData data)
+        public void LoadSaveData(GameData data)
         {
             LogEx.Log($"Loading Save Data to {_savables.Count} savables.");
             foreach (var savable in _savables)
