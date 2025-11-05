@@ -1,4 +1,7 @@
-﻿using Core;
+﻿using System;
+using Core;
+using Cysharp.Threading.Tasks;
+using Machamy.Utils;
 using UI.MainUIs;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,23 +37,59 @@ namespace UI
         [field:SerializeField] public PauseUI PauseUI { get; private set; }
         [field:SerializeField] public MainTitleUI MainTitleUI{ get; private set; }
         [field:SerializeField] public GameUI GameUI{ get; private set; }
+
+        // ReSharper disable once Unity.IncorrectMethodSignature
+        private async UniTaskVoid Start()
+        {
+            await InitialLoader.WaitUntilInitialized();
+            RegisterUIs();
+        }
+
         
         
+        private void RegisterUIs()
+        {
+            T FindUI<T>() where T : Component
+            {
+                var ui = FindAnyObjectByType<T>();
+                if (ui == null)
+                {
+                    LogEx.LogError($"UIManager: {typeof(T).Name} not found in the scene.");
+                }
+                return ui;
+            }
+            
+            PauseUI = FindUI<PauseUI>();
+            MainTitleUI = FindUI<MainTitleUI>();
+            GameUI = FindUI<GameUI>();
+        }
+
         public void ShowPauseUI()
         {
-            PauseUI.gameObject.SetActive(true);
+            PauseUI.Show();
         }
         
+        public void HidePauseUI()
+        {
+            PauseUI.Hide();
+        }
+        
+        /// <summary>
+        /// 메인 메뉴 UI로 전환합니다.
+        /// </summary>
         public void SwitchToMainMenu()
         {
-            // TODO : Unitask이용해서 애니메이션 처리 가능
+            // TODO : UniTask이용해서 애니메이션 처리 가능
             GameUI.gameObject.SetActive(false);
             MainTitleUI.gameObject.SetActive(true);
         }
         
-        public void SwitchToGameUI()
+        /// <summary>
+        /// MainUI에서 게임 UI로 전환합니다.
+        /// </summary>
+        public void SwitchMainToGameUI()
         {
-            // TODO : Unitask이용해서 애니메이션 처리 가능
+            // TODO : UniTask이용해서 애니메이션 처리 가능
             MainTitleUI.gameObject.SetActive(false);
             GameUI.gameObject.SetActive(true);
         }

@@ -1,4 +1,5 @@
 ﻿using Machamy.Utils;
+using SceneManagement;
 using UnityEngine;
 
 namespace Core
@@ -38,12 +39,25 @@ namespace Core
         
         protected virtual void Awake()
         {
+            
+            void SetDontDestroyOnLoad()
+            {
+                // 매니저 씬이 아닌 경우에만 DontDestroyOnLoad 적용
+                if (IsDontDestroyOnLoad)
+                {
+                    if (gameObject.scene.name != SceneReference.ManagerSceneName)
+                    {
+                        DontDestroyOnLoad(gameObject);
+                    }
+                }
+            }
+            
             if (_instance == null)
             {
                 _instance = this as T;
                 if (IsDontDestroyOnLoad)
                 {
-                    DontDestroyOnLoad(gameObject);
+                    SetDontDestroyOnLoad();
                 }
                 AfterAwake();
             }
@@ -54,9 +68,10 @@ namespace Core
                 {
                     Destroy(_instance.gameObject);
                     _instance = this as T;
+                    // 현재 있는 씬 위치 확인
                     if (IsDontDestroyOnLoad)
                     {
-                        DontDestroyOnLoad(gameObject);
+                        SetDontDestroyOnLoad();
                     }
                     AfterAwake();
                 }
