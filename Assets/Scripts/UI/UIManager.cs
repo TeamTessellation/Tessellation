@@ -32,8 +32,8 @@ namespace UI
         }
         
         [field:SerializeField] public PauseUI PauseUI { get; private set; }
-        [field:SerializeField] private MainTitleUI MainTitleUI{ get; private set; }
-        [field:SerializeField] private GameUI GameUI{ get; private set; }
+        [field:SerializeField] public MainTitleUI MainTitleUI{ get; private set; }
+        [field:SerializeField] public GameUI GameUI{ get; private set; }
         
         
         public void ShowPauseUI()
