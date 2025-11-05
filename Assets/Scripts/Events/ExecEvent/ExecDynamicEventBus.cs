@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Events.Core;
 
@@ -64,7 +65,7 @@ namespace ExecEvents
         {
             _handlers.Clear();
         }
-        
+
         /// <summary>
         /// 등록된 모든 핸들러를 호출합니다.<br/>
         /// 각 핸들러는 <see cref="ExecQueue{TEventArgs}"/>에 작업을 등록하여 우선순위를 지정할 수 있습니다.
@@ -74,7 +75,8 @@ namespace ExecEvents
         /// await ExecEventBus&lt;MyEventArgs&gt;.Invoke(args);
         /// </code>
         /// <param name="eventArgs"></param>
-        public static async UniTask Invoke(TEvent eventArgs)
+        /// <param name="cancellationToken"></param>
+        public static async UniTask Invoke(TEvent eventArgs, CancellationToken cancellationToken = default)
         {
             _execQueue.Clear();
             _execQueue.SetCapacity(_handlers.Count);
@@ -86,7 +88,7 @@ namespace ExecEvents
             {
                 handler.Invoke(_execQueue, eventArgs);
             }
-            await _execQueue.ExecuteAll(eventArgs);
+            await _execQueue.ExecuteAll(eventArgs, cancellationToken);
         }
 
         /// <summary>

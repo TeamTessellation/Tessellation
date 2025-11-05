@@ -65,7 +65,7 @@ namespace Stage
              using var initStageArgs = StageStartEventArgs.Get();
              await ExecEventBus<StageStartEventArgs>.InvokeMerged(initStageArgs);
              
-            await UniTask.Delay(1000, cancellationToken: token);
+             await UniTask.Delay(1000, cancellationToken: token);
              
              LogEx.Log("Stage Initialized.");
              

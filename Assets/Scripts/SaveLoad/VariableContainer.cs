@@ -90,6 +90,7 @@ namespace SaveLoad
                 items[key] = variable;
             }
         }
+        
         public Variable GetVariable(string key)
         {
             if (items.TryGetValue(key, out var variable))
@@ -98,6 +99,42 @@ namespace SaveLoad
             }
             return null;
         }
+
+        public bool HasVariable(string key)
+        {
+            return items.ContainsKey(key);
+        }
+        public bool TryGetInteger(string key, out int value)
+        {
+            if (items.TryGetValue(key, out var variable))
+            {
+                value = variable.IntValue;
+                return true;
+            }
+            value = default;
+            return false;
+        }
+        public bool TryGetFloat(string key, out float value)
+        {
+            if (items.TryGetValue(key, out var variable))
+            {
+                value = variable.FloatValue;
+                return true;
+            }
+            value = default;
+            return false;
+        }
+        public bool TryGetString(string key, out string value)
+        {
+            if (items.TryGetValue(key, out var variable))
+            {
+                value = variable.StringValue;
+                return true;
+            }
+            value = default;
+            return false;
+        }
+        
         
         public Variable this[string key]
         {
