@@ -82,6 +82,7 @@ namespace Core
             }
         }
         
+        
         protected virtual void AfterAwake()
         {
             

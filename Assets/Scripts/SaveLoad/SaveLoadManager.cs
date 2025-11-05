@@ -137,13 +137,14 @@ namespace SaveLoad
     /// 데이터를 저장하고 불러오는 기능을 관리하는 클래스입니다.
     /// </summary>
     [DefaultExecutionOrder(-1000)]
-    public class SaveManager : Singleton<SaveManager>
+    public class SaveLoadManager : Singleton<SaveLoadManager>
     {
         public override bool IsDontDestroyOnLoad => false;
 
         private List<ISaveTarget> _savables = new();
-        
+
         private static readonly List<ISaveTarget> _pendingSavables = new();
+
         public static void RegisterPendingSavable(ISaveTarget saveTarget)
         {
             if (_instance != null)
@@ -160,7 +161,7 @@ namespace SaveLoad
         protected override void AfterAwake()
         {
             base.AfterAwake();
-            
+
             // 대기 중인 ISavable들을 등록합니다.
             foreach (var savable in _pendingSavables)
             {
@@ -175,6 +176,7 @@ namespace SaveLoad
                 _savables.Add(saveTarget);
             }
         }
+
         public void UnregisterSaveTarget(ISaveTarget saveTarget)
         {
             if (_savables.Contains(saveTarget))
@@ -182,12 +184,13 @@ namespace SaveLoad
                 _savables.Remove(saveTarget);
             }
         }
+
         public void UnregisterAllSaveTarget()
         {
             _savables.Clear();
         }
-        
-        
+
+
         public GameData CreateCurrentSaveData()
         {
             GameData data = new GameData();
@@ -196,9 +199,10 @@ namespace SaveLoad
             {
                 savable.SaveData(ref data);
             }
+
             return data;
         }
-        
+
         public void LoadSaveData(GameData data)
         {
             LogEx.Log($"Loading Save Data to {_savables.Count} savables.");
@@ -207,6 +211,56 @@ namespace SaveLoad
                 savable.LoadData(data);
             }
         }
-    }
+
+
+        /// <summary>
+        /// 간단한 저장 기능을 제공합니다.
+        /// </summary>
+        public void SimpleSave()
+        {
+            PlayerPrefs.SetString("SimpleSaveData", JsonUtility.ToJson(CreateCurrentSaveData()));
+            PlayerPrefs.Save();
+        }
+        
+        /// <summary>
+        /// 간단한 불러오기 기능을 제공합니다.
+        /// </summary>
+        /// <returns>></returns>
+        public bool SimpleLoad(string savePath = "Default")
+        {
+            string json = PlayerPrefs.GetString($"save_{savePath}", "");
+            if (string.IsNullOrEmpty(json))
+                return false;
+            try
+            {
+                GameData data = JsonUtility.FromJson<GameData>(json);
+                LoadSaveData(data);
+                return true;
+            }
+            catch (Exception e)
+            {
+                LogEx.LogError("Failed to load simple save data: " + e.Message);
+                return false;
+            }
+        }
+        
+        /// <summary>
+        /// 세이브데이터 여부를 확실하게 판단합니다.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasSaveSimpleReliable()
+        {
+            return SimpleLoad();
+        }
+        
+        /// <summary>
+        /// 저장 데이터가 존재하는지 간단하게 확인합니다.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasSimpleSave()
+        {
+            return PlayerPrefs.HasKey("SimpleSaveData");
+        }
+}
 
 }

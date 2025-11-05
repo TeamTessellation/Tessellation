@@ -3,6 +3,7 @@ using Core;
 using Cysharp.Threading.Tasks;
 using ExecEvents;
 using Machamy.Utils;
+using UI;
 using UnityEngine;
 
 namespace Stage
@@ -13,6 +14,15 @@ namespace Stage
         
         private TurnManager TurnManager => TurnManager.Instance;
         
+        
+        
+        private StageModel _currentStage;
+
+        public StageModel CurrentStage
+        {
+            get => _currentStage;
+            set => _currentStage = value;
+        }
         
         [SerializeField] private bool _isStageCleared = false;
         
@@ -37,6 +47,16 @@ namespace Stage
         {
             EndStageAsync().Forget();
         }
+
+        public StageModel GetNextStage()
+        {
+            StageModel tmpStage = new StageModel()
+            {
+                StageLevel = CurrentStage == null ? 1 : CurrentStage.StageLevel + 1,
+                StageTargetScore = CurrentStage == null ? 1000 : CurrentStage.StageTargetScore + Random.Range(500, 2500),
+            };
+            return tmpStage;
+        }
         
         private async UniTask StartStageAsync()
         {
@@ -47,10 +67,15 @@ namespace Stage
             }
             _isStageCleared = false;
             LogEx.Log("Stage Starting...");
+            _currentStage = GetNextStage();
              /*
               * 스테이지 시작 화면 표시
               */
              
+             //TODO 임시 스테이지
+
+             
+             await UIManager.Instance.StageInfoUI.ShowInfoRoutine(CurrentStage);
              
              /*
               * 스테이지 초기화

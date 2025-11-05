@@ -26,7 +26,7 @@ namespace Core
 
         private CancellationTokenSource _gameCancellationTokenSource = new CancellationTokenSource();
         private CancellationToken _gameCancellationToken;
-        private GlobalGameState _currentGameState = GlobalGameState.Initializing;
+        [SerializeField]private GlobalGameState _currentGameState = GlobalGameState.Initializing;
 
         public GlobalGameState CurrentGameState
         {
@@ -61,8 +61,8 @@ namespace Core
                 CurrentGameState = GlobalGameState.Initializing;
                 await InitialLoader.WaitUntilInitialized();
                 CurrentGameState = GlobalGameState.MainMenu;
-                Initialize();
             }
+            Initialize();
         }
         
         private void Initialize()
@@ -113,6 +113,7 @@ namespace Core
             LogEx.Log("게임 재개");
             Time.timeScale = 1f;
             CurrentGameState = GlobalGameState.InGame;
+            UIManager.HidePauseUI();
         }
         
         public void QuitGame()
@@ -128,12 +129,13 @@ namespace Core
             
             CurrentGameState = GlobalGameState.InGame;
             StageManager.StartStage(_gameCancellationToken);
+            UIManager.SwitchMainToGameUI().Forget();
         }
         
         /// <summary>
-        /// 게임을 정지하고 메인 메뉴로 돌아갑니다.
+        /// 게임을 중지하고 메인 메뉴로 복귀합니다.
         /// </summary>
-        public void StopGameAndReturnToMainMenu()
+        public void ResetGameAndReturnToMainMenu()
         {
             LogEx.Log("게임 중지 및 메인 메뉴로 복귀");
             _gameCancellationTokenSource.Cancel();
@@ -143,12 +145,14 @@ namespace Core
             }
             CurrentGameState = GlobalGameState.MainMenu;
             StageManager.ResetStage();
-            UIManager.SwitchToMainMenu();
+            UIManager.HidePauseUI();
+            UIManager.SwitchToMainMenu().Forget();
         }
         
         
         public void OnInputCancel()
         {
+            LogEx.Log("입력 취소 이벤트 수신");
             if (CurrentGameState == GlobalGameState.InGame)
             {
                 PauseGameWithUI();
@@ -157,6 +161,9 @@ namespace Core
             {
                 UIManager.HidePauseUI();
                 ResumeGame();
+            }else if (CurrentGameState == GlobalGameState.MainMenu)
+            {
+                
             }
         }
         
