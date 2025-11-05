@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Abilities
 {
@@ -8,10 +9,11 @@ namespace Abilities
     
         private float _multiplier = 5.0f;
 
-        protected void Start()
+
+        public override void Initialize(TilePlaceHandler tilePlaceHandler)
         {
-            base.Start();
-        
+            base.Initialize(tilePlaceHandler);
+
             _scoreManager = ScoreManager.Instance;
         }
 
@@ -40,6 +42,7 @@ namespace Abilities
         {
             if (_scoreManager == null) return;
         
+            Debug.Log($"실행, Priority : {AbilityPriority}");
             _scoreManager.AddMultiplier(_multiplier);
         }
     }
