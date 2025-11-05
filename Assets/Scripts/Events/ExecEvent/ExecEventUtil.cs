@@ -8,7 +8,7 @@ using Util;
 using UnityEditor;
 #endif
 
-namespace PriortyExecEvent
+namespace ExecEvents
 {
     public delegate void ExecEventHandler<TEvent>(ExecQueue<TEvent> queue, TEvent eventArgs) where TEvent : ExecEventArgs<TEvent>, new();
     public delegate UniTask ExecAction<TEvent>(TEvent eventArgs) where TEvent : ExecEventArgs<TEvent>, new();
@@ -20,6 +20,7 @@ namespace PriortyExecEvent
     {
         public static IReadOnlyList<Type> EventTypes;
         public static IReadOnlyList<Type> EventBusTypes;
+        public static IReadOnlyList<Type> StaticEventBusTypes;
 
         #if UNITY_EDITOR
         public static PlayModeStateChange PlayModeState { get; private set; }
@@ -33,7 +34,7 @@ namespace PriortyExecEvent
         
         private static void OnPlayModeStateChanged(PlayModeStateChange state)
         {
-            state = PlayModeState;
+            PlayModeState = state;
             if (state == PlayModeStateChange.ExitingPlayMode)
             {
                 ClearBus();
@@ -47,12 +48,13 @@ namespace PriortyExecEvent
             LogEx.Log("Initializing ExecEventUtil");
             EventTypes = ReflectionUtil.GetTypes(typeof(ExecEventArgs<>));
             EventBusTypes = InitializeAllBus();
+            StaticEventBusTypes = InitializeAllStaticBus();
         }
 
         private static List<Type> InitializeAllBus()
         {
             List<Type> busTypes = new List<Type>();
-            var busType = typeof(ExecEventBus<>);
+            var busType = typeof(ExecDynamicEventBus<>);
             foreach (var eventType in EventTypes)
             {
                 var genericBusType = busType.MakeGenericType(eventType);
@@ -60,6 +62,19 @@ namespace PriortyExecEvent
                 LogEx.Log($"Initialized ExecEventBus for {eventType.Name}");
             }
             return busTypes;
+        }
+        
+        private static List<Type> InitializeAllStaticBus()
+        {
+            List<Type> staticBusTypes = new List<Type>();
+            var staticBusType = typeof(ExecStaticEventBus<>);
+            foreach (var eventType in EventTypes)
+            {
+                var genericStaticBusType = staticBusType.MakeGenericType(eventType);
+                staticBusTypes.Add(genericStaticBusType);
+                LogEx.Log($"Initialized ExecStaticEventBus for {eventType.Name}");
+            }
+            return staticBusTypes;
         }
         
         public static void ClearBus()
@@ -75,6 +90,19 @@ namespace PriortyExecEvent
                 else
                 {
                     LogEx.LogWarning($"ClearHandlers method not found in {busType.Name}");
+                }
+            }
+            LogEx.Log("Clearing all ExecStaticEventBus handlers");
+            foreach (var staticBusType in StaticEventBusTypes)
+            {
+                var clearMethod = staticBusType.GetMethod("ClearHandlers", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+                if (clearMethod != null)
+                {
+                    clearMethod.Invoke(null, null);
+                }
+                else
+                {
+                    LogEx.LogWarning($"ClearHandlers method not found in {staticBusType.Name}");
                 }
             }
         }

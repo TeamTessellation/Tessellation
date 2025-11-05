@@ -68,9 +68,7 @@ namespace Stage
             /*
             * 스테이지 파트 시작
             */
-            
-
-             
+            TurnManager.StartTurnLoop();
         }
         
         private async UniTask EndStageAsync()
