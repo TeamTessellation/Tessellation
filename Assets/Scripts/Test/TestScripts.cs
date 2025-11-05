@@ -14,8 +14,18 @@ using UnityEditor;
 
 namespace Test
 {
-    public class TestScripts : MonoBehaviour, ISavable
+    public class TestSave : ISaveData
     {
+        public Guid Guid { get; init; } = Guid.NewGuid();
+
+        public int testValue = 0;
+
+    }
+    
+    public class TestScripts : MonoBehaviour, ISaveTarget
+    {
+        public Guid Guid { get; init; } = Guid.NewGuid();
+        
         #region Fields
         
         public VariableContainer variableContainer = new VariableContainer();
@@ -213,7 +223,7 @@ namespace Test
 
         #region ISavable Implementation
 
-        public void LoadData(SaveData data)
+        public void LoadData(GameData data)
         {
             var testVariable = data["TestInt"];
             if (testVariable != null)
@@ -226,7 +236,7 @@ namespace Test
             }
         }
 
-        public void SaveData(ref SaveData data)
+        public void SaveData(ref GameData data)
         {
             var testVariableRef = data["TestInt"];
             if (testVariableRef != null)

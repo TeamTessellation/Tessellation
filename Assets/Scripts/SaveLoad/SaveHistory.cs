@@ -8,21 +8,21 @@ namespace SaveLoad
     /// SaveData를 선형적으로 저장하는 Container 클래스입니다.
     /// </summary>
     [System.Serializable]
-    public class SaveHistory : IReadOnlyList<SaveData>
+    public class SaveHistory : IReadOnlyList<GameData>
     {
-        [SerializeField] private List<SaveData> _saves = new();
+        [SerializeField] private List<GameData> _saves = new();
 
-        public IReadOnlyList<SaveData> Saves => _saves;
+        public IReadOnlyList<GameData> Saves => _saves;
 
 
         #region IReadOnlyList
 
         public int Count => _saves.Count;
         public bool IsReadOnly => false;
-        public SaveData this[int index] => _saves[index];
+        public GameData this[int index] => _saves[index];
 
 
-        public IEnumerator<SaveData> GetEnumerator()
+        public IEnumerator<GameData> GetEnumerator()
         {
             return _saves.GetEnumerator();
         }
@@ -48,7 +48,7 @@ namespace SaveLoad
         /// 복제된 데이터가 저장됩니다.
         /// </summary>
         /// <param name="data"></param>
-        public void Add(SaveData data)
+        public void Add(GameData data)
         {
             _saves.Add(data.Clone());
         }
@@ -58,7 +58,7 @@ namespace SaveLoad
         /// 마지막 저장 데이터를 반환합니다.
         /// </summary>
         /// <returns></returns>
-        public SaveData GetLastSave()
+        public GameData GetLastSave()
         {
             if (_saves.Count == 0)
                 return null;
@@ -71,7 +71,7 @@ namespace SaveLoad
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public SaveData GetSaveAt(int index)
+        public GameData GetSaveAt(int index)
         {
             return _saves[index];
         }
@@ -80,7 +80,7 @@ namespace SaveLoad
         /// 마지막 저장 데이터를 제거하고 반환합니다.
         /// </summary>
         /// <returns></returns>
-        public SaveData PopLastSave()
+        public GameData PopLastSave()
         {
             if (_saves.Count == 0)
                 return default;
