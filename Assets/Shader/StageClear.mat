@@ -98,16 +98,16 @@ Material:
     - _Direction: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EndX: 2
+    - _EndX: 3
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Interval: 0.2
+    - _Interval: 0.1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _Progress: 1
+    - _Progress: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
@@ -117,9 +117,9 @@ Material:
     - _SrcBlendAlpha: 1
     - _StartX: -2
     - _Surface: 0
-    - _TileSize: 5
+    - _TileSize: 1
     - _WorkflowMode: 1
-    - _XCount: 6.37
+    - _XCount: 6
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
