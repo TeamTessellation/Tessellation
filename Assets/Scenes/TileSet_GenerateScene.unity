@@ -2077,7 +2077,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1257889226}
         m_TargetAssemblyTypeName: Generator_Manager, Assembly-CSharp
-        m_MethodName: OpenDeckUI
+        m_MethodName: RotateTileSet
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

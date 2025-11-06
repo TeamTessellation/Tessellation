@@ -132,8 +132,7 @@ public class Generator_Manager : MonoBehaviour
         var tile = Pool<Tile, TileData>.Get(data.TileData);
         _fieldTile.Add(tile);
         _tileDic[coor] = tile;
-        tile.transform.localPosition = data.Coor.ToWorld();
-        tile.Coor = coor;
+        tile.transform.localPosition = coor.ToWorld();
 
         Sprite sprite = Sprites[0];
         _tileDic[coor].ChangeSprite(sprite);
@@ -246,11 +245,13 @@ public class Generator_Manager : MonoBehaviour
     {
         DeckUI.gameObject.SetActive(true);
         SetDeckUI();
+        FieldClickManager.Active = false;
     }
 
     public void CloseDeckUI()
     {
         ConnectGenerator2TargetData();
         DeckUI.gameObject.SetActive(false);
+        FieldClickManager.Active = true;
     }
 }
