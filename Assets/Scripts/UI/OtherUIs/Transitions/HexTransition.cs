@@ -16,12 +16,12 @@ namespace UI.OtherUIs.Transitions
         private static readonly int IntervalHash = Shader.PropertyToID("_Interval");
         private static readonly int XCountHash = Shader.PropertyToID("_XCount");
         private static readonly int StartXHash = Shader.PropertyToID("_StartX");
-        private static readonly int XEndHash = Shader.PropertyToID("_EndX");
+        private static readonly int EndXHash = Shader.PropertyToID("_EndX");
         
         
         
         private Image _image;
-        [SerializeField,VisibleOnly(EditableIn.EditMode)]  float _tileSize = 5;
+        [SerializeField,VisibleOnly(EditableIn.EditMode)]  float _tileSize = 1;
         [SerializeField,Range(0,1f)] float _progress = 0f;
         [SerializeField] DirectionType _directionType = DirectionType.Down2Up;
         [SerializeField] FadeType _fadeType = FadeType.In;
@@ -102,10 +102,10 @@ namespace UI.OtherUIs.Transitions
             get => _image.material.GetFloat(StartXHash);
             protected set { _image.material.SetFloat(StartXHash, value); }
         }
-        public float XEnd
+        public float EndX
         {
-            get => _image.material.GetFloat(XEndHash);
-            protected set { _image.material.SetFloat(XEndHash, value); }
+            get => _image.material.GetFloat(EndXHash);
+            protected set { _image.material.SetFloat(EndXHash, value); }
         }
 
 
@@ -138,17 +138,19 @@ namespace UI.OtherUIs.Transitions
         public void InitEffect()
         {
             _tileSize = _image.material.GetFloat(TileSizeHash);
-            float dist = 0 - Camera.main.transform.position.z;
-            int start = ((Vector2)(Camera.main.ScreenToWorldPoint(new Vector3(0, 0, dist) + (Vector3)startConerOffset))).ToCoor(_tileSize).Pos.x;
-            int end = ((Vector2)(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, dist) + (Vector3)endConerOffset)))
+            float dist = _image.transform.position.z - Camera.main.transform.position.z;
+            int start = ((Vector2)(Camera.main.ScreenToWorldPoint(new Vector3(0, 0, dist)))).ToCoor(_tileSize).Pos.x;
+            int end = ((Vector2)(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, dist))))
                 .ToCoor(_tileSize).Pos.x;
+            Debug.Log(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, dist)));
+            Debug.Log(Camera.main.ScreenToWorldPoint(new Vector3(0, 0, dist)));
 
             float xCount = end - start + 1;
             XCount = xCount;
             float startX = start;
             float xEnd = end;
             StartX = startX;
-            XEnd = xEnd;    
+            EndX = xEnd;    
             
         }
 
@@ -211,7 +213,7 @@ namespace UI.OtherUIs.Transitions
             _image.material.SetFloat(DirectoinHash, _directionType == DirectionType.Down2Up ? 0f : 1f);
             _image.material.SetFloat(AngleHash, _angle);
             _image.material.SetFloat(IntervalHash, _interval);
-            _image.material.SetFloat(TileSizeHash, _tileSize);
+            //_image.material.SetFloat(TileSizeHash, _tileSize);
             if (!Application.isPlaying)
             {
                 InitEffect();
