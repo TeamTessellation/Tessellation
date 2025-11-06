@@ -51,6 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c1b995caf994351a7a0f5ba38822b6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.MainUIs.GameUI
+  canvas: {fileID: 6976655511582307489}
+  savedSortingLayerID: 0
+  savedSortingOrder: 1
 --- !u!223 &6976655511582307489
 Canvas:
   m_ObjectHideFlags: 0
@@ -102,6 +105,7 @@ GameObject:
   - component: {fileID: 4867611001796182298}
   - component: {fileID: 7528783760959470879}
   - component: {fileID: 1330358269762125165}
+  - component: {fileID: 7003102882802574010}
   m_Layer: 0
   m_Name: StageInfoUI
   m_TagString: Untagged
@@ -122,6 +126,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4063122897520902569}
+  - {fileID: 912802418309562852}
   - {fileID: 7059469032347325708}
   - {fileID: 9186646286488585741}
   - {fileID: 8918027487156109289}
@@ -144,10 +149,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f42c74f0be64950965a80c7ac9df984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.OtherUIs.StageInfoUI
+  canvas: {fileID: 0}
+  savedSortingLayerID: 0
+  savedSortingOrder: 0
   BackgroundImage: {fileID: 4832825860710126657}
   TitleText: {fileID: 7147984226131202583}
   StageLevelText: {fileID: 8175727357906339002}
   StageTargetScoreText: {fileID: 1027323179582855787}
+  hexTransition: {fileID: 1821684725622349278}
   stageInfoUISettingSO: {fileID: 11400000, guid: d1b97bbd15bd130448042f37864b94c3, type: 2}
 --- !u!223 &1330358269762125165
 Canvas:
@@ -167,11 +176,23 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 5
   m_TargetDisplay: 0
+--- !u!225 &7003102882802574010
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273515589136586310}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1839314722526186238
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,6 +329,103 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &5935846551358806678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 912802418309562852}
+  - component: {fileID: 4981720075454131867}
+  - component: {fileID: 8103851830564712198}
+  - component: {fileID: 1821684725622349278}
+  m_Layer: 0
+  m_Name: HexTransition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &912802418309562852
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5935846551358806678}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.9999475, y: 0.9999475, z: 0.9999475}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4867611001796182298}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &4981720075454131867
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5935846551358806678}
+  m_CullTransparentMesh: 1
+--- !u!114 &8103851830564712198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5935846551358806678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 2100000, guid: 0837855cdfbdb8b4c89400c1e5834100, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1821684725622349278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5935846551358806678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88223533ba332445aee0526b70820da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.OtherUIs.Transitions.HexTransition
+  _tileSize: 5
+  _progress: 0
+  _directionType: 0
+  _fadeType: 0
+  _angle: 0
+  _interval: 0.167
+  startConerOffset: {x: 0, y: 0}
+  endConerOffset: {x: 0, y: 0}
+  _xCount: 2
 --- !u!1 &6071932881617001930
 GameObject:
   m_ObjectHideFlags: 0
