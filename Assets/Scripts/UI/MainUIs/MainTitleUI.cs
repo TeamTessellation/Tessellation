@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core;
 using Machamy.Utils;
 using SaveLoad;
@@ -17,6 +18,39 @@ namespace UI.MainUIs
         [SerializeField] private Button settingsButton;
         [SerializeField] private Button exitButton;
         
+        protected override void Reset()
+        {
+            base.Reset();
+            if (mainTitleButtonsParent == null)
+            {
+                mainTitleButtonsParent = transform.Find("MainTitleButtons");
+                if (mainTitleButtonsParent == null)
+                {
+                    var go = new GameObject("MainTitleButtons");
+                    go.transform.SetParent(transform);
+                    mainTitleButtonsParent = go.transform;
+                }
+                var buttons = mainTitleButtonsParent.GetComponentsInChildren<Button>();
+
+                
+                void BindButton(ref Button variable, string name)
+                {
+                    foreach (var button in buttons)
+                    {
+                        if (button.name.Contains(name, StringComparison.OrdinalIgnoreCase))
+                        {
+                            variable = button;
+                            break;
+                        }
+                    }
+                }
+                BindButton(ref startButton, "Start");
+                BindButton(ref continueButton, "Continue");
+                BindButton(ref settingsButton, "Settings");
+                BindButton(ref exitButton, "Exit");
+            }
+
+        }
         public override void Show()
         {
             gameObject.SetActive(true);
@@ -90,20 +124,6 @@ namespace UI.MainUIs
         }
 
 
-        public void Reset()
-        {
-            if (mainTitleButtonsParent == null)
-            {
-                mainTitleButtonsParent = transform.Find("MainTitleButtons");
-                if (mainTitleButtonsParent == null)
-                {
-                    var go = new GameObject("MainTitleButtons");
-                    go.transform.SetParent(transform);
-                    mainTitleButtonsParent = go.transform;
-                    return;
-                }
-            }
 
-        }
     }
 }

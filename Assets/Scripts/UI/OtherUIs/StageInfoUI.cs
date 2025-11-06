@@ -4,23 +4,27 @@ using DG.Tweening;
 using Interaction;
 using Stage;
 using TMPro;
+using UI.OtherUIs.Transitions;
 using UI.UISettings;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.OtherUIs
 {
+    [RequireComponent(typeof(CanvasGroup))]
     public class StageInfoUI : UIBase
     {
         [SerializeField] private Image BackgroundImage;
         [SerializeField] private TMP_Text TitleText;
         [SerializeField] private TMP_Text StageLevelText;
         [SerializeField] private TMP_Text StageTargetScoreText;
+        [SerializeField] private HexTransition hexTransition;
         [SerializeField] private StageInfoUISettingSO stageInfoUISettingSO;
         private int _currentStageLevelView;
         private int _currentStageTargetScoreView;
+        private CanvasGroup _canvasGroup;
         
-        private TMP_Text[] _allTMPTexts;
+        // private TMP_Text[] _allTMPTexts;
         public int CurrentStageLevelView
         {
             get => _currentStageLevelView;
@@ -46,10 +50,12 @@ namespace UI.OtherUIs
             }
         }
 
-        private void Awake()
+        protected override void Awake()
         {
-            _allTMPTexts = GetComponentsInChildren<TMP_Text>(true); 
+            // _allTMPTexts = GetComponentsInChildren<TMP_Text>(true); 
             gameObject.SetActive(false);
+            _canvasGroup = GetComponent<CanvasGroup>();
+            hexTransition = GetComponentInChildren<HexTransition>(true);
         }
 
         public override void Show()
@@ -122,7 +128,8 @@ namespace UI.OtherUIs
         public async UniTask ShowRoutine()
         {
             Show();
-            await UIManager.Instance.TransitionUI.PlayHexagonTransition(
+
+            await hexTransition.PlayHexagonTransition(
                 stageInfoUISettingSO.showFadeInDuration,
                 stageInfoUISettingSO.showTransitionFadeType,
                 stageInfoUISettingSO.showTransitionCurve,
@@ -137,7 +144,7 @@ namespace UI.OtherUIs
             await DOTween.To(() => 1f, SetFade, 0f, 0.2f)
                 .SetEase(stageInfoUISettingSO.hideFadeOutEase)
                 .ToUniTask();
-            await UIManager.Instance.TransitionUI.PlayHexagonTransition(
+            await hexTransition.PlayHexagonTransition(
                 stageInfoUISettingSO.hideFadeOutDuration,
                 stageInfoUISettingSO.hideTransitionFadeType,
                 stageInfoUISettingSO.hideTransitionCurve,
@@ -147,23 +154,23 @@ namespace UI.OtherUIs
 
         public void SetFade(float alpha)
         {
-            if (_allTMPTexts == null)
-            {
-                _allTMPTexts = GetComponentsInChildren<TMP_Text>(true);
-            }
-            if (BackgroundImage != null)
-            {
-                Color color = BackgroundImage.color;
-                color.a = alpha;
-                BackgroundImage.color = color;
-            }
-            foreach (var tmpText in _allTMPTexts)
-            {
-                Color color = tmpText.color;
-                color.a = alpha;
-                tmpText.color = color;
-            }
-            
+            // if (_allTMPTexts == null)
+            // {
+            //     _allTMPTexts = GetComponentsInChildren<TMP_Text>(true);
+            // }
+            // if (BackgroundImage != null)
+            // {
+            //     Color color = BackgroundImage.color;
+            //     color.a = alpha;
+            //     BackgroundImage.color = color;
+            // }
+            // foreach (var tmpText in _allTMPTexts)
+            // {
+            //     Color color = tmpText.color;
+            //     color.a = alpha;
+            //     tmpText.color = color;
+            // }
+            _canvasGroup.alpha = alpha;
         }
 
 
