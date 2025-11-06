@@ -4,8 +4,13 @@ using UnityEngine.InputSystem;
 
 public class FieldClickManager : MonoBehaviour
 {
+    public static bool Active = true;
+
     void Update()
     {
+        if (!Active)
+            return;
+
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
             Coordinate coor = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()).ToCoor();

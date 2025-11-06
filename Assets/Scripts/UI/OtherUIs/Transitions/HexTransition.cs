@@ -16,7 +16,7 @@ namespace UI.OtherUIs.Transitions
         private static readonly int IntervalHash = Shader.PropertyToID("_Interval");
         private static readonly int XCountHash = Shader.PropertyToID("_XCount");
         private static readonly int StartXHash = Shader.PropertyToID("_StartX");
-        private static readonly int XEndHash = Shader.PropertyToID("_XEnd");
+        private static readonly int XEndHash = Shader.PropertyToID("_EndX");
         
         
         
