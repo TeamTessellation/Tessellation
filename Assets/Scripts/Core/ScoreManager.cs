@@ -20,13 +20,13 @@ public class ScoreManager : Singleton<ScoreManager>
 
     // === Events ===
     // 총 점수가 변경될 때 호출
-    public event Action<int> OnTotalScoreChanged;
+    public event Func<int, UniTask> OnTotalScoreChangedAsync;
     // 현재 점수가 변경될 때 호출 (UI 갱신 등)
-    public event Action<int> OnCurrentScoreChanged;
+    public event Func<int, UniTask> OnCurrentScoreChangedAsync;
     // 새로운 게임이 시작되어 점수 초기화될 때 호출
-    public event Action OnScoreReset;
+    public event Func<UniTask> OnScoreResetAsync;
     // 곱 배수가 스택에 추가될 때 호출
-    public event Action<float> OnMultiplierAdded;
+    public event Func<float, UniTask> OnMultiplierAddedAsync;
     
     // === Properties ===
     // 여러 턴에 누적되어 최종 합산된 점수
@@ -51,24 +51,53 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         CurrentScore = 0;
         _multiplierStack.Clear();
-        OnScoreReset?.Invoke();
+        OnScoreResetAsync?.Invoke();
     }
 
     // 더하기 연산을 CurrentStack에 적용
     public void AddCurrentScore(int addScore)
     {
         CurrentScore += addScore;
-        OnCurrentScoreChanged?.Invoke(CurrentScore);
+        OnCurrentScoreChangedAsync?.Invoke(CurrentScore);
     }
 
     // 타일이나 조커로 인한 곱 연산을 MultiplierStack에 추가할 때 사용하는 함수
     public void AddMultiplier(float mulValue)
     {
         _multiplierStack.Add(mulValue);
-        OnMultiplierAdded?.Invoke(mulValue);
+        OnMultiplierAddedAsync?.Invoke(mulValue);
     }
 
-    // MultiplierStack을 하나씩 비워가며 CurrentScore 누적
+    private async UniTask CalculatePlaceScore(TurnResultInfo turnResultInfo)
+    {
+        int basePlaceScore = 0;
+        List<Tile> placedTiles = turnResultInfo.PlacedTiles;
+        foreach (var tile in placedTiles)
+        {
+            basePlaceScore += tile.Data.Score;
+            // 타일 위치에 +n 점수표시 (EffectManager)
+        }
+
+        CurrentScore += basePlaceScore;
+        OnCurrentScoreChangedAsync?.Invoke(CurrentScore);
+    }
+
+    private async UniTask CalculateLineClearScore(TurnResultInfo turnResultInfo)
+    {
+        
+    }
+
+    private async UniTask CalculateTileRemoveScore(TurnResultInfo turnResultInfo)
+    {
+        
+    }
+
+    private async UniTask CalculateTileBurstScore(TurnResultInfo turnResultInfo)
+    {
+        
+    }
+    
+    // CurrentScore에 곱계산을 추가하여 TotalScore에 더한다
     public async UniTask FinalizeScore()
     {
         if (_multiplierStack.Count == 0) return;
@@ -83,7 +112,7 @@ public class ScoreManager : Singleton<ScoreManager>
             
             accumulatedScore *= multiplier;
             CurrentScore = (int)accumulatedScore;
-            OnCurrentScoreChanged?.Invoke(CurrentScore);
+            OnCurrentScoreChangedAsync?.Invoke(CurrentScore);
         }
         _multiplierStack.Clear();
         
@@ -93,6 +122,6 @@ public class ScoreManager : Singleton<ScoreManager>
         TotalScore += CurrentScore;
         CurrentScore = 0;
         
-        OnTotalScoreChanged?.Invoke(TotalScore);
+        OnTotalScoreChangedAsync?.Invoke(TotalScore);
     }
 }

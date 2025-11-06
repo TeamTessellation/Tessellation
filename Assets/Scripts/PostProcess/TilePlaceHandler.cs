@@ -11,7 +11,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 // 전체 턴 결과를 담는 데이터 Info
-// 아직 어떻게 활용할지.. 구조 미정
 public class TurnResultInfo : ExecEventArgs<TurnResultInfo>
 {
     public readonly List<Tile> PlacedTiles; // 이번턴에 배치한 타일에 대한 정보
