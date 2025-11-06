@@ -6,6 +6,7 @@ using System.Linq;
 using Stage;
 using UnityEngine;
 using System.Threading.Tasks;
+using UnityEngine.Rendering;
 
 public class Field : MonoBehaviour
 {
