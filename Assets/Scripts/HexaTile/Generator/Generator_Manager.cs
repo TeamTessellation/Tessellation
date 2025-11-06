@@ -133,6 +133,7 @@ public class Generator_Manager : MonoBehaviour
         _fieldTile.Add(tile);
         _tileDic[coor] = tile;
         tile.transform.localPosition = data.Coor.ToWorld();
+        tile.Coor = coor;
 
         Sprite sprite = Sprites[0];
         _tileDic[coor].ChangeSprite(sprite);
@@ -222,6 +223,16 @@ public class Generator_Manager : MonoBehaviour
         int index = TargetDeck.Deck.Count;
         TargetDeck.Deck.Add(data);
         AddBox(data, index);
+    }
+
+    public void RotateTileSet()
+    {
+        var offsetData = TargetData.Data;
+        for (int i = 0; i < offsetData.Count; i++)
+        {
+            offsetData[i].Coor = offsetData[i].Coor.RotateR60();
+        }
+        ConnectGenerator2TargetData();
     }
 
     public void DeleteTileSet()
