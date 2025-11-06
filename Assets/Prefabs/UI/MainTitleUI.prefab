@@ -577,6 +577,7 @@ GameObject:
   - component: {fileID: 7164277663958417456}
   - component: {fileID: 7687518894100067689}
   - component: {fileID: 1472486435866151572}
+  - component: {fileID: 3840356882469374881}
   m_Layer: 0
   m_Name: MainTitleUI
   m_TagString: Untagged
@@ -616,6 +617,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 758c90f8c60a4b3b8bbe10dfc7d949ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.MainUIs.MainTitleUI
+  canvas: {fileID: 7687518894100067689}
+  savedSortingLayerID: 0
+  savedSortingOrder: 0
   mainTitleButtonsParent: {fileID: 7379848791834593342}
   startButton: {fileID: 6911951724396214125}
   continueButton: {fileID: 3728235008222942042}
@@ -661,6 +665,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &3840356882469374881
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4675698799380386556}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4873608564063161033
 GameObject:
   m_ObjectHideFlags: 0
