@@ -73,8 +73,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a198ccb7ff1642299e15d966cc3d7d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.OtherUIs.TransitionUI
-  _hexTransitionImage: {fileID: 2588562799852945259}
-  _hexTransitionMaterial: {fileID: 0}
+  canvas: {fileID: 1932397301754201300}
+  savedSortingLayerID: 0
+  savedSortingOrder: 4
+  _canvas: {fileID: 1932397301754201300}
+  hexTransition: {fileID: 4945591991073931746}
 --- !u!1 &7606312255268976755
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,6 +89,7 @@ GameObject:
   - component: {fileID: 6510406717867350586}
   - component: {fileID: 15690227251153976}
   - component: {fileID: 2588562799852945259}
+  - component: {fileID: 4945591991073931746}
   m_Layer: 0
   m_Name: HexTransition
   m_TagString: Untagged
@@ -150,3 +154,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4945591991073931746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7606312255268976755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88223533ba332445aee0526b70820da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageClearEffect

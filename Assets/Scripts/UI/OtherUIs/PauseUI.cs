@@ -16,8 +16,9 @@ namespace UI.OtherUIs
         [SerializeField] private Button resumeButton;
         [SerializeField] private Button homeButton;
 
-        private void Reset()
+        protected override void Reset()
         {
+            base.Reset();
             pauseBackgroundPanel = transform.GetChild(0).GetComponent<Image>();
             pausePopup = transform.Find("PausePopup").gameObject;
             var buttons = pausePopup.GetComponentsInChildren<Button>();
