@@ -195,7 +195,10 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
 
         LineClearHandler lineClearHandler = new LineClearHandler();
         Debug.Log($"Cleared : {lineClearEvent.ClearedLineCount}, Tile : {lineClearEvent.Tiles.Count}");
-        await lineClearHandler.ClearLineAsync(lineClearEvent.ClearedLine[0], 0.06f);
+        for (int i = 0; i < lineClearEvent.ClearedLineCount; i++)
+        {
+            await lineClearHandler.ClearLineAsync(lineClearEvent.ClearedLine[i], 0.06f);  
+        }
         
         _turnResultInfo.ClearedLineCount += lineClearEvent.ClearedLineCount;
         _turnResultInfo.ClearedTiles.AddRange(lineClearEvent.Tiles);
