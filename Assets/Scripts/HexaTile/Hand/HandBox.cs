@@ -41,11 +41,22 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
             _sprite.sprite = ItemSelectIcon[(int)item];
         else
             _sprite.sprite = ItemSelectIcon[ItemSelectIcon.Count - 1];
+
+        for (int i = 0; i < HoldTileSet.Tiles.Count; i++)
+        {
+            HoldTileSet.Tiles[i].Sr.color = new Color(0.58f, 0.58f, 0.58f);
+        }
     }
 
     public void RemoveItemIcon()
     {
         _sprite.color = new Color(1, 1, 1, 0);
+        if (IsUsed)
+            return;
+        for (int i = 0; i < HoldTileSet.Tiles.Count; i++)
+        {
+            HoldTileSet.Tiles[i].Sr.color = new Color(1f, 1f, 1f);
+        }
     }
 
     public void SetOnHand()
@@ -71,6 +82,7 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
     {
         HoldTileSet = Pool<TileSet, TileSetData>.Get(data);
         HoldTileSet.transform.SetParent(transform, false);
+        Invoke(nameof(SetOnHand), 0f);
         SetOnHand();
 
         _eventTrigger.triggers = null;

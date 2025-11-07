@@ -364,9 +364,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.UIManager
   destroyPreExisting: 0
-  <PauseUI>k__BackingField: {fileID: 0}
   <MainTitleUI>k__BackingField: {fileID: 0}
   <GameUI>k__BackingField: {fileID: 0}
+  <PauseUI>k__BackingField: {fileID: 0}
+  <StageInfoUI>k__BackingField: {fileID: 0}
+  <TransitionUI>k__BackingField: {fileID: 0}
 --- !u!4 &1728006149
 Transform:
   m_ObjectHideFlags: 0
@@ -459,7 +461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421e043786eb35641996ca67c067ba9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandManager
-  DeckSO: {fileID: 11400000, guid: 6204ca29b3f2a874a94602fdddddba86, type: 2}
+  DeckSO: {fileID: 11400000, guid: 6a65295eef7d2f24ea6140e04d67d1d4, type: 2}
 --- !u!114 &2025349028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,6 +546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Core.GameManager
   destroyPreExisting: 0
   _currentGameState: 0
+  AutoPauseInBackground: 0
 --- !u!4 &2104037631
 Transform:
   m_ObjectHideFlags: 0
