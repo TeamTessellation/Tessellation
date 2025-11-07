@@ -3,55 +3,37 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 [PoolSize(5)]
 public class ItemHold : MonoBehaviour, IPoolAble
 {
+    public List<Sprite> ItemIcon;
     private EventTrigger _eventTrigger;
-    private Action _itemUseAction;
-    private bool _dragItemHold;
-    private Camera _cam;
-    private GameObject _icon;
+    private Image _image;
 
     private void Awake()
     {
-        _cam = Camera.main;
-        _icon = transform.GetChild(0).gameObject;
         _eventTrigger = transform.GetComponent<EventTrigger>();
+        _image = transform.GetChild(0).GetComponent<Image>();
+    }
+    public void SetItemIcon(InputManager.Item item)
+    {
+        _image.color = new Color(1, 1, 1, 1);
+        if (ItemIcon.Count > (int)item)
+            _image.sprite = ItemIcon[(int)item];
+        else
+            _image.sprite = ItemIcon[ItemIcon.Count - 1];
     }
 
-    public void RegisterClickEvent(Action<InputManager.Item> action, Action itemUseAction, InputManager.Item item)
+    public void RegisterClickEvent(Action<InputManager.Item> action, InputManager.Item item)
     {
-        var entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
+        SetItemIcon(item);
+        var entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
         entry.callback.AddListener((data) => action?.Invoke(item));
-        entry.callback.AddListener((data) => ItemHoldMouseDown());
         _eventTrigger.triggers = null;
         _eventTrigger.triggers.Add(entry);
-        _itemUseAction += itemUseAction;
-    }
-
-    private void ItemHoldMouseDown()
-    {
-        _dragItemHold = true;
-    }
-
-    private void Update()
-    {
-        if (_dragItemHold)
-        {
-            Vector2 screenPos = Mouse.current.position.ReadValue();
-            Vector2 worldPos = _cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _cam.nearClipPlane));
-
-            _icon.transform.position = worldPos;
-
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
-            {
-                _dragItemHold = false;
-                _icon.transform.localPosition = Vector3.zero;
-                _itemUseAction?.Invoke();
-            }
-        }
     }
 
     public void Reset()
