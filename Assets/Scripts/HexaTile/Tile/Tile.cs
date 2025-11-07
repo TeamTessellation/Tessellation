@@ -26,6 +26,7 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
     /// </summary>
     public TileData Data { get; private set; }
 
+    public SpriteRenderer Sr { get { return _sr; } private set { _sr = value; } }
     private SpriteRenderer _sr;
 
     public void ChangeSprite(Sprite sprite)

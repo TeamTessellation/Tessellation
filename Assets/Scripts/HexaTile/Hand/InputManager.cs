@@ -59,6 +59,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
     {
         Debug.Log("아이템 사용");
         UseItemAction?.Invoke(target);
+        _readyItem = Item.End;
         HandManager.Instance.RemoveItemIcon();
     }
 

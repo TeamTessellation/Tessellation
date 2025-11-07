@@ -97,7 +97,9 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
     {
         for (int i = 0; i < _hand.Length; i++)
         {
-            _hand[i]?.SetItemIcon(item);
+            if (_hand[i] == null || _hand[i].IsUsed)
+                continue;
+            _hand[i].SetItemIcon(item);
         }
     }
 
