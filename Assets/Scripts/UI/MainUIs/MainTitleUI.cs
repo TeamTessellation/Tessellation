@@ -102,7 +102,7 @@ namespace UI.MainUIs
         public void OnStartButtonClicked()
         {
             LogEx.Log("Start Button Clicked");
-            GameManager.Instance.StartStage();
+            GameManager.Instance.StartGame();
         }
         
         public void OnContinueButtonClicked()

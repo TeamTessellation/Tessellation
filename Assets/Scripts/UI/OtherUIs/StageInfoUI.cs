@@ -37,6 +37,19 @@ namespace UI.OtherUIs
                 }
             }
         }
+        
+        public string CurrentStageNameView
+        {
+            get => StageLevelText != null ? StageLevelText.text : string.Empty;
+            set
+            {
+                if (StageLevelText != null)
+                {
+                    StageLevelText.text = value;
+                }
+            }
+        }
+        
         public int CurrentStageTargetScoreView
         {
             get => _currentStageTargetScoreView;
@@ -88,13 +101,15 @@ namespace UI.OtherUIs
             Show();
             await ShowRoutine();
             // 레벨
-            var levelSequence = DOTween.Sequence();
-            levelSequence.Append(DOTween
-                .To(() => CurrentStageLevelView, x => CurrentStageLevelView = x, stageModel.StageLevel,
-                    stageInfoUISettingSO.levelCountUpDuration)
-                .SetEase(stageInfoUISettingSO.targetScoreCountUpEase));
-            currentSequence = levelSequence;
-            await levelSequence.ToUniTask();
+            // var levelSequence = DOTween.Sequence();
+            // levelSequence.Append(DOTween
+            //     .To(() => CurrentStageLevelView, x => CurrentStageLevelView = x, stageModel.StageLevel,
+            //         stageInfoUISettingSO.levelCountUpDuration)
+            //     .SetEase(stageInfoUISettingSO.targetScoreCountUpEase));
+            // currentSequence = levelSequence;
+            // await levelSequence.ToUniTask();
+
+            CurrentStageNameView = stageModel.StageName;
 
             // 타이밍
 
@@ -175,17 +190,6 @@ namespace UI.OtherUIs
             }
             //_canvasGroup.alpha = alpha;
         }
-
-
-        [ContextMenu("Test Show Info Routine")]
-        private async void CtxTestShowInfoRoutine()
-        {
-            UIManager.Instance.SwitchMainToGameUI();
-            StageManager stageManager = StageManager.Instance;
-            StageModel stageModel = stageManager.GetNextStage();
-            stageManager.CurrentStage = stageModel;
-            SetFade(0);
-            await ShowInfoRoutine(stageModel);
-        }
+        
     }
 }

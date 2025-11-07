@@ -150,6 +150,7 @@ namespace UI.OtherUIs
                 {
                     entry.target.gameObject.SetActive(true);
                     entry.target.position = entry.startTransform.position;
+                    LogEx.Log($"Moving {entry.target.name} to start position {entry.startTransform.localPosition} (name: {entry.startTransform.name})");
                     
                     // 원래 위치로 이동하는 애니메이션
                     var task = entry.target.DOLocalMove(_originalPositions[entry.target], onEnableTransitionDuration)
