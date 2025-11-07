@@ -129,7 +129,6 @@ namespace Core
             
             CurrentGameState = GlobalGameState.InGame;
             StageManager.StartStage(_gameCancellationToken);
-            
         }
         
         /// <summary>

@@ -253,8 +253,6 @@ namespace Stage
                     
                 }
                  
-
-            
                 LogEx.Log($"Turn {_turnCount} ended.");
                 State = TurnState.Item;
                 /*

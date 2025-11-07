@@ -197,7 +197,7 @@ namespace UI.OtherUIs.Transitions
                 .ToUniTask();
             Progress = to;
             
-            if (fade == FadeType.In)
+            if (fade == FadeType.Out)
             {
                 gameObject.SetActive(false);
             }
