@@ -341,7 +341,7 @@ GameObject:
   - component: {fileID: 4981720075454131867}
   - component: {fileID: 8103851830564712198}
   - component: {fileID: 1821684725622349278}
-  - component: {fileID: 8890215608216794901}
+  - component: {fileID: 3723095919693556400}
   m_Layer: 0
   m_Name: HexTransition
   m_TagString: Untagged
@@ -427,7 +427,7 @@ MonoBehaviour:
   startConerOffset: {x: 0, y: 0}
   endConerOffset: {x: 0, y: 0}
   _xCount: 6
---- !u!225 &8890215608216794901
+--- !u!225 &3723095919693556400
 CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
