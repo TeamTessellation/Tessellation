@@ -34,7 +34,6 @@ namespace Abilities
             {
                 return baseScore * 2;
             }
-
             return baseScore;
         }
 
