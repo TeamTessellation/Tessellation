@@ -68,7 +68,7 @@ namespace Stage
              /*
               * 스테이지 시작 화면 표시
               */
-             
+            
              UM.SwitchMainToGameUI();
              await UM.StageInfoUI.ShowInfoRoutine(CurrentStage);
              
@@ -85,11 +85,16 @@ namespace Stage
             // 턴 초기화
             // 제약 적용
             using var initStageArgs = StageStartEventArgs.Get();
-             await ExecEventBus<StageStartEventArgs>.InvokeMerged(initStageArgs);
+            await ExecEventBus<StageStartEventArgs>.InvokeMerged(initStageArgs);
+            
+            /*
+             *  스테이지 시작화면 제거
+             */
+            await UM.StageInfoUI.HideInfoRoutine();
              
-             await UniTask.Delay(1000, cancellationToken: token);
+            await UniTask.Delay(150, cancellationToken: token);
              
-             LogEx.Log("Stage Initialized.");
+            LogEx.Log("Stage Initialized.");
              
             /*
             * 스테이지 파트 시작

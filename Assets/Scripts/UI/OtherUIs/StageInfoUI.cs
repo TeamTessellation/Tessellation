@@ -99,7 +99,8 @@ namespace UI.OtherUIs
             InteractionManager.Instance.ConfirmEvent += OnConfirmed;
             // 보이기
             Show();
-            await ShowRoutine();
+            CurrentStageNameView = stageModel.StageName;
+            await ShowRoutineInternal();
             // 레벨
             // var levelSequence = DOTween.Sequence();
             // levelSequence.Append(DOTween
@@ -109,7 +110,7 @@ namespace UI.OtherUIs
             // currentSequence = levelSequence;
             // await levelSequence.ToUniTask();
 
-            CurrentStageNameView = stageModel.StageName;
+            
 
             // 타이밍
 
@@ -139,10 +140,13 @@ namespace UI.OtherUIs
                 await UniTask.Yield();
             }
             InteractionManager.Instance.ConfirmEvent -= OnConfirmed;
-            await HideRoutine();
+            
         }
         
-        public async UniTask ShowRoutine()
+        /// <summary>
+        /// 표시 루틴 내부
+        /// </summary>
+        private async UniTask ShowRoutineInternal()
         {
             Show();
 
@@ -157,7 +161,7 @@ namespace UI.OtherUIs
                 .ToUniTask();
         }
         
-        public async UniTask HideRoutine()
+        public async UniTask HideInfoRoutine()
         {
             await DOTween.To(() => 1f, SetFade, 0f, 0.2f)
                 .SetEase(stageInfoUISettingSO.hideFadeOutEase)
