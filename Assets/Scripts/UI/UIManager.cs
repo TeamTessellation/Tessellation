@@ -45,6 +45,8 @@ namespace UI
         [field:SerializeField] public StageInfoUI StageInfoUI{ get; private set; }
         [field:SerializeField] public TransitionUI TransitionUI{ get; private set; }
 
+        //[field: SerializeField] public UI TransitionUI { get; private set; }
+
         // ReSharper disable once Unity.IncorrectMethodSignature
         private async UniTaskVoid Start()
         {
