@@ -1,16 +1,18 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
 {
     public TileSet HoldTileSet { get; private set; }
     public bool IsUsed { get { return (HoldTileSet == null); } }
+    public List<Sprite> ItemSelectIcon;
 
     private Action<HandBox> _downEvent;
-    private Action<HandBox> _enterEvent;
-    private Action<HandBox> _exitEvent;
     private EventTrigger _eventTrigger;
+    private SpriteRenderer _sprite;
 
     public void Reset()
     {
@@ -21,11 +23,7 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
     private void Awake()
     {
         _eventTrigger = GetComponent<EventTrigger>();
-    }
-
-    public void Rotate()
-    {
-
+        _sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
     public void Use()
@@ -35,8 +33,20 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
     }
 
     public void RegisterDownEvent(Action<HandBox> downEvent) => _downEvent += downEvent;
-    public void RegisterEnterEvent(Action<HandBox> enterEvent) => _enterEvent = enterEvent;
-    public void RegisterExitEvent(Action<HandBox> exitEvent) => _exitEvent = exitEvent;
+
+    public void SetItemIcon(InputManager.Item item)
+    {
+        _sprite.color = new Color(1, 1, 1, 1);
+        if (ItemSelectIcon.Count > (int)item)
+            _sprite.sprite = ItemSelectIcon[(int)item];
+        else
+            _sprite.sprite = ItemSelectIcon[ItemSelectIcon.Count - 1];
+    }
+
+    public void RemoveItemIcon()
+    {
+        _sprite.color = new Color(1, 1, 1, 0);
+    }
 
     public void SetOnHand()
     {
@@ -68,13 +78,5 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
         var entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
         entry.callback.AddListener((data) => _downEvent(this));
         _eventTrigger.triggers.Add(entry);
-
-        var entry2 = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
-        entry2.callback.AddListener((data) => _enterEvent(this));
-        _eventTrigger.triggers.Add(entry2);
-
-        var entry3 = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
-        entry3.callback.AddListener((data) => _exitEvent(this));
-        _eventTrigger.triggers.Add(entry3);
     }
 }

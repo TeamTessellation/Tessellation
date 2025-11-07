@@ -14,7 +14,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
     {
         Add,
         Delete,
-        Boom,
+        Rotate,
         End
     }
 
@@ -28,35 +28,51 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     private bool _dataReady;
     private bool _isTurnEnd;
+    private Item _readyItem;
 
     private void Awake()
     {
         Instance = this;
         _dataReady = false;
         _isTurnEnd = true;
+        _readyItem = Item.End;
     }
 
     private void BindBtn()
     {
         var itemRoot = GameObject.FindWithTag("ItemRoot").transform;
-        for (int i = 0; i < (int)Item.End; i++)
-        {
-            var ItemHold = Pool<ItemHold>.Get();
-            ItemHold.transform.SetParent(itemRoot, false);
-            ItemHold.RegisterClickEvent(SetItem, UseItem, (Item)i);
-        }
-        
+        var itemHold = Pool<ItemHold>.Get();
+        itemHold.transform.SetParent(itemRoot, false);
+        itemHold.RegisterClickEvent(SetItem, Item.Rotate);
+        itemHold.transform.localScale = Vector3.one;
     }
 
-    private void UseItem()
+    public void HandBoxClick(HandBox target)
+    {
+        if (_readyItem == Item.End)
+            return;
+
+        UseItem(target);
+    }
+
+    private void UseItem(HandBox target)
     {
         Debug.Log("아이템 사용");
-        bool success = HandManager.Instance.UseItemToTargetHandBox(UseItemAction);
-        Debug.Log(success);
+        UseItemAction?.Invoke(target);
+        HandManager.Instance.RemoveItemIcon();
     }
 
     public void SetItem(Item item)
     {
+        if (_readyItem == item)
+        {
+            _readyItem = Item.End;
+            HandManager.Instance.RemoveItemIcon();
+            UseItemAction = null;
+        }
+
+        _readyItem = item;
+
         switch (item)
         {
             case Item.Add:
@@ -65,10 +81,11 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
             case Item.Delete:
                 UseItemAction = DeleteTileSetItem;
                 break;
-            case Item.Boom:
-                UseItemAction = BoomItem;
+            case Item.Rotate:
+                UseItemAction = RotateTileSetItem;
                 break;
         }
+        HandManager.Instance.SetItemIcon(item);
     }
 
     public void RotateTileSet(HandBox handBox) => RotateTileSetItem(handBox);

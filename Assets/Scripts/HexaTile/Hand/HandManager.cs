@@ -25,7 +25,6 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
     private Camera _cam;
     private int _remainHand = 0;
     private int _handSize = 3;
-    private HandBox _mouseOnHandBox;
 
     public bool IsPlayerInputEnabled => throw new NotImplementedException();
 
@@ -94,25 +93,27 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
         DeckSO.Deck.Remove(data);
     }
 
+    public void SetItemIcon(InputManager.Item item)
+    {
+        for (int i = 0; i < _hand.Length; i++)
+        {
+            _hand[i]?.SetItemIcon(item);
+        }
+    }
+
+    public void RemoveItemIcon()
+    {
+        for (int i = 0; i < _hand.Length; i++)
+        {
+            _hand[i]?.RemoveItemIcon();
+        }
+    }
+
     private void HandBoxClick()
     {
         _onMouseDown = false;
         _dragTileSet = false;
-        InputManager.Instance.RotateTileSet(_targetHandBox);
-        /*
-        if (InputManager.Instance.UseItemAction == null)
-            InputManager.Instance.RotateTileSet(_targetHandBox);
-        else
-            InputManager.Instance.UseItemAction?.Invoke(_targetHandBox);
-        */
-    }
-
-    public bool UseItemToTargetHandBox(Action<HandBox> useItemAction)
-    {
-        if (_mouseOnHandBox == null) return false;
-        useItemAction?.Invoke(_mouseOnHandBox);
-
-        return true;
+        InputManager.Instance.HandBoxClick(_targetHandBox);
     }
 
     private void PlaceTileSet(Vector2 worldPos)
@@ -158,16 +159,6 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
         _onMouseDown = true;
     }
 
-    private void HandBoxMouseEnter(HandBox target)
-    {
-        _mouseOnHandBox = target;
-    }
-
-    private void HandBoxMouseExit(HandBox target)
-    {
-        _mouseOnHandBox = null;
-    }
-
     public void ResetHand(int handSize)
     {
         _handSize = handSize;
@@ -188,8 +179,6 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
             var handBox = Pool<HandBox, TileSetData>.Get(tileSetDatas[i]);
             handBox.transform.SetParent(_handRoot, false);
             handBox.RegisterDownEvent(HandBoxMouseDown);
-            handBox.RegisterEnterEvent(HandBoxMouseEnter);
-            handBox.RegisterExitEvent(HandBoxMouseExit);
             _hand[i] = handBox;
         }
     }
