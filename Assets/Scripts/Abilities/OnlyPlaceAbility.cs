@@ -15,6 +15,7 @@ namespace Abilities
             base.Initialize(tilePlaceHandler);
 
             _scoreManager = ScoreManager.Instance;
+            _scoreManager.RegisterScoreModifier(ModifyScore);
         }
 
         protected override async UniTask HandleTurnProcessedAsync(TurnResultInfo info)
@@ -26,7 +27,17 @@ namespace Abilities
                 await Activate(info);
             }
         }
-    
+
+        protected override int ModifyScore(eTileEventType tileEventType, Tile tile, int baseScore)
+        {
+            if (tileEventType == eTileEventType.Place)
+            {
+                return baseScore * 2;
+            }
+
+            return baseScore;
+        }
+
         protected override bool CheckCanActivate(TurnResultInfo info)
         {
             bool isLineCleared = info.ClearedLineCount == 0 ? false : true;

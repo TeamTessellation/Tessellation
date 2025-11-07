@@ -49,7 +49,11 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
 
     public async UniTask OnTilePlaced()
     {
-        ScoreManager.Instance.AddCurrentScore(Data.Score);
+        int baseScore = Data.Score;
+        int finalScore = ScoreManager.Instance.CalculateTileScore(eTileEventType.Place, this, baseScore);
+        ScoreManager.Instance.AddCurrentScore(finalScore);
+        
+        // +(finalScore) 이펙트 출력 (.Forget())
     }
 
     public async UniTask OnLineCleared()

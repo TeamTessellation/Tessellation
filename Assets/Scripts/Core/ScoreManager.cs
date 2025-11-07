@@ -28,6 +28,10 @@ public class ScoreManager : Singleton<ScoreManager>
     public event Func<UniTask> OnScoreResetAsync;
     // 곱 배수가 스택에 추가될 때 호출
     public event Func<float, UniTask> OnMultiplierAddedAsync;
+
+    public delegate int TileScoreModifierDelegate(eTileEventType tileEventType, Tile tile, int baseScore);
+
+    public List<TileScoreModifierDelegate> _tileScoreModifiers = new List<TileScoreModifierDelegate>();
     
     // === Properties ===
     // 여러 턴에 누적되어 최종 합산된 점수
@@ -51,10 +55,27 @@ public class ScoreManager : Singleton<ScoreManager>
     public void Reset()
     {
         CurrentScore = 0;
+        TotalScore = 0;
         _multiplierStack.Clear();
         OnScoreResetAsync?.Invoke();
     }
 
+    public void RegisterScoreModifier(TileScoreModifierDelegate modifier)
+    {
+        if (!_tileScoreModifiers.Contains(modifier))
+        {
+            _tileScoreModifiers.Add(modifier);
+        }
+    }
+
+    public void UnRegisterScoreModifier(TileScoreModifierDelegate modifier)
+    {
+        if (!_tileScoreModifiers.Contains(modifier))
+        {
+            _tileScoreModifiers.Remove(modifier);
+        }
+    }
+    
     // 더하기 연산을 CurrentStack에 적용
     public void AddCurrentScore(int addScore)
     {
@@ -68,6 +89,17 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         _multiplierStack.Add(mulValue);
         OnMultiplierAddedAsync?.Invoke(mulValue);
+    }
+
+    public int CalculateTileScore(eTileEventType tileEventType, Tile tile, int baseScore)
+    {
+        int finalScore = baseScore;
+        foreach (var modifier in _tileScoreModifiers)
+        {
+            finalScore = modifier.Invoke(tileEventType, tile, baseScore);
+        }
+
+        return finalScore;
     }
 
     // CurrentScore에 곱계산을 추가하여 TotalScore에 더한다
