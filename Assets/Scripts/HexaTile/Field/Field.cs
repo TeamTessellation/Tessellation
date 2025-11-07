@@ -74,6 +74,7 @@ public class Field : MonoBehaviour
     private void Awake() // 싱글톤은 아님
     {
         _instance = this;
+        InitField();
     }
 
     public void InitField()
