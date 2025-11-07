@@ -34,7 +34,6 @@ namespace Stage
         /// <param name="cancellationToken"></param>
         public void StartStage(CancellationToken cancellationToken)
         {
-            Field.Instance.InitField();
             token = cancellationToken;
             StartStageAsync().Forget();
         }
@@ -81,13 +80,15 @@ namespace Stage
               * 스테이지 초기화
               */
              LogEx.Log("Stage Initializing...");
-             
-             // 6각형 타일 맵 초기화
-             // 점수 초기화
-             // 목표 점수 설정
-             // 턴 초기화
-             // 제약 적용
-             using var initStageArgs = StageStartEventArgs.Get();
+
+            Field.Instance.ResetField(4);
+            HandManager.Instance.ResetHand(3);
+            // 6각형 타일 맵 초기화
+            // 점수 초기화
+            // 목표 점수 설정
+            // 턴 초기화
+            // 제약 적용
+            using var initStageArgs = StageStartEventArgs.Get();
              await ExecEventBus<StageStartEventArgs>.InvokeMerged(initStageArgs);
              
              await UniTask.Delay(1000, cancellationToken: token);
