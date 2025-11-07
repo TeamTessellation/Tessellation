@@ -36,6 +36,7 @@ namespace Stage
         /// <param name="cancellationToken"></param>
         public void StartStage(CancellationToken cancellationToken)
         {
+            Field.Instance.InitField();
             token = cancellationToken;
             StartStageAsync().Forget();
         }

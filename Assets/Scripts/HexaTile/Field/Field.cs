@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -73,10 +74,9 @@ public class Field : MonoBehaviour
     private void Awake() // 싱글톤은 아님
     {
         _instance = this;
-        InitField();
     }
 
-    private void InitField()
+    public void InitField()
     {
         if (_isInit) return;
         _isInit = true;
@@ -91,8 +91,6 @@ public class Field : MonoBehaviour
             else if (childs[i].name == "@CellBGRoot")
             { CellBGRoot = childs[i]; continue; }
         }
-
-        SetFieldBySize(_size);
     }
 
     private void RemoveCell(Coordinate coor)
@@ -124,6 +122,12 @@ public class Field : MonoBehaviour
     [ContextMenu("Debug_ChangeSize")]
     public void Debug_SetFieldBySize() => SetFieldBySize(Debug_Size);
 #endif
+
+    public void ResetField(int size)
+    {
+        SetFieldBySize(size);
+    }
+
     private void SetFieldBySize(int size)
     {
         // 범위에 벗어나는 타일은 제거 - size가 작아지는 경우
@@ -276,4 +280,5 @@ public class Field : MonoBehaviour
     /// <param name="coor">원하는 위치</param>
     public bool CheckAbleCoor(Coordinate coor) => coor.CircleRadius <= _size;
     public static bool CheckAbleCoor(Coordinate coor, int size) => coor.CircleRadius <= size;
+
 }

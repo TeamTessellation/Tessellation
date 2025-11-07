@@ -24,7 +24,7 @@ namespace UI.OtherUIs
         private int _currentStageTargetScoreView;
         private CanvasGroup _canvasGroup;
         
-        // private TMP_Text[] _allTMPTexts;
+        private TMP_Text[] _allTMPTexts;
         public int CurrentStageLevelView
         {
             get => _currentStageLevelView;
@@ -96,6 +96,8 @@ namespace UI.OtherUIs
             currentSequence = levelSequence;
             await levelSequence.ToUniTask();
 
+            // 타이밍
+
             await UniTask.WhenAny(
                 UniTask.Delay(500),
                 UniTask.WaitUntil(() => isConfirmed)
@@ -134,6 +136,7 @@ namespace UI.OtherUIs
                 stageInfoUISettingSO.showTransitionFadeType,
                 stageInfoUISettingSO.showTransitionCurve,
                 stageInfoUISettingSO.showTransitionDirectionType);
+
             await DOTween.To(() => 0f, SetFade, 1f, 0.2f)
                 .SetEase(stageInfoUISettingSO.showFadeInEase)
                 .ToUniTask();
@@ -154,23 +157,23 @@ namespace UI.OtherUIs
 
         public void SetFade(float alpha)
         {
-            // if (_allTMPTexts == null)
-            // {
-            //     _allTMPTexts = GetComponentsInChildren<TMP_Text>(true);
-            // }
-            // if (BackgroundImage != null)
-            // {
-            //     Color color = BackgroundImage.color;
-            //     color.a = alpha;
-            //     BackgroundImage.color = color;
-            // }
-            // foreach (var tmpText in _allTMPTexts)
-            // {
-            //     Color color = tmpText.color;
-            //     color.a = alpha;
-            //     tmpText.color = color;
-            // }
-            _canvasGroup.alpha = alpha;
+            if (_allTMPTexts == null)
+            {
+                _allTMPTexts = GetComponentsInChildren<TMP_Text>(true);
+            }
+            if (BackgroundImage != null)
+            {
+                Color color = BackgroundImage.color;
+                color.a = alpha;
+                BackgroundImage.color = color;
+            }
+            foreach (var tmpText in _allTMPTexts)
+            {
+                Color color = tmpText.color;
+                color.a = alpha;
+                tmpText.color = color;
+            }
+            //_canvasGroup.alpha = alpha;
         }
 
 

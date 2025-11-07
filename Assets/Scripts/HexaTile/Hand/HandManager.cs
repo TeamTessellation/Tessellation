@@ -24,6 +24,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
     private bool _dragTileSet;
     private Camera _cam;
     private int _remainHand = 0;
+    private int _handSize = 3;
     private HandBox _mouseOnHandBox;
 
     public bool IsPlayerInputEnabled => throw new NotImplementedException();
@@ -140,7 +141,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
     {
         _targetHandBox = null;
         _dragTileSet = false;
-        SetHand(3);
+        SetHand();
     }
 
 
@@ -167,14 +168,21 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
         _mouseOnHandBox = null;
     }
 
-    public void SetHand(int handSize = 3)
+    public void ResetHand(int handSize)
     {
-        _remainHand = handSize;
+        _handSize = handSize;
+        for (int i = 0; i < _hand.Length; i++)
+            Pool<HandBox>.Return(_hand[i]);
+    }
+
+    public void SetHand()
+    {
+        _remainHand = _handSize;
         for (int i = 0; i < _hand.Length; i++)
             Pool<HandBox>.Return(_hand[i]);
 
-        _hand = new HandBox[handSize];
-        var tileSetDatas = GetRadomTileSetDataInGroup(handSize);
+        _hand = new HandBox[_handSize];
+        var tileSetDatas = GetRadomTileSetDataInGroup(_handSize);
         for (int i = 0; i < tileSetDatas.Length; i++)
         {
             var handBox = Pool<HandBox, TileSetData>.Get(tileSetDatas[i]);
