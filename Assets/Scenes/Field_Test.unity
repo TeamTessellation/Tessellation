@@ -1032,6 +1032,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hand_Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4179955654088172165, guid: cf97b9f90ba24ee4989821a9d87f4a0d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4179955654088172165, guid: cf97b9f90ba24ee4989821a9d87f4a0d, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4179955654088172165, guid: cf97b9f90ba24ee4989821a9d87f4a0d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5026624239832494487, guid: cf97b9f90ba24ee4989821a9d87f4a0d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
