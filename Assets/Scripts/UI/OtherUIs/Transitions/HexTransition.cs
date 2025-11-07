@@ -142,8 +142,6 @@ namespace UI.OtherUIs.Transitions
             int start = ((Vector2)(Camera.main.ScreenToWorldPoint(new Vector3(0, 0, dist)))).ToCoor(_tileSize).Pos.x;
             int end = ((Vector2)(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, dist))))
                 .ToCoor(_tileSize).Pos.x;
-            Debug.Log(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, dist)));
-            Debug.Log(Camera.main.ScreenToWorldPoint(new Vector3(0, 0, dist)));
 
             float xCount = end - start + 1;
             XCount = xCount;
