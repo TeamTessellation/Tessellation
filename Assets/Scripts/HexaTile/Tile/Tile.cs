@@ -53,6 +53,7 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
         int finalScore = ScoreManager.Instance.CalculateTileScore(eTileEventType.Place, this, baseScore);
         ScoreManager.Instance.AddCurrentScore(finalScore);
         
+        // TODO
         // +(finalScore) 이펙트 출력 (.Forget())
     }
 
