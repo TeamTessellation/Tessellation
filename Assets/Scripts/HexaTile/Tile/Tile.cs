@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 [PoolSize(20)]
@@ -44,5 +45,25 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
     public void Reset()
     {
         _sr.sprite = _defaultSprite;
+    }
+
+    public async UniTask OnTilePlaced()
+    {
+        ScoreManager.Instance.AddCurrentScore(Data.Score);
+    }
+
+    public async UniTask OnLineCleared()
+    {
+        ScoreManager.Instance.AddCurrentScore(Data.Score);
+    }
+    
+    public async UniTask OnTileRemoved()
+    {
+        
+    }
+    
+    public async UniTask OnTileBurst()
+    {
+        ScoreManager.Instance.AddCurrentScore(Data.Score);
     }
 }
