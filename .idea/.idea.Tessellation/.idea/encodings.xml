@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/AbilityFactory.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/OnlyPlaceAbility.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Core/EffectManager.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Effects/ScoreEffect.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/Coordinate.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/Field/Field.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/Generator/Generator_Manager.cs" charset="UTF-8" />
@@ -14,6 +15,7 @@
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerInventory.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/ScriptableObject/EffectDataSO.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Tester.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/UI/ScoreUI.cs" charset="UTF-8" />
     <file url="PROJECT" charset="x-windows-949" />
   </component>
 </project>

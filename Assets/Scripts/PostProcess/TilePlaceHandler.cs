@@ -112,11 +112,6 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         {
             await FirstTilePlaced(inputData.PlacedTile, token);
         }
-        else if (inputData.Type == PlayerInputData.InputType.UseItem)
-        {
-            // TODO
-            // ProcessUseItem(어쩌고) .. 
-        }
     }
     
     // 첫 배치 때 불릴 함수
@@ -152,14 +147,26 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
                     await ProcessTileRemoved((TileRemoveEvent)currentEvent, token);
                     break;
             }
+            PushExtraQueue();
         }
         
         // Queue가 비게 되면 턴 종료. TurnProcessedDelegate 끝
         await InvokeTileEventAsync(OnTurnProcessedAsync, _turnResultInfo, token);
         _turnResultInfo.Dispose();
     }
-    
 
+    private void PushExtraQueue()
+    {
+        // 라인 완성 확인
+        LineClearHandler lineClearHandler = new LineClearHandler();
+        List<Field.Line> clearLines = lineClearHandler.CheckLineClear(_turnResultInfo.PlacedTiles);
+        List<Tile> clearedTiles = lineClearHandler.GetTilesFromLines(clearLines);
+        if (clearLines.Count > 0)
+        {
+            _eventQueue.Enqueue(new LineClearEvent(clearLines, clearedTiles));
+        }
+    }
+    
     private async UniTask ProcessTilePlaced(TilePlaceEvent placeEvent, CancellationToken token)
     {
         foreach (var tile in placeEvent.Tiles)
@@ -169,14 +176,9 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         
         _turnResultInfo.PlacedTiles.AddRange(placeEvent.Tiles);
         
-        // 패시브 아이템 효과나 점수 추가 등의 로직이 전부 종료될 때까지 대기한다
         await InvokeTileEventAsync(OnTilePlacedAsync, _turnResultInfo, token);
-        
-        // TODO
-        // if (lineClearedCount > 0)
-        // {
-        //     _eventQueue.Enqueue(new LineClearEvent(lineClearedCount, clearedTiles));
-        // }
+       
+        await UniTask.Delay(1000);
     }
     
     private async UniTask ProcessLineCompleted(LineClearEvent lineClearEvent, CancellationToken token)
@@ -185,8 +187,13 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         {
             await tile.OnLineCleared();
         }
+
+        LineClearHandler lineClearHandler = new LineClearHandler();
+        for (int i = 0; i < lineClearEvent.ClearedLineCount; i++)
+        {
+            await lineClearHandler.ClearLineAsync(lineClearEvent.ClearedLine[i], 0.06f);  
+        }
         
-        Debug.Log("Process Line Complete");
         _turnResultInfo.ClearedLineCount += lineClearEvent.ClearedLineCount;
         _turnResultInfo.ClearedTiles.AddRange(lineClearEvent.Tiles);
         
@@ -229,17 +236,5 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         {
             await handler(info).AttachExternalCancellation(token); // 하나씩 순차 실행
         }
-    }
-    
-    private (int, List<Tile>) CheckLineCompleted()
-    {
-        int clearedLineCount = 0;
-        
-        List<Tile> clearedTiles = new List<Tile>();
-     
-        // TODO
-        // xyz 3축 사용해서 이래저래 확인하고..
-
-        return (clearedLineCount, clearedTiles);
     }
 }

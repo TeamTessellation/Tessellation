@@ -3,6 +3,7 @@ using UnityEngine;
 public enum eEffectType
 {
     None,
+    ScorePopup,
     Max,
 }
 

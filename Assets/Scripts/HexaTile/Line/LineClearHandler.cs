@@ -1,9 +1,10 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static Field;
 
-public class LineClearHandler : MonoBehaviour
+public class LineClearHandler
 {
     public List<Line> CheckLineClear(List<Tile> newTile)
     {
@@ -88,7 +89,7 @@ public class LineClearHandler : MonoBehaviour
         return true;
     }
 
-    private async UniTask ClearLineAsync(Line line, float interval = 1f)
+    public async UniTask ClearLineAsync(Line line, float interval = 1f)
     {
         Direction up = Direction.R;
         Direction down = Direction.L;
@@ -124,7 +125,7 @@ public class LineClearHandler : MonoBehaviour
         }
         EndLineClear(line);
     }
-
+    
     private async UniTask ClearLinesAsync(List<Line> line, float interval = 1f)
     {
         //UniTask[] tasks = new UniTask[line.Count];
@@ -136,6 +137,78 @@ public class LineClearHandler : MonoBehaviour
         //await UniTask.WhenAll(tasks);
         await UniTask.WaitForSeconds(interval);
         EndAllLineClear(line);
+    }
+
+    public List<Tile> GetTilesFromLine(Line line)
+    {
+        List<Tile> tiles = new List<Tile>();
+        Direction up, down;
+        
+        // 축에 따른 방향 설정
+        switch (line.Axis)
+        {
+            case Axis.X:
+                up = Direction.R;
+                down = Direction.L;
+                break;
+            case Axis.Y:
+                up = Direction.RD;
+                down = Direction.LU;
+                break;
+            case Axis.Z:
+                up = Direction.RU;
+                down = Direction.LD;
+                break;
+            default:
+                return tiles; // 빈 리스트 반환
+        }
+        
+        // 시작점 타일 추가
+        Tile startTile = Field.Instance.GetTile(line.Start);
+        if (startTile != null)
+            tiles.Add(startTile);
+        
+        // 위쪽 방향 타일들 수집
+        Coordinate upCoord = line.Start + up;
+        while (Field.Instance.CheckAbleCoor(upCoord))
+        {
+            Tile tile = Field.Instance.GetTile(upCoord);
+            if (tile != null)
+                tiles.Add(tile);
+            else
+                break; // 빈 공간을 만나면 중단
+            upCoord += up;
+        }
+        
+        // 아래쪽 방향 타일들 수집
+        Coordinate downCoord = line.Start + down;
+        while (Field.Instance.CheckAbleCoor(downCoord))
+        {
+            Tile tile = Field.Instance.GetTile(downCoord);
+            if (tile != null)
+                tiles.Add(tile);
+            else
+                break; // 빈 공간을 만나면 중단
+            downCoord += down;
+        }
+        
+        return tiles;
+    }
+    
+    public List<Tile> GetTilesFromLines(List<Line> lines)
+    {
+        HashSet<Tile> tileSet = new HashSet<Tile>();
+        
+        foreach (var line in lines)
+        {
+            List<Tile> lineTiles = GetTilesFromLine(line);
+            foreach (var tile in lineTiles)
+            {
+                tileSet.Add(tile);
+            }
+        }
+        
+        return tileSet.ToList();
     }
 
     private void EndLineClear(Line line)
