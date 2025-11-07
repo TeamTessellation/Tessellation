@@ -166,11 +166,14 @@ namespace UI.OtherUIs.Transitions
             DirectionType = direction;
             FadeType = fade;
             
+            // Dotween Á×ÀÌ±â 
+            DOTween.Kill(this);
+            
             float elapsed = 0f;
             float from = fade == FadeType.In ? 1f : 0f;
             float to = fade == FadeType.In ? 0f : 1f;
-            
-            await DOTween.To(() => from, x => Progress = x, to, duration)
+            Progress = from;
+            await DOTween.To(() => Progress, x => Progress = x, to, duration)
                 .SetEase(easeType)
                 .ToUniTask();
             Progress = to;
@@ -191,8 +194,8 @@ namespace UI.OtherUIs.Transitions
             
             float from = fade == FadeType.In ? 1f : 0f;
             float to = fade == FadeType.In ? 0f : 1f;
-            
-            await DOTween.To(() => from, x => Progress = x, to, duration)
+            Progress = from;
+            await DOTween.To(() => Progress, x => Progress = x, to, duration)
                 .SetEase(curve)
                 .ToUniTask();
             Progress = to;
@@ -202,6 +205,8 @@ namespace UI.OtherUIs.Transitions
                 gameObject.SetActive(false);
             }
         }
+        
+        
 
         private void OnValidate()
         {

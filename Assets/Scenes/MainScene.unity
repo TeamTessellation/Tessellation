@@ -1818,6 +1818,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 330585545}
+    - target: {fileID: 6340585120630712642, guid: efee451262678fe4a8de6368388f28ca, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -208.30005
+      objectReference: {fileID: 0}
     - target: {fileID: 6354373538184674695, guid: efee451262678fe4a8de6368388f28ca, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2204,6 +2208,26 @@ PrefabInstance:
     - target: {fileID: 557357052113842888, guid: ba1c7155f439c3746ac9c53abf9e55d6, type: 3}
       propertyPath: m_SortingLayerID
       value: -1279800915
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570012584074066988, guid: ba1c7155f439c3746ac9c53abf9e55d6, type: 3}
+      propertyPath: savedSortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570012584074066988, guid: ba1c7155f439c3746ac9c53abf9e55d6, type: 3}
+      propertyPath: savedSortingLayerID
+      value: -1279800915
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570012584074066988, guid: ba1c7155f439c3746ac9c53abf9e55d6, type: 3}
+      propertyPath: onEnableTransitionEase
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570012584074066988, guid: ba1c7155f439c3746ac9c53abf9e55d6, type: 3}
+      propertyPath: onEnableTransitionDuration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570012584074066988, guid: ba1c7155f439c3746ac9c53abf9e55d6, type: 3}
+      propertyPath: onDisableTransitionDuration
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 3579802168876125234, guid: ba1c7155f439c3746ac9c53abf9e55d6, type: 3}
       propertyPath: m_Pivot.x
