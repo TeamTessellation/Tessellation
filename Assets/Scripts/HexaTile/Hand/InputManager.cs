@@ -93,6 +93,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
     private void RotateTileSetItem(HandBox handBox)
     {
         handBox.HoldTileSet.Rotate();
+        handBox.SetOnHand();
     }
 
     private void AddTileSetItem(HandBox handBox)
