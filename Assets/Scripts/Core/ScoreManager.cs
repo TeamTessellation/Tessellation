@@ -35,9 +35,9 @@ public class ScoreManager : Singleton<ScoreManager>
     
     // === Properties ===
     // 여러 턴에 누적되어 최종 합산된 점수
-    private int TotalScore { get; set; }
+    public int TotalScore { get; private set; }
     // 현재 턴에 대한 총 점수
-    private int CurrentScore { get; set; }
+    public int CurrentScore { get; private set; }
     
     // 현재 점수 옆에 곱셈 표시 뜨는거 저장하는 리스트
     public IReadOnlyList<float> MultiplierStack => _multiplierStack;

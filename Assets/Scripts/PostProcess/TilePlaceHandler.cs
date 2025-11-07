@@ -146,7 +146,8 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
                 case eTileEventType.Remove:
                     await ProcessTileRemoved((TileRemoveEvent)currentEvent, token);
                     break;
-            } 
+            }
+            PushExtraQueue();
         }
         
         // Queue가 비게 되면 턴 종료. TurnProcessedDelegate 끝
@@ -156,7 +157,14 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
 
     private void PushExtraQueue()
     {
-        
+        // 라인 완성 확인
+        LineClearHandler lineClearHandler = new LineClearHandler();
+        List<Field.Line> clearLines = lineClearHandler.CheckLineClear(_turnResultInfo.PlacedTiles);
+        List<Tile> clearedTiles = lineClearHandler.GetTilesFromLines(clearLines);
+        if (clearLines.Count > 0)
+        {
+            _eventQueue.Enqueue(new LineClearEvent(clearLines, clearedTiles));
+        }
     }
     
     private async UniTask ProcessTilePlaced(TilePlaceEvent placeEvent, CancellationToken token)
@@ -168,19 +176,8 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         
         _turnResultInfo.PlacedTiles.AddRange(placeEvent.Tiles);
         
-        // 패시브 아이템 효과나 점수 추가 등의 로직이 전부 종료될 때까지 대기한다
         await InvokeTileEventAsync(OnTilePlacedAsync, _turnResultInfo, token);
-        
-        // FIXME
-        // PushExtraQueue..
-        LineClearHandler lineClearHandler = new LineClearHandler();
-        List<Field.Line> clearLines = lineClearHandler.CheckLineClear(placeEvent.Tiles);
-        List<Tile> clearedTiles = lineClearHandler.GetTilesFromLines(clearLines);
-        if (clearLines.Count > 0)
-        {
-            _eventQueue.Enqueue(new LineClearEvent(clearLines, clearedTiles));
-        }
-
+       
         await UniTask.Delay(1000);
     }
     
@@ -190,11 +187,8 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         {
             await tile.OnLineCleared();
         }
-        
-        Debug.Log("Process Line Complete");
 
         LineClearHandler lineClearHandler = new LineClearHandler();
-        Debug.Log($"Cleared : {lineClearEvent.ClearedLineCount}, Tile : {lineClearEvent.Tiles.Count}");
         for (int i = 0; i < lineClearEvent.ClearedLineCount; i++)
         {
             await lineClearHandler.ClearLineAsync(lineClearEvent.ClearedLine[i], 0.06f);  
@@ -202,8 +196,6 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         
         _turnResultInfo.ClearedLineCount += lineClearEvent.ClearedLineCount;
         _turnResultInfo.ClearedTiles.AddRange(lineClearEvent.Tiles);
-        
-        
         
         await InvokeTileEventAsync(OnLineClearedAsync, _turnResultInfo, token);
     }

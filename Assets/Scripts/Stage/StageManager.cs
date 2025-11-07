@@ -124,7 +124,15 @@ namespace Stage
         public bool CheckStageClear()
         {
             // 목표 점수 도달 확인
-            // _isStageCleared = true;
+            if (_currentStage.StageTargetScore <= ScoreManager.Instance.TotalScore)
+            {
+                _isStageCleared = true;
+            }
+            else
+            {
+                _isStageCleared = false;
+            }
+            
             return _isStageCleared;
         }
 
