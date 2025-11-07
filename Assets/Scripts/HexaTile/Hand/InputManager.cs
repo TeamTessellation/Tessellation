@@ -120,7 +120,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     public bool IsPlayerCanDoAction()
     {
-        return _isTurnEnd;
+        return _isTurnEnd; // ToDo 핸드 수정
     }
 
     public async UniTask OnTurnStart(int turnCount, CancellationToken token)

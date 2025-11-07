@@ -1,12 +1,13 @@
 using Cysharp.Threading.Tasks;
+using Stage;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Stage;
-using UnityEngine;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Rendering;
+using static Field;
 
 public class Field : MonoBehaviour
 {
@@ -64,34 +65,10 @@ public class Field : MonoBehaviour
     public int Debug_Size = 4;
 #endif
 
+    public int Size { get { return _size; } }
+
     private int _size = 4;
     private bool _isInit = false;
-
-    // 타일 배치, 라인 클리어 시 호출 이벤트
-    /// <summary>
-    /// 타일 배치 시작 ( 배치를 시작만 하고 실질적인 배치는 아직 안함 )
-    /// </summary>
-    public Action<Coordinate> PlaceTileStartEvent;
-    /// <summary>
-    /// 타일 베치 끝 ( 실질적인 타일을 맵에 배치함 )
-    /// </summary>
-    public Action<Coordinate> PlaceTileEndEvent;
-    /// <summary>
-    /// 타일셋 배치 시작 ( 배치를 시작만 하고 실질적인 배치는 아직 안함 )
-    /// </summary>
-    public Action<Coordinate> PlaceTileSetStartEvent;
-    /// <summary>
-    /// 타일셋 베치 끝 ( 실질적인 타일셋을 맵에 배치함 )
-    /// </summary>
-    public Action<Coordinate> PlaceTileSetEndEvent;
-    /// <summary>
-    /// 라인 클리어 시작 ( 줄을 전부 채워 특정 라인을 지우기 시작함 )
-    /// </summary>
-    public Action<Coordinate> LineClearStartEvent;
-    /// <summary>
-    /// 라인 클리어 끝 ( 줄에 존재하는 타일을 전부 제거함 )
-    /// </summary>
-    public Action<Coordinate> LineClearEndEvent;
 
     private void Awake() // 싱글톤은 아님
     {
@@ -136,11 +113,12 @@ public class Field : MonoBehaviour
         cell.UnSet();
     }
 
-    private void SafeRemoveTile(Coordinate coor)
+    public void SafeRemoveTile(Coordinate coor)
     {
         if (CheckAbleCoor(coor))
             RemoveTileEffect(_allCell[coor]).Forget();
     }
+
 
 #if UNITY_EDITOR
     [ContextMenu("Debug_ChangeSize")]
@@ -174,141 +152,6 @@ public class Field : MonoBehaviour
         }
     }
 
-    private List<Line> CheckLineClear(List<Tile> newTile)
-    {
-        HashSet<int> xCheckList = new();
-        HashSet<int> yCheckList = new();
-        HashSet<int> zCheckList = new();
-
-        List<Line> clearLines = new();
-
-        int upOrDown = UnityEngine.Random.Range(0, 2); // 0 up 1 down
-
-        for (int i = 0; i < newTile.Count; i++)
-        {
-            if (!xCheckList.Contains(newTile[i].Coor.Pos3D.y))
-            {
-                CheckAxis(upOrDown, xCheckList, newTile[i].Coor.Pos3D.y, Axis.X, newTile[i], clearLines);
-            }
-            if (!yCheckList.Contains(newTile[i].Coor.Pos3D.x))
-            {
-                CheckAxis(upOrDown, yCheckList, newTile[i].Coor.Pos3D.x, Axis.Y, newTile[i], clearLines);
-            }
-            if (!zCheckList.Contains(newTile[i].Coor.Pos3D.z))
-            {
-                CheckAxis(upOrDown, zCheckList, newTile[i].Coor.Pos3D.z, Axis.Z, newTile[i], clearLines);
-            }
-        }
-
-        return clearLines;
-    }
-
-    private void CheckAxis(int upOrDown, HashSet<int> checkList, int key, Axis axis, Tile tile, List<Line> clearLines)
-    {
-        checkList.Add(key);
-        if (CheckLine(upOrDown, axis, tile.Coor, out Coordinate start))
-            clearLines.Add(new(axis, start));
-    }
-
-    private void ClearLine(Line line)
-    {
-        Direction up = Direction.R;
-        Direction down = Direction.L;
-
-        switch (line.Axis)
-        {
-            case Axis.X:
-                up = Direction.R;
-                down = Direction.L;
-                break;
-            case Axis.Y:
-                up = Direction.RD;
-                down = Direction.LU;
-                break;
-            case Axis.Z:
-                up = Direction.RU;
-                down = Direction.LD;
-                break;
-        }
-
-        Coordinate correctCoor = line.Start;
-
-        RemoveTile(correctCoor);
-        while (CheckAbleCoor(correctCoor))
-        {
-            correctCoor += up;
-            RemoveTile(correctCoor);
-        }
-
-        correctCoor = line.Start;
-        while (CheckAbleCoor(correctCoor))
-        {
-            correctCoor += down;
-            RemoveTile(correctCoor);
-        }
-        EndLineClear(line);
-    }
-
-    private async UniTask ClearLineAsync(Line line, float interval = 1f)
-    {
-        Direction up = Direction.R;
-        Direction down = Direction.L;
-
-        switch (line.Axis)
-        {
-            case Axis.X:
-                up = Direction.R;
-                down = Direction.L;
-                break;
-            case Axis.Y:
-                up = Direction.RD;
-                down = Direction.LU;
-                break;
-            case Axis.Z:
-                up = Direction.RU;
-                down = Direction.LD;
-                break;
-        }
-
-        Coordinate upCorrect = line.Start;
-        Coordinate downCorrect = line.Start;
-
-        SafeRemoveTile(line.Start);
-        await UniTask.WaitForSeconds(interval);
-        while (CheckAbleCoor(upCorrect) || CheckAbleCoor(downCorrect))
-        {
-            upCorrect += up;
-            downCorrect += down;
-            await UniTask.WaitForSeconds(interval);
-            SafeRemoveTile(upCorrect);
-            SafeRemoveTile(downCorrect);
-        }
-        EndLineClear(line);
-    }
-
-    private async UniTask ClearLinesAsync(List<Line> line, float interval = 1f)
-    {
-        //UniTask[] tasks = new UniTask[line.Count];
-
-        for (int i = 0; i < line.Count; i++)
-        {
-            await ClearLineAsync(line[i], interval);
-        }
-        //await UniTask.WhenAll(tasks);
-        await UniTask.WaitForSeconds(interval);
-        EndAllLineClear(line);
-    }
-
-    private void EndLineClear(Line line)
-    {
-
-    }
-
-    private void EndAllLineClear(List<Line> line)
-    {
-        Debug.Log("Line 클리어");
-    }
-
     /// <summary>
     /// to다산 Coor 주변 타일을 가져온다. 없으면 null
     /// </summary>
@@ -327,53 +170,6 @@ public class Field : MonoBehaviour
         return result;
     }
 
-    private bool CheckLine(int upOrDown, Axis axis, Coordinate start, out Coordinate result)
-    {
-        Direction up = Direction.R;
-        Direction down = Direction.L;
-        result = start;
-
-        switch (axis)
-        {
-            case Axis.X:
-                up = Direction.R;
-                down = Direction.L;
-                break;
-            case Axis.Y:
-                up = Direction.RD;
-                down = Direction.LU;
-                break;
-            case Axis.Z:
-                up = Direction.RU;
-                down = Direction.LD;
-                break;
-        }
-
-        Coordinate correctCoor = start;
-        while (CheckAbleCoor(correctCoor) && !_allCell[correctCoor].IsEmpty)
-        {
-            correctCoor += up;
-        }
-        if (correctCoor.CircleRadius <= _size)
-            return false;
-
-        if (upOrDown == 0)
-            result = correctCoor - up;
-
-        correctCoor = start;
-        while (CheckAbleCoor(correctCoor) && !_allCell[correctCoor].IsEmpty)
-        {
-            correctCoor += down;
-        }
-        if (correctCoor.CircleRadius <= _size)
-            return false;
-
-        if (upOrDown == 1)
-            result = correctCoor - down;
-
-        return true;
-    }
-
     /// <summary>
     /// 배치를 시도한다 가능하면 배치 불가능할 시 배치 X
     /// </summary>
@@ -386,7 +182,6 @@ public class Field : MonoBehaviour
         if (CanPlace(tileSet, coor))
         {
             placeTiles = new();
-            PlaceTileSetStartEvent?.Invoke(coor);
             for (int i = 0; i < tileSet.Tiles.Count; i++)
             {
                 var tileInfo = tileSet.Tiles[i].transform.localPosition;
@@ -394,12 +189,7 @@ public class Field : MonoBehaviour
                 SetTileOnCell(tileSet.Tiles[i], correctCoor);
                 placeTiles.Add(tileSet.Tiles[i]);
             }
-
-            var clearLines = CheckLineClear(tileSet.Tiles);
             tileSet.Use();
-            PlaceTileSetEndEvent?.Invoke(coor);
-            if (clearLines.Count > 0)
-                ClearLinesAsync(clearLines, 0.06f).Forget();
             return true;
         }
         return false;
@@ -457,10 +247,8 @@ public class Field : MonoBehaviour
     /// <param name="coor"></param>
     private void SetTileOnCell(Tile tile, Coordinate coor)
     {
-        PlaceTileStartEvent?.Invoke(coor);
         tile.Coor = coor;
         _allCell[coor].Set(tile);
-        PlaceTileEndEvent?.Invoke(coor);
     }
 
     /// <summary>

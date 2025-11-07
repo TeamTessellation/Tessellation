@@ -15,6 +15,7 @@ namespace Player
         
         public InputType Type { get; }
         public List<Tile> PlacedTile { get; }
+        public List<Field.Line> ClearLines { get; }
         
         /// <summary>
         /// 플레이어 액션 전에 발생한 이벤트 인자.
