@@ -118,6 +118,7 @@ namespace Abilities
             }
         }
 
+        protected abstract int ModifyScore(eTileEventType tileEventType, Tile tile, int baseScore);
         protected abstract bool CheckCanActivate(TurnResultInfo info);
         protected abstract UniTask Activate(TurnResultInfo info);
     }
