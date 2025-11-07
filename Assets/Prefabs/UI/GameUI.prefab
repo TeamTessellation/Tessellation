@@ -178,8 +178,8 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 5
+  m_SortingLayerID: -1279800915
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!225 &7003102882802574010
 CanvasGroup:
@@ -341,13 +341,14 @@ GameObject:
   - component: {fileID: 4981720075454131867}
   - component: {fileID: 8103851830564712198}
   - component: {fileID: 1821684725622349278}
+  - component: {fileID: 8890215608216794901}
   m_Layer: 0
   m_Name: HexTransition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &912802418309562852
 RectTransform:
   m_ObjectHideFlags: 0
@@ -417,7 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a88223533ba332445aee0526b70820da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.OtherUIs.Transitions.HexTransition
-  _tileSize: 5
+  _tileSize: 1
   _progress: 0
   _directionType: 0
   _fadeType: 0
@@ -425,7 +426,19 @@ MonoBehaviour:
   _interval: 0.167
   startConerOffset: {x: 0, y: 0}
   endConerOffset: {x: 0, y: 0}
-  _xCount: 2
+  _xCount: 6
+--- !u!225 &8890215608216794901
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5935846551358806678}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 1
 --- !u!1 &6071932881617001930
 GameObject:
   m_ObjectHideFlags: 0

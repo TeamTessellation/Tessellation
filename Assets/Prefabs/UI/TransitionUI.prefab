@@ -58,7 +58,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1279800915
   m_SortingOrder: 4
   m_TargetDisplay: 0
 --- !u!114 &7088748289633702664
@@ -96,7 +96,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6510406717867350586
 RectTransform:
   m_ObjectHideFlags: 0
@@ -114,7 +114,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &15690227251153976
 CanvasRenderer:
@@ -165,4 +165,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a88223533ba332445aee0526b70820da, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StageClearEffect
+  m_EditorClassIdentifier: Assembly-CSharp::UI.OtherUIs.Transitions.HexTransition
+  _tileSize: 1
+  _progress: 0
+  _directionType: 1
+  _fadeType: 0
+  _angle: 0
+  _interval: 0.167
+  startConerOffset: {x: 0, y: 0}
+  endConerOffset: {x: 0, y: 0}
+  _xCount: 6

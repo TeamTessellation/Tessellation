@@ -147,12 +147,17 @@ namespace Core
             Application.Quit();
         }
         
-        public void StartStage()
+        /// <summary>
+        /// 게임을 시작합니다.
+        /// 스테이지는 1-1부터 시작됩니다.
+        /// </summary>
+        public void StartGame()
         {
             _gameCancellationTokenSource = new CancellationTokenSource();
             _gameCancellationToken = _gameCancellationTokenSource.Token;
             
             CurrentGameState = GlobalGameState.InGame;
+            StageManager.CurrentStage = StageModel.FirstStageModel;
             StageManager.StartStage(_gameCancellationToken);
         }
         

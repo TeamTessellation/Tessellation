@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using ExecEvents;
 using Machamy.Utils;
 using UI;
+using UI.OtherUIs;
 using UnityEngine;
 
 namespace Stage
@@ -16,17 +17,24 @@ namespace Stage
         
         private StageModel _currentStage;
 
+
+        
+        [SerializeField] private bool _isStageCleared = false;
+
+        [SerializeField] private int _currentStageIndex = 0;
+        
+        public bool IsStageCleared => _isStageCleared;
+        
+        private CancellationToken token;
+        
+        
         public StageModel CurrentStage
         {
             get => _currentStage;
             set => _currentStage = value;
         }
-        
-        [SerializeField] private bool _isStageCleared = false;
-        
-        public bool IsStageCleared => _isStageCleared;
-        
-        private CancellationToken token;
+
+        public StageModel NextStage => CurrentStage.GetNextStageModel();
         
         /// <summary>
         /// 스테이지를 시작합니다.
@@ -45,34 +53,22 @@ namespace Stage
         {
             EndStageAsync().Forget();
         }
-
-        public StageModel GetNextStage()
-        {
-            StageModel tmpStage = new StageModel()
-            {
-                StageLevel = CurrentStage == null ? 1 : CurrentStage.StageLevel + 1,
-                StageTargetScore = CurrentStage == null ? 1000 : CurrentStage.StageTargetScore + Random.Range(500, 2500),
-            };
-            return tmpStage;
-        }
+        
         
         private async UniTask StartStageAsync()
         {
             if (token == default)
             {
-                LogEx.LogError("StageManager: CancellationToken is not set. Cannot start stage.");
+                LogEx.LogError("CancellationToken is not set. Cannot start stage.");
                 return;
             }
             var UM = UIManager.Instance;
             _isStageCleared = false;
             LogEx.Log("Stage Starting...");
-            _currentStage = GetNextStage();
              /*
               * 스테이지 시작 화면 표시
               */
              
-             //TODO 임시 스테이지
-
              UM.SwitchMainToGameUI();
              await UM.StageInfoUI.ShowInfoRoutine(CurrentStage);
              
@@ -105,7 +101,7 @@ namespace Stage
         {
             if (token == CancellationToken.None)
             {
-                LogEx.LogError("StageManager: CancellationToken is not set. Cannot end stage.");
+                LogEx.LogError("CancellationToken is not set. Cannot end stage.");
                 return;
             }
             LogEx.Log("Stage Ending...");
