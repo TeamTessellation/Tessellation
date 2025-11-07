@@ -74,7 +74,6 @@ namespace Abilities
         {
             if (tilePlaceHandler == null)
             {
-                LogEx.LogError("TilePlaceHandler에 연결 실패");
                 return;
             }
             

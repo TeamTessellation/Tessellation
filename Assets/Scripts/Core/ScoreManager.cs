@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Core;
 using Cysharp.Threading.Tasks;
+using Stage;
 using UnityEngine;
 
 /* ================================================================================
@@ -30,9 +31,9 @@ public class ScoreManager : Singleton<ScoreManager>
     
     // === Properties ===
     // 여러 턴에 누적되어 최종 합산된 점수
-    public int TotalScore { get; private set; }
+    private int TotalScore { get; set; }
     // 현재 턴에 대한 총 점수
-    public int CurrentScore { get; private set; }
+    private int CurrentScore { get; set; }
     
     // 현재 점수 옆에 곱셈 표시 뜨는거 저장하는 리스트
     public IReadOnlyList<float> MultiplierStack => _multiplierStack;
@@ -58,6 +59,7 @@ public class ScoreManager : Singleton<ScoreManager>
     public void AddCurrentScore(int addScore)
     {
         CurrentScore += addScore;
+        Debug.Log($"CurrentScore : {CurrentScore}");
         OnCurrentScoreChangedAsync?.Invoke(CurrentScore);
     }
 
@@ -68,35 +70,6 @@ public class ScoreManager : Singleton<ScoreManager>
         OnMultiplierAddedAsync?.Invoke(mulValue);
     }
 
-    private async UniTask CalculatePlaceScore(TurnResultInfo turnResultInfo)
-    {
-        int basePlaceScore = 0;
-        List<Tile> placedTiles = turnResultInfo.PlacedTiles;
-        foreach (var tile in placedTiles)
-        {
-            basePlaceScore += tile.Data.Score;
-            // 타일 위치에 +n 점수표시 (EffectManager)
-        }
-
-        CurrentScore += basePlaceScore;
-        OnCurrentScoreChangedAsync?.Invoke(CurrentScore);
-    }
-
-    private async UniTask CalculateLineClearScore(TurnResultInfo turnResultInfo)
-    {
-        
-    }
-
-    private async UniTask CalculateTileRemoveScore(TurnResultInfo turnResultInfo)
-    {
-        
-    }
-
-    private async UniTask CalculateTileBurstScore(TurnResultInfo turnResultInfo)
-    {
-        
-    }
-    
     // CurrentScore에 곱계산을 추가하여 TotalScore에 더한다
     public async UniTask FinalizeScore()
     {

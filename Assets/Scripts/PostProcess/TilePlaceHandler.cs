@@ -156,11 +156,17 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         
         // Queue가 비게 되면 턴 종료. TurnProcessedDelegate 끝
         await InvokeTileEventAsync(OnTurnProcessedAsync, _turnResultInfo, token);
+        _turnResultInfo.Dispose();
     }
     
 
     private async UniTask ProcessTilePlaced(TilePlaceEvent placeEvent, CancellationToken token)
     {
+        foreach (var tile in placeEvent.Tiles)
+        {
+            await tile.OnTilePlaced();
+        }
+        
         _turnResultInfo.PlacedTiles.AddRange(placeEvent.Tiles);
         
         // 패시브 아이템 효과나 점수 추가 등의 로직이 전부 종료될 때까지 대기한다
@@ -175,6 +181,11 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
     
     private async UniTask ProcessLineCompleted(LineClearEvent lineClearEvent, CancellationToken token)
     {
+        foreach (var tile in lineClearEvent.Tiles)
+        {
+            await tile.OnLineCleared();
+        }
+        
         Debug.Log("Process Line Complete");
         _turnResultInfo.ClearedLineCount += lineClearEvent.ClearedLineCount;
         _turnResultInfo.ClearedTiles.AddRange(lineClearEvent.Tiles);
@@ -184,6 +195,11 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
 
     private async UniTask ProcessTileRemoved(TileRemoveEvent removeEvent, CancellationToken token)
     {
+        foreach (var tile in removeEvent.Tiles)
+        {
+            await tile.OnTileRemoved();
+        }
+        
         _turnResultInfo.RemovedTiles.AddRange(removeEvent.Tiles);
         
         await InvokeTileEventAsync(OnTileRemovedAsync, _turnResultInfo, token);
@@ -191,6 +207,11 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
 
     private async UniTask ProcessTileBurst(TileBurstEvent burstEvent, CancellationToken token)
     {
+        foreach (var tile in burstEvent.Tiles)
+        {
+            await tile.OnTileBurst();
+        }
+        
         _turnResultInfo.BurstTiles.AddRange(burstEvent.Tiles);
         
         await InvokeTileEventAsync(OnTileBurstAsync, _turnResultInfo, token);
