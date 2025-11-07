@@ -52,13 +52,14 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
         int baseScore = Data.Score;
         int finalScore = ScoreManager.Instance.CalculateTileScore(eTileEventType.Place, this, baseScore);
         ScoreManager.Instance.AddCurrentScore(finalScore);
+
+        Vector2 popUpPosition = Coor.ToWorld(Field.Instance.TileOffset);
         
-        // TODO
-        // +(finalScore) 이펙트 출력 (.Forget())
     }
 
     public async UniTask OnLineCleared()
     {
+        int baseScore = Data.Score;
         ScoreManager.Instance.AddCurrentScore(Data.Score);
     }
     

@@ -79,4 +79,9 @@ public class EffectManager : Singleton<EffectManager>
         releasePoolObject.SetActive(false);
     }
 
+    public void ShowScoreEffect(int score, Vector2 pos)
+    {
+        // TODO
+        //....
+    }
 }
