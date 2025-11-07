@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using ExecEvents;
 using Interaction;
 using Machamy.Utils;
 using Stage;
 using UI;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Core
@@ -20,6 +22,7 @@ namespace Core
         PausedInGame, // 게임 플레이 중 일시정지
     }
     
+
     public class GameManager : Singleton<GameManager>
     {
         public override bool IsDontDestroyOnLoad => true;
@@ -35,6 +38,7 @@ namespace Core
             {
                 if (value != _currentGameState)
                 {
+                    LogEx.Log($"게임 상태 변경: {_currentGameState} -> {value}");
                     _currentGameState = value;
                     OnGameStateChanged?.Invoke(_currentGameState);
                 }
@@ -47,8 +51,29 @@ namespace Core
         InteractionManager InteractionManager => InteractionManager.Instance;
         
         public event Action<GlobalGameState> OnGameStateChanged;
-
+        public event Action OnGamePaused;
+        public event Action OnGameResumed;
         
+        
+        public bool AutoPauseInBackground = false;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            OnGameStateChanged += (newState) =>
+            {
+                switch (newState)
+                {
+                    case GlobalGameState.InGame:
+                        OnGameResumed?.Invoke();
+                        break;
+                    case GlobalGameState.PausedInGame:
+                        OnGamePaused?.Invoke();
+                        break;
+                }
+            };
+        }
         public async UniTaskVoid Start()
         {
             LogEx.Log("GameManager 시작");
@@ -177,7 +202,8 @@ namespace Core
                 if (CurrentGameState == GlobalGameState.InGame)
                 {
                     // 게임 플레이 중에 앱을 벗어났을때는 정지UI를 보여준다
-                    PauseGameWithUI();
+                    if (AutoPauseInBackground)
+                        PauseGameWithUI();
                 }else if (CurrentGameState == GlobalGameState.PausedInGame)
                 {
                     // 일시정지 상태에서 앱을 벗어났을때는 그대로

@@ -14,8 +14,6 @@ namespace Stage
         
         private TurnManager TurnManager => TurnManager.Instance;
         
-        
-        
         private StageModel _currentStage;
 
         public StageModel CurrentStage
