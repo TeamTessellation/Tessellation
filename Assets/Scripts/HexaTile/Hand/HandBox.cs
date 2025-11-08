@@ -82,8 +82,8 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
     {
         HoldTileSet = Pool<TileSet, TileSetData>.Get(data);
         HoldTileSet.transform.SetParent(transform, false);
-        Invoke(nameof(SetOnHand), 0f);
         SetOnHand();
+        Invoke(nameof(SetOnHand), 0.1f);
 
         _eventTrigger.triggers = null;
 
