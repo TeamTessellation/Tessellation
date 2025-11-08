@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Core;
 using Cysharp.Threading.Tasks;
 using ExecEvents;
@@ -23,7 +24,8 @@ namespace Stage
         [SerializeField] private bool _isStageCleared = false;
 
         [SerializeField] private int _currentStageIndex = 0;
-        
+
+        [Obsolete("아마 안쓸듯")]
         public bool IsStageCleared => _isStageCleared;
         
         private CancellationToken token;
@@ -63,6 +65,16 @@ namespace Stage
             LogEx.Log("Stage Failed.");
             FailStageAsync(cancellationToken).Forget();
         }
+        
+        /// <summary>
+        /// 다음 스테이지로 진행합니다.
+        /// </summary>
+        private void GoToNextStage()
+        {
+            _currentStage = NextStage;
+            LogEx.Log($"Proceeding to next stage: {_currentStage.StageName}");
+        }
+            
         
         private async UniTask StartStageAsync(CancellationToken cancellationToken)
         {
@@ -143,7 +155,8 @@ namespace Stage
             // 상점 파트
             LogEx.Log("Stage Ended.");
             // 스테이지 시작으로 돌아가기
-            
+            GoToNextStage();
+            StartStage(token);
             
         }
         
@@ -186,7 +199,14 @@ namespace Stage
         /// </summary>
         public void ResetStage()
         {
-            
+            /*
+             *  1. 스테이지 초기화
+             *  2. 필드, 핸드, 점수 초기화
+             */
+            _isStageCleared = false;
+            Field.Instance.ResetField(GameManager.Instance.PlayerStatus.FieldSize);
+            HandManager.Instance.ResetHand(GameManager.Instance.PlayerStatus.HandSize);
+            ScoreManager.Instance.Reset();
         }
     }
 }

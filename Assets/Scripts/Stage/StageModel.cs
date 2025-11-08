@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Stage
 {
+    /// <summary>
+    /// 스테이지 모델 클래스입니다.
+    /// struct로 바꿀 수도 있음.
+    /// </summary>
     [System.Serializable]
     public class StageModel : IComparable
     {
