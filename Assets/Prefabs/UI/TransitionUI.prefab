@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a88223533ba332445aee0526b70820da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.OtherUIs.Transitions.HexTransition
-  _tileSize: 1
+  _tileSize: 2.5
   _progress: 0
   _directionType: 1
   _fadeType: 0
@@ -174,4 +174,4 @@ MonoBehaviour:
   _interval: 0.167
   startConerOffset: {x: 0, y: 0}
   endConerOffset: {x: 0, y: 0}
-  _xCount: 6
+  _xCount: 3

@@ -54,12 +54,12 @@ namespace UI
         private async UniTaskVoid Start()
         {
             await InitialLoader.WaitUntilInitialized();
-            RegisterUIs();
             SetMainMenu();
         }
 
         private void OnEnable()
         {
+            RegisterUIs();
             BindEventsToUIs();
         }
         
@@ -78,11 +78,6 @@ namespace UI
         }
 
 
-        [ContextMenu("Register UIs")]
-        public void Ctx()
-        {
-            RegisterUIs();
-        }
         private void RegisterUIs()
         {
             T FindUI<T>() where T : Component
