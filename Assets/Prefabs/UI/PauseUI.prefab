@@ -3564,10 +3564,10 @@ MonoBehaviour:
   savedSortingOrder: 10
   pauseBackgroundPanel: {fileID: 8003293774739900799}
   pausePopup: {fileID: 202533883010518189}
-  soundButton: {fileID: 6491348471341401}
-  retryButton: {fileID: 5712740510744897386}
-  resumeButton: {fileID: 1047783413713498752}
-  homeButton: {fileID: 6891227482067745925}
+  soundButton: {fileID: 5712740510744897386}
+  retryButton: {fileID: 6891227482067745925}
+  resumeButton: {fileID: 6491348471341401}
+  homeButton: {fileID: 1047783413713498752}
   onDisableTransitionDuration: 0.5
   onDisableTransitionEase: 26
   originalPositionsHolder: {fileID: 5783003975625246341}

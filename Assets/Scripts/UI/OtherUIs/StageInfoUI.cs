@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Interaction;
@@ -25,6 +26,9 @@ namespace UI.OtherUIs
         private CanvasGroup _canvasGroup;
         
         private TMP_Text[] _allTMPTexts;
+        
+        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        
         public int CurrentStageLevelView
         {
             get => _currentStageLevelView;
@@ -81,7 +85,8 @@ namespace UI.OtherUIs
             gameObject.SetActive(false);
         }
         
-        public async UniTask ShowInfoRoutine(StageModel stageModel)
+        
+        public async UniTask ShowInfoRoutine(StageModel stageModel, CancellationToken cancellationToken)
         {
             bool isConfirmed = false;
             Sequence currentSequence = null;
@@ -100,23 +105,24 @@ namespace UI.OtherUIs
             // 보이기
             Show();
             CurrentStageNameView = stageModel.StageName;
-            await ShowRoutineInternal();
-            // 레벨
-            // var levelSequence = DOTween.Sequence();
-            // levelSequence.Append(DOTween
-            //     .To(() => CurrentStageLevelView, x => CurrentStageLevelView = x, stageModel.StageLevel,
-            //         stageInfoUISettingSO.levelCountUpDuration)
-            //     .SetEase(stageInfoUISettingSO.targetScoreCountUpEase));
-            // currentSequence = levelSequence;
-            // await levelSequence.ToUniTask();
 
+            await hexTransition.PlayHexagonTransition(
+                stageInfoUISettingSO.showFadeInDuration,
+                stageInfoUISettingSO.showTransitionFadeType,
+                stageInfoUISettingSO.showTransitionCurve,
+                stageInfoUISettingSO.showTransitionDirectionType, cancellationToken: cancellationToken);
+
+            SetFade(0f);
+            await DOTween.To(() => 0f, SetFade, 1f, 0.2f)
+                .SetEase(stageInfoUISettingSO.showFadeInEase)
+                .ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, cancellationToken: cancellationToken);
             
 
             // 타이밍
 
             await UniTask.WhenAny(
-                UniTask.Delay(500),
-                UniTask.WaitUntil(() => isConfirmed)
+                UniTask.Delay(500, cancellationToken: cancellationToken),
+                UniTask.WaitUntil(() => isConfirmed, cancellationToken: cancellationToken)
             );
             // 목표 점수는 숫자가 올라가는 효과
             var sequence = DOTween.Sequence();
@@ -125,11 +131,11 @@ namespace UI.OtherUIs
                     stageInfoUISettingSO.targetScoreCountUpDuration)
                 .SetEase(stageInfoUISettingSO.targetScoreCountUpEase));
             currentSequence = sequence;
-            await sequence.ToUniTask();
+            await sequence.ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, cancellationToken: cancellationToken);
             
             await UniTask.WhenAny(
-                UniTask.Delay(500),
-                UniTask.WaitUntil(() => isConfirmed)
+                UniTask.Delay(500, cancellationToken: cancellationToken),
+                UniTask.WaitUntil(() => isConfirmed, cancellationToken: cancellationToken)
             );
             
 
@@ -137,41 +143,22 @@ namespace UI.OtherUIs
             while (!isConfirmed && elapsedTime < stageInfoUISettingSO.autoHideDelay)
             {
                 elapsedTime += Time.deltaTime;
-                await UniTask.Yield();
+                await UniTask.Yield(cancellationToken);
             }
             InteractionManager.Instance.ConfirmEvent -= OnConfirmed;
             
         }
-        
-        /// <summary>
-        /// 표시 루틴 내부
-        /// </summary>
-        private async UniTask ShowRoutineInternal()
-        {
-            Show();
 
-            await hexTransition.PlayHexagonTransition(
-                stageInfoUISettingSO.showFadeInDuration,
-                stageInfoUISettingSO.showTransitionFadeType,
-                stageInfoUISettingSO.showTransitionCurve,
-                stageInfoUISettingSO.showTransitionDirectionType);
-
-            SetFade(0f);
-            await DOTween.To(() => 0f, SetFade, 1f, 0.2f)
-                .SetEase(stageInfoUISettingSO.showFadeInEase)
-                .ToUniTask();
-        }
-        
-        public async UniTask HideInfoRoutine()
+        public async UniTask HideInfoRoutine(CancellationToken cancellationToken)
         {
             await DOTween.To(() => 1f, SetFade, 0f, 0.2f)
                 .SetEase(stageInfoUISettingSO.hideFadeOutEase)
-                .ToUniTask();
+                .ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, cancellationToken: cancellationToken);
             await hexTransition.PlayHexagonTransition(
                 stageInfoUISettingSO.hideFadeOutDuration,
                 stageInfoUISettingSO.hideTransitionFadeType,
                 stageInfoUISettingSO.hideTransitionCurve,
-                stageInfoUISettingSO.hideTransitionDirectionType);
+                stageInfoUISettingSO.hideTransitionDirectionType, cancellationToken: cancellationToken);
             Hide();
         }
 
