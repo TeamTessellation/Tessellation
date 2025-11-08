@@ -5,6 +5,7 @@ using Machamy.Utils;
 using UI.MainUIs;
 using UI.OtherUIs;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
@@ -40,11 +41,12 @@ namespace UI
         [field:SerializeField] public MainTitleUI MainTitleUI{ get; private set; }
         [field:SerializeField] public GameUI GameUI{ get; private set; }
         [field:SerializeField] public InGameUI InGameUI{ get; private set; }
-        [field:SerializeField] public SettingUI SettingUI{ get; private set; }
+        [field: FormerlySerializedAs("<SettingUI>k__BackingField")] [field:SerializeField] public SettingParentUI SettingParentUI{ get; private set; }
         [Header("GameUI Child UIs")]
         [field:SerializeField] public StageInfoUI StageInfoUI{ get; private set; }
         [Header("Setting Child UIs")]
         [field:SerializeField] public PauseUI PauseUI { get; private set; }
+        [field:SerializeField] public SoundSettingUI SoundSettingUI { get; private set; }  
         [field:Space(20)]
         [Header("Other UIs")]
         [field:SerializeField] public TransitionUI TransitionUI{ get; private set; }
@@ -106,18 +108,19 @@ namespace UI
                 return ui;
             }
             
-            SettingUI = FindUI<SettingUI>();
+            SettingParentUI = FindUI<SettingParentUI>();
             PauseUI = FindUI<PauseUI>();
             MainTitleUI = FindUI<MainTitleUI>();
             GameUI = FindUI<GameUI>();
             InGameUI = FindUI<InGameUI>();
+            SoundSettingUI = FindUI<SoundSettingUI>();
             StageInfoUI = FindUI<StageInfoUI>();
             TransitionUI = FindUI<TransitionUI>();
         }
 
         public void ShowPauseUI()
         {
-            SettingUI.Show();
+            SettingParentUI.Show();
             PauseUI.Show();
         }
         

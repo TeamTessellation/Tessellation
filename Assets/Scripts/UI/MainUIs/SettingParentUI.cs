@@ -1,6 +1,6 @@
 ﻿namespace UI.MainUIs
 {
-    public class SettingUI : UIBase
+    public class SettingParentUI : UIBase
     {      
         public void Show()
         {
