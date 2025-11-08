@@ -85,6 +85,7 @@ namespace Stage
             // 턴 초기화
             // 제약 적용
             using var initStageArgs = StageStartEventArgs.Get();
+            initStageArgs.StageTargetScore = _currentStage.StageTargetScore;
             await ExecEventBus<StageStartEventArgs>.InvokeMerged(initStageArgs);
             
             /*
@@ -126,7 +127,7 @@ namespace Stage
         public bool CheckStageClear()
         {
             // 목표 점수 도달 확인
-            if (_currentStage.StageTargetScore <= ScoreManager.Instance.TotalScore)
+            if (_currentStage.StageTargetScore <= ScoreManager.Instance.CurrentScore)
             {
                 _isStageCleared = true;
             }
@@ -145,19 +146,5 @@ namespace Stage
         {
             
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
 }
