@@ -58,6 +58,25 @@ namespace UI
             SetMainMenu();
         }
 
+        private void OnEnable()
+        {
+            BindEventsToUIs();
+        }
+        
+        private void OnDisable()
+        {
+            UnbindEventsFromUIs();
+        }
+
+        private void BindEventsToUIs()
+        {
+            InGameUI.RegisterEvents();
+        }
+        private void UnbindEventsFromUIs()
+        {
+            InGameUI.UnregisterEvents();
+        }
+
 
         [ContextMenu("Register UIs")]
         public void Ctx()
@@ -79,6 +98,7 @@ namespace UI
             PauseUI = FindUI<PauseUI>();
             MainTitleUI = FindUI<MainTitleUI>();
             GameUI = FindUI<GameUI>();
+            InGameUI = FindUI<InGameUI>();
             StageInfoUI = FindUI<StageInfoUI>();
             TransitionUI = FindUI<TransitionUI>();
         }
@@ -105,8 +125,11 @@ namespace UI
         }
         
         /// <summary>
-        /// 메인 메뉴 UI로 전환합니다.
+        /// 메인 메뉴 UI로 즉시 전환합니다.
         /// </summary>
+        /// <remarks>
+        /// 시작/종료 애니메이션 없이 즉시 전환됩니다.
+        /// </remarks>
         public async void SwitchToMainMenu()
         {
             // TODO : UniTask이용해서 애니메이션 처리 가능
@@ -117,11 +140,15 @@ namespace UI
         /// <summary>
         /// MainUI에서 게임 UI로 전환합니다.
         /// </summary>
+        /// <remarks>
+        /// 시작/종료 애니메이션 없이 즉시 전환됩니다.
+        /// </remarks>
         public async void SwitchMainToGameUI()
         {
             // TODO : UniTask이용해서 애니메이션 처리 가능
             MainTitleUI.Hide();
-            GameUI.Show();
+            GameUI.Show(); 
+            InGameUI.Show();
         }
         
         
