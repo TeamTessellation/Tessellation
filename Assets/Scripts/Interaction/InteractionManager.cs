@@ -22,7 +22,8 @@ namespace Interaction
         
         private void OnDestroy()
         {
-            inputActions.Player.Disable();
+            if (inputActions != null)
+                inputActions.Player.Disable();
         }
         
         public event Action<InputAction.CallbackContext> PointerClickEvent;

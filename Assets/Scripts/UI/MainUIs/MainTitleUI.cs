@@ -51,12 +51,12 @@ namespace UI.MainUIs
             }
 
         }
-        public override void Show()
+        public void Show()
         {
             gameObject.SetActive(true);
         }
 
-        public override void Hide()
+        public void Hide()
         {
             gameObject.SetActive(false);
         }

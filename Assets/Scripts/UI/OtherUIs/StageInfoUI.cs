@@ -71,12 +71,12 @@ namespace UI.OtherUIs
             hexTransition = GetComponentInChildren<HexTransition>(true);
         }
 
-        public override void Show()
+        public void Show()
         {
             gameObject.SetActive(true);
         }
 
-        public override void Hide()
+        public void Hide()
         {
             gameObject.SetActive(false);
         }
@@ -156,6 +156,7 @@ namespace UI.OtherUIs
                 stageInfoUISettingSO.showTransitionCurve,
                 stageInfoUISettingSO.showTransitionDirectionType);
 
+            SetFade(0f);
             await DOTween.To(() => 0f, SetFade, 1f, 0.2f)
                 .SetEase(stageInfoUISettingSO.showFadeInEase)
                 .ToUniTask();
