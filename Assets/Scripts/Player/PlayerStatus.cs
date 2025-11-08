@@ -12,12 +12,12 @@ namespace Player
         public static PlayerStatus Current => GameManager.Instance.PlayerStatus;
         
         [SerializeField] private int fieldSize = 4;
-        [SerializeField] private int handSize = 5;
+        [SerializeField] private int handSize = 3;
 
         public void Reset()
         {
             fieldSize = 4;
-            handSize = 5;
+            handSize = 3;
         }
         
         

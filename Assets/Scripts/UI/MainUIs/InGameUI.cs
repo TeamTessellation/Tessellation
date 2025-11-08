@@ -1,10 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
 using ExecEvents;
 using Stage;
-using Unity.VisualScripting;
-using UnityEngine.UIElements;
 
-namespace UI.OtherUIs
+namespace UI.MainUIs
 {
     public class InGameUI : UIBase
     {

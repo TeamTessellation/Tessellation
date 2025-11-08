@@ -81,8 +81,10 @@ namespace UI.OtherUIs
             bool isConfirmed = false;
             Sequence currentSequence = null;
             gameObject.SetActive(true);
+            SetFade(0f);
             void OnConfirmed()
             {
+                // ReSharper disable AccessToModifiedClosure
                 if (currentSequence != null && currentSequence.IsActive())
                 {
                     currentSequence.Complete();
@@ -103,7 +105,7 @@ namespace UI.OtherUIs
                 stageInfoUISettingSO.showTransitionCurve,
                 stageInfoUISettingSO.showTransitionDirectionType, cancellationToken: cancellationToken);
 
-            SetFade(0f);
+            
             await DOTween.To(() => 0f, SetFade, 1f, 0.2f)
                 .SetEase(stageInfoUISettingSO.showFadeInEase)
                 .ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, cancellationToken: cancellationToken);

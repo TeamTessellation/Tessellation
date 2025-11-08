@@ -45,6 +45,7 @@ namespace Stage
         public void StartStage(CancellationToken cancellationToken)
         {
             token = cancellationToken;
+            
             StartStageAsync(cancellationToken).Forget();
         }
         
