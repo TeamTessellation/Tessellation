@@ -27,20 +27,20 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
     private PlayerInputData _playerInputData;
 
     private bool _dataReady;
-    private bool _isTurnEnd;
     private Item _readyItem;
 
     private void Awake()
     {
         Instance = this;
         _dataReady = false;
-        _isTurnEnd = true;
         _readyItem = Item.End;
     }
 
     private void BindBtn()
     {
         var itemRoot = GameObject.FindWithTag("ItemRoot").transform;
+        if (itemRoot.transform.childCount > 0)
+            return;
         var itemHold = Pool<ItemHold>.Get();
         itemHold.transform.SetParent(itemRoot, false);
         itemHold.RegisterClickEvent(SetItem, Item.Rotate);
@@ -121,7 +121,6 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
     {
         _playerInputData = new(tiles);
         _dataReady = true;
-        _isTurnEnd = true;
         handBox.Use();
     }
 
@@ -139,7 +138,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     public bool IsPlayerCanDoAction()
     {
-        return _isTurnEnd; // ToDo 핸드 수정
+        return (HandManager.Instance.HandSize > 0); // ToDo 핸드 수정
     }
 
     public async UniTask OnTurnStart(int turnCount, CancellationToken token)
