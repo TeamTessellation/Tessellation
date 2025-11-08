@@ -59,8 +59,24 @@ namespace UI
 
         private void OnEnable()
         {
-            RegisterUIs();
-            BindEventsToUIs();
+            if (GameManager.Instance.CurrentGameState == GlobalGameState.Initializing)
+            {
+                void OnInitialized(GlobalGameState newState)
+                {
+                    if (newState != GlobalGameState.Initializing)
+                    {
+                        GameManager.Instance.OnGameStateChanged -= OnInitialized;
+                        RegisterUIs();
+                        BindEventsToUIs();
+                    }
+                }
+                GameManager.Instance.OnGameStateChanged += OnInitialized;
+            }
+            else
+            {
+                RegisterUIs();
+                BindEventsToUIs();
+            }
         }
         
         private void OnDisable()
@@ -76,7 +92,6 @@ namespace UI
         {
             InGameUI.UnregisterEvents();
         }
-
 
         private void RegisterUIs()
         {

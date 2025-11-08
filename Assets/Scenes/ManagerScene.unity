@@ -241,6 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Stage.StageManager
   destroyPreExisting: 0
   _isStageCleared: 0
+  _currentStageIndex: 0
 --- !u!4 &1418308661
 Transform:
   m_ObjectHideFlags: 0
@@ -366,8 +367,9 @@ MonoBehaviour:
   destroyPreExisting: 0
   <MainTitleUI>k__BackingField: {fileID: 0}
   <GameUI>k__BackingField: {fileID: 0}
-  <PauseUI>k__BackingField: {fileID: 0}
+  <InGameUI>k__BackingField: {fileID: 0}
   <StageInfoUI>k__BackingField: {fileID: 0}
+  <PauseUI>k__BackingField: {fileID: 0}
   <TransitionUI>k__BackingField: {fileID: 0}
 --- !u!4 &1728006149
 Transform:
@@ -515,6 +517,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc49cbad543fab4faa65a63c5d73142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TilePlaceHandler
+--- !u!1 &2094400910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2094400912}
+  - component: {fileID: 2094400911}
+  m_Layer: 0
+  m_Name: '@DBManager'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2094400911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094400910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d383f07d75744cd7b1e58bc9cee3f540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Database.DatabaseManager
+  mcDatabase:
+    Example2List: []
+  isInitialized: 0
+  googleSheetUrl: URL_HERE
+  localJsonPath: Database/
+  streamingAssetPath: Json/
+  forceUseStreamingAsset: 0
+  timeoutSeconds: 10
+--- !u!4 &2094400912
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094400910}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 50.51949, y: 0, z: 778.97784}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2104037629
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,3 +629,4 @@ SceneRoots:
   - {fileID: 1231704939}
   - {fileID: 2025349029}
   - {fileID: 1728006149}
+  - {fileID: 2094400912}

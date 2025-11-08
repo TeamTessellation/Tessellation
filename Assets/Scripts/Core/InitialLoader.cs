@@ -1,10 +1,14 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
+using Database;
 using SceneManagement;
+using TMPro;
 using Unity.Android.Gradle.Manifest;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Utils;
 using Action = System.Action;
 
@@ -21,6 +25,10 @@ namespace Core
         [SerializeField] private SceneReference nextScene;
         
  
+        [Header("UI References")]
+        [SerializeField] private Slider progressBar;
+        [SerializeField] private TMP_Text progressText;
+        
         private float _progress;
         
         public float Progress
@@ -30,6 +38,14 @@ namespace Core
             {
                 _progress = Mathf.Clamp01(value);
                 Debug.Log($"Loading Progress: {_progress * 100f}%");
+                if (progressBar != null)
+                {
+                    progressBar.value = _progress;
+                }
+                if (progressText != null)
+                {
+                    progressText.text = $"{Mathf.RoundToInt(_progress * 100f)}%";
+                }
             }
         }
         
@@ -93,8 +109,8 @@ namespace Core
             /*
              * 기초 씬 로드
              */
-            int totalScenes = scenesToLoad.Length;
-            int loadedScenes = 0;
+            int toLoadCount = scenesToLoad.Length;
+            int loadedCount = 0;
             Progress = 0f;
             IsDone = false;
             async UniTask LoadSceneAsync(SceneReference sceneRef)
@@ -107,11 +123,28 @@ namespace Core
                         await UniTask.Yield();
                     }
                 }
-                loadedScenes++;
-                Progress = (float)loadedScenes / totalScenes;
+                loadedCount++;
+                Progress = (float)loadedCount / toLoadCount;
             }
+            List<UniTask> loadTasks = new List<UniTask>();
+            foreach (var sceneRef in scenesToLoad)
+            {
+                loadTasks.Add(LoadSceneAsync(sceneRef));
+            }
+            // DB 로드
+            async UniTask LoadDatabaseAsync()
+            {
+                await UniTask.WaitUntil(() => DatabaseManager.s_IsInstanced);
+                var dbManager = FindAnyObjectByType<DatabaseManager>();
+                await UniTask.WaitUntil(() => DatabaseManager.s_IsInitialized);
+                loadedCount++;
+                Progress = (float)loadedCount / toLoadCount;
+            }
+            loadTasks.Add(LoadDatabaseAsync());
             
-            await UniTask.WhenAll(scenesToLoad.Select(LoadSceneAsync));
+            toLoadCount = loadTasks.Count;
+            
+            await UniTask.WhenAll(loadTasks);
             Progress = 1f;
             IsDone = true;
             _initialized = true;
