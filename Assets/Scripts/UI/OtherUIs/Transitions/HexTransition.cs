@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Machamy.Attributes;
@@ -158,7 +159,8 @@ namespace UI.OtherUIs.Transitions
         }
         
         public async UniTask PlayHexagonTransition(float duration, FadeType fade,
-            DirectionType direction = DirectionType.Down2Up, Ease easeType = Ease.Linear, float angle = 0f)
+            DirectionType direction = DirectionType.Down2Up, Ease easeType = Ease.Linear, float angle = 0f,
+            CancellationToken cancellationToken = default)
         {
             gameObject.SetActive(true);
             DirectionType = direction;
@@ -184,7 +186,8 @@ namespace UI.OtherUIs.Transitions
         }
         
         public async UniTask PlayHexagonTransition(float duration, FadeType fade, AnimationCurve curve,
-            DirectionType direction = DirectionType.Down2Up, float angle = 0f)
+            DirectionType direction = DirectionType.Down2Up, float angle = 0f,
+            CancellationToken cancellationToken = default)
         {
             gameObject.SetActive(true);
             DirectionType = direction;
@@ -195,7 +198,7 @@ namespace UI.OtherUIs.Transitions
             Progress = from;
             await DOTween.To(() => Progress, x => Progress = x, to, duration)
                 .SetEase(curve)
-                .ToUniTask();
+                .ToUniTask(TweenCancelBehaviour.CompleteAndCancelAwait, cancellationToken: cancellationToken);
             Progress = to;
             
             if (fade == FadeType.Out)

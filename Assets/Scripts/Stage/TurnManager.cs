@@ -245,7 +245,7 @@ namespace Stage
                     if(StageManager.CheckStageClear())
                     {
                         LogEx.Log("Stage Cleared!");
-                        StageManager.EndStage();
+                        StageManager.EndStage(token);
                         return;
                     }
                     using var playerActionLoopEndArgs = PlayerActionLoopEndEventArgs.Get();

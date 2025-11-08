@@ -62,12 +62,24 @@ namespace Stage
     }
     
     
-    
+    /// <summary>
+    /// 스테이지가 정상적으로 종료될 때 호출됩니다.
+    /// </summary>
     public class StageEndEventArgs : ExecEventArgs<StageEndEventArgs>
     {
-        public bool IsCleared;
         
         public StageEndEventArgs()
+        {
+
+        }
+    }
+    
+    /// <summary>
+    /// 스테이지가 실패로 종료될 때 호출됩니다.
+    /// </summary>
+    public class StageFailEventArgs : ExecEventArgs<StageFailEventArgs>
+    {
+        public StageFailEventArgs()
         {
 
         }

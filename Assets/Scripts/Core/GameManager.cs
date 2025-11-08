@@ -27,10 +27,14 @@ namespace Core
     {
         public override bool IsDontDestroyOnLoad => true;
 
+        /// <summary>
+        /// 게임 전체를 취소할 수 있는 토큰 소스입니다.
+        /// 게임 전체로직과 상관 없는 로직에서는 이 토큰을 사용하지 마세요.
+        /// </summary>
         private CancellationTokenSource _gameCancellationTokenSource = new CancellationTokenSource();
-        private CancellationToken _gameCancellationToken;
         [SerializeField]private GlobalGameState _currentGameState = GlobalGameState.Initializing;
 
+        public CancellationToken GameCancellationToken => _gameCancellationTokenSource.Token;
         public GlobalGameState CurrentGameState
         {
             get => _currentGameState;
@@ -154,11 +158,10 @@ namespace Core
         public void StartGame()
         {
             _gameCancellationTokenSource = new CancellationTokenSource();
-            _gameCancellationToken = _gameCancellationTokenSource.Token;
             
             CurrentGameState = GlobalGameState.InGame;
             StageManager.CurrentStage = StageModel.FirstStageModel;
-            StageManager.StartStage(_gameCancellationToken);
+            StageManager.StartStage(_gameCancellationTokenSource.Token);
         }
         
         /// <summary>
@@ -176,6 +179,8 @@ namespace Core
             StageManager.ResetStage();
             UIManager.HidePauseUI();
             UIManager.SwitchToMainMenu();
+            
+            _gameCancellationTokenSource = new CancellationTokenSource();
         }
         
         
