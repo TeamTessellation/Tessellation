@@ -24,6 +24,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
     private bool _dragTileSet;
     private Camera _cam;
     private int _remainHand = 0;
+    public int HandSize { get { return _remainHand; } }
     private int _handSize = 3;
 
     public bool IsPlayerInputEnabled => throw new NotImplementedException();
@@ -122,9 +123,8 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
     {
         if(Field.Instance.TryPlace(_targetHandBox.HoldTileSet, worldPos.ToCoor(Field.Instance.TileOffset), out var placeTiles))
         {
-            InputManager.Instance.PlaceTileSet(worldPos, _targetHandBox, placeTiles);
-
             _remainHand--;
+            InputManager.Instance.PlaceTileSet(worldPos, _targetHandBox, placeTiles);
             if (_remainHand <= 0)
                 UseAllHand();
         }
@@ -144,7 +144,6 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
     {
         _targetHandBox = null;
         _dragTileSet = false;
-        SetHand();
     }
 
 
