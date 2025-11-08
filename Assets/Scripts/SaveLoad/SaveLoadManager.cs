@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Core;
 using Machamy.Utils;
+using Player;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,6 +18,7 @@ namespace SaveLoad
     {
         public int TurnCount;
         public int Score;
+        public PlayerStatus PlayerStatus;
         
         /// <summary>
         /// 변수 컨테이너. 우선적으로 내장 변수를 사용하는 것이 권장됩니다.
