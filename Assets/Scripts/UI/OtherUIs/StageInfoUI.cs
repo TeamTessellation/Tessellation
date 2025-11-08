@@ -80,6 +80,7 @@ namespace UI.OtherUIs
         {
             bool isConfirmed = false;
             Sequence currentSequence = null;
+            gameObject.SetActive(true);
             void OnConfirmed()
             {
                 if (currentSequence != null && currentSequence.IsActive())
@@ -142,6 +143,10 @@ namespace UI.OtherUIs
 
         public async UniTask HideInfoRoutine(CancellationToken cancellationToken)
         {
+            if (!gameObject.activeSelf)
+            {
+                gameObject.SetActive(true);
+            }
             await DOTween.To(() => 1f, SetFade, 0f, 0.2f)
                 .SetEase(stageInfoUISettingSO.hideFadeOutEase)
                 .ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, cancellationToken: cancellationToken);

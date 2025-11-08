@@ -6,7 +6,6 @@ using ExecEvents;
 using Machamy.Utils;
 using Player;
 using UI;
-using UI.OtherUIs;
 using UnityEngine;
 
 namespace Stage
@@ -90,7 +89,9 @@ namespace Stage
               * 스테이지 시작 화면 표시
               */
             
-             UM.SwitchMainToGameUI();
+             // UM.SwitchMainToGameUI(); 타이밍 문제로 인해 주석처리
+             UIManager.Instance.GameUI.Show();
+             
              await UM.StageInfoUI.ShowInfoRoutine(CurrentStage, token);
              
              /*
@@ -117,9 +118,16 @@ namespace Stage
             // # 스테이지 모델에 정의된 제약 조건들을 필드에 적용
             // # TODO : 현재 없음
             
+            // 메인타이틀 UI 숨기기
+            UM.MainTitleUI.Hide();
+            UM.InGameUI.Show();
+            
+            
             using var initStageArgs = StageStartEventArgs.Get();
             initStageArgs.StageTargetScore = _currentStage.StageTargetScore;
             await ExecEventBus<StageStartEventArgs>.InvokeMerged(initStageArgs);
+            
+            
             
             /*
              *  스테이지 시작화면 제거
