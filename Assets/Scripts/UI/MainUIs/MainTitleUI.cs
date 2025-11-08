@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core;
+using Cysharp.Threading.Tasks;
 using Machamy.Utils;
 using SaveLoad;
 using TMPro;
@@ -114,8 +115,9 @@ namespace UI.MainUIs
         public void OnSettingsButtonClicked()
         {
             LogEx.Log("Settings Button Clicked");
-            // TODO : 설정 UI 열기
-            
+            UIManager.Instance.SettingParentUI.Show();
+            UIManager.Instance.SoundSettingUI.ShowDefaultAsync().Forget();
+
         }
         public void OnExitButtonClicked()
         {

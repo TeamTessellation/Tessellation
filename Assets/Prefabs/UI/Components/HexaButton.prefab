@@ -384,6 +384,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5945417860304024845}
+  - component: {fileID: 8479411981091248014}
   m_Layer: 0
   m_Name: HexaButton
   m_TagString: Untagged
@@ -413,6 +414,18 @@ RectTransform:
   m_AnchoredPosition: {x: -158, y: -325}
   m_SizeDelta: {x: 259, y: 292}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &8479411981091248014
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2671432919056605640}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2762074324244630259
 GameObject:
   m_ObjectHideFlags: 0
