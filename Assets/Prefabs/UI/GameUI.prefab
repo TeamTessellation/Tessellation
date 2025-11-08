@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 7528783760959470879}
   - component: {fileID: 1330358269762125165}
   - component: {fileID: 7003102882802574010}
+  - component: {fileID: 347543323361400971}
   m_Layer: 0
   m_Name: StageInfoUI
   m_TagString: Untagged
@@ -194,6 +195,23 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &347543323361400971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273515589136586310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1839314722526186238
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +460,7 @@ MonoBehaviour:
   _interval: 0.167
   startConerOffset: {x: 0, y: 0}
   endConerOffset: {x: 0, y: 0}
-  _xCount: 6
+  _xCount: 3
 --- !u!225 &3723095919693556400
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -911,6 +929,10 @@ PrefabInstance:
     - target: {fileID: 3443819728726492855, guid: efee451262678fe4a8de6368388f28ca, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5519942727815859472, guid: efee451262678fe4a8de6368388f28ca, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.00012207031
       objectReference: {fileID: 0}
     - target: {fileID: 6784952660400549615, guid: efee451262678fe4a8de6368388f28ca, type: 3}
       propertyPath: m_AnchorMax.y

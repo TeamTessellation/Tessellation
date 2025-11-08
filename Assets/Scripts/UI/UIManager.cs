@@ -39,13 +39,14 @@ namespace UI
         [Header("Main UIs")]
         [field:SerializeField] public MainTitleUI MainTitleUI{ get; private set; }
         [field:SerializeField] public GameUI GameUI{ get; private set; }
-        [Header("GameUI Child UIs")]
         [field:SerializeField] public InGameUI InGameUI{ get; private set; }
+        [field:SerializeField] public SettingUI SettingUI{ get; private set; }
+        [Header("GameUI Child UIs")]
         [field:SerializeField] public StageInfoUI StageInfoUI{ get; private set; }
+        [Header("Setting Child UIs")]
+        [field:SerializeField] public PauseUI PauseUI { get; private set; }
         [field:Space(20)]
         [Header("Other UIs")]
-        [field:SerializeField] public PauseUI PauseUI { get; private set; }
-        
         [field:SerializeField] public TransitionUI TransitionUI{ get; private set; }
 
         //[field: SerializeField] public UI TransitionUI { get; private set; }
@@ -105,6 +106,7 @@ namespace UI
                 return ui;
             }
             
+            SettingUI = FindUI<SettingUI>();
             PauseUI = FindUI<PauseUI>();
             MainTitleUI = FindUI<MainTitleUI>();
             GameUI = FindUI<GameUI>();
@@ -115,6 +117,7 @@ namespace UI
 
         public void ShowPauseUI()
         {
+            SettingUI.Show();
             PauseUI.Show();
         }
         

@@ -17,7 +17,7 @@ namespace UI.OtherUIs
 {
     public class PauseUI : UIBase
     {
-        [SerializeField] private Image pauseBackgroundPanel;
+        // [SerializeField] private Image pauseBackgroundPanel;
 
         [Header("Popup Elements")]
         [SerializeField] private GameObject pausePopup;
@@ -63,7 +63,7 @@ namespace UI.OtherUIs
         protected override void Reset()
         {
             base.Reset();
-            pauseBackgroundPanel = transform.GetChild(0).GetComponent<Image>();
+            // pauseBackgroundPanel = transform.GetChild(0).GetComponent<Image>();
             pausePopup = transform.Find("PausePopup").gameObject;
             var buttons = pausePopup.GetComponentsInChildren<Button>();
             
