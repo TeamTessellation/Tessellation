@@ -101,11 +101,11 @@ namespace UI.OtherUIs
                     LogEx.LogError("버튼의 인덱스가 범위를 벗어났습니다: " + index);
                 }
             }
+            BindButton(ref resumeButton, 0);
+            BindButton(ref soundButton, 1);
+            BindButton(ref homeButton, 2);
+            BindButton(ref retryButton, 3);
             
-            BindButton(ref soundButton, 0);
-            BindButton(ref retryButton, 1);
-            BindButton(ref resumeButton, 2);
-            BindButton(ref homeButton, 3);
         }
         
         private CancellationTokenSource enabledCancellationTokenSource;
