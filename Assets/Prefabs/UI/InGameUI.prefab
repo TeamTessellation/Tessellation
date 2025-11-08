@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3443819728726492855}
   - component: {fileID: 5527310707222154512}
   - component: {fileID: 7902817171813907184}
+  - component: {fileID: 413912059084252776}
   m_Layer: 5
   m_Name: InGameUI
   m_TagString: Untagged
@@ -82,6 +83,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &413912059084252776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2769564214204408919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9907ba60ebe94f8fb1de182ecad31737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.OtherUIs.InGameUI
+  canvas: {fileID: 5527310707222154512}
+  savedSortingLayerID: 1339770911
+  savedSortingOrder: 0
 --- !u!1 &4835802164303133430
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +110,7 @@ GameObject:
   - component: {fileID: 1877609063184850691}
   - component: {fileID: 1766526320563089605}
   - component: {fileID: 638017323844935803}
+  - component: {fileID: 5093733603590096498}
   m_Layer: 5
   m_Name: ProgressBar
   m_TagString: Untagged
@@ -161,6 +178,21 @@ MonoBehaviour:
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!114 &638017323844935803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4835802164303133430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f20180c82d13734eb346330b06838c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreSlider
+  fillImage: {fileID: 1836344488272121776}
+  animationDuration: 0.3
+  animationEase: 27
+--- !u!114 &5093733603590096498
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -685,8 +717,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1000
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4ee90838e21702d4da94a493e018b628, type: 2}
+  m_sharedMaterial: {fileID: -7419257086709444399, guid: 4ee90838e21702d4da94a493e018b628, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -710,8 +742,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
