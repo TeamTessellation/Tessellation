@@ -43,19 +43,27 @@ namespace Stage
         public void StartStage(CancellationToken cancellationToken)
         {
             token = cancellationToken;
-            StartStageAsync().Forget();
+            StartStageAsync(cancellationToken).Forget();
         }
         
         /// <summary>
         /// 스테이지를 정상적으로 종료합니다.
         /// </summary>
-        public void EndStage()
+        public void EndStage(CancellationToken cancellationToken)
         {
-            EndStageAsync().Forget();
+            EndStageAsync(cancellationToken).Forget();
+        }
+
+        /// <summary>
+        /// 스테이지를 실패로 처리합니다.
+        /// </summary>
+        public void FailStage(CancellationToken cancellationToken)
+        {
+            LogEx.Log("Stage Failed.");
+            FailStageAsync(cancellationToken).Forget();
         }
         
-        
-        private async UniTask StartStageAsync()
+        private async UniTask StartStageAsync(CancellationToken cancellationToken)
         {
             if (token == default)
             {
@@ -70,7 +78,7 @@ namespace Stage
               */
             
              UM.SwitchMainToGameUI();
-             await UM.StageInfoUI.ShowInfoRoutine(CurrentStage);
+             await UM.StageInfoUI.ShowInfoRoutine(CurrentStage, token);
              
              /*
               * 스테이지 초기화
@@ -85,12 +93,13 @@ namespace Stage
             // 턴 초기화
             // 제약 적용
             using var initStageArgs = StageStartEventArgs.Get();
+            initStageArgs.StageTargetScore = _currentStage.StageTargetScore;
             await ExecEventBus<StageStartEventArgs>.InvokeMerged(initStageArgs);
             
             /*
              *  스테이지 시작화면 제거
              */
-            await UM.StageInfoUI.HideInfoRoutine();
+            await UM.StageInfoUI.HideInfoRoutine(token);
              
             await UniTask.Delay(150, cancellationToken: token);
              
@@ -102,7 +111,7 @@ namespace Stage
             TurnManager.StartTurnLoop();
         }
         
-        private async UniTask EndStageAsync()
+        private async UniTask EndStageAsync(CancellationToken cancellationToken)
         {
             if (token == CancellationToken.None)
             {
@@ -121,12 +130,33 @@ namespace Stage
             // 상점 파트
             LogEx.Log("Stage Ended.");
             // 스테이지 시작으로 돌아가기
+            
+            
         }
+        
+        private async UniTask FailStageAsync(CancellationToken cancellationToken)
+        {
+            
+            LogEx.Log("Stage Failing...");
+            /*
+             * 스테이지 실패 처리
+             */
+            using var failStageArgs = StageFailEventArgs.Get();
+            await ExecEventBus<StageFailEventArgs>.InvokeMerged(failStageArgs);
+            
+            await UniTask.Delay(1000);
+            // 실패 팝업
+            // 스테이지 시작으로 돌아가기
+            
+            LogEx.Log("Stage Failed.");
+            GameManager.Instance.ResetGameAndReturnToMainMenu();
+        }
+        
         
         public bool CheckStageClear()
         {
             // 목표 점수 도달 확인
-            if (_currentStage.StageTargetScore <= ScoreManager.Instance.TotalScore)
+            if (_currentStage.StageTargetScore <= ScoreManager.Instance.CurrentScore)
             {
                 _isStageCleared = true;
             }
@@ -145,19 +175,5 @@ namespace Stage
         {
             
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
 }
