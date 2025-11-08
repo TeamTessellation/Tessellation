@@ -80,7 +80,6 @@ public class ScoreManager : Singleton<ScoreManager>
     public void AddCurrentScore(int addScore)
     {
         CurrentScore += addScore;
-        Debug.Log($"CurrentScore : {CurrentScore}");
         OnCurrentScoreChangedAsync?.Invoke(CurrentScore);
     }
 

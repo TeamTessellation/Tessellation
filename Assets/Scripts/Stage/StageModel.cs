@@ -67,7 +67,7 @@ namespace Stage
         public static int CalculateTargetScore(int a, int b)
         {
             float[] dataA = { 1, 1.5f, 2, 2 };
-            float[] dataB = { 2.5f, 3.75f, 5f, 5f };
+            float[] dataB = { 1f, 3.75f, 5f, 5f };
             int baseScore = 100;
             return Mathf.FloorToInt(baseScore * dataA[a - 1] * dataB[b - 1]);
         }
