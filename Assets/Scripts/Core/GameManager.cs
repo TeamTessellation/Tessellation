@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using ExecEvents;
 using Interaction;
 using Machamy.Utils;
+using Player;
 using Stage;
 using UI;
 using Unity.VisualScripting;
@@ -35,6 +36,7 @@ namespace Core
         [SerializeField]private GlobalGameState _currentGameState = GlobalGameState.Initializing;
 
         public CancellationToken GameCancellationToken => _gameCancellationTokenSource.Token;
+        private PlayerStatus _playerStatus;
         public GlobalGameState CurrentGameState
         {
             get => _currentGameState;
@@ -53,6 +55,9 @@ namespace Core
         TurnManager TurnManager => TurnManager.Instance;
         UIManager UIManager => UIManager.Instance;
         InteractionManager InteractionManager => InteractionManager.Instance;
+        
+        
+        public PlayerStatus PlayerStatus => _playerStatus;
         
         public event Action<GlobalGameState> OnGameStateChanged;
         public event Action OnGamePaused;

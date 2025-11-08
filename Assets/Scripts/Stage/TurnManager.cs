@@ -71,6 +71,9 @@ namespace Stage
         [SerializeField]private int _turnCount = 0;
         public int TurnCount => _turnCount;
         public TurnState State { get; private set; }
+        public int CurrentTurn => _turnCount;
+        public int MaxTurn => StageManager.Instance.CurrentStage.StageTurnLimit;
+        public int RemainingTurns => MaxTurn - _turnCount;
         
         [Header("Logics/Handlers")]
         private IFieldTurnLogic fieldTurnLogic;
@@ -79,7 +82,6 @@ namespace Stage
         private IBasicTurnLogic[] basicTurnLogics;
 
         private StageManager StageManager => StageManager.Instance;
-
         private CancellationTokenSource _cancellationTokenSource;
 
         private void Reset()

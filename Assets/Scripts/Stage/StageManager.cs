@@ -3,6 +3,7 @@ using Core;
 using Cysharp.Threading.Tasks;
 using ExecEvents;
 using Machamy.Utils;
+using Player;
 using UI;
 using UI.OtherUIs;
 using UnityEngine;
@@ -84,14 +85,26 @@ namespace Stage
               * 스테이지 초기화
               */
              LogEx.Log("Stage Initializing...");
-
-            Field.Instance.ResetField(4);
-            HandManager.Instance.ResetHand(3);
+             
+            PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
             // 6각형 타일 맵 초기화
+            Field.Instance.ResetField(playerStatus.FieldSize);
+            // 핸드 초기화
+            HandManager.Instance.ResetHand(playerStatus.HandSize);
             // 점수 초기화
+            ScoreManager.Instance.Reset();
             // 목표 점수 설정
-            // 턴 초기화
+            // # 자동으로 할당됨
+            // # TargetScore => StageManager.Instance.CurrentStage.StageTarget
+            
+            // # 자동으로 할당됨
+            // TurnManager.Instance.MaxTurnCount => StageManager.Instance.CurrentStage.StageMaxTurn;
+            // TurnManager::StartTurnLoop(){ ... _currentTurn = 1;  ... }
+            
             // 제약 적용
+            // # 스테이지 모델에 정의된 제약 조건들을 필드에 적용
+            // # TODO : 현재 없음
+            
             using var initStageArgs = StageStartEventArgs.Get();
             initStageArgs.StageTargetScore = _currentStage.StageTargetScore;
             await ExecEventBus<StageStartEventArgs>.InvokeMerged(initStageArgs);

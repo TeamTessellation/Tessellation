@@ -38,6 +38,8 @@ public class ScoreManager : Singleton<ScoreManager>
     public int TotalScore { get; private set; }
     // 현재 턴에 대한 총 점수
     public int CurrentScore { get; private set; }
+
+    public int TargetScore => StageManager.Instance.CurrentStage.StageTargetScore;
     
     // 현재 점수 옆에 곱셈 표시 뜨는거 저장하는 리스트
     public IReadOnlyList<float> MultiplierStack => _multiplierStack;
