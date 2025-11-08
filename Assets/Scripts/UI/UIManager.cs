@@ -95,6 +95,7 @@ namespace UI
         /// </summary>
         public void SetMainMenu()
         {
+            LogEx.Log("SetMainMenu called.");
             GameUI.Hide();
             MainTitleUI.Show();
             PauseUI.Hide();

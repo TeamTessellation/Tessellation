@@ -71,26 +71,6 @@ namespace UI
                 canvas.sortingOrder = savedSortingOrder;
             }
         }
-
         
-        public virtual void Show()
-        {
-        }
-
-        public virtual void Hide()
-        {
-        }
-
-        public void SetVisible(bool visible)
-        {
-            if (visible)
-            {
-                Show();
-            }
-            else
-            {
-                Hide();
-            }
-        }
     }
 }
