@@ -10,6 +10,9 @@ namespace Stage
         [field:SerializeField] public string StageName {set; get; }
         // [field:SerializeField] public int StageLevel {set; get; }
         [field:SerializeField] public int StageTargetScore {set; get; }
+        [field:SerializeField] public int StageTurnLimit {set; get; } = 10;
+        public bool IsInfiniteTurn => StageTurnLimit <= 0;
+        
         
         public int CompareTo(object obj)
         {
