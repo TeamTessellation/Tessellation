@@ -1,0 +1,55 @@
+﻿{
+  "TEST": {
+    "comment": {
+      "name": "testString",
+      "lv": "testInt",
+      "hp": "testFloat",
+      "args": "testArr",
+      "hp2": "testFloat",
+      "arr_aaa": "arrtest"
+    },
+    "type": {
+      "name": "string",
+      "lv": "int",
+      "hp": "float",
+      "args": "int",
+      "hp2": "float",
+      "arr_aaa": "List<int>"
+    },
+    "data": [
+      {
+        "name": "aaa",
+        "lv": 1,
+        "hp": 1.4,
+        "args": null,
+        "hp2": 1.4,
+        "arr_aaa": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "name": "bbb",
+        "lv": 2,
+        "hp": 2,
+        "args": 2,
+        "hp2": 2,
+        "arr_aaa": [
+          55
+        ]
+      },
+      {
+        "name": "ccc",
+        "lv": 3,
+        "hp": 3,
+        "args": null,
+        "hp2": 3,
+        "arr_aaa": [
+          222
+        ]
+      }
+    ]
+  }
+}

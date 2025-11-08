@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Database/Scripts/Editor/MDBLoaderEditor.uss?fileID=7433441132597879392&amp;guid=196981cac9480e349962d8123b3ec682&amp;type=3#MDBLoaderEditor" />
+    <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-self: center; width: 401px;" />
+    <ui:VisualElement style="flex-grow: 1;" />
+</ui:UXML>

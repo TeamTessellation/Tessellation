@@ -1,0 +1,590 @@
+[
+  {
+    "RoomID": "1.1",
+    "MobCount": 1,
+    "MobList": [
+      "\"ga\""
+    ],
+    "RoomSequence": 1,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.3,
+      0.5,
+      0.2
+    ],
+    "MachineLevel": 1
+  },
+  {
+    "RoomID": "1.2",
+    "MobCount": 1,
+    "MobList": [
+      "\"na\"",
+      "\"da\"",
+      "\"ra\""
+    ],
+    "RoomSequence": 2,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.3,
+      0.5,
+      0.2
+    ],
+    "MachineLevel": 1
+  },
+  {
+    "RoomID": "1.3",
+    "MobCount": 1,
+    "MobList": [
+      "\"na\"",
+      "\"da\"",
+      "\"ra\""
+    ],
+    "RoomSequence": 3,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.3,
+      0.5,
+      0.2
+    ],
+    "MachineLevel": 1
+  },
+  {
+    "RoomID": "1.4",
+    "MobCount": 2,
+    "MobList": [
+      "\"ba\"",
+      "\"sa\"",
+      "\"ra\""
+    ],
+    "RoomSequence": 4,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.3,
+      0.5,
+      0.2
+    ],
+    "MachineLevel": 1
+  },
+  {
+    "RoomID": "1.5",
+    "MobCount": 1,
+    "MobList": [
+      "\"ja\"",
+      "\"ka\""
+    ],
+    "RoomSequence": 5,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.3,
+      0.5,
+      0.2
+    ],
+    "MachineLevel": 1
+  },
+  {
+    "RoomID": "MBoss1.1",
+    "MobCount": 1,
+    "MobList": [
+      "\"boss1\""
+    ],
+    "RoomSequence": 1,
+    "HPRate": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "HPRateProbabillity": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "MachineLevel": 2
+  },
+  {
+    "RoomID": "1.6",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 6,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.3,
+      0.5,
+      0.2
+    ],
+    "MachineLevel": 1
+  },
+  {
+    "RoomID": "1.7",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 7,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.3,
+      0.5,
+      0.2
+    ],
+    "MachineLevel": 1
+  },
+  {
+    "RoomID": "1.8",
+    "MobCount": 2,
+    "MobList": [],
+    "RoomSequence": 8,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.3,
+      0.5,
+      0.2
+    ],
+    "MachineLevel": 1
+  },
+  {
+    "RoomID": "1.9",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 9,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.3,
+      0.5,
+      0.2
+    ],
+    "MachineLevel": 1
+  },
+  {
+    "RoomID": "FBoss1.1",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 1,
+    "HPRate": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "HPRateProbabillity": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "MachineLevel": 2
+  },
+  {
+    "RoomID": "2.1",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 1,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.25,
+      0.5,
+      0.25
+    ],
+    "MachineLevel": 2
+  },
+  {
+    "RoomID": "2.2",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 2,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.25,
+      0.5,
+      0.25
+    ],
+    "MachineLevel": 2
+  },
+  {
+    "RoomID": "2.3",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 3,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.25,
+      0.5,
+      0.25
+    ],
+    "MachineLevel": 2
+  },
+  {
+    "RoomID": "2.4",
+    "MobCount": 2,
+    "MobList": [],
+    "RoomSequence": 4,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.25,
+      0.5,
+      0.25
+    ],
+    "MachineLevel": 2
+  },
+  {
+    "RoomID": "2.5",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 5,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.25,
+      0.5,
+      0.25
+    ],
+    "MachineLevel": 2
+  },
+  {
+    "RoomID": "MBoss2.1",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 1,
+    "HPRate": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "HPRateProbabillity": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "MachineLevel": 3
+  },
+  {
+    "RoomID": "2.6",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 6,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.25,
+      0.5,
+      0.25
+    ],
+    "MachineLevel": 2
+  },
+  {
+    "RoomID": "2.7",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 7,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.25,
+      0.5,
+      0.25
+    ],
+    "MachineLevel": 2
+  },
+  {
+    "RoomID": "2.8",
+    "MobCount": 2,
+    "MobList": [],
+    "RoomSequence": 8,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.25,
+      0.5,
+      0.25
+    ],
+    "MachineLevel": 2
+  },
+  {
+    "RoomID": "2.9",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 9,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.25,
+      0.5,
+      0.25
+    ],
+    "MachineLevel": 2
+  },
+  {
+    "RoomID": "FBoss2.1",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 1,
+    "HPRate": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "HPRateProbabillity": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "MachineLevel": 3
+  },
+  {
+    "RoomID": "3.1",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 1,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.2,
+      0.5,
+      0.0,
+      3.0
+    ],
+    "MachineLevel": 3
+  },
+  {
+    "RoomID": "3.2",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 2,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.2,
+      0.5,
+      0.0,
+      3.0
+    ],
+    "MachineLevel": 3
+  },
+  {
+    "RoomID": "3.3",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 3,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.2,
+      0.5,
+      0.0,
+      3.0
+    ],
+    "MachineLevel": 3
+  },
+  {
+    "RoomID": "3.4",
+    "MobCount": 2,
+    "MobList": [],
+    "RoomSequence": 4,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.2,
+      0.5,
+      0.0,
+      3.0
+    ],
+    "MachineLevel": 3
+  },
+  {
+    "RoomID": "3.5",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 5,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.2,
+      0.5,
+      0.0,
+      3.0
+    ],
+    "MachineLevel": 3
+  },
+  {
+    "RoomID": "MBoss3.1",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 1,
+    "HPRate": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "HPRateProbabillity": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "MachineLevel": 4
+  },
+  {
+    "RoomID": "3.6",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 6,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.2,
+      0.5,
+      0.0,
+      3.0
+    ],
+    "MachineLevel": 4
+  },
+  {
+    "RoomID": "3.7",
+    "MobCount": 2,
+    "MobList": [],
+    "RoomSequence": 7,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.2,
+      0.5,
+      0.0,
+      3.0
+    ],
+    "MachineLevel": 4
+  },
+  {
+    "RoomID": "3.8",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 8,
+    "HPRate": [
+      0.95,
+      1.0,
+      1.05
+    ],
+    "HPRateProbabillity": [
+      0.2,
+      0.5,
+      0.0,
+      3.0
+    ],
+    "MachineLevel": 3
+  },
+  {
+    "RoomID": "FBoss3.1",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 1,
+    "HPRate": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "HPRateProbabillity": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "MachineLevel": 100000
+  },
+  {
+    "RoomID": "FBoss3.2",
+    "MobCount": 1,
+    "MobList": [],
+    "RoomSequence": 1,
+    "HPRate": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "HPRateProbabillity": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "MachineLevel": 100000
+  }
+]
