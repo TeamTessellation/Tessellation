@@ -12,7 +12,12 @@ namespace Player
         
         [SerializeField] private int fieldSize = 4;
         [SerializeField] private int handSize = 5;
-        
+
+        public void Reset()
+        {
+            fieldSize = 4;
+            handSize = 5;
+        }
         
         
         public int FieldSize => fieldSize;

@@ -5,6 +5,7 @@ using DG.Tweening;
 using Interaction;
 using Stage;
 using TMPro;
+using UI.Components;
 using UI.OtherUIs.Transitions;
 using UI.UISettings;
 using UnityEngine;
@@ -18,11 +19,11 @@ namespace UI.OtherUIs
         [SerializeField] private Image BackgroundImage;
         [SerializeField] private TMP_Text TitleText;
         [SerializeField] private TMP_Text StageLevelText;
-        [SerializeField] private TMP_Text StageTargetScoreText;
+        [SerializeField] private CounterText StageTargetScoreCounterText;
         [SerializeField] private HexTransition hexTransition;
         [SerializeField] private StageInfoUISettingSO stageInfoUISettingSO;
         private int _currentStageLevelView;
-        private int _currentStageTargetScoreView;
+
         private CanvasGroup _canvasGroup;
         
         private TMP_Text[] _allTMPTexts;
@@ -54,18 +55,7 @@ namespace UI.OtherUIs
             }
         }
         
-        public int CurrentStageTargetScoreView
-        {
-            get => _currentStageTargetScoreView;
-            set
-            {
-                _currentStageTargetScoreView = value;
-                if (StageTargetScoreText != null)
-                {
-                    StageTargetScoreText.text = _currentStageTargetScoreView.ToString($"D{stageInfoUISettingSO.numLengthForTargetScore}");
-                }
-            }
-        }
+
 
         protected override void Awake()
         {
@@ -124,12 +114,13 @@ namespace UI.OtherUIs
                 UniTask.Delay(500, cancellationToken: cancellationToken),
                 UniTask.WaitUntil(() => isConfirmed, cancellationToken: cancellationToken)
             );
-            // 목표 점수는 숫자가 올라가는 효과
+            
             var sequence = DOTween.Sequence();
-            sequence.Append(DOTween
-                .To(() => CurrentStageTargetScoreView, x => CurrentStageTargetScoreView = x, stageModel.StageTargetScore,
-                    stageInfoUISettingSO.targetScoreCountUpDuration)
-                .SetEase(stageInfoUISettingSO.targetScoreCountUpEase));
+            sequence.Append(
+                StageTargetScoreCounterText.DoCount(stageModel.StageTargetScore,
+                        stageInfoUISettingSO.targetScoreCountUpDuration)
+                    .SetEase(stageInfoUISettingSO.targetScoreCountUpEase)
+            );
             currentSequence = sequence;
             await sequence.ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, cancellationToken: cancellationToken);
             
