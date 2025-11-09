@@ -127,6 +127,15 @@ public class Field : MonoBehaviour
     public void ResetField(int size)
     {
         SetFieldBySize(size);
+        RemoveAllTile();
+    }
+
+    private void RemoveAllTile()
+    {
+        foreach (var cell in _allCell.Values)
+        {
+            cell.UnSet();
+        }
     }
 
     private void SetFieldBySize(int size)
