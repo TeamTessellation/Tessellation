@@ -113,6 +113,7 @@ namespace Database
 
             if (_modifiedFiles.Contains(realPath))
             {
+#if UNITY_EDITOR
                 EditorApplication.delayCall += () =>
                 {
                     if (!_modifiedFiles.Contains(realPath)) return;
@@ -128,6 +129,7 @@ namespace Database
                     if (_modifiedFiles.Count == 0)
                         DelayedAssetRefresh();
                 };
+#endif
             }
         }
 
@@ -135,11 +137,13 @@ namespace Database
 
         private static void DelayedAssetRefresh()
         {
+#if UNITY_EDITOR
             EditorApplication.delayCall += () =>
             {
                 Debug.Log("Refreshing AssetDatabase...");
                 AssetDatabase.Refresh();
             };
+#endif
         }
     }
 }

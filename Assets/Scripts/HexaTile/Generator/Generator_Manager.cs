@@ -7,7 +7,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using static UnityEditor.Searcher.Searcher.AnalyticsEvent;
 
 public class Generator_Manager : MonoBehaviour
 {
@@ -46,9 +45,11 @@ public class Generator_Manager : MonoBehaviour
 
     private void OnDisable()
     {
+#if UNITY_EDITOR
         EditorUtility.SetDirty(TargetDeck);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
+#endif
     }
 
     private void Update()

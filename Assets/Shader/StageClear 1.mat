@@ -95,10 +95,10 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Direction: 1
+    - _Direction: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EndX: 11
+    - _EndX: -3
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -115,11 +115,11 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
-    - _StartX: -11
+    - _StartX: -5
     - _Surface: 0
     - _TileSize: 2.5
     - _WorkflowMode: 1
-    - _XCount: 23
+    - _XCount: 3
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
