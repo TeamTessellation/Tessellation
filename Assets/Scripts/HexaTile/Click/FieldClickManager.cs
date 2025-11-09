@@ -19,6 +19,19 @@ public class FieldClickManager : MonoBehaviour
 #endif
             _tileClickEvent?.Invoke(coor);
         }
+
+        if (Touchscreen.current != null)
+        {
+            var touch = Touchscreen.current.primaryTouch;
+            if (touch.phase.ReadValue() == UnityEngine.InputSystem.TouchPhase.Ended)
+            {
+                Coordinate coor = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()).ToCoor();
+#if UNITY_EDITOR
+                //Debug.Log(coor);
+#endif
+                _tileClickEvent?.Invoke(coor);
+            }
+        }
     }
 
     private Action<Coordinate> _tileClickEvent;

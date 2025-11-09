@@ -44,19 +44,32 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
     {
         if (_onMouseDown)
         {
-            Vector2 screenPos = Mouse.current.position.ReadValue();
+            Vector2 screenPos = Pointer.current.position.ReadValue();
             Vector2 worldPos = _cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _cam.nearClipPlane));
 
             if (Vector2.Distance(_startPos, worldPos) > 0.5f)
             {
-                _onMouseDown = false;
-                _dragTileSet = true;
-                _targetHandBox.HoldTileSet.transform.localScale = Vector3.one;
+                if (!InputManager.Instance.ReadyItem)
+                {
+                    _onMouseDown = false;
+                    _dragTileSet = true;
+                    _targetHandBox.HoldTileSet.transform.localScale = Vector3.one;
+                }
             }
 
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            if (Mouse.current != null && Mouse.current.leftButton.wasReleasedThisFrame)
             {
                 HandBoxClick();
+            }
+
+            // 2. 모바일 (터치)
+            if (Touchscreen.current != null)
+            {
+                var touch = Touchscreen.current.primaryTouch;
+                if (touch.phase.ReadValue() == UnityEngine.InputSystem.TouchPhase.Ended)
+                {
+                    HandBoxClick();
+                }
             }
 
             return;
@@ -64,14 +77,23 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
 
         if (_dragTileSet)
         {
-            Vector2 screenPos = Mouse.current.position.ReadValue();
+            Vector2 screenPos = Pointer.current.position.ReadValue();
             Vector2 worldPos = _cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _cam.nearClipPlane));
 
             _targetHandBox.HoldTileSet.transform.position = worldPos;
 
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            if (Mouse.current != null && Mouse.current.leftButton.wasReleasedThisFrame)
             {
                 PlaceTileSet(worldPos);
+            }
+
+            if (Touchscreen.current != null)
+            {
+                var touch = Touchscreen.current.primaryTouch;
+                if (touch.phase.ReadValue() == UnityEngine.InputSystem.TouchPhase.Ended)
+                {
+                    PlaceTileSet(worldPos);
+                }
             }
         }
     }
@@ -154,7 +176,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
         if (target.IsUsed || TurnManager.Instance.State != TurnState.Player)
             return;
 
-        Vector2 screenPos = Mouse.current.position.ReadValue();
+        Vector2 screenPos = Pointer.current.position.ReadValue();
         _startPos = _cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _cam.nearClipPlane));
         _targetHandBox = target;
         _onMouseDown = true;

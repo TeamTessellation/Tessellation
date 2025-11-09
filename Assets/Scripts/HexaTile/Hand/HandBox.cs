@@ -49,6 +49,7 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
         {
             HoldTileSet.Tiles[i].Sr.color = new Color(0.58f, 0.58f, 0.58f);
         }
+        _sprite.transform.localPosition = Vector3.zero;
     }
 
     public void RemoveItemIcon()
