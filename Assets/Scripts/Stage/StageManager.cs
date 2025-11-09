@@ -125,7 +125,7 @@ namespace Stage
             
             
             using var initStageArgs = StageStartEventArgs.Get();
-            initStageArgs.StageTargetScore = _currentStage.StageTargetScore;
+            initStageArgs.StageModel = _currentStage;
             await ExecEventBus<StageStartEventArgs>.InvokeMerged(initStageArgs);
             
             
