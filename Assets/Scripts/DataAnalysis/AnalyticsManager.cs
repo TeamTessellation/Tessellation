@@ -26,9 +26,8 @@ namespace DataAnalysis
             try
             {
                 await UnityServices.InitializeAsync();
-                // Deprecated 지만, 6.2부터 적용된거라 일단 유지
-                Service.StartDataCollection();
-
+                var userConsent = EndUserConsent.GetConsentState();
+                userConsent.AnalyticsIntent = ConsentStatus.Granted;
             }
             catch (Exception e)
             {
