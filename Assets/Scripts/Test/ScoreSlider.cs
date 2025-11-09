@@ -52,11 +52,6 @@ public class ScoreSlider : MonoBehaviour
     {
         _currentTargetScore = args.StageTargetScore;
         
-        // 기존 애니메이션 중단
-        _inFlightCts?.Cancel();
-        _inFlightCts?.Dispose();
-        _sequence?.Kill();
-        
         _currentScore = 0;
         fillImage.fillAmount = 0f;
     }
@@ -73,6 +68,12 @@ public class ScoreSlider : MonoBehaviour
 
         try
         {
+
+            if (_currentTargetScore <= 0)
+            {
+                return;
+            }
+            Debug.Log($"Fill : {fillImage.fillAmount}");
             // 진행 중인 트윈 종료 (즉시 완료로 간주)
             _sequence?.Kill();
             _sequence = null;
