@@ -66,7 +66,15 @@ namespace Stage
             if(a == 0 || b == 0)
                 throw new ArgumentException("Parameters 'a' and 'b' must be greater than 0.");
             StageModel stageModel = new StageModel();
-            stageModel.StageName = $"{a}-{b}";
+            if (b == 4)
+            {
+                stageModel.StageName = $"{a}-Boss";
+            }
+            else
+            {
+                stageModel.StageName = $"{a}-{b}";
+            }
+            
             stageModel.StageTargetScore = CalculateTargetScore(a, b);
             return stageModel;
         }
