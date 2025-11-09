@@ -123,7 +123,7 @@ namespace UI
             InGameUI = FindUI<InGameUI>();
             SoundSettingUI = FindUI<SoundSettingUI>();
             StageInfoUI = FindUI<StageInfoUI>();
-            TransitionUI = FindUI<TransitionUI>();
+            //TransitionUI = FindUI<TransitionUI>();
         }
 
         public void ShowPauseUI()

@@ -20,13 +20,12 @@
         {
             "RenderType"="Transparent"
             "Queue"="Transparent"
-            "RenderPipeline"="UniversalRenderPipeline"
+            "RenderPipeline"="UniversalPipeline"
         }
 
         Pass
         {
             Name "UnlitWorldPosUI"
-            Tags { "LightMode"="UniversalForward" } // 2D 라이트 영향 안 받는 일반 Unlit 패스
 
             Blend SrcAlpha OneMinusSrcAlpha
             Cull Off
