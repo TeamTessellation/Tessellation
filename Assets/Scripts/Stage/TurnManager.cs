@@ -251,6 +251,13 @@ namespace Stage
                         StopTurnLoop();
                         return;
                     }
+                    if(StageManager.CheckStageFail())
+                    {
+                        LogEx.Log("Stage Failed!");
+                        StageManager.FailStage(token);
+                        StopTurnLoop();
+                        return;
+                    }
                     using var playerActionLoopEndArgs = PlayerActionLoopEndEventArgs.Get();
                     await ExecEventBus<PlayerActionLoopEndEventArgs>.InvokeMerged(playerActionLoopEndArgs);
                     

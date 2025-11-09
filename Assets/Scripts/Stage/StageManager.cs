@@ -203,6 +203,18 @@ namespace Stage
             return _isStageCleared;
         }
 
+        public bool CheckStageFail()
+        {
+            // 턴 수 초과 확인
+            PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
+            if (playerStatus.RemainingTurns <= 0 && !CheckStageClear())
+            {
+                return true;
+            }
+            
+            return false;
+        }
+        
         /// <summary>
         /// 스테이지를 초기 상태로 재설정합니다.
         /// </summary>
