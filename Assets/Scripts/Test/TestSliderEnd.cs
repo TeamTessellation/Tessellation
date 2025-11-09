@@ -17,9 +17,9 @@ namespace Test
         
         public BoxCollider BoxCollider => _boxCollider;
 
-        protected override void Reset()
+        void Reset()
         {
-            base.Reset();
+            //base.Reset();
             if (_particleSystem == null)
             {
                 _particleSystem = FindAnyObjectByType<ParticleSystem>();

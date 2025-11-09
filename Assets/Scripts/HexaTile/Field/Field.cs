@@ -100,6 +100,18 @@ public class Field : MonoBehaviour
         _allCell.Remove(coor);
     }
 
+    /*
+    public bool CanPlace(TileSet tileset)
+    {
+
+    }    
+
+    public bool CanPlace(Tile tile)
+    {
+
+    }
+    */
+
     private void RemoveTile(Coordinate coor)
     {
         //_allCell[coor].UnSet();

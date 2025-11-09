@@ -4,7 +4,6 @@ using Cysharp.Threading.Tasks;
 using Database;
 using SceneManagement;
 using TMPro;
-using Unity.Android.Gradle.Manifest;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
