@@ -62,7 +62,7 @@ namespace UI.OtherUIs
         {
             gameObject.SetActive(true);
             LogEx.Log("Showing Fail Result UI");
-            stageNameText.text = StageManager.Instance.CurrentStage.StageName;
+            stageNameText.text = $"stage {StageManager.Instance.CurrentStage.StageName}";
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
             
 
