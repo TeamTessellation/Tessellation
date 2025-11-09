@@ -154,7 +154,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
         if (target.IsUsed || TurnManager.Instance.State != TurnState.Player)
             return;
 
-        Vector2 screenPos = Mouse.current.position.ReadValue();
+        Vector2 screenPos = Pointer.current.position.ReadValue();
         _startPos = _cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _cam.nearClipPlane));
         _targetHandBox = target;
         _onMouseDown = true;
