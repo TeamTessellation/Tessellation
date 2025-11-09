@@ -182,8 +182,14 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
         _onMouseDown = true;
     }
 
+    public bool CanPlace()
+    {
+        return Field.Instance.TryPlaceAllTileSet(_hand.ToList());
+    }
+
     public void ResetHand(int handSize)
     {
+        RemoveItemIcon();
         _handSize = handSize;
         for (int i = 0; i < _hand.Length; i++)
             Pool<HandBox>.Return(_hand[i]);
