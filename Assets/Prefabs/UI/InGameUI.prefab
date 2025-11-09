@@ -98,6 +98,7 @@ MonoBehaviour:
   canvas: {fileID: 5527310707222154512}
   savedSortingLayerID: 1339770911
   savedSortingOrder: 0
+  currentStageText: {fileID: 640016173100357015}
 --- !u!1 &4835802164303133430
 GameObject:
   m_ObjectHideFlags: 0
