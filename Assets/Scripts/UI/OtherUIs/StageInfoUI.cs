@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Core;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Interaction;
@@ -8,8 +9,10 @@ using TMPro;
 using UI.Components;
 using UI.OtherUIs.Transitions;
 using UI.UISettings;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Sequence = DG.Tweening.Sequence;
 
 namespace UI.OtherUIs
 {
@@ -63,6 +66,18 @@ namespace UI.OtherUIs
             gameObject.SetActive(false);
             _canvasGroup = GetComponent<CanvasGroup>();
             hexTransition = GetComponentInChildren<HexTransition>(true);
+            GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+        }
+        private void OnDestroy()
+        {
+            GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+        }
+        private void OnGameStateChanged(GlobalGameState state)
+        {
+            if (state == GlobalGameState.MainMenu)
+            {
+                StageTargetScoreCounterText.CounterValue = 0;
+            }
         }
 
         public void Show()
