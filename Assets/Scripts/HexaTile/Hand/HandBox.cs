@@ -17,7 +17,10 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
     public void Reset()
     {
         if (!IsUsed)
+        {
             Pool<TileSet>.Return(HoldTileSet);
+            HoldTileSet = null;
+        }
     }
 
     private void Awake()
