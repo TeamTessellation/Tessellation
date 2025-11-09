@@ -11,10 +11,13 @@ namespace Stage
     public class StageModel : IComparable
     {
         public static StageModel FirstStageModel => CreateModel(1, 1);
+        
+        [field:SerializeField] public int[] StageIdentifiers {set; get; } = Array.Empty<int>();
         [field:SerializeField] public string StageName {set; get; }
         // [field:SerializeField] public int StageLevel {set; get; }
         [field:SerializeField] public int StageTargetScore {set; get; }
         [field:SerializeField] public int StageTurnLimit {set; get; } = 10;
+
         public bool IsInfiniteTurn => StageTurnLimit <= 0;
         
         
@@ -68,6 +71,7 @@ namespace Stage
             StageModel stageModel = new StageModel();
             stageModel.StageName = $"{a}-{b}";
             stageModel.StageTargetScore = CalculateTargetScore(a, b);
+            stageModel.StageIdentifiers = new int[] { a, b };
             return stageModel;
         }
         

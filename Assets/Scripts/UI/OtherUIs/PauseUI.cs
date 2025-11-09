@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Machamy.Attributes;
 using Machamy.Utils;
+using Stage;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.Rendering;
@@ -157,13 +158,17 @@ namespace UI.OtherUIs
         {
             resumeButton.onClick.AddListener(OnResumeButtonClicked);
             homeButton.onClick.AddListener(OnHomeButtonClicked);
-            ;
+            retryButton.onClick.AddListener(OnRetryButtonClicked);
+            soundButton.onClick.AddListener(OnSoundButtonClicked);
+            
         }
         
         private void OnDisable()
         {
             resumeButton.onClick.RemoveListener(OnResumeButtonClicked);
             homeButton.onClick.RemoveListener(OnHomeButtonClicked);
+            retryButton.onClick.RemoveListener(OnRetryButtonClicked);
+            soundButton.onClick.RemoveListener(OnSoundButtonClicked);
         }
         
         public void CancelEnabledTransitions()
@@ -380,6 +385,7 @@ namespace UI.OtherUIs
         {
             // Hide();
             LogEx.Log("재시작 버튼 클릭됨");
+            GameManager.Instance.RestartCurrentStage();
         }
 
         public void OnResumeButtonClicked()

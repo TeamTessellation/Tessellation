@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Core;
 using Cysharp.Threading.Tasks;
+using SaveLoad;
 using Stage;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ using UnityEngine;
  *
  * 점수의 증가는 게임 상 이펙트 효과를 동반하기 때문에 중간중간 이벤트를 보내고 대기한다.
  ================================================================================ */
-public class ScoreManager : Singleton<ScoreManager>
+public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
 {
     public override bool IsDontDestroyOnLoad => true;
 
@@ -131,5 +132,18 @@ public class ScoreManager : Singleton<ScoreManager>
         CurrentScore = 0;
         
         OnTotalScoreChangedAsync?.Invoke(TotalScore);
+    }
+
+    public Guid Guid { get; init; } = Guid.NewGuid();
+    public void LoadData(GameData data)
+    {
+        this.CurrentScore = data.CurrentScore;
+        this.TotalScore = data.TotalScore;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.CurrentScore = this.CurrentScore;
+        data.TotalScore = this.TotalScore;
     }
 }
