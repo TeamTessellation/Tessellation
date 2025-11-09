@@ -57,7 +57,6 @@ namespace UI
         private async UniTaskVoid Start()
         {
             await InitialLoader.WaitUntilInitialized();
-            SetMainMenu();
         }
 
         private void OnEnable()
@@ -71,6 +70,7 @@ namespace UI
                         GameManager.Instance.OnGameStateChanged -= OnInitialized;
                         RegisterUIs();
                         BindEventsToUIs();
+                        SetMainMenu();
                     }
                 }
                 GameManager.Instance.OnGameStateChanged += OnInitialized;
@@ -79,6 +79,7 @@ namespace UI
             {
                 RegisterUIs();
                 BindEventsToUIs();
+                SetMainMenu();
             }
         }
         

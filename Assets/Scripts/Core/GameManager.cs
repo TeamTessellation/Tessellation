@@ -94,6 +94,7 @@ namespace Core
             {
                 CurrentGameState = GlobalGameState.Initializing;
                 await InitialLoader.WaitUntilInitialized();
+                await UniTask.Yield();
                 CurrentGameState = GlobalGameState.MainMenu;
             }
             Initialize();
