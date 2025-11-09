@@ -250,8 +250,9 @@ MonoBehaviour:
     transitionDuration2: 0.2
     transitionEase2: 26
   center: {fileID: 5401155846360812635}
+  soundButtonRectTransform: {fileID: 4841691594322750791}
   mainTiles:
-  - {fileID: 0}
+  - {fileID: 4841691594322750791}
   - {fileID: 5584172230394230609}
   - {fileID: 6813146992666227784}
   - {fileID: 3358400366134995569}
