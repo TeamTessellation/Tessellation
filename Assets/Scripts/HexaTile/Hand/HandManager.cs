@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using SaveLoad;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class HandManager : MonoBehaviour, IFieldTurnLogic
+public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 {
     public static HandManager Instance { get; private set; }
 
@@ -20,9 +21,10 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
     private HandBox[] _hand;
 
     private HandBox _targetHandBox;
+    private Camera _cam;
     private bool _onMouseDown;
     private bool _dragTileSet;
-    private Camera _cam;
+
     private int _remainHand = 0;
     public int HandSize { get { return _remainHand; } }
     private int _handSize = 3;
@@ -220,5 +222,16 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
     {
         SetHand();
         await UniTask.CompletedTask;
+    }
+
+    public Guid Guid { get; init; } = Guid.NewGuid();
+    public void LoadData(GameData data)
+    {
+        
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        
     }
 }

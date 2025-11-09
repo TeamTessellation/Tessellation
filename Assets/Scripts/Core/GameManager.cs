@@ -185,7 +185,7 @@ namespace Core
                 if (sm.CurrentStage != null)
                 {
                     CurrentGameState = GlobalGameState.InGame;
-                    sm.StartStage(_gameCancellationTokenSource.Token);
+                    sm.StartStage(_gameCancellationTokenSource.Token, isContinue: true);
                 }
                 else
                 {

@@ -6,11 +6,12 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using SaveLoad;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static Field;
 
-public class Field : MonoBehaviour
+public class Field : MonoBehaviour, ISaveTarget
 {
     public struct Line
     {
@@ -303,4 +304,14 @@ public class Field : MonoBehaviour
     public bool CheckAbleCoor(Coordinate coor) => coor.CircleRadius <= _size;
     public static bool CheckAbleCoor(Coordinate coor, int size) => coor.CircleRadius <= size;
 
+    public Guid Guid { get; init; } = Guid.NewGuid();
+    public void LoadData(GameData data)
+    {
+        
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        
+    }
 }

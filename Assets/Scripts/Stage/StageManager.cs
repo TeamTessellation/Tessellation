@@ -49,11 +49,11 @@ namespace Stage
         /// 스테이지를 시작합니다.
         /// </summary>
         /// <param name="cancellationToken"></param>
-        public void StartStage(CancellationToken cancellationToken)
+        public void StartStage(CancellationToken cancellationToken, bool isContinue = false)
         {
             token = cancellationToken;
             
-            StartStageAsync(cancellationToken).Forget();
+            StartStageAsync(cancellationToken, isContinue).Forget();
         }
         
         /// <summary>
@@ -83,7 +83,7 @@ namespace Stage
         }
             
         
-        private async UniTask StartStageAsync(CancellationToken cancellationToken)
+        private async UniTask StartStageAsync(CancellationToken cancellationToken, bool isContinue = false)
         {
             if (token == default)
             {
