@@ -117,7 +117,7 @@ namespace UI.OtherUIs
                 UniTask.Delay(500, cancellationToken: cancellationToken),
                 UniTask.WaitUntil(() => isConfirmed, cancellationToken: cancellationToken)
             );
-            
+            // StageTargetScoreCounterText.PaddingChar = ' ';
             var sequence = DOTween.Sequence();
             sequence.Append(
                 StageTargetScoreCounterText.DoCount(stageModel.StageTargetScore,

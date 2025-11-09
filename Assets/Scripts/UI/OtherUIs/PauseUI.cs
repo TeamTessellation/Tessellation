@@ -147,7 +147,12 @@ namespace UI.OtherUIs
                 StoreOriginal(tile);
             }
         }
-        
+
+        private void Start()
+        {
+            gameObject.SetActive(false);
+        }
+
         private void OnEnable()
         {
             resumeButton.onClick.AddListener(OnResumeButtonClicked);
