@@ -122,6 +122,7 @@ namespace Core
             _gameCancellationTokenSource = new CancellationTokenSource();
             CurrentGameState = GlobalGameState.InGame;
             StageManager.CurrentStage = StageModel.FirstStageModel;
+            
             StageManager.StartStage(_gameCancellationTokenSource.Token);
         }
         
@@ -194,6 +195,7 @@ namespace Core
             CurrentGameState = GlobalGameState.MainMenu;
             PlayerStatus.Reset();
             StageManager.ResetStage();
+            TurnManager.StopTurnLoop();
             UIManager.HidePauseUI();
             UIManager.SwitchToMainMenu();
             
@@ -221,11 +223,10 @@ namespace Core
              * 4. 일시정지 UI 숨기기
              * 5. 메인메뉴 UI로 전환
              */
-            CurrentGameState = GlobalGameState.MainMenu;
             PlayerStatus.Reset();
             StageManager.ResetStage();
+            TurnManager.StopTurnLoop();
             UIManager.HidePauseUI();
-            UIManager.SwitchToMainMenu();
             
             _gameCancellationTokenSource = new CancellationTokenSource();
         }

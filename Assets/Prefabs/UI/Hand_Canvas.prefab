@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 5348101050405880108}
   - component: {fileID: 3458869498685720869}
   - component: {fileID: 4108486045539991335}
+  - component: {fileID: 825697723353018818}
   m_Layer: 5
   m_Name: Hand_Canvas
   m_TagString: Untagged
@@ -237,6 +238,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &825697723353018818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2677597412363285879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b74dd247de04d08bc6a8f11e657ee63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.OtherUIs.HandCanvas
+  canvas: {fileID: 5348101050405880108}
+  savedSortingLayerID: 1307112341
+  savedSortingOrder: -1
 --- !u!1 &4686640455704980081
 GameObject:
   m_ObjectHideFlags: 0
