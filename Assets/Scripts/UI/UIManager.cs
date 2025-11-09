@@ -1,6 +1,7 @@
 ﻿using System;
 using Core;
 using Cysharp.Threading.Tasks;
+using Interaction;
 using Machamy.Utils;
 using UI.MainUIs;
 using UI.OtherUIs;
@@ -61,6 +62,13 @@ namespace UI
 
         private void OnEnable()
         {
+            void Init()
+            {
+                RegisterUIs();
+                BindEventsToUIs();
+                SetMainMenu();
+            }
+            
             if (GameManager.Instance.CurrentGameState == GlobalGameState.Initializing)
             {
                 void OnInitialized(GlobalGameState newState)
@@ -68,19 +76,14 @@ namespace UI
                     if (newState != GlobalGameState.Initializing)
                     {
                         GameManager.Instance.OnGameStateChanged -= OnInitialized;
-                        RegisterUIs();
-                        BindEventsToUIs();
-                        SetMainMenu();
+                        Init();
                     }
                 }
                 GameManager.Instance.OnGameStateChanged += OnInitialized;
             }
-            else
-            {
-                RegisterUIs();
-                BindEventsToUIs();
-                SetMainMenu();
-            }
+            Init();
+            
+            InteractionManager.Instance.CancelEvent += OnCancelInput;
         }
         
         private void OnDisable()
@@ -171,7 +174,31 @@ namespace UI
             GameUI.Show(); 
             InGameUI.Show();
         }
-        
+
+
+        public void OnCancelInput()
+        {
+            if (SoundSettingUI.isActiveAndEnabled)
+            {
+                SoundSettingUI.OnClickBackButton();
+            }
+            else if (PauseUI.isActiveAndEnabled)
+            {
+                HidePauseUI();
+                GameManager.Instance.ResumeGame();
+            }
+            else
+            {
+                if (GameManager.Instance.CurrentGameState == GlobalGameState.InGame)
+                {
+                    GameManager.Instance.PauseGameWithUI();
+                }
+                else
+                {
+                    SoundSettingUI.ShowDefaultAsync().Forget();
+                }
+            }
+        }
         
     }
 }

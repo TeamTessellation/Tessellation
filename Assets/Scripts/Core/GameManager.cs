@@ -232,19 +232,7 @@ namespace Core
         
         public void OnInputCancel()
         {
-            LogEx.Log("입력 취소 이벤트 수신");
-            if (CurrentGameState == GlobalGameState.InGame)
-            {
-                PauseGameWithUI();
-            }
-            else if (CurrentGameState == GlobalGameState.PausedInGame)
-            {
-                UIManager.HidePauseUI();
-                ResumeGame();
-            }else if (CurrentGameState == GlobalGameState.MainMenu)
-            {
-                
-            }
+
         }
         
         private void OnApplicationFocus(bool hasFocus)
