@@ -248,6 +248,7 @@ namespace Stage
                     {
                         LogEx.Log("Stage Cleared!");
                         StageManager.EndStage(token);
+                        StopTurnLoop();
                         return;
                     }
                     using var playerActionLoopEndArgs = PlayerActionLoopEndEventArgs.Get();
@@ -270,8 +271,6 @@ namespace Stage
                 await ExecEventBus<TurnEndEventArgs>.InvokeMerged(turnEndArgs);
                 
                 LogEx.Log($"Turn {_turnCount} fully ended.");
-                
-                
             }
         }
 
