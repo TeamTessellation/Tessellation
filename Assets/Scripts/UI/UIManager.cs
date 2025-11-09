@@ -93,6 +93,10 @@ namespace UI
         }
         private void UnbindEventsFromUIs()
         {
+            if (InGameUI == null)
+            {
+                InGameUI = GlobalCanvas.GetComponentInChildren<InGameUI>(true);
+            }
             InGameUI.UnregisterEvents();
         }
 
