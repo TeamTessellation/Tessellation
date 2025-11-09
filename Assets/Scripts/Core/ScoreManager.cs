@@ -57,7 +57,9 @@ public class ScoreManager : Singleton<ScoreManager>
     public void Reset()
     {
         CurrentScore = 0;
+        OnCurrentScoreChangedAsync?.Invoke(CurrentScore);
         TotalScore = 0;
+        OnTotalScoreChangedAsync?.Invoke(TotalScore);
         _multiplierStack.Clear();
         OnScoreResetAsync?.Invoke();
     }
