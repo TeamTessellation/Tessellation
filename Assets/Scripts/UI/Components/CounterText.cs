@@ -12,7 +12,8 @@ namespace UI.Components
     {
         [SerializeField] private TMP_Text counterTMPText;
         [SerializeField] private int numberPaddingLength = 0;
-        
+        [SerializeField] private string formatString = "{0} 점";
+        [SerializeField] private char paddingChar = '0';
         private int _counterValue;
         public int CounterValue
         {
@@ -36,17 +37,45 @@ namespace UI.Components
             }
         }
         
+        public int PaddingLength
+        {
+            get => numberPaddingLength;
+            set
+            {
+                numberPaddingLength = value;
+                SetCounterValue(_counterValue);
+            }
+        }
+        
+        public char PaddingChar
+        {
+            get => paddingChar;
+            set
+            {
+                paddingChar = value;
+                SetCounterValue(_counterValue);
+            }
+        }
+        
         public void SetCounterValue(int value)
         {
             if (counterTMPText != null)
             {
-                counterTMPText.text = value.ToString(numberPaddingLength > 0 ? $"D{numberPaddingLength}" : "D");
+                counterTMPText.text = string.Format(formatString, numberPaddingLength > 0 ? value.ToString().PadLeft(numberPaddingLength, paddingChar) : value.ToString());
             }
         }
         
 
-        public TweenerCore<int, int, NoOptions> DoCount(int from, int to, float duration)
+        public TweenerCore<int, int, NoOptions> DoCount(int from, int to, float duration, bool setPaddingToToValue = true)
         {
+            if (setPaddingToToValue)
+            {
+                int toValueLength = to.ToString().Length;
+                if (toValueLength > numberPaddingLength)
+                {
+                    numberPaddingLength = toValueLength;
+                }
+            }
             _counterValue = from;
             var tween = DOTween.To(() => _counterValue, x =>
             {
@@ -55,9 +84,9 @@ namespace UI.Components
             return tween;
         }
         
-        public TweenerCore<int, int, NoOptions> DoCount(int to, float duration)
+        public TweenerCore<int, int, NoOptions> DoCount(int to, float duration, bool setPaddingToToValue = true)
         {
-            return DoCount(_counterValue, to, duration);
+            return DoCount(_counterValue, to, duration, setPaddingToToValue);
         }
 
 

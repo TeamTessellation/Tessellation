@@ -368,8 +368,10 @@ MonoBehaviour:
   <MainTitleUI>k__BackingField: {fileID: 0}
   <GameUI>k__BackingField: {fileID: 0}
   <InGameUI>k__BackingField: {fileID: 0}
+  <SettingParentUI>k__BackingField: {fileID: 0}
   <StageInfoUI>k__BackingField: {fileID: 0}
   <PauseUI>k__BackingField: {fileID: 0}
+  <SoundSettingUI>k__BackingField: {fileID: 0}
   <TransitionUI>k__BackingField: {fileID: 0}
 --- !u!4 &1728006149
 Transform:
@@ -552,7 +554,7 @@ MonoBehaviour:
   googleSheetUrl: URL_HERE
   localJsonPath: Database/
   streamingAssetPath: Json/
-  forceUseStreamingAsset: 0
+  forceUseStreamingAsset: 1
   timeoutSeconds: 10
 --- !u!4 &2094400912
 Transform:

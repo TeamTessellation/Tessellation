@@ -94,6 +94,11 @@ namespace UI.OtherUIs
       
         }
 
+        private void Start()
+        {
+            gameObject.SetActive(false);
+        }
+
         private void OnEnable()
         {
             bgmSlider.value = SoundManager.Instance.MusicVolume;
