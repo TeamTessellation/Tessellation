@@ -24,7 +24,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
     private bool _dragTileSet;
     private Camera _cam;
     private int _remainHand = 0;
-    public int HandSize { get { return _remainHand; } }
+    public int HandCount { get { return _remainHand; } }
     private int _handSize = 3;
 
     public bool IsPlayerInputEnabled => throw new NotImplementedException();
@@ -186,6 +186,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
     {
         return Field.Instance.TryPlaceAllTileSet(_hand.ToList());
     }
+    
 
     public void ResetHand(int handSize)
     {

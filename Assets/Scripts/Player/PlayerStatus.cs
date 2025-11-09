@@ -18,6 +18,23 @@ namespace Player
         {
             fieldSize = 4;
             handSize = 3;
+            Variables = new VariableContainer();
+            Variables.SetInteger(nameof(VariableKey.BestScorePlacement), 0);
+            Variables.SetInteger(nameof(VariableKey.TotalScore), 0);
+            Variables.SetInteger(nameof(VariableKey.ClearedLines), 0);
+            Variables.SetInteger(nameof(VariableKey.AbilityUseCount), 0);
+            Variables.SetInteger(nameof(VariableKey.MaxCoinsObtained), 0);
+            Variables.SetInteger(nameof(VariableKey.TotalCoins), 0);
+        }
+        
+        public enum VariableKey
+        {
+            BestScorePlacement,// 최고 득점 배치
+            TotalScore,// 총 점수
+            ClearedLines,// 지운 줄 수
+            AbilityUseCount,// 능력 사용 횟수
+            MaxCoinsObtained,// 최대 획득 코인
+            TotalCoins// 총 코인
         }
         
         
@@ -53,6 +70,18 @@ namespace Player
         {
             get
             {
+                switch (key)
+                {
+                    case nameof(VariableKey.TotalScore):
+                        return new VariableContainer.Variable()
+                        {
+                            IntValue = TotalScore
+                        };
+                        break;
+                    default:
+                        break;
+                }
+                
                 if (Variables.Items.ContainsKey(key))
                 {
                     return Variables.Items[key];

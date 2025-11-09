@@ -45,6 +45,7 @@ namespace UI
         [field: FormerlySerializedAs("<SettingUI>k__BackingField")] [field:SerializeField] public SettingParentUI SettingParentUI{ get; private set; }
         [Header("GameUI Child UIs")]
         [field:SerializeField] public StageInfoUI StageInfoUI{ get; private set; }
+        [field:SerializeField] public FailResultUI FailResultUI{ get; private set; }
         [Header("Setting Child UIs")]
         [field:SerializeField] public PauseUI PauseUI { get; private set; }
         [field:SerializeField] public SoundSettingUI SoundSettingUI { get; private set; }  
@@ -123,7 +124,8 @@ namespace UI
             InGameUI = FindUI<InGameUI>();
             SoundSettingUI = FindUI<SoundSettingUI>();
             StageInfoUI = FindUI<StageInfoUI>();
-            //TransitionUI = FindUI<TransitionUI>();
+            // TransitionUI = FindUI<TransitionUI>();
+            FailResultUI = FindUI<FailResultUI>();
         }
 
         public void ShowPauseUI()
@@ -159,6 +161,8 @@ namespace UI
             // TODO : UniTask이용해서 애니메이션 처리 가능
             GameUI.Hide();
             MainTitleUI.Show();
+            InGameUI.Hide();
+            FailResultUI.Hide();
         }
         
         /// <summary>
@@ -173,6 +177,7 @@ namespace UI
             MainTitleUI.Hide();
             GameUI.Show(); 
             InGameUI.Show();
+            FailResultUI.Hide();
         }
 
 

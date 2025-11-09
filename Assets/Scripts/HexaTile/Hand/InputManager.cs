@@ -148,14 +148,14 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     public async UniTask<PlayerInputData> WaitForPlayerReady(CancellationToken token)
     {
-        await UniTask.WaitUntil(() => _dataReady);
+        await UniTask.WaitUntil(() => _dataReady || token.IsCancellationRequested, cancellationToken: token);
         _dataReady = false;
         return _playerInputData;
     }
 
     public bool IsPlayerCanDoAction()
     {
-        return (HandManager.Instance.HandSize > 0); // ToDo 핸드 수정
+        return (HandManager.Instance.HandCount > 0); // ToDo 핸드 수정
     }
 
     public async UniTask OnTurnStart(int turnCount, CancellationToken token)

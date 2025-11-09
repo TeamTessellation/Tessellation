@@ -456,6 +456,7 @@ namespace UI.OtherUIs
         {
             // Hide();
             LogEx.Log("재시작 버튼 클릭됨");
+            GameManager.Instance.StartGame();
         }
 
         public void OnResumeButtonClicked()
