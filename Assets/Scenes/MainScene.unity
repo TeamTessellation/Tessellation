@@ -1506,17 +1506,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameUI
       objectReference: {fileID: 0}
-    - target: {fileID: 1027323179582855787, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
-      propertyPath: m_text
-      value: "  0\uC810"
-      objectReference: {fileID: 0}
     - target: {fileID: 1821684725622349278, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
       propertyPath: _xCount
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4466752590794055612, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
-      propertyPath: formatString
-      value: "{0}\uC810"
       objectReference: {fileID: 0}
     - target: {fileID: 8828177164580624571, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
       propertyPath: m_Pivot.x
