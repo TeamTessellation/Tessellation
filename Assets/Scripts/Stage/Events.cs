@@ -55,7 +55,7 @@ namespace Stage
     /// </summary>
     public class StageStartEventArgs : ExecEventArgs<StageStartEventArgs>
     {
-        public int StageTargetScore;
+        public StageModel StageModel { get; set; }
         public StageStartEventArgs()
         {
 

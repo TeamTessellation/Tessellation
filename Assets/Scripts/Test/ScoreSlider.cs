@@ -50,7 +50,7 @@ public class ScoreSlider : MonoBehaviour
 
     private void OnStageStart(ExecQueue<StageStartEventArgs> queue, StageStartEventArgs args)
     {
-        _currentTargetScore = args.StageTargetScore;
+        _currentTargetScore = args.StageModel.StageTargetScore;
         
         _currentScore = 0;
         fillImage.fillAmount = 0f;

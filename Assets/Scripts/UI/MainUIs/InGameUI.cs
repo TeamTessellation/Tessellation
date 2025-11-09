@@ -1,11 +1,15 @@
 ﻿using Cysharp.Threading.Tasks;
 using ExecEvents;
 using Stage;
+using TMPro;
+using UnityEngine;
 
 namespace UI.MainUIs
 {
     public class InGameUI : UIBase
     {
+        [SerializeField] private TMP_Text currentStageText;
+        
         public void Show()
         {
             gameObject.SetActive(true);
@@ -29,6 +33,7 @@ namespace UI.MainUIs
         private UniTask OnStageStarted(StageStartEventArgs args)
         {
             Show();
+            currentStageText.text = args.StageModel.StageName;
             return UniTask.CompletedTask;
         }
         
