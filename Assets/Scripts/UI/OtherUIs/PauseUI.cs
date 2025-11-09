@@ -147,16 +147,12 @@ namespace UI.OtherUIs
                 StoreOriginal(tile);
             }
         }
-
-        private void Start()
-        {
-            gameObject.SetActive(false);
-        }
-
+        
         private void OnEnable()
         {
             resumeButton.onClick.AddListener(OnResumeButtonClicked);
             homeButton.onClick.AddListener(OnHomeButtonClicked);
+            ;
         }
         
         private void OnDisable()
@@ -179,12 +175,12 @@ namespace UI.OtherUIs
         }
         public void CancelAllTransitions()
         {
-            enabledCancellationTokenSource.Cancel();
-            disabledCancellationTokenSource.Cancel();
+            enabledCancellationTokenSource?.Cancel();
+            disabledCancellationTokenSource?.Cancel();
             
-            enabledCancellationTokenSource.Dispose();
-            disabledCancellationTokenSource.Dispose();
-            cancellationTokenSource.Dispose();
+            enabledCancellationTokenSource?.Dispose();
+            disabledCancellationTokenSource?.Dispose();
+            cancellationTokenSource?.Dispose();
 
             enabledCancellationTokenSource = new CancellationTokenSource();
             disabledCancellationTokenSource = new CancellationTokenSource();
@@ -393,6 +389,12 @@ namespace UI.OtherUIs
             // Hide();
             LogEx.Log("홈 버튼 클릭됨");
             GameManager.Instance.ResetGameAndReturnToMainMenu();
+        }
+
+        public void OnPauseButtonClicked()
+        {
+            // Hide();
+            LogEx.Log("일시정지 버튼 클릭됨");
         }
     }
 }
