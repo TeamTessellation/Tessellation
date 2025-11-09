@@ -98,7 +98,7 @@ Material:
     - _Direction: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EndX: -1
+    - _EndX: -5
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -115,11 +115,11 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
-    - _StartX: -5
+    - _StartX: -11
     - _Surface: 0
     - _TileSize: 2.5
     - _WorkflowMode: 1
-    - _XCount: 5
+    - _XCount: 7
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
