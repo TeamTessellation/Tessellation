@@ -12,7 +12,8 @@ namespace Stage
     {
         public static StageModel FirstStageModel => CreateModel(1, 1);
         [field:SerializeField] public string StageName {set; get; }
-        // [field:SerializeField] public int StageLevel {set; get; }
+        [field:SerializeField] public int StageWorld {set; get; }
+        [field:SerializeField] public int StageLevel {set; get; }
         [field:SerializeField] public int StageTargetScore {set; get; }
         [field:SerializeField] public int StageTurnLimit {set; get; } = 10;
         public bool IsInfiniteTurn => StageTurnLimit <= 0;
@@ -34,12 +35,8 @@ namespace Stage
 
         public StageModel GetNextStageModel()
         {
-            string[] parts = StageName.Split('-');
-            if (parts.Length != 2)
-                throw new FormatException("StageName format is incorrect. Expected format: 'a-b'.");
-
-            if (!int.TryParse(parts[0], out int a) || !int.TryParse(parts[1], out int b))
-                throw new FormatException("StageName parts must be integers.");
+            int a = StageWorld;
+            int b = StageLevel;
 
             if (b < 4)
             {
