@@ -77,6 +77,25 @@ public class Field : MonoBehaviour
         InitField();
     }
 
+    public bool TryPlaceAllTileSet(List<HandBox> handBoxs)
+    {
+        for (int i = 0; i < handBoxs.Count; i++)
+        {
+            if (!handBoxs[i].IsUsed)
+            {
+                foreach(var cell in _allCell)
+                {
+                    if (cell.Value.IsEmpty)
+                    {
+                        if (CanPlace(handBoxs[i].HoldTileSet, cell.Key))
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public void InitField()
     {
         if (_isInit) return;
