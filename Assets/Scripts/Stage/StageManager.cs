@@ -170,7 +170,11 @@ namespace Stage
             
             await UniTask.Delay(1000);
             // 결과 팝업
+            // TODO : ClearResultUI 구현 필요
+            
             // 상점 파트
+            // TODO : ShopUI 구현 필요
+            
             LogEx.Log("Stage Ended.");
             // 스테이지 시작으로 돌아가기
             GoToNextStage();

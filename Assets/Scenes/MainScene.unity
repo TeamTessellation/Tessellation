@@ -1615,9 +1615,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameUI
       objectReference: {fileID: 0}
-    - target: {fileID: 3656841348949816489, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+    - target: {fileID: 6288939971650417248, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8828177164580624571, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
       propertyPath: m_Pivot.x
@@ -1697,18 +1697,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8828177164580624571, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8866895663891847087, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
-      propertyPath: m_Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9013632570017650624, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 912.94
-      objectReference: {fileID: 0}
-    - target: {fileID: 9013632570017650624, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
-      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1813,10 +1801,6 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3538513822316463104, guid: ba1c7155f439c3746ac9c53abf9e55d6, type: 3}
-      propertyPath: backgroundImage
-      value: 
-      objectReference: {fileID: 3186169530713275489}
     - target: {fileID: 3579802168876125234, guid: ba1c7155f439c3746ac9c53abf9e55d6, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1914,11 +1898,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba1c7155f439c3746ac9c53abf9e55d6, type: 3}
---- !u!225 &3186169530713275489 stripped
-CanvasGroup:
-  m_CorrespondingSourceObject: {fileID: 2751472921329322419, guid: ba1c7155f439c3746ac9c53abf9e55d6, type: 3}
-  m_PrefabInstance: {fileID: 3186169530713275488}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7107528507754811818
 PrefabInstance:
   m_ObjectHideFlags: 0

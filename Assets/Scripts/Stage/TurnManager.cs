@@ -232,6 +232,7 @@ namespace Stage
                     }
                     if(StageManager.CheckStageFail())
                     {
+                        await UniTask.WaitForSeconds(0.3f);
                         LogEx.Log("Stage Failed!");
                         StageManager.FailStage(token);
                         StopTurnLoop();
