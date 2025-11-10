@@ -71,6 +71,8 @@ namespace Stage
             {
                 stageModel.StageName = $"{a}-{b}";
             }
+            stageModel.StageWorld = a;
+            stageModel.StageLevel = b;
             
             stageModel.StageTargetScore = CalculateTargetScore(a, b);
             return stageModel;
