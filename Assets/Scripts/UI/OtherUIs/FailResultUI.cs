@@ -4,11 +4,13 @@ using System.Threading;
 using Core;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Interaction;
 using Machamy.Utils;
 using Player;
 using Stage;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.UI;
 
 namespace UI.OtherUIs
@@ -42,6 +44,8 @@ namespace UI.OtherUIs
         
         CancellationTokenSource _tokenSource = new CancellationTokenSource();
         
+        private List<Tween> tweenList = new List<Tween>();
+        
         private void Awake()
         {
             _skipButton.onClick.AddListener(OnSkipButtonClicked);
@@ -58,14 +62,39 @@ namespace UI.OtherUIs
             _tokenSource = new CancellationTokenSource();
         }
 
+        private void OnEnable()
+        {
+            InteractionManager.Instance.ConfirmEvent += OnConfirmed;
+        }
+        private void OnDisable()
+        {
+            InteractionManager.Instance.ConfirmEvent -= OnConfirmed;
+        }
+        
+        
+        
+        void OnConfirmed()
+        {
+            LogEx.Log("Fail Result UI confirmed by player.");
+            foreach (var tween in tweenList)
+            {
+                if (tween.IsActive() && tween.IsPlaying())
+                    tween.Complete();
+            }
+            tweenList.Clear();
+        }
+
         public async UniTask ShowFailResult()
         {
             gameObject.SetActive(true);
             LogEx.Log("Showing Fail Result UI");
             stageNameText.text = $"stage {StageManager.Instance.CurrentStage.StageName}";
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
+
             
 
+
+            
             _tokenSource.Cancel();
             _tokenSource = new CancellationTokenSource();
             
@@ -108,12 +137,16 @@ namespace UI.OtherUIs
                 cg.alpha = 0f;  
                 
                 // 이동 및 페이드인
+                
                 var moveTween = rect.DOAnchorPos(initialPosition, moveDuration).SetEase(moveEase);
                 var fadeTween = cg.DOFade(1f, fadeDuration).SetEase(fadeEase);
                 
-
+                var seq = DOTween.Sequence();
+                seq.Append(moveTween);
+                seq.Join(fadeTween);
+                tweenList.Add(seq);
                 
-                await UniTask.WhenAll(moveTween.ToUniTask(TweenCancelBehaviour.Complete,token), fadeTween.ToUniTask(TweenCancelBehaviour.Complete,token));
+                await seq.ToUniTask(TweenCancelBehaviour.Complete, cancellationToken: token);
                 
                 // 카운터 증가. 이동 및 페이드인 완료 후 시작. 다음 엔트리는 기다리지 않음.
                 var countTween = entry.FailCountText.DoCount(0, dataValue, countDuration, true).SetEase(countEase).SetDelay(countAfetrMoveDelay);
@@ -123,6 +156,7 @@ namespace UI.OtherUIs
             }
             LogEx.Log("Waiting for all counters to complete");
             // 모든 카운터 트윈이 완료될 때까지 대기
+            tweenList.AddRange(counterTweens);
             await UniTask.WhenAll(counterTweens.ConvertAll(t => t.ToUniTask(TweenCancelBehaviour.Complete,token)));
             await UniTask.Yield(); 
             
