@@ -288,12 +288,28 @@ namespace UI.OtherUIs
                 tile.gameObject.SetActive(false);
             }
             center.gameObject.SetActive(true);
+
+
+            // pausePopup 페이드 인 애니메이션 추가
+            var popupCanvasGroup = pausePopup.GetComponent<CanvasGroup>();
+            if (popupCanvasGroup != null)
+            {
+                popupCanvasGroup.alpha = 0f;
+                var popupFadeTask = popupCanvasGroup.DOFade(1f, 0.2f)
+                    .SetEase(Ease.InOutSine)
+                    .SetUpdate(true)
+                    .ToUniTask(cancellationToken: cancellationToken);
+                transitionTasks.Add(popupFadeTask);
+            }
+
             // 1차 타일들 애니메이션
             // 중앙 -> 각자 위치로
             await UniTask.Delay(TimeSpan.FromSeconds(onEnableTransition.delay1), 
                 delayType: DelayType.UnscaledDeltaTime,
                 cancellationToken: cancellationToken);
+        
             
+
             foreach (var tile in mainTiles)
             {
                 tile.gameObject.SetActive(true);
@@ -340,6 +356,8 @@ namespace UI.OtherUIs
                 tile.gameObject.SetActive(true);
             }
             LogEx.Log("PlayOnDisableTransitionsAsync 시작");
+
+
             // 1차 타일들 애니메이션
             await UniTask.Delay(TimeSpan.FromSeconds(onDisableTransition.delay1), 
                 delayType: DelayType.UnscaledDeltaTime,
@@ -376,15 +394,29 @@ namespace UI.OtherUIs
                     .ToUniTask(cancellationToken: cancellationToken);
                 transitionTasks.Add(task);
             }
+
+            var popupCanvasGroup = pausePopup.GetComponent<CanvasGroup>();
+            if (popupCanvasGroup != null)
+            {
+                popupCanvasGroup.alpha = 1f;
+                var popupFadeTask = popupCanvasGroup.DOFade(0, 0.2f)
+                    .SetEase(Ease.InOutSine)
+                    .SetUpdate(true)
+                    .ToUniTask(cancellationToken: cancellationToken);
+                transitionTasks.Add(popupFadeTask);
+            }
+
             await UniTask.WhenAll(transitionTasks);
         }
 
         public async UniTask SwitchToSoundSettingsAsync(CancellationToken cancellationToken)
         {
             LogEx.Log("SwitchToSoundSettingsAsync 시작");
+            using var handle = ListPool<UniTask>.Get(out var transitionTasks); // Correctly initialize transitionTasks here
 
             // 일시정지 UI 숨기기(사운드 제외 Fade out)
             soundButtonCanvasGroup.ignoreParentGroups = true;
+
             await canvasGroup.DOFade(0f, 0.3f)
                 .SetEase(Ease.InOutSine)
                 .SetUpdate(true)
@@ -395,6 +427,8 @@ namespace UI.OtherUIs
             // 사운드 설정 UI 표시
             var soundSettingsUI = UIManager.Instance.SoundSettingUI;
             
+
+
             await soundSettingsUI.ShowInPauseAsync(soundButton.GetComponent<RectTransform>(), cancellationToken);
             LogEx.Log("사운드 설정 UI 표시 완료");
         }
