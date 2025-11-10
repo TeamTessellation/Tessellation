@@ -49,29 +49,24 @@ namespace Abilities
     public class AbilityDataSO : ScriptableObject
     {
         [Header("Basic Info")] 
-        public eAbilityType abilityType;
-        public eRarity rarity;
-        public string abilityName;
-        [TextArea(3, 5)] public string description;
-        public Sprite itemIcon;
-    
-        [Space(40)]
-    
-        [Header("Level Settings")] 
-        public int maxLevel;
-        public int baseLevel = 1;
+        public eAbilityType AbilityType;
+        public eRarity Rarity;
+        public string AbilityName;
+        [TextArea(3, 5)] public string Description;
+        [Tooltip("Rarity == Normal만 레벨을 가진다")] public int MaxLevel;
+        public Sprite ItemIcon;
 
         [Space(40)] 
     
         [Header("Shop Settings")] 
-        public int abilityPrice;
-        public bool canAppearInShop;
+        public int AbilityPrice;
+        public bool CanAppearInShop;
 
         [Space(40)] 
     
         [Header("Synthesis Settings")] 
-        public bool isSynthesisItem;
-        public AbilityDataSO[] synthesisRequirements;
+        public bool IsSynthesisItem;
+        public AbilityDataSO[] SynthesisRequirements;
     }
 }
 
