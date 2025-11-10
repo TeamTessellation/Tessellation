@@ -7,7 +7,7 @@ public enum eEffectType
     Max,
 }
 
-[CreateAssetMenu(fileName = "NewEffectData", menuName = "EffectData")]
+[CreateAssetMenu(fileName = "NewEffectData", menuName = "GameData/EffectData")]
 public class EffectDataSO : ScriptableObject
 {
     [Header("기본 정보")] 
