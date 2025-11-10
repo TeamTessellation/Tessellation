@@ -9,9 +9,10 @@ namespace Abilities
     public abstract class AbilityBase
     {
         // === Properties ===
-        public eAbilityType AbilityType;
+        private AbilityDataSO _dataSO;
         public int AbilityPriority;
-        public int AbilityLevel = 1;
+        public int currentLevel = 1;
+        
         
         protected virtual bool ReactsToTilePlaced => false;
         protected virtual bool ReactsToLineCleared => false;
@@ -20,6 +21,12 @@ namespace Abilities
         protected virtual bool ReactsToTurnProcessed => false;
 
         // === Functions ===
+        public void InitializeData(AbilityDataSO dataSO)
+        {
+            _dataSO = dataSO;
+            currentLevel = 1;
+        }
+        
         public virtual void Initialize(TilePlaceHandler tilePlaceHandler)
         {
             if (tilePlaceHandler == null)
