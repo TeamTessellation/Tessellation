@@ -1566,6 +1566,7 @@ GameObject:
   - component: {fileID: 618115520703273071}
   - component: {fileID: 3538513822316463104}
   - component: {fileID: 6562013071611665700}
+  - component: {fileID: 3164826116013271292}
   m_Layer: 0
   m_Name: SoundSettingUI
   m_TagString: Untagged
@@ -1637,6 +1638,7 @@ MonoBehaviour:
   soundButtonRectTransform: {fileID: 5629982170242190263}
   backButtonRectTransform: {fileID: 6006195294452534943}
   soundSliderRectTransform: {fileID: 7403813649564534560}
+  backgroundImage: {fileID: 2751472921329322419}
   backButton: {fileID: 4589846347405047635}
   bgmSlider: {fileID: 3581529760526525150}
   sfxSlider: {fileID: 1274668490271943486}
@@ -1709,6 +1711,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &3164826116013271292
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057650463439893517}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2310418431973487926
 GameObject:
   m_ObjectHideFlags: 0
@@ -4672,6 +4686,7 @@ GameObject:
   - component: {fileID: 45236332969056599}
   - component: {fileID: 6945221507178106594}
   - component: {fileID: 5824583099919052116}
+  - component: {fileID: 2751472921329322419}
   m_Layer: 0
   m_Name: BackgroundPanel
   m_TagString: Untagged
@@ -4736,6 +4751,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &2751472921329322419
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6888048836160777761}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7040729149036567640
 GameObject:
   m_ObjectHideFlags: 0
