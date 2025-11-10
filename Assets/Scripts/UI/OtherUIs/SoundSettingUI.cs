@@ -35,7 +35,8 @@ namespace UI.OtherUIs
         [SerializeField] private RectTransform soundButtonRectTransform;
         [SerializeField] private RectTransform backButtonRectTransform;
         [SerializeField] private RectTransform soundSliderRectTransform;
-        
+        [Space(5)]
+        [SerializeField] private CanvasGroup backgroundImage;
         [SerializeField] private Button backButton;
         [SerializeField] private Slider bgmSlider;
         [SerializeField] private Slider sfxSlider;
@@ -177,10 +178,11 @@ namespace UI.OtherUIs
             rightSequence.Join(soundSliderRectTransform.GetComponent<CanvasGroup>().DOFade(1.0f,
                 soundSliderTransitionSettings.fromFadeDuration).SetEase(soundSliderTransitionSettings.fromFadeEase)
                 .SetDelay(soundSliderTransitionSettings.fromFadeDelay));
-            
+
             var allSequence = DOTween.Sequence();
             allSequence.Join(leftSequence);
             allSequence.Join(rightSequence);
+            allSequence.Join(backgroundImage.DOFade(1.0f, 0.2f).SetEase(Ease.InOutSine));
             allSequence.SetUpdate(true);
             await allSequence.Play().ToUniTask(cancellationToken: cancellationTokenSource.Token);
         }
@@ -227,6 +229,7 @@ namespace UI.OtherUIs
             var allSequence = DOTween.Sequence();
             allSequence.Join(leftSequence);
             allSequence.Join(rightSequence);
+            allSequence.Join(backgroundImage.DOFade(0.0f, 0.2f).SetEase(Ease.InOutSine));
             allSequence.SetUpdate(true);
             await allSequence.Play().ToUniTask(cancellationToken: cancellationTokenSource.Token);
             
