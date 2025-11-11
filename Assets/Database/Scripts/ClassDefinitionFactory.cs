@@ -1,3 +1,5 @@
+
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,29 +18,25 @@ namespace Database
         };
 
         private static HashSet<string> KnownEnumTypes = new HashSet<string>() {
-            "Cardevil.Utils.Directions.Direction",
-            "Define.RareType",
-            "Define.SlotRewardType",
-            "Cardevil.Cards.Evaluations.HandRanking",
-            "Cardevil.Relics.EffectExcute",
-            "Cardevil.Relics.EffectEvaluation"
+
             };
         public static string GenerateClassDefinition(DataFrame df)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("using System.Text;")
+            StringBuilder usingSb = new StringBuilder();
+            usingSb.AppendLine("using System.Text;")
               .AppendLine("using System;")
               .AppendLine("using System.Collections.Generic;")
               .AppendLine();
-
+            
+            StringBuilder sb = new StringBuilder();
             sb.AppendLine("namespace Database.Generated")
               .AppendLine("{")
               .AppendLine();
             sb.AppendLine("    [UnityEngine.Scripting.Preserve]")
               .AppendLine("    [Serializable]")
-              .Append("    public class ")
+              .Append("    public partial class ")
               .Append(df.name)
-              .AppendLine("    {")
+              .AppendLine(": IDBData {")
               .AppendLine();
 
             for (int i = 0; i < df.MaxColumn; i++)
@@ -49,13 +47,14 @@ namespace Database
                 string tl = type.Trim().ToLower();
                 if (tl == "null" || tl == "comment") continue;
 
-                sb.Append(GetVariableDefinition(df.varNames[i], type, df.comments[i], 2));
+                var full = GetVariableDefinition(df.varNames[i], type, df.comments[i], 2);
+                sb.Append(full);
             }
 
             sb.AppendLine("    }")
               .AppendLine("}");
-
-            return sb.ToString();
+            
+            return usingSb.ToString() + sb.ToString();
         }
 
         private static StringBuilder GetVariableDefinition(string name, string type, string comment = null, int indent = 0)
@@ -97,57 +96,127 @@ namespace Database
 
         // "int" / "string" 등 알려진 타입만 그대로 두고,
         // 그 외(배열, 제네릭, enum, 커스텀 등)는 모두 string으로 강등
-        private static string DecideType(string original, out bool isKnown)
+        private static string DecideType(string original, out bool isKnown,int depth =0)
         {
             isKnown = false;
             if (string.IsNullOrEmpty(original)) return "string";
-            string t = original.Trim();
-            string tl = t.ToLower();
+            string typeName = original.Trim();
+            string typeNameLower = typeName.ToLower();
 
-            if (IsKnown(tl)) { isKnown = true; return tl; }
+            if (IsKnown(typeNameLower)) { isKnown = true; return typeNameLower; }
 
             // Enum<T>
-            if (tl.StartsWith("enum<") && tl.EndsWith(">"))
+            if (typeNameLower.StartsWith("enum<") && typeNameLower.EndsWith(">"))
             {
-                string enumName = t.Substring(5, t.Length - 6).Trim();
-                if (KnownEnumTypes.Contains(enumName) || ReflectionUtil.IsValidEnumType(enumName))
+                string enumName = typeName.Substring(5, typeName.Length - 6).Trim();
+                
+                // 전체 이름이 알려진 enum 타입이거나, 리플렉션으로 유효한 enum 타입이면 통과
+                if (KnownEnumTypes.Contains(enumName) || ReflectionUtil.IsValidFullEnumType(enumName))
                 {
                     isKnown = true;
                     return enumName;
                 }
+                // 부분 이름이 알려진 enum 타입이면 통과 + namespace 탐색
+                if (ReflectionUtil.FindTypeByName(enumName) is { } enumType && enumType.IsEnum)
+                {
+                    if (enumType.FullName != null)
+                    {
+                        isKnown = true;
+                        return enumType.FullName.Replace("+", "."); // 중첩 클래스인 경우 +가 들어올 수 있음
+                    }
+                }
+                
+                // 알 수 없는 enum 타입
                 return "string";
             }
             
-            if(tl.StartsWith("class<") && tl.EndsWith(">"))
+            if(typeNameLower.StartsWith("class<") && typeNameLower.EndsWith(">"))
             {
-                string className = t.Substring(6, t.Length - 7).Trim();
-                if (ReflectionUtil.FindTypeByFullName(className) is { } type)
+                string className = typeName.Substring(6, typeName.Length - 7).Trim();
+                
+                bool CheckClass(Type type)
                 {
-                    isKnown = true;
-                    return className;
+                    // SerializableAttribute 또는 JsonConverterAttribute가 붙어있는지 확인
+                    if(ReflectionUtil.GetAttribute<SerializableAttribute>(type) is SerializableAttribute)
+                    {
+                        return true;
+                    }
+                    if (ReflectionUtil.GetAttribute<JsonConverterAttribute>(type) is JsonConverterAttribute)
+                    {
+                        return true;
+                    }
+                    
+                    // // IDeserialize를 상속하는지 확인
+                    // if (ReflectionUtil.IsDerivedFrom<IDeserialize>(type))
+                    // {
+                    //     return true;
+                    // }
+                    //
+                    // // IDeserialize를 상속하지 않는 경우, 전체 IDeserializer 탐색
+                    // var deserializerTypes = ReflectionUtil.FindDerivedTypesWithCache<IDeserializer>();
+                    // foreach (var deserializerType in deserializerTypes)
+                    // {
+                    //     if(ReflectionUtil.GetAttribute<DeserializerAttribute>(deserializerType) is DeserializerAttribute attr)
+                    //     {
+                    //         if (attr.TargetType == type)
+                    //         {
+                    //             return true;
+                    //         }
+                    //     }
+                    // }
+                    return false;
+                }
+
+                if (ReflectionUtil.FindTypeByFullName(className) is { } type1)
+                {
+                    if (CheckClass(type1))
+                    {
+                        isKnown = true;
+                        if (type1.FullName != null)
+                        {
+                            return type1.FullName.Replace("+", ".");
+                        }
+                    }
+                }
+
+                if (ReflectionUtil.FindTypeByName(className) is { } type2)
+                {
+                    if (CheckClass(type2))
+                    {
+                        isKnown = true;
+                        if (type2.FullName != null)
+                        {
+                            return type2.FullName.Replace("+", ".");
+                        }
+                    }
                 }
             }
 
             // List<T>
-            if (tl.StartsWith("list<") && tl.EndsWith(">"))
+            if (typeNameLower.StartsWith("list<") && typeNameLower.EndsWith(">"))
             {
-                string inner = t.Substring(5, t.Length - 6).Trim(); 
-                string innerLower = inner.ToLower();
+                // 괄호 안의 내부 타입 문자열을 추출
+                string inner = typeName.Substring(5, typeName.Length - 6).Trim(); 
+        
+                // 내부 타입을 결정하기 위해 자기 자신(DecideType)을 재귀적으로 호출
+                string determinedInnerType = DecideType(inner, out bool innerIsKnown,depth +1);
 
-                if (IsKnown(innerLower))
+                if (innerIsKnown)
                 {
-                    isKnown = true;
-                    return "List<" + innerLower + ">";
-                }
-                if (innerLower.StartsWith("enum<") && innerLower.EndsWith(">"))
-                {
-                    string enumName = inner.Substring(5, inner.Length - 6).Trim();
-                    if (KnownEnumTypes.Contains(enumName) || ReflectionUtil.IsValidEnumType(enumName))
+                    if(depth ==0)
                     {
                         isKnown = true;
-                        return "List<" + enumName + ">";
+                        // 내부 타입이 결정되었으면 List<결정된타입> 형식으로 반환
+                        return "List<" + determinedInnerType + ">";
+                    }
+                    else
+                    {
+                        isKnown = true;
+                        return "List<" + determinedInnerType + ">";
                     }
                 }
+        
+                // 내부 타입이 알려지지 않은 경우
                 return "string";
             }
 

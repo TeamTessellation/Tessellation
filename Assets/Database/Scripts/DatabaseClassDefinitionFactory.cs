@@ -168,11 +168,8 @@ namespace Database
             foreach (var name in classNames)
             {
                 sb.AppendLine($"                case \"{name}\":");
-
-                // --- 수정된 부분 ---
-                // 기존의 비표준 JsonUtilExtend 대신 표준 Newtonsoft.Json을 사용하도록 변경
+                
                 sb.AppendLine($"                    var new{name}Items = Newtonsoft.Json.JsonConvert.DeserializeObject<List<{name}>>(json);");
-                // ---
 
                 sb.AppendLine($"                    {name}List.AddRange(new{name}Items);");
                 sb.AppendLine("                    break;");

@@ -117,6 +117,8 @@ namespace Database
                     Debug.Log($"Creating {df.name}.json");
                     _modifiedFiles.Remove(df.name);
                     WriteJson(df);
+                    Debug.Log("Creating .df");
+                    WriteDf(df);
                     if(_modifiedFiles.Count == 0)
                         AssetDatabase.Refresh();
                 };
@@ -211,6 +213,16 @@ namespace Database
             Debug.Log($"Json Generated: {fileName}");
         }
 
+        private void WriteDf(DataFrame df)
+        {
+            if(!Directory.Exists(TargetDirPath))
+                Directory.CreateDirectory(TargetDirPath);
+            string fileName = Path.Combine(TargetDirPath, df.name + ".df");
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(df, Newtonsoft.Json.Formatting.Indented);
+            byte[] jsonBytes = System.Text.Encoding.UTF8.GetBytes(json);
+            File.WriteAllBytes(fileName, jsonBytes);
+            Debug.Log($"Df Generated: {fileName}");
+        }
 
 #endif
     }
