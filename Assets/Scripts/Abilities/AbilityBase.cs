@@ -7,10 +7,11 @@ using UnityEngine;
 
 namespace Abilities
 {
+    [Serializable]
     public abstract class AbilityBase
     {
         // === Properties ===
-        protected AbilityDataSO dataSO;
+        public AbilityDataSO dataSO;
         public int AbilityPriority;
         public int CurrentLevel = 1;
         
@@ -45,7 +46,7 @@ namespace Abilities
             OnAbilityApplied();
         }
 
-        public void OnDestroy(TilePlaceHandler tilePlaceHandler)
+        public void Remove(TilePlaceHandler tilePlaceHandler)
         {
             if (tilePlaceHandler == null)
             {
@@ -64,12 +65,12 @@ namespace Abilities
 
         protected virtual void OnAbilityApplied()
         {
-            
+            Debug.Log($"{dataSO.AbilityName} 생성됨");
         }
 
         protected virtual void OnAbilityRemoved()
         {
-            
+            Debug.Log($"{dataSO.AbilityName} 삭제됨");
         }
                 
         protected virtual async UniTask HandleTilePlacedAsync(TurnResultInfo info)
