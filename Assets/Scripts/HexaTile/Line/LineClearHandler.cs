@@ -115,6 +115,8 @@ public class LineClearHandler
 
         List<UniTask> allTask = new();
 
+        await UniTask.WaitForSeconds(0.3f);
+
         allTask.Add(Field.Instance.SafeRemoveTile(line.Start));
         await UniTask.WaitForSeconds(interval);
         while (Field.Instance.CheckAbleCoor(upCorrect) || Field.Instance.CheckAbleCoor(downCorrect))
