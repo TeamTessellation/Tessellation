@@ -18,6 +18,10 @@ namespace SaveLoad
     {
         public int TurnCount;
         public int Score;
+        public int HandCount;
+        public int FieldSize;
+        public List<OffsetTileData> FieldTileData;
+        public TileSetData[] HandData;
         public PlayerStatus PlayerStatus;
         
         /// <summary>

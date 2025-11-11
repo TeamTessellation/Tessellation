@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Player;
+using SaveLoad;
 using Stage;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,9 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
-public class HandManager : MonoBehaviour, IFieldTurnLogic
+public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 {
     public static HandManager Instance { get; private set; }
 
@@ -30,6 +32,8 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
 
     public bool IsPlayerInputEnabled => throw new NotImplementedException();
 
+    public Guid Guid { get; init; }
+
     private void Awake()
     {
         Instance = this;
@@ -40,6 +44,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
         _cam = Camera.main;
         _remainHand = 0;
         _lastDragCoor = new();
+        SaveLoadManager.RegisterPendingSavable(this);
     }
 
     void Update()
@@ -223,6 +228,18 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
             handBox.RegisterDownEvent(HandBoxMouseDown);
             _hand[i] = handBox;
         }
+
+        RefreshGameObject().Forget();
+    }
+
+    private async UniTask RefreshGameObject()
+    {
+        await UniTask.NextFrame();
+        for (int i = 0; i < _hand.Length; i++)
+        {
+            _hand[i].gameObject.SetActive(false);
+            _hand[i].gameObject.SetActive(true);
+        }
     }
 
     private TileSetData[] GetRadomTileSetDataInGroup(int dataCount = 1)
@@ -261,5 +278,40 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
     {
         SetHand();
         await UniTask.CompletedTask;
+    }
+
+    public void LoadData(GameData data)
+    {
+        ResetHand(data.HandCount);
+
+        _hand = new HandBox[data.HandCount];
+        for (int i = 0; i < data.HandCount; i++)
+        {
+            HandBox handBox;
+            if (data.HandData[i] == null)
+                handBox = Pool<HandBox>.Get();
+            else
+                handBox = Pool<HandBox, TileSetData>.Get(data.HandData[i]);
+
+            handBox.transform.SetParent(_handRoot, false);
+            handBox.RegisterDownEvent(HandBoxMouseDown);
+            _hand[i] = handBox;
+        }
+
+        RefreshGameObject().Forget();
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.HandData = new TileSetData[_handSize];
+        data.HandCount = _handSize;
+
+        for (int i = 0; i < _hand.Length; i++)
+        {
+            if (_hand[i].IsUsed)
+                data.HandData[i] = null;
+
+            data.HandData[i] = _hand[i].HoldTileSet.Data;
+        }
     }
 }

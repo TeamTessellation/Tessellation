@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using SaveLoad;
 using Stage;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using static Field;
 
-public class Field : MonoBehaviour
+public class Field : MonoBehaviour, ISaveTarget
 {
     public struct Line
     {
@@ -70,6 +71,8 @@ public class Field : MonoBehaviour
 
     public int Size { get { return _size; } }
 
+    public Guid Guid { get; init; }
+
     private int _size = 4;
     private bool _isInit = false;
 
@@ -77,6 +80,7 @@ public class Field : MonoBehaviour
     {
         _instance = this;
         InitField();
+        SaveLoadManager.RegisterPendingSavable(this);
     }
 
     public bool TryPlaceAllTileSet(List<HandBox> handBoxs)
@@ -367,4 +371,28 @@ public class Field : MonoBehaviour
     public bool CheckAbleCoor(Coordinate coor) => coor.CircleRadius <= _size;
     public static bool CheckAbleCoor(Coordinate coor, int size) => coor.CircleRadius <= size;
 
+    public void LoadData(GameData data)
+    {
+        ResetField(data.FieldSize);
+        for (int i = 0; i < data.FieldTileData.Count; i++)
+        {
+            var tileData = data.FieldTileData[i];
+            TryPlace(Pool<Tile, TileData>.Get(tileData.TileData), tileData.Coor);
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.FieldTileData = new();
+        foreach(var cell in _allCell)
+        {
+            if (cell.Value.IsEmpty)
+                continue;
+
+            OffsetTileData tileData = new();
+            tileData.Coor = cell.Key;
+            tileData.TileData = cell.Value.Tile.Data;
+            data.FieldTileData.Add(tileData);
+        }
+    }
 }
