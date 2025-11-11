@@ -12,27 +12,15 @@ namespace Abilities
             { eAbilityType.OnlyPlace , () => new OnlyPlaceAbility() },
             // Add..            
         };
-        public static AbilityBase Create(eAbilityType abilityType)
+        
+        public static AbilityBase Create(AbilityDataSO abilitydata)
         {
-            AbilityDataSO abilityDataSo = Resources.Load<AbilityDataSO>($"Prefabs/Ability/{abilityType.ToString()}");
-            if (!abilityDataSo)
-            {
-                LogEx.LogWarning($"미구현 Ability : {abilityType}");
-                return null;
-            }
-            // //
-            // // if(!abilityda)
-            // // AbilityBase newAbility;
-            // // switch (abilityType)
-            // // {
-            // //     case eAbilityType.OnlyPlace:
-            // //     {
-            // //         newAbility = new OnlyPlaceAbility();
-            // //         break;
-            // //     }
-            // }
+            if (!abiltyFuncs.ContainsKey(abilitydata.AbilityType)) return null;
 
-            return null;
+            AbilityBase newAbility = abiltyFuncs[abilitydata.AbilityType]();
+            newAbility.InitializeData(abilitydata);
+            
+            return newAbility;
         }
     }
 }

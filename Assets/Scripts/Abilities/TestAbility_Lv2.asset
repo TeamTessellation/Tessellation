@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9fc628945da38f43987756c6c3b7d49, type: 3}
-  m_Name: TestAbility
+  m_Name: TestAbility_Lv2
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   AbilityType: 0
   Rarity: 0
@@ -21,4 +21,5 @@ MonoBehaviour:
   AbilityPrice: 5
   CanAppearInShop: 1
   IsSynthesisItem: 0
-  SynthesisRequirements: []
+  SynthesisRequirements:
+  - {fileID: 11400000, guid: bc805b53accc4ae45ad66c2ba6f5e19d, type: 2}

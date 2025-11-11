@@ -7,16 +7,16 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    private List<AbilityBase> _abilities = new List<AbilityBase>();
+    [SerializeField] private List<AbilityDataSO> TestCreateAbilites = new List<AbilityDataSO>();
+    
+    [SerializeReference] private List<AbilityBase> _abilities = new List<AbilityBase>();
     private int _currentAbilityCount = 0;
-    private int _maxAbilityCount;
+    private int _maxAbilityCount = 5;
 
     private TilePlaceHandler _tilePlaceHandler;
-    
+
     private void Awake()
     {
-        _maxAbilityCount = 5;
-        
         for (int i = 0; i < _maxAbilityCount; i++)
         {
             _abilities.Add(null);
@@ -30,7 +30,7 @@ public class PlayerInventory : MonoBehaviour
         {
             Debug.LogError("TilePlaceHandler가 할당되지 않음! TurnManager 확인..");
         }
-        
+
 #if UNITY_EDITOR
         TestAddAbility();
 #endif
@@ -41,10 +41,10 @@ public class PlayerInventory : MonoBehaviour
     /// </summary>
     private void TestAddAbility()
     {
-        AddAbility(eAbilityType.OnlyPlace);
-        AddAbility(eAbilityType.OnlyPlace);
-        AddAbility(eAbilityType.OnlyPlace);
-        AddAbility(eAbilityType.OnlyPlace);
+        for (int i = 0; i < TestCreateAbilites.Count; i++)
+        {
+            AddAbility(TestCreateAbilites[i]);
+        }
     }
 
     private void OnDestroy()
@@ -53,30 +53,77 @@ public class PlayerInventory : MonoBehaviour
         {
             if (_abilities[i] != null)
             {
-                _abilities[i].OnDestroy(_tilePlaceHandler);
+                _abilities[i].Remove(_tilePlaceHandler);
             }
         }
     }
 
-    public void AddAbility(eAbilityType abilityType)
+    public void AddAbility(AbilityDataSO abilityData)
     {
+        // A. abilityData SynthesisRequirements에 해당하는 어빌리티들을 제거하기
+        if (abilityData.SynthesisRequirements != null)
+        {
+            for (int i = 0; i < abilityData.SynthesisRequirements.Length; i++)
+            {
+                RemoveAbilityByData(abilityData.SynthesisRequirements[i]);
+            }
+        }
+        
+        // A-1. 인벤토리 크기 체킹
         if (_currentAbilityCount >= _maxAbilityCount)
         {
-            LogEx.LogError("인벤토리가 다 찼음! 아이템 버리셈!");
+            Debug.Log("인벤토리가 Max입니다");
             return;
         }
-
-        LogEx.Log($"{abilityType.ToString()} 증강 추가!");
-        AbilityBase newAbility = AbilityFactory.Create(abilityType);
         
+        // B. AbilityFactory 통해서 Ability 생성
+        AbilityBase newAbility = AbilityFactory.Create(abilityData);
         if (newAbility == null) return;
         newAbility.Initialize(_tilePlaceHandler);
         
-        _abilities[_currentAbilityCount] = newAbility;
-        _currentAbilityCount++;
-        RefreshPriorities();
+        // C. 맨 앞 빈곳에 생성한 어빌리티 추가
+        for (int i = 0; i < _maxAbilityCount; i++)
+        {
+            if (_abilities[i] == null)
+            {
+                _abilities[i] = newAbility;
+                _currentAbilityCount++;
+                break;
+            }
+        }
+        
+        // D. 빈칸 없도록 어빌리티들을 앞으로 압축하기
+        RefreshInventory();
     }
 
+    public void RemoveAbilityByData(AbilityDataSO abilityData)
+    {
+        for (int i = 0; i < _maxAbilityCount; i++)
+        {
+            if (_abilities[i] == null) continue;
+
+            if (_abilities[i].dataSO == abilityData)
+            {
+                RemoveAbility(_abilities[i]);
+                _abilities[i] = null;
+                _currentAbilityCount--;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Inventory 내 Abilities들을 앞으로 압축하고 정보 갱신한다
+    /// </summary>
+    private void RefreshInventory()
+    {
+        
+    }
+
+    private void RemoveAbility(AbilityBase ability)
+    {
+        ability.Remove(_tilePlaceHandler);
+    }
+    
     public void RemoveAbility(int slotIdx)
     {
         if (slotIdx < 0 || slotIdx >= _maxAbilityCount) return;
