@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
 
 /// <summary>
 /// Tile 묶음 꾸러미
@@ -13,10 +14,12 @@ public class TileSet : MonoBehaviour, IPoolAble<TileSetData>
     public Direction Rotation;
     public TileSetData Data { get; private set; }
     private Transform _tileRoot;
+    private SortingGroup _sg;
 
     public void Awake()
     {
         _tileRoot = transform.GetChild(0);
+        _sg = _tileRoot.GetComponent<SortingGroup>();
     }
 
     public void Use() => Tiles.Clear();
@@ -41,10 +44,27 @@ public class TileSet : MonoBehaviour, IPoolAble<TileSetData>
         }
     }
 
+    public void SetOrderInTop()
+    {
+        SetOrder("InGameUI", 1);
+    }
+
+    public void SetOrderInHand()
+    {
+        SetOrder("Field", 0);
+    }
+
+    private void SetOrder(string layer, int order)
+    {
+        _sg.sortingOrder = order;
+        _sg.sortingLayerName = layer;
+    }
+
     public void Set(TileSetData data)
     {
         Data = data;
         var randomSprite = RandomTileSprite[Random.Range(0, RandomTileSprite.Count)];
+        SetOrderInHand();
 
         for (int i = 0; i < data.Data.Count; i++)
         {

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static Field;
@@ -58,6 +59,7 @@ public class Field : MonoBehaviour
 
     private static Field _instance;
     private Dictionary<Coordinate, Cell> _allCell;
+    private List<GameObject> _silhouetteTiles;
 
     public Vector2 TileOffset { get { return transform.position; } set { transform.position = value; } }
 
@@ -102,6 +104,7 @@ public class Field : MonoBehaviour
         _isInit = true;
 
         _allCell = new();
+        _silhouetteTiles = new();
 
         var childs = transform.GetComponentsInChildren<Transform>();
         for (int i = 0; i < childs.Length; i++)
@@ -130,6 +133,45 @@ public class Field : MonoBehaviour
 
     }
     */
+
+    public void ClearSilhouette()
+    {
+        for (int i = 0; i < _silhouetteTiles.Count; i++)
+        {
+            Pool.Return(_silhouetteTiles[i]);
+        }
+        _silhouetteTiles.Clear();
+    }
+
+    public void ShowSilhouette(TileSet tileSet, Coordinate coor)
+    {
+        if (!CanPlace(tileSet, coor))
+            return;
+
+        ClearSilhouette();
+
+        for (int i = 0; i < tileSet.Tiles.Count; i++)
+        {
+            var correctCoor = coor + tileSet.Tiles[i].transform.localPosition.ToCoor();
+            GenerateSilhouetteTile(correctCoor);
+        }
+    }
+
+    public void ShowSilhouette(Tile tile, Coordinate coor)
+    {
+        if (!CanPlace(tile, coor))
+            return;
+
+        ClearSilhouette();
+        GenerateSilhouetteTile(coor);
+    }
+
+    private void GenerateSilhouetteTile(Coordinate coor)
+    {
+        var silhouetteObj = Pool.Get("SilhouetteTile");
+        silhouetteObj.transform.position = coor.ToWorld(TileOffset);
+        _silhouetteTiles.Add(silhouetteObj);
+    }
 
     private void RemoveTile(Coordinate coor)
     {
