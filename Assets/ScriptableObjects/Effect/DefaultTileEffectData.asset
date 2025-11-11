@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TileEffectSO
   WaitForEnd: 0
   LightEase: 1
-  LightDuration: 0.7
+  LightDuration: 0.1
   LightColor: {r: 1, g: 1, b: 1, a: 1}
   LightStartPower: 0
-  LightMaxPower: 12
-  MaxRemainTime: 0.5
-  FadeOutEase: 1
-  FadeOutColor: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
-  FadeOutDuration: 0.5
+  LightMaxPower: 9
+  MaxRemainTime: 0.2
+  FadeOutEase: 3
+  FadeOutColor: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 0}
+  FadeOutDuration: 0.7
