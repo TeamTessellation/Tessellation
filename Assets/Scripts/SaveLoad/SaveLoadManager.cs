@@ -20,7 +20,12 @@ namespace SaveLoad
         public int TurnCount = 0;
         public int TotalScore = 0; // 여러 턴에 걸쳐 누적된 총합 점수
         public int CurrentScore = 0; // 현재 턴에 대해 누적되는 점수
-        public PlayerStatus PlayerStatus = new PlayerStatus();
+        public int Score;
+        public int HandCount;
+        public int FieldSize;
+        public List<OffsetTileData> FieldTileData;
+        public TileSetData[] HandData;
+        public PlayerStatus PlayerStatus;
         
         /// <summary>
         /// 변수 컨테이너. 우선적으로 내장 변수를 사용하는 것이 권장됩니다.
