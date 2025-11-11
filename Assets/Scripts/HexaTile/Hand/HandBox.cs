@@ -3,11 +3,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
+using SaveLoad;
 
 public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
 {
     public TileSet HoldTileSet { get; private set; }
     public bool IsUsed { get { return (HoldTileSet == null); } }
+
     public List<Sprite> ItemSelectIcon;
 
     private Action<HandBox> _downEvent;
@@ -82,12 +85,19 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
         HoldTileSet.transform.localPosition = -center;
     }
 
+    public async UniTask SetOnHandAsync()
+    {
+        await UniTask.NextFrame();
+        SetOnHand();
+    }
+
     public void Set(TileSetData data)
     {
         HoldTileSet = Pool<TileSet, TileSetData>.Get(data);
         HoldTileSet.transform.SetParent(transform, false);
+
         SetOnHand();
-        Invoke(nameof(SetOnHand), 0.1f);
+        SetOnHandAsync().Forget();
 
         _eventTrigger.triggers = null;
 
