@@ -215,11 +215,7 @@ namespace Stage
                     if (basicTurnLogic == null) continue;
                     await basicTurnLogic.OnTurnStart(_turnCount, token);
                 }
-                /*
-                 *  턴에 들어가기전 상태 저장
-                 */
-                HistoryManager.Instance.SaveCurrentState();
-                SaveLoadManager.Instance.SimpleSave();
+
                 
                 /*
                  * 유저
@@ -231,6 +227,9 @@ namespace Stage
                     using var playerActionLoopStartArgs = PlayerActionLoopStartEventArgs.Get();
                     await ExecEventBus<PlayerActionLoopStartEventArgs>.InvokeMerged(playerActionLoopStartArgs);
                     // 플레이어가 행동할 수 있는 동안 반복
+                    
+                    HistoryManager.Instance.SaveCurrentState();
+                    SaveLoadManager.Instance.SimpleSave();
                     
                     if (token.IsCancellationRequested)
                     {

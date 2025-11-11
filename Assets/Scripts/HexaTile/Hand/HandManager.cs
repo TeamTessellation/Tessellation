@@ -310,7 +310,10 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         for (int i = 0; i < _hand.Length; i++)
         {
             if (_hand[i].IsUsed)
+            {
                 data.HandData[i] = null;
+                continue;
+            }
 
             data.HandData[i] = _hand[i].HoldTileSet.Data;
         }
