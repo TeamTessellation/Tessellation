@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: TestAbility_Lv2
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   AbilityType: 0
-  Rarity: 0
-  AbilityName: "\uC628\uB9AC\uBC30\uCE58"
+  Rarity: 2
+  AbilityName: "\uC628\uB9AC\uBC30\uCE58 Lv.2"
   Description: "\uBC30\uCE58\uC810\uC218\uAC00 2\uBC30\uAC00 \uB41C\uB2E4 \uC640\uC6B0!"
   MaxLevel: 3
   ItemIcon: {fileID: 21300000, guid: 2c9c223f37a05ed4db54f2625d2991e8, type: 3}
   AbilityPrice: 5
   CanAppearInShop: 1
+  ConflictingAbilities: []
   IsSynthesisItem: 0
   SynthesisRequirements:
   - {fileID: 11400000, guid: bc805b53accc4ae45ad66c2ba6f5e19d, type: 2}

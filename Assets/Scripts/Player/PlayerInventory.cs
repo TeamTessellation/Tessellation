@@ -36,6 +36,18 @@ public class PlayerInventory : MonoBehaviour
 #endif
     }
 
+    public List<AbilityDataSO> GetOwnedAbilities()
+    {
+        List<AbilityDataSO> ownedAbilities = new List<AbilityDataSO>();
+        for (int i = 0; i < _maxAbilityCount; i++)
+        {
+            if (_abilities[i] == null) continue;
+            ownedAbilities.Add(_abilities[i].dataSO);
+        }
+
+        return ownedAbilities;
+    }
+
     /// <summary>
     /// Will be deprecated
     /// </summary>
