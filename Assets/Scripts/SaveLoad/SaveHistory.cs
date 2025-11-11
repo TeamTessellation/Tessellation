@@ -10,6 +10,8 @@ namespace SaveLoad
     [System.Serializable]
     public class SaveHistory : IReadOnlyList<GameData>
     {
+        public static readonly SaveHistory Empty = new SaveHistory();
+        
         [SerializeField] private List<GameData> _saves = new();
 
         public IReadOnlyList<GameData> Saves => _saves;
@@ -50,7 +52,9 @@ namespace SaveLoad
         /// <param name="data"></param>
         public void Add(GameData data)
         {
-            _saves.Add(data.Clone());
+            var clonedData = data.Clone();
+            clonedData.SaveHistory = Empty; // 순환 참조 방지
+            _saves.Add(clonedData);
         }
 
         
@@ -90,6 +94,17 @@ namespace SaveLoad
             _saves.RemoveAt(lastIndex);
             return lastSave;
         }
-        
+
+        public SaveHistory Clone()
+        {
+            var clone = new SaveHistory();
+            foreach (var save in _saves)
+            {
+                clone.Add(save.Clone());
+            }
+
+            return clone;
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using ExecEvents;
@@ -38,7 +39,7 @@ namespace Core
 
         [field:SerializeField] public bool DisableContinueInMainMenu { get; private set; } = false;
         public CancellationToken GameCancellationToken => _gameCancellationTokenSource.Token;
-        private PlayerStatus _playerStatus = new PlayerStatus();
+        [SerializeField] private PlayerStatus _playerStatus = new PlayerStatus();
         public GlobalGameState CurrentGameState
         {
             get => _currentGameState;
@@ -105,6 +106,8 @@ namespace Core
         private void Initialize()
         {
             InteractionManager.CancelEvent += OnInputCancel;
+            
+            SaveLoadManager.Instance.RegisterSaveTarget(this);
         }
         
         private void OnDestroy()
@@ -129,7 +132,7 @@ namespace Core
         
         public void ContinueStage()
         {
-            LogEx.Log("게임 계속하기");
+            LogEx.Log("스테이지 계속하기");
             ResetGame();
             // 이전 토큰 디스포즈
             
@@ -141,19 +144,15 @@ namespace Core
                 LogEx.LogWarning("No saved game to continue.");
                 return;
             }
-            svM.SimpleLoad(onComplete: () =>
+            GameData data = svM.GetSimpleSaveData();
+            if(data == null || data.SaveHistory.Count == 0)
             {
-                StageManager sm = StageManager.Instance;
-                if (sm.CurrentStage != null)
-                {
-                    CurrentGameState = GlobalGameState.InGame;
-                    sm.StartStage(_gameCancellationTokenSource.Token);
-                }
-                else
-                {
-                    LogEx.LogError("Failed to continue game: Current stage is null after loading save.");
-                }
-            });
+                LogEx.LogWarning("No stage data in saved game.");
+                return;
+            }
+            svM.LoadSaveData(data);
+            StageManager sm = StageManager.Instance;
+            sm.StartStage(_gameCancellationTokenSource.Token);
         }
 
         public void ContinueTurn()

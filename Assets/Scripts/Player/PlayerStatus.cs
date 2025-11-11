@@ -1,5 +1,7 @@
 ﻿using System;
 using Core;
+using Cysharp.Threading.Tasks;
+using ExecEvents;
 using SaveLoad;
 using Stage;
 using UnityEngine;
@@ -13,7 +15,7 @@ namespace Player
         
         [SerializeField] private int fieldSize = 4;
         [SerializeField] private int handSize = 3;
-
+        [field:SerializeField]public VariableContainer Variables { get; private set; } = new VariableContainer();
         public void Reset()
         {
             fieldSize = 4;
@@ -71,16 +73,25 @@ namespace Player
         public Guid Guid { get; init; }
         public void LoadData(GameData data)
         {
+
             data.PlayerStatus.CopyTo(this);
+            using var evt = ScoreManager.CurrentScoreChangedEventArgs.Get();
+            evt.NewCurrentScore = this.CurrentScore;    
+            ExecEventBus<ScoreManager.CurrentScoreChangedEventArgs>.InvokeMerged(evt).Forget();
+            using var totalEvt = ScoreManager.TotalScoreChangedEventArgs.Get();
+            totalEvt.NewTotalScore = this.TotalScore;
+            ExecEventBus<ScoreManager.TotalScoreChangedEventArgs>.InvokeMerged(totalEvt).Forget();
         }
 
         public void SaveData(ref GameData data)
         {
+            data.PlayerStatus = new PlayerStatus();
+            data.PlayerStatus.Reset();
             this.CopyTo(data.PlayerStatus);
         }
 
 
-        public VariableContainer Variables { get; private set; } = new VariableContainer();
+
         
         public PlayerStatus()
         {
@@ -132,6 +143,9 @@ namespace Player
         {
             target.fieldSize = this.fieldSize;
             target.handSize = this.handSize;
+            // target.CurrentScore = this.CurrentScore;
+            // target.TotalScore = this.TotalScore;
+            
             target.Variables = this.Variables.Clone();
         }
         public void CopyFrom(PlayerStatus source)

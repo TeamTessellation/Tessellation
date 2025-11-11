@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using System;
+using Core;
 using UnityEngine;
 
 namespace SaveLoad
@@ -6,7 +7,7 @@ namespace SaveLoad
     /// <summary>
     /// 선형적으로 저장 기록을 관리하는 클래스입니다.
     /// </summary>
-    public class HistoryManager : Singleton<HistoryManager>
+    public class HistoryManager : Singleton<HistoryManager>, ISaveTarget
     {
         public override bool IsDontDestroyOnLoad => false;
 
@@ -67,6 +68,17 @@ namespace SaveLoad
         private void AddSave(GameData data)
         {
             _saveHistory.Add(data);
+        }
+
+        public Guid Guid { get; init; }
+        public void LoadData(GameData data)
+        {
+            _saveHistory = data.SaveHistory.Clone();
+        }
+
+        public void SaveData(ref GameData data)
+        {
+            data.SaveHistory = _saveHistory.Clone();
         }
     }
     

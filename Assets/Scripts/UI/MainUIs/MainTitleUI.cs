@@ -116,7 +116,7 @@ namespace UI.MainUIs
         public void OnContinueButtonClicked()
         {
             LogEx.Log("Continue Button Clicked");
-            GameManager.Instance.ContinueStage();
+            GameManager.Instance.ContinueTurn();
             
         }
         public void OnSettingsButtonClicked()
