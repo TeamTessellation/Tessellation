@@ -10,7 +10,7 @@ public enum Direction
 
 public enum TileOption
 {
-    Defaut, // 기본
+    Default, // 기본
     Boom, // 래제 누나..
     Bonus, // 점수 추가
     Double, // 점수 두배

@@ -113,16 +113,21 @@ public class LineClearHandler
         Coordinate upCorrect = line.Start;
         Coordinate downCorrect = line.Start;
 
-        Field.Instance.SafeRemoveTile(line.Start);
+        List<UniTask> allTask = new();
+
+        allTask.Add(Field.Instance.SafeRemoveTile(line.Start));
         await UniTask.WaitForSeconds(interval);
         while (Field.Instance.CheckAbleCoor(upCorrect) || Field.Instance.CheckAbleCoor(downCorrect))
         {
             upCorrect += up;
             downCorrect += down;
             await UniTask.WaitForSeconds(interval);
-            Field.Instance.SafeRemoveTile(upCorrect);
-            Field.Instance.SafeRemoveTile(downCorrect);
+            allTask.Add(Field.Instance.SafeRemoveTile(upCorrect));
+            allTask.Add(Field.Instance.SafeRemoveTile(downCorrect));
         }
+
+        await allTask;
+
         EndLineClear(line);
     }
     

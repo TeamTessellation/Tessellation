@@ -1,9 +1,17 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using System.Collections.Generic;
+using System;
 
 [PoolSize(20)]
 public class Tile : MonoBehaviour, IPoolAble<TileData>
 {
+    public SerializedDictionary<TileOption, TileEffectSO> TileEffectSO;
+    public List<TileEffectSO> TileEffectSOList;
+
     /// <summary>
     /// 맵 절대 타일 좌표
     /// </summary>
@@ -18,8 +26,8 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
     public Cell Owner;
     public bool IsPlace => Owner != null;
     public Direction Direction;
-    public TileOption Option;
     private Sprite _defaultSprite;
+    private Light2D _light;
 
     /// <summary>
     /// 해당 Tile Data
@@ -34,18 +42,90 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
         _sr.sprite = sprite;
     }
 
-    public void Set(TileData data)
+    private void Awake()
     {
         _sr = GetComponent<SpriteRenderer>();
+        _light = GetComponent<Light2D>();
+
+        for (int i = 0; i < (int)TileOption.End; i++)
+        {
+            if (TileEffectSOList.Count > i)
+                TileEffectSO[(TileOption)i] = TileEffectSOList[i];
+            else
+                TileEffectSO[(TileOption)i] = TileEffectSOList[0];
+        }
+    }
+
+    public void Set(TileData data)
+    {
         _defaultSprite = _sr.sprite;
         Data = data;
         gameObject.transform.localScale = Vector3.one * data.Scale;
-        Option = data.Option;
+
+        _light.intensity = 0;
+        _light.color = TileEffectSO[data.Option].LightColor;
+
+        _sr.color = new Color(1, 1, 1, 1);
     }
 
     public void Reset()
     {
         _sr.sprite = _defaultSprite;
+    }
+
+    public async UniTask ActiveEffect(Action endAction)
+    {
+        TileEffectSO effectData;
+        if (TileEffectSO.ContainsKey(Data.Option))
+            effectData = TileEffectSO[Data.Option];
+        else
+            effectData = TileEffectSO[TileOption.Default];
+
+        DOTween.Kill(this);
+
+        float progress = effectData.LightStartPower;
+        await DOTween.To(() => progress, x => { SetLight(x); progress = x; }, effectData.LightMaxPower, effectData.LightDuration)
+            .SetEase(effectData.LightEase)
+            .ToUniTask();
+
+        _light.intensity = effectData.LightMaxPower;
+        await UniTask.WaitForSeconds(effectData.MaxRemainTime);
+
+        if (effectData.WaitForEnd)
+        {
+
+        }
+        else
+        {
+            await RemoveEffect(endAction);
+        }
+    }
+
+    public async UniTask RemoveEffect(Action endAction)
+    {
+        TileEffectSO effectData;
+        if (TileEffectSO.ContainsKey(Data.Option))
+            effectData = TileEffectSO[Data.Option];
+        else
+            effectData = TileEffectSO[TileOption.Default];
+
+        DOTween.Kill(this);
+
+        _light.intensity = 0;
+
+        _sr.color = effectData.FadeOutColor;
+        float progress = 1;
+        await DOTween.To(() => progress, x => { _sr.color = new Color(_sr.color.r, _sr.color.g, _sr.color.b, x); progress = x; }, 0, effectData.FadeOutDuration)
+            .SetEase(effectData.FadeOutEase)
+            .ToUniTask();
+
+        _sr.color = new Color(_sr.color.r, _sr.color.g, _sr.color.b, 0);
+        endAction?.Invoke();
+    }
+
+    private void SetLight(float light)
+    {
+        _light.intensity = light;
     }
 
     public async UniTask OnTilePlaced()
