@@ -3,10 +3,12 @@ using System.Threading;
 using Core;
 using Cysharp.Threading.Tasks;
 using ExecEvents;
+using Machamy.DeveloperConsole.Attributes;
 using Machamy.Utils;
 using Player;
 using SaveLoad;
 using UI;
+using UI.OtherUIs;
 using UnityEngine;
 
 namespace Stage
@@ -102,18 +104,24 @@ namespace Stage
              
              await UM.StageInfoUI.ShowInfoRoutine(CurrentStage, token);
              
-             /*
-              * 스테이지 초기화
-              */
-             LogEx.Log("Stage Initializing...");
+            /*
+             * 화면 완전히 가려짐
+             * 스테이지 초기화
+             */
+            LogEx.Log("Stage Initializing...");
              
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
+            
+            
             // 6각형 타일 맵 초기화
+            Field.Instance.gameObject.SetActive(true);
             Field.Instance.ResetField(playerStatus.FieldSize);
             // 핸드 초기화
+            HandCanvas.Instance.gameObject.SetActive(true);
             HandManager.Instance.ResetHand(playerStatus.HandSize);
             // 점수 초기화
             ScoreManager.Instance.Reset();
+            
             // 목표 점수 설정
             // # 자동으로 할당됨
             // # TargetScore => StageManager.Instance.CurrentStage.StageTarget
@@ -126,13 +134,14 @@ namespace Stage
             // # 스테이지 모델에 정의된 제약 조건들을 필드에 적용
             // # TODO : 현재 없음
             
-            // 메인타이틀 UI 숨기기
+            // UI 숨기기
             UM.MainTitleUI.Hide();
+            UM.FailResultUI.Hide();
             UM.InGameUI.Show();
             
             
             using var initStageArgs = StageStartEventArgs.Get();
-            initStageArgs.StageTargetScore = _currentStage.StageTargetScore;
+            initStageArgs.StageModel = _currentStage;
             await ExecEventBus<StageStartEventArgs>.InvokeMerged(initStageArgs);
             
             
@@ -168,7 +177,11 @@ namespace Stage
             
             await UniTask.Delay(1000);
             // 결과 팝업
+            // TODO : ClearResultUI 구현 필요
+            
             // 상점 파트
+            // TODO : ShopUI 구현 필요
+            
             LogEx.Log("Stage Ended.");
             // 스테이지 시작으로 돌아가기
             GoToNextStage();
@@ -185,13 +198,10 @@ namespace Stage
              */
             using var failStageArgs = StageFailEventArgs.Get();
             await ExecEventBus<StageFailEventArgs>.InvokeMerged(failStageArgs);
+            var UM = UIManager.Instance;
+            // UM.InGameUI.Hide();
+            await UM.FailResultUI.ShowFailResult();
             
-            await UniTask.Delay(1000);
-            // 실패 팝업
-            // 스테이지 시작으로 돌아가기
-            
-            LogEx.Log("Stage Failed.");
-            GameManager.Instance.ResetGameAndReturnToMainMenu();
         }
         public void RestartCurrentStage(CancellationToken cancellationToken)
         {
@@ -215,6 +225,23 @@ namespace Stage
             return _isStageCleared;
         }
 
+        public bool CheckStageFail()
+        {
+            // 턴 수 초과 확인
+            PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
+            if (playerStatus.RemainingTurns <= 0 && !CheckStageClear())
+            {
+                return true;
+            }
+            // 핸드에 놓을 수 있는 타일이 없는지 확인
+            if (HandManager.Instance.HandCount > 0 && !HandManager.Instance.CanPlace())
+            {
+                return true;
+            }
+            
+            return false;
+        }
+        
         /// <summary>
         /// 스테이지를 초기 상태로 재설정합니다.
         /// </summary>
@@ -251,6 +278,12 @@ namespace Stage
         public void SaveData(ref GameData data)
         {
             data.CurrentStage = _currentStage.StageIdentifiers;
+        }
+
+        [ConsoleCommand("StageFail", "강제 스테이지 실패 처리")]
+        public static void SetFail()
+        {
+            Instance.FailStage(Instance.token);
         }
     }
 }

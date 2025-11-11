@@ -20,13 +20,12 @@
         {
             "RenderType"="Transparent"
             "Queue"="Transparent"
-            "RenderPipeline"="UniversalRenderPipeline"
+            "RenderPipeline"="UniversalPipeline"
         }
 
         Pass
         {
             Name "UnlitWorldPosUI"
-            Tags { "LightMode"="UniversalForward" } // 2D 라이트 영향 안 받는 일반 Unlit 패스
 
             Blend SrcAlpha OneMinusSrcAlpha
             Cull Off
@@ -54,16 +53,15 @@
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _BaseColor;
+                float _TileSize;
+                float _Interval;
+                float _Progress;
+                float _StartX;
+                float _EndX;
+                float _XCount;
+                float _Direction;
+                float _Angle;
             CBUFFER_END
-
-            float _TileSize;
-            float _Interval;
-            float _Progress;
-            float _StartX;
-            float _EndX;
-            float _XCount;
-            float _Direction;
-            float _Angle;
 
             TEXTURE2D(_BaseMap);
             SAMPLER(sampler_BaseMap);
@@ -142,6 +140,7 @@
 
             half4 frag(Varyings IN) : SV_Target
         {
+            //return half4(1, 1, 1, 1);
             float progress = 1 - _Progress;
             float2 worldPos = Rotate2D(IN.worldPos.xy, _Angle);
             float3 coor = WorldToCoor(worldPos, _TileSize);

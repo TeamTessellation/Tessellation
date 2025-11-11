@@ -36,9 +36,17 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     
     // === Properties ===
     // 여러 턴에 누적되어 최종 합산된 점수
-    public int TotalScore { get; private set; }
+    public int TotalScore
+    {
+        get => GameManager.Instance.PlayerStatus.TotalScore;
+        private set => GameManager.Instance.PlayerStatus.TotalScore = value;
+    }
     // 현재 턴에 대한 총 점수
-    public int CurrentScore { get; private set; }
+    public int CurrentScore
+    {
+        get => GameManager.Instance.PlayerStatus.CurrentScore;
+        private set => GameManager.Instance.PlayerStatus.CurrentScore = value;
+    }
 
     public int TargetScore => StageManager.Instance.CurrentStage.StageTargetScore;
     

@@ -26,12 +26,12 @@ namespace UI.OtherUIs
         [SerializeField] private Button retryButton;
         [SerializeField] private Button resumeButton;
         [SerializeField] private Button homeButton;
-        
+        [Header("Cavans Group")]
+        [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private CanvasGroup soundButtonCanvasGroup;
         
         [Space(20)]
         [Header("Transitions")]
-        
-
         [SerializeField]private float onDisableTransitionDuration = 0.5f;
         [SerializeField]private Ease onDisableTransitionEase = Ease.InBack;
 
@@ -40,6 +40,7 @@ namespace UI.OtherUIs
         [SerializeField] private TransitionInfo onEnableTransition;
         [SerializeField] private TransitionInfo onDisableTransition;    
         [SerializeField] private RectTransform center;
+        [SerializeField] private RectTransform soundButtonRectTransform;
 
         [SerializeField, Tooltip("1차로 나오는 UI들")]
         private List<RectTransform> mainTiles;
@@ -111,6 +112,7 @@ namespace UI.OtherUIs
         
         private CancellationTokenSource enabledCancellationTokenSource;
         private CancellationTokenSource disabledCancellationTokenSource;
+        private CancellationTokenSource switchingCancellationTokenSource;
         private CancellationTokenSource cancellationTokenSource;
 
         [ContextMenu("test awake")]
@@ -124,9 +126,11 @@ namespace UI.OtherUIs
             base.Awake();
             enabledCancellationTokenSource = new CancellationTokenSource();
             disabledCancellationTokenSource = new CancellationTokenSource();
+            switchingCancellationTokenSource = new CancellationTokenSource();
             cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
                 enabledCancellationTokenSource.Token,
-                disabledCancellationTokenSource.Token);
+                disabledCancellationTokenSource.Token,
+                switchingCancellationTokenSource.Token);
             
             // 원래 위치 저장
             var originalHolder = originalPositionsHolder != null ? originalPositionsHolder : new GameObject("OriginalPositionsHolder").transform;
@@ -147,6 +151,8 @@ namespace UI.OtherUIs
             {
                 StoreOriginal(tile);
             }
+            StoreOriginal(center);
+            StoreOriginal(soundButtonRectTransform);
         }
 
         private void Start()
@@ -158,17 +164,13 @@ namespace UI.OtherUIs
         {
             resumeButton.onClick.AddListener(OnResumeButtonClicked);
             homeButton.onClick.AddListener(OnHomeButtonClicked);
-            retryButton.onClick.AddListener(OnRetryButtonClicked);
-            soundButton.onClick.AddListener(OnSoundButtonClicked);
-            
+            ;
         }
         
         private void OnDisable()
         {
             resumeButton.onClick.RemoveListener(OnResumeButtonClicked);
             homeButton.onClick.RemoveListener(OnHomeButtonClicked);
-            retryButton.onClick.RemoveListener(OnRetryButtonClicked);
-            soundButton.onClick.RemoveListener(OnSoundButtonClicked);
         }
         
         public void CancelEnabledTransitions()
@@ -183,20 +185,32 @@ namespace UI.OtherUIs
             disabledCancellationTokenSource.Dispose();
             disabledCancellationTokenSource = new CancellationTokenSource();
         }
+        
+        public void CancelSwitchingTransitions()
+        {
+            switchingCancellationTokenSource.Cancel();
+            switchingCancellationTokenSource.Dispose();
+            switchingCancellationTokenSource = new CancellationTokenSource();
+        }
+        
         public void CancelAllTransitions()
         {
             enabledCancellationTokenSource?.Cancel();
             disabledCancellationTokenSource?.Cancel();
+            switchingCancellationTokenSource?.Cancel();
             
             enabledCancellationTokenSource?.Dispose();
             disabledCancellationTokenSource?.Dispose();
+            switchingCancellationTokenSource?.Dispose();
             cancellationTokenSource?.Dispose();
 
             enabledCancellationTokenSource = new CancellationTokenSource();
             disabledCancellationTokenSource = new CancellationTokenSource();
+            switchingCancellationTokenSource = new CancellationTokenSource();
             cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
                 enabledCancellationTokenSource.Token,
-                disabledCancellationTokenSource.Token);
+                disabledCancellationTokenSource.Token,
+                switchingCancellationTokenSource.Token);
         }
         
         
@@ -272,12 +286,28 @@ namespace UI.OtherUIs
                 tile.gameObject.SetActive(false);
             }
             center.gameObject.SetActive(true);
+
+
+            // pausePopup 페이드 인 애니메이션 추가
+            var popupCanvasGroup = pausePopup.GetComponent<CanvasGroup>();
+            if (popupCanvasGroup != null)
+            {
+                popupCanvasGroup.alpha = 0f;
+                var popupFadeTask = popupCanvasGroup.DOFade(1f, 0.2f)
+                    .SetEase(Ease.InOutSine)
+                    .SetUpdate(true)
+                    .ToUniTask(cancellationToken: cancellationToken);
+                transitionTasks.Add(popupFadeTask);
+            }
+
             // 1차 타일들 애니메이션
             // 중앙 -> 각자 위치로
             await UniTask.Delay(TimeSpan.FromSeconds(onEnableTransition.delay1), 
                 delayType: DelayType.UnscaledDeltaTime,
                 cancellationToken: cancellationToken);
+        
             
+
             foreach (var tile in mainTiles)
             {
                 tile.gameObject.SetActive(true);
@@ -324,6 +354,8 @@ namespace UI.OtherUIs
                 tile.gameObject.SetActive(true);
             }
             LogEx.Log("PlayOnDisableTransitionsAsync 시작");
+
+
             // 1차 타일들 애니메이션
             await UniTask.Delay(TimeSpan.FromSeconds(onDisableTransition.delay1), 
                 delayType: DelayType.UnscaledDeltaTime,
@@ -360,10 +392,80 @@ namespace UI.OtherUIs
                     .ToUniTask(cancellationToken: cancellationToken);
                 transitionTasks.Add(task);
             }
+
+            var popupCanvasGroup = pausePopup.GetComponent<CanvasGroup>();
+            if (popupCanvasGroup != null)
+            {
+                popupCanvasGroup.alpha = 1f;
+                var popupFadeTask = popupCanvasGroup.DOFade(0, 0.2f)
+                    .SetEase(Ease.InOutSine)
+                    .SetUpdate(true)
+                    .ToUniTask(cancellationToken: cancellationToken);
+                transitionTasks.Add(popupFadeTask);
+            }
+
             await UniTask.WhenAll(transitionTasks);
-        }   
+        }
+
+        public async UniTask SwitchToSoundSettingsAsync(CancellationToken cancellationToken)
+        {
+            LogEx.Log("SwitchToSoundSettingsAsync 시작");
+            using var handle = ListPool<UniTask>.Get(out var transitionTasks); // Correctly initialize transitionTasks here
+
+            // 일시정지 UI 숨기기(사운드 제외 Fade out)
+            soundButtonCanvasGroup.ignoreParentGroups = true;
+
+            await canvasGroup.DOFade(0f, 0.3f)
+                .SetEase(Ease.InOutSine)
+                .SetUpdate(true)
+                .ToUniTask(cancellationToken: cancellationToken);
+            soundButtonCanvasGroup.ignoreParentGroups = false;
+            gameObject.SetActive(false);
+
+            // 사운드 설정 UI 표시
+            var soundSettingsUI = UIManager.Instance.SoundSettingUI;
+            
+
+
+            await soundSettingsUI.ShowInPauseAsync(soundButton.GetComponent<RectTransform>(), cancellationToken);
+            LogEx.Log("사운드 설정 UI 표시 완료");
+        }
         
-        
+        public async UniTask SwitchBackFromSoundSettingsAsync(RectTransform prevSoundButtonRect, CancellationToken cancellationToken)
+        {
+            LogEx.Log("SwitchBackFromSoundSettingsAsync 시작");
+            
+            // 사운드 버튼 활성화
+            gameObject.SetActive(true);
+            soundButtonCanvasGroup.ignoreParentGroups = true;
+            soundButtonCanvasGroup.alpha = 1f;
+            canvasGroup.alpha = 0f;
+            soundButtonRectTransform.anchoredPosition = prevSoundButtonRect.anchoredPosition;
+
+            // 사운드 설정 UI 숨기기
+            // var soundSettingsUI = UIManager.Instance.SoundSettingUI;
+            // await soundSettingsUI.HideInPauseAsync(cancellationToken);
+            LogEx.Log("사운드 설정 UI 숨기기 완료");
+            
+            
+            // 사운드 버튼 원위치로 이동
+            var soundButtonRect = soundButtonRectTransform;
+            soundButtonRect.anchoredPosition = prevSoundButtonRect.anchoredPosition;
+            await soundButtonRect.DOAnchorPos(_originalPositions[soundButtonRect].anchoredPosition, 0.3f)
+                .SetEase(Ease.InOutSine)
+                .SetUpdate(true)
+                .ToUniTask(cancellationToken: cancellationToken);
+            
+            // 사운드 제외 Fade in
+            await DOTween.To(() => canvasGroup.alpha, x => canvasGroup.alpha = x, 1f, 0.3f)
+                .SetEase(Ease.InOutSine)
+                .SetUpdate(true)
+                .ToUniTask(cancellationToken: cancellationToken);
+            soundButtonCanvasGroup.ignoreParentGroups = false;
+            LogEx.Log("일시정지 UI 다시 표시 완료");
+        }
+
+
         public IEnumerable<RectTransform> GetAllTiles()
         {
             yield return center;
@@ -380,12 +482,13 @@ namespace UI.OtherUIs
         public void OnSoundButtonClicked()
         {
             LogEx.Log("사운드 버튼 클릭됨");
+            SwitchToSoundSettingsAsync(switchingCancellationTokenSource.Token).Forget();
         }
         public void OnRetryButtonClicked()
         {
             // Hide();
             LogEx.Log("재시작 버튼 클릭됨");
-            GameManager.Instance.RestartCurrentStage();
+            GameManager.Instance.StartGame();
         }
 
         public void OnResumeButtonClicked()

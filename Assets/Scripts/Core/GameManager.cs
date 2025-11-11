@@ -35,7 +35,8 @@ namespace Core
         /// </summary>
         private CancellationTokenSource _gameCancellationTokenSource = new CancellationTokenSource();
         [SerializeField]private GlobalGameState _currentGameState = GlobalGameState.Initializing;
-        [field: SerializeField] public bool DisableContinueInMainMenu { get; private set; } = false;
+
+        [field:SerializeField] public bool DisableContinueInMainMenu { get; private set; } = false;
         public CancellationToken GameCancellationToken => _gameCancellationTokenSource.Token;
         private PlayerStatus _playerStatus = new PlayerStatus();
         public GlobalGameState CurrentGameState
@@ -104,7 +105,6 @@ namespace Core
         private void Initialize()
         {
             InteractionManager.CancelEvent += OnInputCancel;
-            SaveLoadManager.Instance.RegisterSaveTarget(this);
         }
         
         private void OnDestroy()
@@ -127,6 +127,51 @@ namespace Core
             StageManager.StartStage(_gameCancellationTokenSource.Token);
         }
         
+        public void ContinueGame()
+        {
+            LogEx.Log("게임 계속하기");
+            ResetGame();
+            // 이전 토큰 디스포즈
+            
+            _gameCancellationTokenSource = new CancellationTokenSource();
+            SaveLoadManager svM = SaveLoadManager.Instance;
+            
+            if(svM == null || !svM.HasSimpleSave())
+            {
+                LogEx.LogWarning("No saved game to continue.");
+                return;
+            }
+            svM.SimpleLoad(onComplete: () =>
+            {
+                StageManager sm = StageManager.Instance;
+                if (sm.CurrentStage != null)
+                {
+                    CurrentGameState = GlobalGameState.InGame;
+                    sm.StartStage(_gameCancellationTokenSource.Token);
+                }
+                else
+                {
+                    LogEx.LogError("Failed to continue game: Current stage is null after loading save.");
+                }
+            });
+        }
+        
+        public void RestartCurrentStage()
+        {
+            LogEx.Log("현재 스테이지 재시작");
+            _gameCancellationTokenSource.Cancel();
+            if (CurrentGameState == GlobalGameState.PausedInGame)
+            {
+                Time.timeScale = 1f; // 일시정지 상태라면 시간 흐름을 복원
+            }
+            /*
+             * 1. 상태 인게임으로 변경
+             * 2. 스테이지 매니저 현재 스테이지 재시작
+             */
+            CurrentGameState = GlobalGameState.InGame;
+            _gameCancellationTokenSource = new CancellationTokenSource();
+            StageManager.RestartCurrentStage(_gameCancellationTokenSource.Token);
+        } 
         
         /// <summary>  
         /// 게임을 일시정지합니다.
@@ -163,35 +208,6 @@ namespace Core
             Time.timeScale = 1f;
             CurrentGameState = GlobalGameState.InGame;
             UIManager.HidePauseUI();
-        }
-        
-        public void ContinueGame()
-        {
-            LogEx.Log("게임 계속하기");
-            ResetGame();
-            // 이전 토큰 디스포즈
-            
-            _gameCancellationTokenSource = new CancellationTokenSource();
-            SaveLoadManager svM = SaveLoadManager.Instance;
-            
-            if(svM == null || !svM.HasSimpleSave())
-            {
-                LogEx.LogWarning("No saved game to continue.");
-                return;
-            }
-            svM.SimpleLoad(onComplete: () =>
-            {
-                StageManager sm = StageManager.Instance;
-                if (sm.CurrentStage != null)
-                {
-                    CurrentGameState = GlobalGameState.InGame;
-                    sm.StartStage(_gameCancellationTokenSource.Token, isContinue: true);
-                }
-                else
-                {
-                    LogEx.LogError("Failed to continue game: Current stage is null after loading save.");
-                }
-            });
         }
         
         public void QuitGame()
@@ -257,25 +273,8 @@ namespace Core
             StageManager.ResetStage();
             UIManager.HidePauseUI();
             UIManager.SwitchToMainMenu();
-            _gameCancellationTokenSource.Dispose();
+            
             _gameCancellationTokenSource = new CancellationTokenSource();
-        }
-        
-        public void RestartCurrentStage()
-        {
-            LogEx.Log("현재 스테이지 재시작");
-            _gameCancellationTokenSource.Cancel();
-            if (CurrentGameState == GlobalGameState.PausedInGame)
-            {
-                Time.timeScale = 1f; // 일시정지 상태라면 시간 흐름을 복원
-            }
-            /*
-             * 1. 상태 인게임으로 변경
-             * 2. 스테이지 매니저 현재 스테이지 재시작
-             */
-            CurrentGameState = GlobalGameState.InGame;
-            _gameCancellationTokenSource = new CancellationTokenSource();
-            StageManager.RestartCurrentStage(_gameCancellationTokenSource.Token);
         }
         
         public void OnInputCancel()
@@ -317,7 +316,7 @@ namespace Core
                 }
             }
         }
-
+        
         public Guid Guid { get; init; } = Guid.NewGuid();
         public void LoadData(GameData data)
         {
@@ -328,5 +327,6 @@ namespace Core
         {
             _playerStatus.SaveData(ref data);
         }
+
     }
 }

@@ -26,8 +26,9 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     private bool _dragTileSet;
 
     private int _remainHand = 0;
-    public int HandSize { get { return _remainHand; } }
+    public int HandCount { get { return _remainHand; } }
     private int _handSize = 3;
+    private Coordinate _lastDragCoor;
 
     public bool IsPlayerInputEnabled => throw new NotImplementedException();
 
@@ -40,25 +41,40 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         _onMouseDown = false;
         _cam = Camera.main;
         _remainHand = 0;
+        _lastDragCoor = new();
     }
 
     void Update()
     {
         if (_onMouseDown)
         {
-            Vector2 screenPos = Mouse.current.position.ReadValue();
+            Vector2 screenPos = Pointer.current.position.ReadValue();
             Vector2 worldPos = _cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _cam.nearClipPlane));
 
             if (Vector2.Distance(_startPos, worldPos) > 0.5f)
             {
-                _onMouseDown = false;
-                _dragTileSet = true;
-                _targetHandBox.HoldTileSet.transform.localScale = Vector3.one;
+                if (!InputManager.Instance.ReadyItem)
+                {
+                    _onMouseDown = false;
+                    _dragTileSet = true;
+                    _targetHandBox.HoldTileSet.transform.localScale = Vector3.one;
+                    _targetHandBox.HoldTileSet.SetOrderInTop();
+                }
             }
 
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            if (Mouse.current != null && Mouse.current.leftButton.wasReleasedThisFrame)
             {
                 HandBoxClick();
+            }
+
+            // 2. 모바일 (터치)
+            if (Touchscreen.current != null)
+            {
+                var touch = Touchscreen.current.primaryTouch;
+                if (touch.phase.ReadValue() == UnityEngine.InputSystem.TouchPhase.Ended)
+                {
+                    HandBoxClick();
+                }
             }
 
             return;
@@ -66,14 +82,30 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 
         if (_dragTileSet)
         {
-            Vector2 screenPos = Mouse.current.position.ReadValue();
+            Vector2 screenPos = Pointer.current.position.ReadValue();
             Vector2 worldPos = _cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _cam.nearClipPlane));
+            Coordinate dragCoor = worldPos.ToCoor(Field.Instance.TileOffset);
+            if (dragCoor != _lastDragCoor)
+            {
+                _lastDragCoor = dragCoor;
+                Field.Instance.ClearSilhouette();
+                Field.Instance.ShowSilhouette(_targetHandBox.HoldTileSet, dragCoor);
+            }
 
             _targetHandBox.HoldTileSet.transform.position = worldPos;
 
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            if (Mouse.current != null && Mouse.current.leftButton.wasReleasedThisFrame)
             {
                 PlaceTileSet(worldPos);
+            }
+
+            if (Touchscreen.current != null)
+            {
+                var touch = Touchscreen.current.primaryTouch;
+                if (touch.phase.ReadValue() == UnityEngine.InputSystem.TouchPhase.Ended)
+                {
+                    PlaceTileSet(worldPos);
+                }
             }
         }
     }
@@ -123,7 +155,9 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 
     private void PlaceTileSet(Vector2 worldPos)
     {
-        if(Field.Instance.TryPlace(_targetHandBox.HoldTileSet, worldPos.ToCoor(Field.Instance.TileOffset), out var placeTiles))
+        _targetHandBox.HoldTileSet.SetOrderInHand();
+        Field.Instance.ClearSilhouette();
+        if (Field.Instance.TryPlace(_targetHandBox.HoldTileSet, worldPos.ToCoor(Field.Instance.TileOffset), out var placeTiles))
         {
             _remainHand--;
             InputManager.Instance.PlaceTileSet(worldPos, _targetHandBox, placeTiles);
@@ -156,14 +190,21 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         if (target.IsUsed || TurnManager.Instance.State != TurnState.Player)
             return;
 
-        Vector2 screenPos = Mouse.current.position.ReadValue();
+        Vector2 screenPos = Pointer.current.position.ReadValue();
         _startPos = _cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _cam.nearClipPlane));
         _targetHandBox = target;
         _onMouseDown = true;
     }
 
+    public bool CanPlace()
+    {
+        return Field.Instance.TryPlaceAllTileSet(_hand.ToList());
+    }
+    
+
     public void ResetHand(int handSize)
     {
+        RemoveItemIcon();
         _handSize = handSize;
         for (int i = 0; i < _hand.Length; i++)
             Pool<HandBox>.Return(_hand[i]);

@@ -237,6 +237,14 @@ namespace Stage
                         LogEx.Log("Turn loop cancelled.");
                         return;
                     }
+                    if(StageManager.CheckStageFail())
+                    {
+                        await UniTask.WaitForSeconds(0.3f);
+                        LogEx.Log("Stage Failed!");
+                        StageManager.FailStage(token);
+                        StopTurnLoop();
+                        return;
+                    }
                     
                     playerTurnLogic.SetPlayerInputEnabled(true);
                     var playerInputData = await playerTurnLogic.WaitForPlayerReady(token);
@@ -258,6 +266,15 @@ namespace Stage
                         StopTurnLoop();
                         return;
                     }
+                    
+                    if(StageManager.CheckStageFail())
+                    {
+                        LogEx.Log("Stage Failed!");
+                        StageManager.FailStage(token);
+                        StopTurnLoop();
+                        return;
+                    }
+
                     using var playerActionLoopEndArgs = PlayerActionLoopEndEventArgs.Get();
                     await ExecEventBus<PlayerActionLoopEndEventArgs>.InvokeMerged(playerActionLoopEndArgs);
                     

@@ -1,12 +1,10 @@
 using Cysharp.Threading.Tasks;
-using Stage;
+
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+
 using SaveLoad;
+
 using UnityEngine;
 using UnityEngine.Rendering;
 using static Field;
@@ -59,6 +57,7 @@ public class Field : MonoBehaviour, ISaveTarget
 
     private static Field _instance;
     private Dictionary<Coordinate, Cell> _allCell;
+    private List<GameObject> _silhouetteTiles;
 
     public Vector2 TileOffset { get { return transform.position; } set { transform.position = value; } }
 
@@ -78,12 +77,32 @@ public class Field : MonoBehaviour, ISaveTarget
         InitField();
     }
 
+    public bool TryPlaceAllTileSet(List<HandBox> handBoxs)
+    {
+        for (int i = 0; i < handBoxs.Count; i++)
+        {
+            if (!handBoxs[i].IsUsed)
+            {
+                foreach(var cell in _allCell)
+                {
+                    if (cell.Value.IsEmpty)
+                    {
+                        if (CanPlace(handBoxs[i].HoldTileSet, cell.Key))
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public void InitField()
     {
         if (_isInit) return;
         _isInit = true;
 
         _allCell = new();
+        _silhouetteTiles = new();
 
         var childs = transform.GetComponentsInChildren<Transform>();
         for (int i = 0; i < childs.Length; i++)
@@ -113,6 +132,45 @@ public class Field : MonoBehaviour, ISaveTarget
     }
     */
 
+    public void ClearSilhouette()
+    {
+        for (int i = 0; i < _silhouetteTiles.Count; i++)
+        {
+            Pool.Return(_silhouetteTiles[i]);
+        }
+        _silhouetteTiles.Clear();
+    }
+
+    public void ShowSilhouette(TileSet tileSet, Coordinate coor)
+    {
+        if (!CanPlace(tileSet, coor))
+            return;
+
+        ClearSilhouette();
+
+        for (int i = 0; i < tileSet.Tiles.Count; i++)
+        {
+            var correctCoor = coor + tileSet.Tiles[i].transform.localPosition.ToCoor();
+            GenerateSilhouetteTile(correctCoor);
+        }
+    }
+
+    public void ShowSilhouette(Tile tile, Coordinate coor)
+    {
+        if (!CanPlace(tile, coor))
+            return;
+
+        ClearSilhouette();
+        GenerateSilhouetteTile(coor);
+    }
+
+    private void GenerateSilhouetteTile(Coordinate coor)
+    {
+        var silhouetteObj = Pool.Get("SilhouetteTile");
+        silhouetteObj.transform.position = coor.ToWorld(TileOffset);
+        _silhouetteTiles.Add(silhouetteObj);
+    }
+
     private void RemoveTile(Coordinate coor)
     {
         //_allCell[coor].UnSet();
@@ -121,14 +179,17 @@ public class Field : MonoBehaviour, ISaveTarget
 
     private async UniTask RemoveTileEffect(Cell cell)
     {
-        await UniTask.WaitForSeconds(0.2f);
-        cell.UnSet();
+        await cell.Tile.ActiveEffect(cell.UnSet);
     }
 
-    public void SafeRemoveTile(Coordinate coor)
+    public async UniTask SafeRemoveTile(Coordinate coor)
     {
-        if (CheckAbleCoor(coor))
-            RemoveTileEffect(_allCell[coor]).Forget();
+        if (CheckAbleCoor(coor) && !_allCell[coor].IsEmpty)
+        {
+            var cell = _allCell[coor];
+            await RemoveTileEffect(cell);
+        }
+        await UniTask.CompletedTask;
     }
 
 

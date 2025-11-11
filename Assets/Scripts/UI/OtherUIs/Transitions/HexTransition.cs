@@ -121,7 +121,11 @@ namespace UI.OtherUIs.Transitions
             _angle = _image.material.GetFloat(AngleHash);
             _interval = _image.material.GetFloat(IntervalHash);
             _xCount = _image.material.GetFloat(XCountHash);
+#if UNITY_EDITOR
+            /*
             OnValidate();
+            */
+#endif
         }
 
         private void Awake()
@@ -138,6 +142,10 @@ namespace UI.OtherUIs.Transitions
         /// </summary>
         public void InitEffect()
         {
+            if (_image == null)
+            {
+                _image = GetComponent<Image>();
+            }
             _tileSize = _image.material.GetFloat(TileSizeHash);
             float dist = _image.transform.position.z - Camera.main.transform.position.z;
             int start = ((Vector2)(Camera.main.ScreenToWorldPoint(new Vector3(0, 0, dist)))).ToCoor(_tileSize).Pos.x;
@@ -206,9 +214,10 @@ namespace UI.OtherUIs.Transitions
                 gameObject.SetActive(false);
             }
         }
-        
-        
 
+
+#if UNITY_EDITOR
+        /*
         private void OnValidate()
         {
             if (_image == null)
@@ -225,5 +234,7 @@ namespace UI.OtherUIs.Transitions
                 InitEffect();
             }
         }
+        */
+#endif
     }
 }

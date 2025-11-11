@@ -14,7 +14,8 @@ namespace Stage
         
         [field:SerializeField] public int[] StageIdentifiers {set; get; } = Array.Empty<int>();
         [field:SerializeField] public string StageName {set; get; }
-        // [field:SerializeField] public int StageLevel {set; get; }
+        [field:SerializeField] public int StageWorld {set; get; }
+        [field:SerializeField] public int StageLevel {set; get; }
         [field:SerializeField] public int StageTargetScore {set; get; }
         [field:SerializeField] public int StageTurnLimit {set; get; } = 10;
 
@@ -37,12 +38,8 @@ namespace Stage
 
         public StageModel GetNextStageModel()
         {
-            string[] parts = StageName.Split('-');
-            if (parts.Length != 2)
-                throw new FormatException("StageName format is incorrect. Expected format: 'a-b'.");
-
-            if (!int.TryParse(parts[0], out int a) || !int.TryParse(parts[1], out int b))
-                throw new FormatException("StageName parts must be integers.");
+            int a = StageWorld;
+            int b = StageLevel;
 
             if (b < 4)
             {
@@ -69,7 +66,17 @@ namespace Stage
             if(a == 0 || b == 0)
                 throw new ArgumentException("Parameters 'a' and 'b' must be greater than 0.");
             StageModel stageModel = new StageModel();
-            stageModel.StageName = $"{a}-{b}";
+            if (b == 4)
+            {
+                stageModel.StageName = $"{a}-Boss";
+            }
+            else
+            {
+                stageModel.StageName = $"{a}-{b}";
+            }
+            stageModel.StageWorld = a;
+            stageModel.StageLevel = b;
+            
             stageModel.StageTargetScore = CalculateTargetScore(a, b);
             stageModel.StageIdentifiers = new int[] { a, b };
             return stageModel;

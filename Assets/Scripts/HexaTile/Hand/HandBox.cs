@@ -49,6 +49,7 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
         {
             HoldTileSet.Tiles[i].Sr.color = new Color(0.58f, 0.58f, 0.58f);
         }
+        _sprite.transform.localPosition = Vector3.zero;
     }
 
     public void RemoveItemIcon()
@@ -69,7 +70,7 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
         {
             maxRadius = Mathf.Max(HoldTileSet.Data.Data[j].Coor.CircleRadius, maxRadius);
         }
-        float size = (maxRadius * 2 + 1 > 3) ? 5 / (Mathf.Sqrt(3) * (maxRadius * 2 + 1)) : 0.7f;
+        float size = (maxRadius * 2 + 1 > 3) ? 5 / (Mathf.Sqrt(3) * (maxRadius * 2 + 1)) : 0.6f;
         HoldTileSet.transform.localScale = Vector2.one * size;
 
         Vector3 center = Vector3.zero;

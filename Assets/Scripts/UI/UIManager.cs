@@ -1,6 +1,7 @@
 ﻿using System;
 using Core;
 using Cysharp.Threading.Tasks;
+using Interaction;
 using Machamy.Utils;
 using UI.MainUIs;
 using UI.OtherUIs;
@@ -44,6 +45,7 @@ namespace UI
         [field: FormerlySerializedAs("<SettingUI>k__BackingField")] [field:SerializeField] public SettingParentUI SettingParentUI{ get; private set; }
         [Header("GameUI Child UIs")]
         [field:SerializeField] public StageInfoUI StageInfoUI{ get; private set; }
+        [field:SerializeField] public FailResultUI FailResultUI{ get; private set; }
         [Header("Setting Child UIs")]
         [field:SerializeField] public PauseUI PauseUI { get; private set; }
         [field:SerializeField] public SoundSettingUI SoundSettingUI { get; private set; }  
@@ -61,6 +63,13 @@ namespace UI
 
         private void OnEnable()
         {
+            void Init()
+            {
+                RegisterUIs();
+                BindEventsToUIs();
+                SetMainMenu();
+            }
+            
             if (GameManager.Instance.CurrentGameState == GlobalGameState.Initializing)
             {
                 void OnInitialized(GlobalGameState newState)
@@ -68,19 +77,14 @@ namespace UI
                     if (newState != GlobalGameState.Initializing)
                     {
                         GameManager.Instance.OnGameStateChanged -= OnInitialized;
-                        RegisterUIs();
-                        BindEventsToUIs();
-                        SetMainMenu();
+                        Init();
                     }
                 }
                 GameManager.Instance.OnGameStateChanged += OnInitialized;
             }
-            else
-            {
-                RegisterUIs();
-                BindEventsToUIs();
-                SetMainMenu();
-            }
+            Init();
+            
+            InteractionManager.Instance.CancelEvent += OnCancelInput;
         }
         
         private void OnDisable()
@@ -120,7 +124,8 @@ namespace UI
             InGameUI = FindUI<InGameUI>();
             SoundSettingUI = FindUI<SoundSettingUI>();
             StageInfoUI = FindUI<StageInfoUI>();
-            TransitionUI = FindUI<TransitionUI>();
+            // TransitionUI = FindUI<TransitionUI>();
+            FailResultUI = FindUI<FailResultUI>();
         }
 
         public void ShowPauseUI()
@@ -156,6 +161,8 @@ namespace UI
             // TODO : UniTask이용해서 애니메이션 처리 가능
             GameUI.Hide();
             MainTitleUI.Show();
+            InGameUI.Hide();
+            FailResultUI.Hide();
         }
         
         /// <summary>
@@ -170,8 +177,33 @@ namespace UI
             MainTitleUI.Hide();
             GameUI.Show(); 
             InGameUI.Show();
+            FailResultUI.Hide();
         }
-        
+
+
+        public void OnCancelInput()
+        {
+            if (SoundSettingUI.isActiveAndEnabled)
+            {
+                SoundSettingUI.OnClickBackButton();
+            }
+            else if (PauseUI.isActiveAndEnabled)
+            {
+                HidePauseUI();
+                GameManager.Instance.ResumeGame();
+            }
+            else
+            {
+                if (GameManager.Instance.CurrentGameState == GlobalGameState.InGame)
+                {
+                    GameManager.Instance.PauseGameWithUI();
+                }
+                else
+                {
+                    SoundSettingUI.ShowDefaultAsync().Forget();
+                }
+            }
+        }
         
     }
 }

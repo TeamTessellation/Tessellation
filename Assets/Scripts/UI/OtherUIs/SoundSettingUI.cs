@@ -35,7 +35,8 @@ namespace UI.OtherUIs
         [SerializeField] private RectTransform soundButtonRectTransform;
         [SerializeField] private RectTransform backButtonRectTransform;
         [SerializeField] private RectTransform soundSliderRectTransform;
-        
+        [Space(5)]
+        [SerializeField] private CanvasGroup backgroundImage;
         [SerializeField] private Button backButton;
         [SerializeField] private Slider bgmSlider;
         [SerializeField] private Slider sfxSlider;
@@ -177,10 +178,11 @@ namespace UI.OtherUIs
             rightSequence.Join(soundSliderRectTransform.GetComponent<CanvasGroup>().DOFade(1.0f,
                 soundSliderTransitionSettings.fromFadeDuration).SetEase(soundSliderTransitionSettings.fromFadeEase)
                 .SetDelay(soundSliderTransitionSettings.fromFadeDelay));
-            
+
             var allSequence = DOTween.Sequence();
             allSequence.Join(leftSequence);
             allSequence.Join(rightSequence);
+            allSequence.Join(backgroundImage.DOFade(1.0f, 0.2f).SetEase(Ease.InOutSine));
             allSequence.SetUpdate(true);
             await allSequence.Play().ToUniTask(cancellationToken: cancellationTokenSource.Token);
         }
@@ -227,6 +229,7 @@ namespace UI.OtherUIs
             var allSequence = DOTween.Sequence();
             allSequence.Join(leftSequence);
             allSequence.Join(rightSequence);
+            allSequence.Join(backgroundImage.DOFade(0.0f, 0.2f).SetEase(Ease.InOutSine));
             allSequence.SetUpdate(true);
             await allSequence.Play().ToUniTask(cancellationToken: cancellationTokenSource.Token);
             
@@ -236,11 +239,40 @@ namespace UI.OtherUIs
         /// <summary>
         /// 일시정지 화면에서의 표시 동작을 수행합니다.
         /// </summary>
-        public async UniTask ShowInPauseAsync(CancellationToken cancellationToken = default)
+        public async UniTask ShowInPauseAsync(RectTransform prevSoundButtonRect, CancellationToken cancellationToken = default)
         {
             returnType = ReturnType.ToPauseUI;
             gameObject.SetActive(true);
-            await UniTask.CompletedTask;
+            
+            // 사운드 버튼 위치 동기화
+            soundButtonRectTransform.GetComponent<CanvasGroup>().alpha = 1.0f;
+            backButtonRectTransform.GetComponent<CanvasGroup>().alpha = 0.0f;
+            soundButtonRectTransform.position = prevSoundButtonRect.position;
+            backButtonRectTransform.anchoredPosition = _originalPositions[soundButtonRectTransform];
+            var leftSequence = DOTween.Sequence();
+            // 왼쪽 UI들 애니메이션(사운드 이동 -> 그 밑으로 돌아가기 나타남)
+            leftSequence.Append(soundButtonRectTransform.DOAnchorPos(_originalPositions[soundButtonRectTransform],
+                    soundButtonFromPauseTransitionSettings.fromMoveDuration)
+                .SetEase(soundButtonFromPauseTransitionSettings.fromMoveEase));
+            leftSequence.Append(backButtonRectTransform.DOAnchorPos(_originalPositions[backButtonRectTransform],
+                backButtonTransitionSettings.fromMoveDuration).SetEase(backButtonTransitionSettings.fromMoveEase));
+            leftSequence.Join(backButtonRectTransform.GetComponent<CanvasGroup>().DOFade(1.0f,
+                backButtonTransitionSettings.fromFadeDuration).SetEase(backButtonTransitionSettings.fromFadeEase)
+                .SetDelay(backButtonTransitionSettings.fromFadeDelay));
+            
+            // 오른쪽은 그대로
+            var rightSequence = DOTween.Sequence();
+            rightSequence.Append(soundSliderRectTransform.DOAnchorPos(_originalPositions[soundSliderRectTransform],
+                soundSliderTransitionSettings.fromMoveDuration).SetEase(soundSliderTransitionSettings.fromMoveEase));
+            rightSequence.Join(soundSliderRectTransform.GetComponent<CanvasGroup>().DOFade(1.0f,
+                soundSliderTransitionSettings.fromFadeDuration).SetEase(soundSliderTransitionSettings.fromFadeEase)
+                .SetDelay(soundSliderTransitionSettings.fromFadeDelay));  
+            
+            var allSequence = DOTween.Sequence();
+            allSequence.Join(leftSequence);
+            allSequence.Join(rightSequence);
+            allSequence.SetUpdate(true);
+            await allSequence.Play().ToUniTask(cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -248,8 +280,37 @@ namespace UI.OtherUIs
         /// </summary>
         public async UniTask HideInPauseAsync(CancellationToken cancellationToken = default)
         {
+            var leftSequence = DOTween.Sequence();
+            
+            // 왼쪽 UI들 애니메이션(돌아가기가 사운드 버튼 밑으로 사라짐)
+            // 이후 이동은 PauseUI에서 처리
+            leftSequence.Append(backButtonRectTransform.DOAnchorPos(
+                _originalPositions[soundButtonRectTransform],
+                backButtonTransitionSettings.toMoveDuration).SetEase(backButtonTransitionSettings.toMoveEase));
+            leftSequence.Join(backButtonRectTransform.GetComponent<CanvasGroup>().DOFade(0.0f,  
+                backButtonTransitionSettings.toFadeDuration).SetEase(backButtonTransitionSettings.toFadeEase)
+                .SetDelay(backButtonTransitionSettings.toFadeDelay));
+
+            var rightSequence = DOTween.Sequence();
+            // 오른쪽 UI 애니메이션
+            rightSequence.Append(soundSliderRectTransform.DOAnchorPos(
+                _originalPositions[soundSliderRectTransform] +
+                Vector2.right * soundSliderTransitionSettings.toOffset *
+                soundSliderRectTransform.GetRectSize().x,
+                soundSliderTransitionSettings.toMoveDuration).SetEase(soundSliderTransitionSettings.toMoveEase));
+            rightSequence.Join(soundSliderRectTransform.GetComponent<CanvasGroup>().DOFade(0.0f,
+                soundSliderTransitionSettings.toFadeDuration).SetEase(soundSliderTransitionSettings.toFadeEase)
+                .SetDelay(soundSliderTransitionSettings.toFadeDelay));
+            
+            var allSequence = DOTween.Sequence();
+            allSequence.Join(leftSequence);
+            allSequence.Join(rightSequence);
+            allSequence.SetUpdate(true);
+            await allSequence.Play().ToUniTask(cancellationToken: cancellationToken);
+            
             gameObject.SetActive(false);
-            await UniTask.CompletedTask;
+            
+            await UIManager.Instance.PauseUI.SwitchBackFromSoundSettingsAsync(soundButtonRectTransform, cancellationToken);
         }
         
         public void OnClickBackButton()

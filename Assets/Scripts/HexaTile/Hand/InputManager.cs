@@ -6,6 +6,7 @@ using System.Threading;
 using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 {
@@ -27,6 +28,8 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
     private PlayerInputData _playerInputData;
 
     private bool _dataReady;
+
+    public bool ReadyItem => (_readyItem != Item.End);
     private Item _readyItem;
 
     private void Awake()
@@ -39,8 +42,15 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
     private void BindBtn()
     {
         var itemRoot = GameObject.FindWithTag("ItemRoot").transform;
+
         if (itemRoot.transform.childCount > 0)
             return;
+
+        var unSetBtn = itemRoot.transform.parent.GetChild(0).GetComponent<EventTrigger>();
+        var entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
+        entry.callback.AddListener((data) => UnSetItem());
+        unSetBtn.triggers.Add(entry);
+
         var itemHold = Pool<ItemHold>.Get();
         itemHold.transform.SetParent(itemRoot, false);
         itemHold.RegisterClickEvent(SetItem, Item.Rotate);
@@ -89,6 +99,13 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
         HandManager.Instance.SetItemIcon(item);
     }
 
+    public void UnSetItem()
+    {
+        _readyItem = Item.End;
+        HandManager.Instance.RemoveItemIcon();
+        UseItemAction = null;
+    }
+
     public void RotateTileSet(HandBox handBox) => RotateTileSetItem(handBox);
 
     private void RotateTileSetItem(HandBox handBox)
@@ -131,14 +148,14 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     public async UniTask<PlayerInputData> WaitForPlayerReady(CancellationToken token)
     {
-        await UniTask.WaitUntil(() => _dataReady);
+        await UniTask.WaitUntil(() => _dataReady || token.IsCancellationRequested, cancellationToken: token);
         _dataReady = false;
         return _playerInputData;
     }
 
     public bool IsPlayerCanDoAction()
     {
-        return (HandManager.Instance.HandSize > 0); // ToDo 핸드 수정
+        return (HandManager.Instance.HandCount > 0); // ToDo 핸드 수정
     }
 
     public async UniTask OnTurnStart(int turnCount, CancellationToken token)
