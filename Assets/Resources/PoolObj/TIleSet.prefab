@@ -60,6 +60,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4575744340049431732}
+  - component: {fileID: 1332960656919366901}
   m_Layer: 0
   m_Name: TileRoot
   m_TagString: Untagged
@@ -82,3 +83,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5193452960650638913}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &1332960656919366901
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4698048771471433641}
+  m_Enabled: 1
+  m_SortingLayerID: 1339770911
+  m_SortingLayer: 3
+  m_SortingOrder: 1
+  m_SortAtRoot: 0
