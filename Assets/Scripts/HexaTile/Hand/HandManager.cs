@@ -26,6 +26,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
     private int _remainHand = 0;
     public int HandCount { get { return _remainHand; } }
     private int _handSize = 3;
+    private Coordinate _lastDragCoor;
 
     public bool IsPlayerInputEnabled => throw new NotImplementedException();
 
@@ -38,6 +39,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
         _onMouseDown = false;
         _cam = Camera.main;
         _remainHand = 0;
+        _lastDragCoor = new();
     }
 
     void Update()
@@ -54,6 +56,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
                     _onMouseDown = false;
                     _dragTileSet = true;
                     _targetHandBox.HoldTileSet.transform.localScale = Vector3.one;
+                    _targetHandBox.HoldTileSet.SetOrderInTop();
                 }
             }
 
@@ -79,6 +82,13 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
         {
             Vector2 screenPos = Pointer.current.position.ReadValue();
             Vector2 worldPos = _cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _cam.nearClipPlane));
+            Coordinate dragCoor = worldPos.ToCoor(Field.Instance.TileOffset);
+            if (dragCoor != _lastDragCoor)
+            {
+                _lastDragCoor = dragCoor;
+                Field.Instance.ClearSilhouette();
+                Field.Instance.ShowSilhouette(_targetHandBox.HoldTileSet, dragCoor);
+            }
 
             _targetHandBox.HoldTileSet.transform.position = worldPos;
 
@@ -143,7 +153,9 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic
 
     private void PlaceTileSet(Vector2 worldPos)
     {
-        if(Field.Instance.TryPlace(_targetHandBox.HoldTileSet, worldPos.ToCoor(Field.Instance.TileOffset), out var placeTiles))
+        _targetHandBox.HoldTileSet.SetOrderInHand();
+        Field.Instance.ClearSilhouette();
+        if (Field.Instance.TryPlace(_targetHandBox.HoldTileSet, worldPos.ToCoor(Field.Instance.TileOffset), out var placeTiles))
         {
             _remainHand--;
             InputManager.Instance.PlaceTileSet(worldPos, _targetHandBox, placeTiles);
