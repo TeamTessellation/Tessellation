@@ -16,7 +16,10 @@ namespace SaveLoad
     [System.Serializable]
     public class GameData
     {
-        public int TurnCount;
+        public int[] CurrentStage = new int[2] {0, 0}; // 월드 인덱스, 스테이지 인덱스
+        public int TurnCount = 0;
+        public int TotalScore = 0; // 여러 턴에 걸쳐 누적된 총합 점수
+        public int CurrentScore = 0; // 현재 턴에 대해 누적되는 점수
         public int Score;
         public int HandCount;
         public int FieldSize;
@@ -90,17 +93,6 @@ namespace SaveLoad
         {
             get
             {
-                // 내장 변수들은 여기서 처리
-                if (key == "TurnCount")
-                {
-                    return new VariableContainer.Variable { IntValue = TurnCount };
-                }
-                if (key == "Score")
-                {
-                    return new VariableContainer.Variable { IntValue = Score };
-                }
-                
-                
                 // 일반 변수들은 VariableContainer에서 처리
                 if (Variables.Items.TryGetValue(key, out var variable))
                 {
@@ -224,7 +216,7 @@ namespace SaveLoad
         /// </summary>
         public void SimpleSave()
         {
-            PlayerPrefs.SetString("SimpleSaveData", JsonUtility.ToJson(CreateCurrentSaveData()));
+            PlayerPrefs.SetString("save_Default", JsonUtility.ToJson(CreateCurrentSaveData()));
             PlayerPrefs.Save();
         }
         
@@ -232,20 +224,23 @@ namespace SaveLoad
         /// 간단한 불러오기 기능을 제공합니다.
         /// </summary>
         /// <returns>></returns>
-        public bool SimpleLoad(string savePath = "Default")
+        public bool SimpleLoad(string savePath = "Default", Action onComplete = null, Action onFail = null)
         {
             string json = PlayerPrefs.GetString($"save_{savePath}", "");
             if (string.IsNullOrEmpty(json))
                 return false;
             try
             {
+                LogEx.Log("Loading simple save data...");
                 GameData data = JsonUtility.FromJson<GameData>(json);
                 LoadSaveData(data);
+                onComplete?.Invoke();
                 return true;
             }
             catch (Exception e)
             {
                 LogEx.LogError("Failed to load simple save data: " + e.Message);
+                onFail?.Invoke();
                 return false;
             }
         }
@@ -265,7 +260,7 @@ namespace SaveLoad
         /// <returns></returns>
         public bool HasSimpleSave()
         {
-            return PlayerPrefs.HasKey("SimpleSaveData");
+            return PlayerPrefs.HasKey("save_Default");
         }
 }
 

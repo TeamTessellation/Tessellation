@@ -4,6 +4,7 @@ using Core;
 using Cysharp.Threading.Tasks;
 using Machamy.Utils;
 using SaveLoad;
+using Stage;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -92,10 +93,16 @@ namespace UI.MainUIs
         {
             bool hasSavedGame = false;
             
+            
             SaveLoadManager saveLoadManager = SaveLoadManager.Instance;
             if (saveLoadManager != null)
             {
                 hasSavedGame = saveLoadManager.HasSimpleSave();
+            }
+            
+            if(GameManager.Instance.DisableContinueInMainMenu)
+            {
+                hasSavedGame = false;
             }
             SetContinueButtonInteractable(hasSavedGame);
         }
@@ -109,7 +116,7 @@ namespace UI.MainUIs
         public void OnContinueButtonClicked()
         {
             LogEx.Log("Continue Button Clicked");
-            //TODO : History 기반으로 저장 로드 해야함. 현재 SaveLoadManager에서 가장 최근 저장 불러오는 것으로 임시 구현
+            GameManager.Instance.ContinueGame();
             
         }
         public void OnSettingsButtonClicked()

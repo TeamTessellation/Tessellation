@@ -22,9 +22,10 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     private HandBox[] _hand;
 
     private HandBox _targetHandBox;
+    private Camera _cam;
     private bool _onMouseDown;
     private bool _dragTileSet;
-    private Camera _cam;
+
     private int _remainHand = 0;
     public int HandCount { get { return _remainHand; } }
     private int _handSize = 3;

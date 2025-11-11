@@ -5,6 +5,7 @@ using ExecEvents;
 using Interaction;
 using Machamy.Utils;
 using Player;
+using SaveLoad;
 using Stage;
 using UI;
 using Unity.VisualScripting;
@@ -24,7 +25,7 @@ namespace Core
     }
     
 
-    public class GameManager : Singleton<GameManager>
+    public class GameManager : Singleton<GameManager>, ISaveTarget
     {
         public override bool IsDontDestroyOnLoad => true;
 
@@ -35,6 +36,7 @@ namespace Core
         private CancellationTokenSource _gameCancellationTokenSource = new CancellationTokenSource();
         [SerializeField]private GlobalGameState _currentGameState = GlobalGameState.Initializing;
 
+        [field:SerializeField] public bool DisableContinueInMainMenu { get; private set; } = false;
         public CancellationToken GameCancellationToken => _gameCancellationTokenSource.Token;
         private PlayerStatus _playerStatus = new PlayerStatus();
         public GlobalGameState CurrentGameState
@@ -122,10 +124,54 @@ namespace Core
             _gameCancellationTokenSource = new CancellationTokenSource();
             CurrentGameState = GlobalGameState.InGame;
             StageManager.CurrentStage = StageModel.FirstStageModel;
-            
             StageManager.StartStage(_gameCancellationTokenSource.Token);
         }
         
+        public void ContinueGame()
+        {
+            LogEx.Log("게임 계속하기");
+            ResetGame();
+            // 이전 토큰 디스포즈
+            
+            _gameCancellationTokenSource = new CancellationTokenSource();
+            SaveLoadManager svM = SaveLoadManager.Instance;
+            
+            if(svM == null || !svM.HasSimpleSave())
+            {
+                LogEx.LogWarning("No saved game to continue.");
+                return;
+            }
+            svM.SimpleLoad(onComplete: () =>
+            {
+                StageManager sm = StageManager.Instance;
+                if (sm.CurrentStage != null)
+                {
+                    CurrentGameState = GlobalGameState.InGame;
+                    sm.StartStage(_gameCancellationTokenSource.Token);
+                }
+                else
+                {
+                    LogEx.LogError("Failed to continue game: Current stage is null after loading save.");
+                }
+            });
+        }
+        
+        public void RestartCurrentStage()
+        {
+            LogEx.Log("현재 스테이지 재시작");
+            _gameCancellationTokenSource.Cancel();
+            if (CurrentGameState == GlobalGameState.PausedInGame)
+            {
+                Time.timeScale = 1f; // 일시정지 상태라면 시간 흐름을 복원
+            }
+            /*
+             * 1. 상태 인게임으로 변경
+             * 2. 스테이지 매니저 현재 스테이지 재시작
+             */
+            CurrentGameState = GlobalGameState.InGame;
+            _gameCancellationTokenSource = new CancellationTokenSource();
+            StageManager.RestartCurrentStage(_gameCancellationTokenSource.Token);
+        } 
         
         /// <summary>  
         /// 게임을 일시정지합니다.
@@ -195,7 +241,6 @@ namespace Core
             CurrentGameState = GlobalGameState.MainMenu;
             PlayerStatus.Reset();
             StageManager.ResetStage();
-            TurnManager.StopTurnLoop();
             UIManager.HidePauseUI();
             UIManager.SwitchToMainMenu();
             
@@ -223,17 +268,30 @@ namespace Core
              * 4. 일시정지 UI 숨기기
              * 5. 메인메뉴 UI로 전환
              */
+            CurrentGameState = GlobalGameState.MainMenu;
             PlayerStatus.Reset();
             StageManager.ResetStage();
-            TurnManager.StopTurnLoop();
             UIManager.HidePauseUI();
+            UIManager.SwitchToMainMenu();
             
             _gameCancellationTokenSource = new CancellationTokenSource();
         }
         
         public void OnInputCancel()
         {
-
+            LogEx.Log("입력 취소 이벤트 수신");
+            if (CurrentGameState == GlobalGameState.InGame)
+            {
+                PauseGameWithUI();
+            }
+            else if (CurrentGameState == GlobalGameState.PausedInGame)
+            {
+                UIManager.HidePauseUI();
+                ResumeGame();
+            }else if (CurrentGameState == GlobalGameState.MainMenu)
+            {
+                
+            }
         }
         
         private void OnApplicationFocus(bool hasFocus)
@@ -257,6 +315,17 @@ namespace Core
                     // 메인메뉴에서 앱을 벗어났을때는 그대로
                 }
             }
+        }
+        
+        public Guid Guid { get; init; } = Guid.NewGuid();
+        public void LoadData(GameData data)
+        {
+            _playerStatus.LoadData(data);
+        }
+
+        public void SaveData(ref GameData data)
+        {
+            _playerStatus.SaveData(ref data);
         }
 
     }
