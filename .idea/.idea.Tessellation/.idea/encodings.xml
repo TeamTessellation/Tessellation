@@ -6,6 +6,7 @@
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/AbilityFactory.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/AbilityInfoSO.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/OnlyPlaceAbility.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/RemoveActiveUpAbility.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Core/EffectManager.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Effects/ScoreEffect.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/Coordinate.cs" charset="UTF-8" />
@@ -16,8 +17,10 @@
     <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/Tile/TileSet.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerInventory.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/ScriptableObject/EffectDataSO.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Shop/ShopItemSelector.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Test/ScoreSlider.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Tester.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/UI/OtherUIs/ShopUI.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/UI/ScoreUI.cs" charset="UTF-8" />
     <file url="PROJECT" charset="x-windows-949" />
   </component>
