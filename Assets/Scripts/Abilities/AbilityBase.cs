@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using Machamy.Utils;
 using Stage;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Abilities
@@ -9,10 +10,9 @@ namespace Abilities
     public abstract class AbilityBase
     {
         // === Properties ===
-        private AbilityDataSO _dataSO;
+        protected AbilityDataSO dataSO;
         public int AbilityPriority;
-        public int currentLevel = 1;
-        
+        public int CurrentLevel = 1;
         
         protected virtual bool ReactsToTilePlaced => false;
         protected virtual bool ReactsToLineCleared => false;
@@ -21,10 +21,10 @@ namespace Abilities
         protected virtual bool ReactsToTurnProcessed => false;
 
         // === Functions ===
-        public void InitializeData(AbilityDataSO dataSO)
+        public void InitializeData(AbilityDataSO data)
         {
-            _dataSO = dataSO;
-            currentLevel = 1;
+            dataSO = data;
+            CurrentLevel = 1;
         }
         
         public virtual void Initialize(TilePlaceHandler tilePlaceHandler)
@@ -41,6 +41,8 @@ namespace Abilities
             tilePlaceHandler.OnTileRemovedAsync += HandleTileRemovedAsync;
             tilePlaceHandler.OnTileBurstAsync += HandleTileBurstAsync;
             tilePlaceHandler.OnTurnProcessedAsync += HandleTurnProcessedAsync;
+
+            OnAbilityApplied();
         }
 
         public void OnDestroy(TilePlaceHandler tilePlaceHandler)
@@ -56,8 +58,20 @@ namespace Abilities
             tilePlaceHandler.OnTileRemovedAsync -= HandleTileRemovedAsync;
             tilePlaceHandler.OnTileBurstAsync -= HandleTileBurstAsync;
             tilePlaceHandler.OnTurnProcessedAsync -= HandleTurnProcessedAsync;
+
+            OnAbilityRemoved();
         }
 
+        protected virtual void OnAbilityApplied()
+        {
+            
+        }
+
+        protected virtual void OnAbilityRemoved()
+        {
+            
+        }
+                
         protected virtual async UniTask HandleTilePlacedAsync(TurnResultInfo info)
         {
             if (ReactsToTilePlaced) await TryActivate(info);
