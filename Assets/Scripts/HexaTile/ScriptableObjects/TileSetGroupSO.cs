@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// TileSet들의 Group
 /// </summary>
-[CreateAssetMenu(fileName = "Deck", menuName = "HexaSystem", order = 0)]
+[CreateAssetMenu(fileName = "Deck", menuName = "HexaSystem/Deck", order = 0)]
 public class DeckSO : ScriptableObject
 {
     public List<DeckData> Deck;

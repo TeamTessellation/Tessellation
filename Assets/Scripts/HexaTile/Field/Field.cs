@@ -139,14 +139,17 @@ public class Field : MonoBehaviour
 
     private async UniTask RemoveTileEffect(Cell cell)
     {
-        await UniTask.WaitForSeconds(0.2f);
-        cell.UnSet();
+        await cell.Tile.ActiveEffect(cell.UnSet);
     }
 
-    public void SafeRemoveTile(Coordinate coor)
+    public async UniTask SafeRemoveTile(Coordinate coor)
     {
-        if (CheckAbleCoor(coor))
-            RemoveTileEffect(_allCell[coor]).Forget();
+        if (CheckAbleCoor(coor) && !_allCell[coor].IsEmpty)
+        {
+            var cell = _allCell[coor];
+            await RemoveTileEffect(cell);
+        }
+        await UniTask.CompletedTask;
     }
 
 
