@@ -245,6 +245,11 @@ namespace SaveLoad
             }
         }
         
+        public void RemoveSimpleSave(string savePath = "Default")
+        {
+            PlayerPrefs.DeleteKey($"save_{savePath}");
+        }
+        
         /// <summary>
         /// 세이브데이터 여부를 확실하게 판단합니다.
         /// </summary>

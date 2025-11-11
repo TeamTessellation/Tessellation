@@ -384,6 +384,7 @@ public class Field : MonoBehaviour, ISaveTarget
 
     public void SaveData(ref GameData data)
     {
+        data.FieldSize = _size;
         data.FieldTileData = new();
         foreach(var cell in _allCell)
         {

@@ -69,6 +69,8 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
     public void SetOnHand()
     {
         int maxRadius = 0;
+        if(HoldTileSet == null)
+            return;
         for (int j = 0; j < HoldTileSet.Data.Data.Count; j++)
         {
             maxRadius = Mathf.Max(HoldTileSet.Data.Data[j].Coor.CircleRadius, maxRadius);

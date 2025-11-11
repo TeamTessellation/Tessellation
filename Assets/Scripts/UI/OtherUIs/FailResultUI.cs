@@ -7,6 +7,7 @@ using DG.Tweening;
 using Interaction;
 using Machamy.Utils;
 using Player;
+using SaveLoad;
 using Stage;
 using TMPro;
 using UnityEngine;
@@ -177,9 +178,15 @@ namespace UI.OtherUIs
             GameManager.Instance.StartGame();
         }
         
+        /// <summary>
+        /// 홈 버튼 클릭 시 로직.
+        /// 게임 상태를 초기화하고 메인 메뉴로 돌아갑니다.
+        /// 세이브도 제거합니다.
+        /// </summary>
         private void OnHomeButtonClicked()
         {
             Debug.Log("Home button clicked. Returning to main menu...");
+            SaveLoadManager.Instance.RemoveSimpleSave();
             GameManager.Instance.ResetGameAndReturnToMainMenu();
         }
         

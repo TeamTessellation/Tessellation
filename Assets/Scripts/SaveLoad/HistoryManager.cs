@@ -34,11 +34,22 @@ namespace SaveLoad
         
         /// <summary>
         /// 마지막 저장 기록을 불러오고 기록에서 제거합니다.
+        /// 사이즈가 1인경우 불러오기만 합니다.
         /// </summary>
         /// <returns></returns>
         public GameData LoadAndPopLastSave()
         {
-            var lastSave = _saveHistory.PopLastSave();
+            if (_saveHistory.Count == 0)
+            {
+                Debug.LogWarning("No save data available to load.");
+                return null;
+            }
+            var lastSave = _saveHistory.GetLastSave();
+            if (_saveHistory.Count > 1)
+            {
+                // 마지막 저장 기록 제거
+                _saveHistory.PopLastSave();
+            }   
             SaveLoadManager.Instance.LoadSaveData(lastSave);
             return lastSave;
         }

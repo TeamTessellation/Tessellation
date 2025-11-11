@@ -127,9 +127,38 @@ namespace Core
             StageManager.StartStage(_gameCancellationTokenSource.Token);
         }
         
-        public void ContinueGame()
+        public void ContinueStage()
         {
             LogEx.Log("게임 계속하기");
+            ResetGame();
+            // 이전 토큰 디스포즈
+            
+            _gameCancellationTokenSource = new CancellationTokenSource();
+            SaveLoadManager svM = SaveLoadManager.Instance;
+            
+            if(svM == null || !svM.HasSimpleSave())
+            {
+                LogEx.LogWarning("No saved game to continue.");
+                return;
+            }
+            svM.SimpleLoad(onComplete: () =>
+            {
+                StageManager sm = StageManager.Instance;
+                if (sm.CurrentStage != null)
+                {
+                    CurrentGameState = GlobalGameState.InGame;
+                    sm.StartStage(_gameCancellationTokenSource.Token);
+                }
+                else
+                {
+                    LogEx.LogError("Failed to continue game: Current stage is null after loading save.");
+                }
+            });
+        }
+
+        public void ContinueTurn()
+        {
+            LogEx.Log("턴 계속하기");
             ResetGame();
             // 이전 토큰 디스포즈
             
@@ -282,12 +311,10 @@ namespace Core
             LogEx.Log("입력 취소 이벤트 수신");
             if (CurrentGameState == GlobalGameState.InGame)
             {
-                PauseGameWithUI();
             }
             else if (CurrentGameState == GlobalGameState.PausedInGame)
             {
-                UIManager.HidePauseUI();
-                ResumeGame();
+                
             }else if (CurrentGameState == GlobalGameState.MainMenu)
             {
                 
