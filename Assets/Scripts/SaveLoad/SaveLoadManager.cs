@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core;
+using Machamy.Attributes;
 using Machamy.Utils;
 using Player;
 using UnityEngine;
@@ -19,13 +20,15 @@ namespace SaveLoad
         public int[] CurrentStage = new int[2] {0, 0}; // 월드 인덱스, 스테이지 인덱스
         public int TurnCount = 0;
         public int TotalScore = 0; // 여러 턴에 걸쳐 누적된 총합 점수
-        public int CurrentScore = 0; // 현재 턴에 대해 누적되는 점수
+        // public int CurrentScore = 0; // 현재 턴에 대해 누적되는 점수
         public int Score;
         public int HandCount;
         public int FieldSize;
         public List<OffsetTileData> FieldTileData;
         public TileSetData[] HandData;
         public PlayerStatus PlayerStatus;
+        
+        public SaveHistory SaveHistory;
         
         /// <summary>
         /// 변수 컨테이너. 우선적으로 내장 변수를 사용하는 것이 권장됩니다.
@@ -143,6 +146,8 @@ namespace SaveLoad
 
         private static readonly List<ISaveTarget> _pendingSavables = new();
 
+        [VisibleOnly, SerializeField] private GameData lastSavedData;
+        
         public static void RegisterPendingSavable(ISaveTarget saveTarget)
         {
             if (_instance != null)
@@ -201,13 +206,14 @@ namespace SaveLoad
             return data;
         }
 
-        public void LoadSaveData(GameData data)
+        public void LoadSaveData(GameData data, Action onComplete = null)
         {
             LogEx.Log($"Loading Save Data to {_savables.Count} savables.");
             foreach (var savable in _savables)
             {
                 savable.LoadData(data);
             }
+            onComplete?.Invoke();
         }
 
 
@@ -216,8 +222,27 @@ namespace SaveLoad
         /// </summary>
         public void SimpleSave()
         {
-            PlayerPrefs.SetString("save_Default", JsonUtility.ToJson(CreateCurrentSaveData()));
+            lastSavedData = CreateCurrentSaveData();
+            PlayerPrefs.SetString("save_Default", JsonUtility.ToJson(lastSavedData));
             PlayerPrefs.Save();
+        }
+        
+        public GameData GetSimpleSaveData(string savePath = "Default")
+        {
+            string json = PlayerPrefs.GetString($"save_{savePath}", "");
+            if (string.IsNullOrEmpty(json))
+                return null;
+            try
+            {
+                LogEx.Log("Retrieving simple save data...");
+                GameData data = JsonUtility.FromJson<GameData>(json);
+                return data;
+            }
+            catch (Exception e)
+            {
+                LogEx.LogError("Failed to retrieve simple save data: " + e.Message);
+                return null;
+            }
         }
         
         /// <summary>

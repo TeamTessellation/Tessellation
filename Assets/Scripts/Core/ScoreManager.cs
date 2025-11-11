@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Core;
 using Cysharp.Threading.Tasks;
+using ExecEvents;
 using SaveLoad;
 using Stage;
 using UnityEngine;
@@ -20,15 +21,36 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
 {
     public override bool IsDontDestroyOnLoad => true;
 
-    // === Events ===
-    // 총 점수가 변경될 때 호출
-    public event Func<int, UniTask> OnTotalScoreChangedAsync;
-    // 현재 점수가 변경될 때 호출 (UI 갱신 등)
-    public event Func<int, UniTask> OnCurrentScoreChangedAsync;
-    // 새로운 게임이 시작되어 점수 초기화될 때 호출
-    public event Func<UniTask> OnScoreResetAsync;
-    // 곱 배수가 스택에 추가될 때 호출
-    public event Func<float, UniTask> OnMultiplierAddedAsync;
+    #region Events
+    public class TotalScoreChangedEventArgs : ExecEventArgs<TotalScoreChangedEventArgs>
+    {
+        public int NewTotalScore { get; set; }
+    }
+    public class CurrentScoreChangedEventArgs : ExecEventArgs<CurrentScoreChangedEventArgs>
+    {
+        public int NewCurrentScore { get; set; }
+    }
+    public class ScoreResetEventArgs : ExecEventArgs<ScoreResetEventArgs>
+    {
+    }
+    public class MultiplierAddedEventArgs : ExecEventArgs<MultiplierAddedEventArgs>
+    {
+        public float NewMultiplier { get; set; }
+    }
+    
+
+    #endregion
+    
+    //
+    // // === Events ===
+    // // 총 점수가 변경될 때 호출
+    // public event Func<int, UniTask> OnTotalScoreChangedAsync;
+    // // 현재 점수가 변경될 때 호출 (UI 갱신 등)
+    // public event Func<int, UniTask> OnCurrentScoreChangedAsync;
+    // // 새로운 게임이 시작되어 점수 초기화될 때 호출
+    // public event Func<UniTask> OnScoreResetAsync;
+    // // 곱 배수가 스택에 추가될 때 호출
+    // public event Func<float, UniTask> OnMultiplierAddedAsync;
 
     public delegate int TileScoreModifierDelegate(eTileEventType tileEventType, Tile tile, int baseScore);
 
@@ -66,11 +88,13 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     public void Reset()
     {
         CurrentScore = 0;
-        OnCurrentScoreChangedAsync?.Invoke(CurrentScore);
         TotalScore = 0;
-        OnTotalScoreChangedAsync?.Invoke(TotalScore);
         _multiplierStack.Clear();
-        OnScoreResetAsync?.Invoke();
+
+        BroadCastScores();
+        
+        using var resetEvt = ScoreResetEventArgs.Get();
+        ExecEventBus<ScoreResetEventArgs>.InvokeMerged(resetEvt).Forget(); 
     }
 
     public void RegisterScoreModifier(TileScoreModifierDelegate modifier)
@@ -93,14 +117,28 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     public void AddCurrentScore(int addScore)
     {
         CurrentScore += addScore;
-        OnCurrentScoreChangedAsync?.Invoke(CurrentScore);
+        using var currentEvt = CurrentScoreChangedEventArgs.Get();
+        currentEvt.NewCurrentScore = CurrentScore;
+        ExecEventBus<CurrentScoreChangedEventArgs>.InvokeMerged(currentEvt).Forget();
     }
 
     // 타일이나 조커로 인한 곱 연산을 MultiplierStack에 추가할 때 사용하는 함수
     public void AddMultiplier(float mulValue)
     {
         _multiplierStack.Add(mulValue);
-        OnMultiplierAddedAsync?.Invoke(mulValue);
+        using var mulEvt = MultiplierAddedEventArgs.Get();
+        mulEvt.NewMultiplier = mulValue;
+        ExecEventBus<MultiplierAddedEventArgs>.InvokeMerged(mulEvt).Forget();
+    }
+    
+    public void BroadCastScores()
+    {
+        using var totalEvt = TotalScoreChangedEventArgs.Get();
+        totalEvt.NewTotalScore = TotalScore;
+        ExecEventBus<TotalScoreChangedEventArgs>.InvokeMerged(totalEvt).Forget();    
+        using var currentEvt = CurrentScoreChangedEventArgs.Get();
+        currentEvt.NewCurrentScore = CurrentScore;
+        ExecEventBus<CurrentScoreChangedEventArgs>.InvokeMerged(currentEvt).Forget(); 
     }
 
     public int CalculateTileScore(eTileEventType tileEventType, Tile tile, int baseScore)
@@ -129,7 +167,9 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
             
             accumulatedScore *= multiplier;
             CurrentScore = (int)accumulatedScore;
-            OnCurrentScoreChangedAsync?.Invoke(CurrentScore);
+            using var currentEvt = CurrentScoreChangedEventArgs.Get();
+            currentEvt.NewCurrentScore = CurrentScore;
+            await ExecEventBus<CurrentScoreChangedEventArgs>.InvokeMerged(currentEvt);
         }
         _multiplierStack.Clear();
         
@@ -138,20 +178,22 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
         // await EffectHandler.PlayAddTotalScoreEffect()
         TotalScore += CurrentScore;
         CurrentScore = 0;
-        
-        OnTotalScoreChangedAsync?.Invoke(TotalScore);
+        using var totalEvt = TotalScoreChangedEventArgs.Get();
+        totalEvt.NewTotalScore = TotalScore;
+        await ExecEventBus<TotalScoreChangedEventArgs>.InvokeMerged(totalEvt);
     }
 
     public Guid Guid { get; init; } = Guid.NewGuid();
     public void LoadData(GameData data)
     {
-        this.CurrentScore = data.CurrentScore;
-        this.TotalScore = data.TotalScore;
+        // 어차피 PlayerStatus에서 불러오니까 여기선 할 필요 없음
+        // this.CurrentScore = data.PlayerStatus.CurrentScore;
+        // this.TotalScore = data.PlayerStatus.TotalScore;
     }
 
     public void SaveData(ref GameData data)
     {
-        data.CurrentScore = this.CurrentScore;
-        data.TotalScore = this.TotalScore;
+        // data.PlayerStatus.CurrentScore = this.CurrentScore;
+        // data.PlayerStatus.TotalScore = this.TotalScore;
     }
 }
