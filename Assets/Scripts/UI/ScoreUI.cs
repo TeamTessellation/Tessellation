@@ -114,6 +114,7 @@ public class ScoreUI : UIBehaviour
         }
         finally
         {
+            linked.Cancel();
             linked.Dispose();
         }
     }
