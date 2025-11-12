@@ -86,6 +86,10 @@ namespace Stage
         {
             // a (월드)에 따른 배율 (2.5의 거듭제곱): 2.5^0, 2.5^1, 2.5^2
             // b (레벨)에 따른 배율: Level 1, Level 2 (x1.5), Level 3 (x2.0), Boss (x2.0)
+            if (a < 1 || b < 1)
+            {
+                return 100;
+            }
             float[] levelMultipliers = { 1.0f, 1.5f, 2.0f, 2.0f };
     
             int baseScore = 250;
@@ -97,7 +101,7 @@ namespace Stage
             
             float targetScore = baseScore * stageMultiplier * levelMultiplier;
     
-            return Mathf.FloorToInt(targetScore);
+            return Mathf.RoundToInt(targetScore);
         }
     }
 }
