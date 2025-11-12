@@ -4,6 +4,9 @@ namespace Stage
 {
     public class TurnStartEventArgs : ExecEventArgs<TurnStartEventArgs>
     {
+        public int MaxTurnCount { get; set; }
+        public int CurrentTurnCount { get; set; }
+        
         public TurnStartEventArgs()
         {
 

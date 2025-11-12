@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Collections;
 using UnityEngine;
 
@@ -51,7 +52,6 @@ namespace SaveLoad
         [SerializeField] private SerializableDictionary<string, Variable> items = new();
 
         public IReadOnlyDictionary<string, Variable> Items => items;
-        
         
 
         public void SetString(string key, string value)

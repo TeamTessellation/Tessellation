@@ -37,6 +37,24 @@ public class Cell
         if (!IsEmpty) Pool<Tile>.Return(Tile);
         Tile = null;
     }
+    
+    public void SetSize(float size)
+    {
+        BG.transform.localScale = new Vector3(size, size, 1);
+        if (Tile != null)
+        {
+            Tile.transform.localScale = new Vector3(size, size, 1);
+        }
+    }
+    public void ResetSize()
+    {
+        BG.transform.localScale = Vector3.one;
+        if (Tile != null)
+        {
+            Tile.transform.localScale = Vector3.one;
+        }
+    }
+    
 
     /// <summary>
     /// 해당 cell에 전달받은 Tile 배치
