@@ -1798,9 +1798,9 @@ MonoBehaviour:
   handTransformMoveTarget: {fileID: 7126867533842342942}
   skipCanvasGroup: {fileID: 5734650109188786664}
   skipButton: {fileID: 5731548814070010777}
-  fieldShrinkDuration: 0.2
+  fieldShrinkDuration: 0.5
   fieldShrinkEase: 26
-  handShrinkDuration: 0.2
+  handShrinkDuration: 0.5
   handShrinkEase: 26
   itemMoveUpDuration: 0.3
   itemMoveUpEase: 9
