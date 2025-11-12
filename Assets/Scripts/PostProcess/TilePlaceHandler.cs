@@ -94,6 +94,10 @@ public class TileBurstEvent : TileEvent
 // 플레이어 입력 후처리 해주는 클래스
 public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
 {
+    // === Settings ===
+    [Header("Settings")] 
+    [SerializeField] private float tileRemoveInterval = 0.1f;
+    
     // === Delegate ===
     public event Func<TurnResultInfo, UniTask> OnTilePlacedAsync;
     public event Func<TurnResultInfo, UniTask> OnLineClearedAsync;
@@ -191,7 +195,7 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         LineClearHandler lineClearHandler = new LineClearHandler();
         for (int i = 0; i < lineClearEvent.ClearedLineCount; i++)
         {
-            await lineClearHandler.ClearLineAsync(lineClearEvent.ClearedLine[i], 0.1f);  
+            await lineClearHandler.ClearLineAsync(lineClearEvent.ClearedLine[i], tileRemoveInterval);  
         }
         
         _turnResultInfo.ClearedLineCount += lineClearEvent.ClearedLineCount;
