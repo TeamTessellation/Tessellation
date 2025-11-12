@@ -6,13 +6,14 @@ using ExecEvents;
 using Machamy.DeveloperConsole.Attributes;
 using Machamy.Utils;
 using Player;
+using SaveLoad;
 using UI;
 using UI.OtherUIs;
 using UnityEngine;
 
 namespace Stage
 {
-    public class StageManager : Singleton<StageManager>
+    public class StageManager : Singleton<StageManager>, ISaveTarget
     {
         public override bool IsDontDestroyOnLoad => false;
         
@@ -24,7 +25,7 @@ namespace Stage
         
         [SerializeField] private bool _isStageCleared = false;
 
-        [SerializeField] private int _currentStageIndex = 0;
+        // [SerializeField] private int _currentStageIndex = 0;
 
         [Obsolete("아마 안쓸듯")]
         public bool IsStageCleared => _isStageCleared;
@@ -39,16 +40,22 @@ namespace Stage
         }
 
         public StageModel NextStage => CurrentStage.GetNextStageModel();
-        
+
+
+        private void Start()
+        {
+             
+        }
+
         /// <summary>
         /// 스테이지를 시작합니다.
         /// </summary>
         /// <param name="cancellationToken"></param>
-        public void StartStage(CancellationToken cancellationToken)
+        public void StartStage(CancellationToken cancellationToken, bool isContinue = false)
         {
             token = cancellationToken;
             
-            StartStageAsync(cancellationToken).Forget();
+            StartStageAsync(cancellationToken, isContinue).Forget();
         }
         
         /// <summary>
@@ -78,7 +85,7 @@ namespace Stage
         }
             
         
-        private async UniTask StartStageAsync(CancellationToken cancellationToken)
+        private async UniTask StartStageAsync(CancellationToken cancellationToken, bool isContinue = false)
         {
             if (token == default)
             {
@@ -196,7 +203,12 @@ namespace Stage
             await UM.FailResultUI.ShowFailResult();
             
         }
-        
+        public void RestartCurrentStage(CancellationToken cancellationToken)
+        {
+            LogEx.Log("Restarting Current Stage...");
+            ResetStage();
+            StartStage(cancellationToken);
+        }
         
         public bool CheckStageClear()
         {
@@ -243,6 +255,29 @@ namespace Stage
             Field.Instance.ResetField(GameManager.Instance.PlayerStatus.FieldSize);
             HandManager.Instance.ResetHand(GameManager.Instance.PlayerStatus.HandSize);
             ScoreManager.Instance.Reset();
+        }
+
+        public Guid Guid { get; init; } = Guid.NewGuid();
+        public void LoadData(GameData data)
+        {
+            if (data.CurrentStage == null)
+            {
+                LogEx.LogWarning("No stage data found in save data.");
+                return;
+            }
+            // 같은 스테이지인 경우
+            if (_currentStage != null && _currentStage.StageIdentifiers == data.CurrentStage)
+            {
+                LogEx.Log("Same stage detected. No need to load stage data.");
+                return;
+            }
+            CurrentStage = StageModel.CreateModel(data.CurrentStage[0], data.CurrentStage[1]);
+            LogEx.Log($"Loaded stage data: {CurrentStage.StageName}");
+        }
+
+        public void SaveData(ref GameData data)
+        {
+            data.CurrentStage = _currentStage.StageIdentifiers;
         }
 
         [ConsoleCommand("StageFail", "강제 스테이지 실패 처리")]

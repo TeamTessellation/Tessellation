@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using System;
+using Core;
 using UnityEngine;
 
 namespace SaveLoad
@@ -6,7 +7,7 @@ namespace SaveLoad
     /// <summary>
     /// 선형적으로 저장 기록을 관리하는 클래스입니다.
     /// </summary>
-    public class HistoryManager : Singleton<HistoryManager>
+    public class HistoryManager : Singleton<HistoryManager>, ISaveTarget
     {
         public override bool IsDontDestroyOnLoad => false;
 
@@ -34,11 +35,22 @@ namespace SaveLoad
         
         /// <summary>
         /// 마지막 저장 기록을 불러오고 기록에서 제거합니다.
+        /// 사이즈가 1인경우 불러오기만 합니다.
         /// </summary>
         /// <returns></returns>
         public GameData LoadAndPopLastSave()
         {
-            var lastSave = _saveHistory.PopLastSave();
+            if (_saveHistory.Count == 0)
+            {
+                Debug.LogWarning("No save data available to load.");
+                return null;
+            }
+            var lastSave = _saveHistory.GetLastSave();
+            if (_saveHistory.Count > 1)
+            {
+                // 마지막 저장 기록 제거
+                _saveHistory.PopLastSave();
+            }   
             SaveLoadManager.Instance.LoadSaveData(lastSave);
             return lastSave;
         }
@@ -56,6 +68,17 @@ namespace SaveLoad
         private void AddSave(GameData data)
         {
             _saveHistory.Add(data);
+        }
+
+        public Guid Guid { get; init; }
+        public void LoadData(GameData data)
+        {
+            _saveHistory = data.SaveHistory.Clone();
+        }
+
+        public void SaveData(ref GameData data)
+        {
+            data.SaveHistory = _saveHistory.Clone();
         }
     }
     

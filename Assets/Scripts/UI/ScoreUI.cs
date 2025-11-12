@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using ExecEvents;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -30,16 +31,17 @@ public class ScoreUI : UIBehaviour
     {
         _destroyToken = this.GetCancellationTokenOnDestroy();
         SetText(_displayedScore);
+        ExecEventBus<ScoreManager.CurrentScoreChangedEventArgs>.RegisterStatic((int)ExecPriority.UIDefault, ScoreChange);
     }
 
     private void OnEnable()
     {
-        ScoreManager.Instance.OnCurrentScoreChangedAsync += ScoreChange;
+        
     }
 
     private void OnDisable()
     {
-        ScoreManager.Instance.OnCurrentScoreChangedAsync -= ScoreChange;
+        
 
         // 정리
         _sequence?.Kill();
@@ -48,6 +50,11 @@ public class ScoreUI : UIBehaviour
         _inFlightCts?.Cancel();
         _inFlightCts?.Dispose();
         _inFlightCts = null;
+    }
+    
+    private void OnDestroy()
+    {
+        ExecEventBus<ScoreManager.CurrentScoreChangedEventArgs>.UnregisterStatic(ScoreChange);
     }
 
     /// <summary>
@@ -67,8 +74,9 @@ public class ScoreUI : UIBehaviour
     /// <summary>
     /// 점수가 갱신될 때 호출되는 핸들러.
     /// </summary>
-    private async UniTask ScoreChange(int newScore)
+    private async UniTask ScoreChange(ScoreManager.CurrentScoreChangedEventArgs args)
     {
+        int newScore = args.NewCurrentScore;
         // 연속 호출 대비: 이전 작업 취소
         _inFlightCts?.Cancel();
         _inFlightCts?.Dispose();
