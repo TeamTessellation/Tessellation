@@ -1644,6 +1644,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameUI
       objectReference: {fileID: 0}
+    - target: {fileID: 913767944189801569, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: handShrinkDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 913767944189801569, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: fieldShrinkDuration
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1052814698836110562, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1662,6 +1670,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1052814698836110562, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1372144967812382634, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3112804149864775766, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
