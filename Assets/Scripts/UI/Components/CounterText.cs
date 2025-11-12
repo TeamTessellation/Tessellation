@@ -16,7 +16,7 @@ namespace UI.Components
         [SerializeField] private char paddingChar = '0';
         private int _counterValue;
 
-        public void Reset()
+        public virtual void Reset()
         {
             counterTMPText = GetComponent<TMP_Text>();
             _counterValue = 0;
@@ -34,6 +34,11 @@ namespace UI.Components
                 _counterValue = value;
                 SetCounterValue(_counterValue);
             }
+        }
+
+        public TMP_Text CounterTMPText
+        {
+            get => counterTMPText;
         }
 
         public string Text
@@ -76,9 +81,12 @@ namespace UI.Components
             }
         }
         
+        
 
         public TweenerCore<int, int, NoOptions> DoCount(int from, int to, float duration, bool setPaddingToToValue = true)
         {
+
+            
             if (setPaddingToToValue)
             {
                 int toValueLength = to.ToString().Length;
@@ -91,13 +99,18 @@ namespace UI.Components
             var tween = DOTween.To(() => _counterValue, x =>
             {
                 CounterValue = x;
-            }, to, duration);
+            }, to, duration).SetTarget(this);
             return tween;
         }
         
         public TweenerCore<int, int, NoOptions> DoCount(int to, float duration, bool setPaddingToToValue = true)
         {
             return DoCount(_counterValue, to, duration, setPaddingToToValue);
+        }
+        
+        public void KillTween()
+        {
+            DOTween.Kill(this);
         }
 
 

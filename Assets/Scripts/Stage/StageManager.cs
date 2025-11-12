@@ -8,6 +8,7 @@ using Machamy.Utils;
 using Player;
 using SaveLoad;
 using UI;
+using UI.Components;
 using UI.OtherUIs;
 using UnityEngine;
 
@@ -186,6 +187,8 @@ namespace Stage
              * PlayerStatus에서 처리해야할 것들 처리
              * Best/Total Score 갱신, 이자 등
              */
+            CoinCounter coinCounter = UIManager.Instance.InGameUI.CoinCounter;
+            coinCounter.autoUpdate = false;
             
             // 점수 갱신
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
@@ -199,6 +202,8 @@ namespace Stage
             playerStatus.StageInterestEarnedCoins = interest;
             playerStatus.StageCoinsObtained += playerStatus.StageClearedLines;
             playerStatus.StageCoinsObtained += playerStatus.RemainingTurns;
+            
+            playerStatus.CurrentCoins += playerStatus.StageCoinsObtained;
             LogEx.Log($"Stage Coins Obtained: {playerStatus.StageCoinsObtained} (Interest: {interest}, Cleared Lines: {playerStatus.StageClearedLines}, Remaining Turns: {playerStatus.RemainingTurns})");
             
             // Best/Total Stage Clear 갱신
@@ -216,10 +221,18 @@ namespace Stage
             // await UniTask.Delay(1000);
             // 결과 팝업
             ClearResultUI clearResultUI = UIManager.Instance.ClearResultUI;
-            await UniTask.WhenAny(clearResultUI.ShowClearResultsAsync(token), clearResultUI.WaitForSkipButtonAsync(token));
-            
-            clearResultUI.gameObject.SetActive(false);
 
+            
+            await UniTask.WhenAny(clearResultUI.ShowClearResultsAsync(token), clearResultUI.WaitForSkipButtonAsync(token));
+            await clearResultUI.WaitForSkipButtonAsync(token);
+            
+            // 만약 스킵이 눌렸다면 즉시 결과창 닫기
+            clearResultUI.gameObject.SetActive(false);
+            
+            // 코인 카운터 스킵된 경우 처리
+            coinCounter.autoUpdate = true;
+            coinCounter.KillTween();
+            coinCounter.DoCount(playerStatus.CurrentCoins, 0.2f, false);
             
             // 상점 파트
             // TODO : ShopUI 구현 필요

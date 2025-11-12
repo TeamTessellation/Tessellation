@@ -3,7 +3,6 @@ using Core;
 using Cysharp.Threading.Tasks;
 using ExecEvents;
 using SaveLoad;
-using Stage;
 using UnityEngine;
 // ReSharper disable ArrangeAccessorOwnerBody
 namespace Player
@@ -271,7 +270,15 @@ namespace Player
         public int CurrentCoins
         {
             get { return Variables.GetVariable(nameof(VariableKey.CurrentCoins)).IntValue; }
-            set { Variables.SetInteger(nameof(VariableKey.CurrentCoins), value); }
+            set
+            {
+                int oldValue = CurrentCoins;
+                Variables.SetInteger(nameof(VariableKey.CurrentCoins), value);
+                using var evt = CurrentCoinChangedEventArgs.Get();
+                evt.OldCurrentCoin = oldValue;
+                evt.NewCurrentCoin = value;
+                ExecEventBus<CurrentCoinChangedEventArgs>.InvokeMerged(evt).Forget();
+            }
         }
 
         public int CurrentTurn
@@ -368,5 +375,13 @@ namespace Player
             source.CopyTo(this);
         }
     }
+    
+    public class CurrentCoinChangedEventArgs : ExecEventArgs<CurrentCoinChangedEventArgs>
+    {
+        public int OldCurrentCoin { get; set; }
+        public int NewCurrentCoin { get; set; }
+    }
+    
+
 }
 
