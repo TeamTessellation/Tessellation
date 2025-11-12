@@ -2,6 +2,7 @@
 using ExecEvents;
 using Stage;
 using TMPro;
+using UI.Components;
 using UnityEngine;
 
 namespace UI.MainUIs
@@ -9,7 +10,25 @@ namespace UI.MainUIs
     public class InGameUI : UIBase
     {
         [SerializeField] private TMP_Text currentStageText;
-        
+        [field:SerializeField] public CoinCounter CoinCounter { get; private set; }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            T FindUIComponent<T>() where T : Component
+            {
+                T ui = GetComponentInChildren<T>();
+                if (ui == null)
+                {
+                    Debug.LogError($"InGameUI: Could not find {typeof(T).Name} in children.");
+                }
+                return ui;
+            }
+            CoinCounter = FindUIComponent<CoinCounter>();
+            
+        }
+
         public void Show()
         {
             gameObject.SetActive(true);

@@ -8,6 +8,7 @@ using Interaction;
 using Machamy.Utils;
 using Player;
 using TMPro;
+using UI.Components;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -66,7 +67,7 @@ namespace UI.OtherUIs
         protected override void Awake()
         {
             base.Awake();
-            SetInvisible();
+            SetInitialState();
             gameObject.SetActive(false);
         }
 
@@ -116,15 +117,19 @@ namespace UI.OtherUIs
             }
         }
         
-        public void SetInvisible()
+        public void SetInitialState()
         {
             foreach (var entry in entries)
             {
                 entry.CanvasGroup.ignoreParentGroups = true;
                 entry.CanvasGroup.alpha = 0f;
+                entry.ValueText.CounterValue = 0;
+                entry.ValueText.PaddingChar = ' ';
             }
             totalEntry.CanvasGroup.ignoreParentGroups = true;
             totalEntry.CanvasGroup.alpha = 0f;
+            totalHolderCanvasGroup.ignoreParentGroups = true;
+            totalHolderCanvasGroup.alpha = 0f;
         }
 
         private Vector2 _originalItemHolderPos;
@@ -132,7 +137,7 @@ namespace UI.OtherUIs
         public async UniTask ShowClearResultsAsync(CancellationToken cancellationToken)
         {
             gameObject.SetActive(true);
-            SetInvisible();
+            SetInitialState();
             
             _isSkipping = false;
             clearCanvasGroup.alpha = 0f;
@@ -200,6 +205,8 @@ namespace UI.OtherUIs
             for (int i = 0; i < entries.Count; i++)
             {
                 var entry = entries[i];
+                entry.ValueText.CounterValue = 0;
+                
                 var entryFadeInTween = entry.CanvasGroup.DOFade(1f, entryFadeInDuration);
                 await entryFadeInTween.ToUniTask(cancellationToken: cancellationToken);
                 tweenList.Add(entryFadeInTween);
@@ -224,6 +231,21 @@ namespace UI.OtherUIs
              * 3. Total Entry 애니메이션
              */
             await UniTask.Delay(TimeSpan.FromSeconds(totalEntryDelay), cancellationToken: cancellationToken);
+            // Total Holder 애니메이션
+            
+            totalEntry.ValueText.CounterValue = 0;
+            
+            var totalHolderMoveUpTween = totalHolderCanvasGroup.transform
+                .DOLocalMoveY(totalHolderCanvasGroup.transform.localPosition.y + totalHolderMoveUpDistance, totalHolderMoveUpDuration)
+                .SetEase(Ease.OutCubic);
+            var totalHolderFadeInTween = totalHolderCanvasGroup.DOFade(1f, totalHolderFadeInDuration);
+            var totalHolderSequence = DOTween.Sequence();
+            totalHolderSequence.Append(totalHolderMoveUpTween);
+            totalHolderSequence.Join(totalHolderFadeInTween);
+            tweenList.Add(totalHolderSequence);
+            await totalHolderSequence.ToUniTask(cancellationToken: cancellationToken);
+            // Total Entry 애니메이션
+            
             var totalFadeInTween = totalEntry.CanvasGroup.DOFade(1f, totalEntryFadeInDuration);
             tweenList.Add(totalFadeInTween);
 
@@ -245,6 +267,12 @@ namespace UI.OtherUIs
             tweenList.AddRange(countTweens);
             await UniTask.WhenAll(countTweens.ConvertAll(t => t.ToUniTask(cancellationToken: cancellationToken)));
             
+            // 코인 카운터 업데이트
+            CoinCounter coinCounter = UIManager.Instance.InGameUI.CoinCounter;
+            var coinUpdateTween = coinCounter.DoCount(coinCounter.CounterValue, coinCounter.CounterValue + totalCoins, 1.0f)
+                .SetEase(Ease.OutCubic);
+            tweenList.Add(coinUpdateTween);
+            await coinUpdateTween.ToUniTask(cancellationToken: cancellationToken);
             
             InteractionManager.Instance.ConfirmEvent -= ConfirmHandler;
         }
@@ -259,7 +287,6 @@ namespace UI.OtherUIs
             {
                 await UniTask.Yield(cancellationToken);
             }
-            _isSkipping = false; // 리셋
         }
         
         
