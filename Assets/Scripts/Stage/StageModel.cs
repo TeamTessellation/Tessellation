@@ -84,10 +84,20 @@ namespace Stage
         
         public static int CalculateTargetScore(int a, int b)
         {
-            float[] dataA = { 1, 1.5f, 2, 2 };
-            float[] dataB = { 2.5f, 3.75f, 5f, 5f };
-            int baseScore = 100;
-            return Mathf.FloorToInt(baseScore * dataA[a - 1] * dataB[b - 1]);
+            // a (월드)에 따른 배율 (2.5의 거듭제곱): 2.5^0, 2.5^1, 2.5^2
+            // b (레벨)에 따른 배율: Level 1, Level 2 (x1.5), Level 3 (x2.0), Boss (x2.0)
+            float[] levelMultipliers = { 1.0f, 1.5f, 2.0f, 2.0f };
+    
+            int baseScore = 250;
+    
+            // Stage Multiplier 계산: 2.5^(a-1)
+            float stageMultiplier = Mathf.Pow(2.5f, a - 1);
+            
+            float levelMultiplier = levelMultipliers[b - 1];
+            
+            float targetScore = baseScore * stageMultiplier * levelMultiplier;
+    
+            return Mathf.FloorToInt(targetScore);
         }
     }
 }
