@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
     [System.Serializable]
     public enum Item
     {
+        None,
         Add,
         Delete,
         Rotate,

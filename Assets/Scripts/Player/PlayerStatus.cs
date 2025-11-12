@@ -48,8 +48,11 @@ namespace Player
             StageCoinsObtained,// 해당 스테이지 획득 코인
             
         }
-        
-        
+
+        public enum eActiveItemType
+        {
+            
+        }
         
         
         public int FieldSize => fieldSize;
