@@ -5,6 +5,7 @@ using Stage;
 using System.Threading;
 using UnityEngine;
 using System;
+using Core;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
@@ -72,6 +73,8 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
         UseItemAction?.Invoke(target);
         _readyItem = Item.End;
         HandManager.Instance.RemoveItemIcon();
+        PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
+        playerStatus.StageAbilityUseCount += 1;
     }
 
     public void SetItem(Item item)

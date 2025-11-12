@@ -186,11 +186,15 @@ namespace Stage
                 return;
             }
 
+            _turnCount = -1;
             while (true)
             {
-                
                 _turnCount++;
+                PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
+                playerStatus.RemainingTurns = RemainingTurns;
                 using var turnStartArgs = TurnStartEventArgs.Get();
+                turnStartArgs.MaxTurnCount = MaxTurn;
+                turnStartArgs.CurrentTurnCount = _turnCount;
                 await ExecEventBus<TurnStartEventArgs>.InvokeMerged(turnStartArgs);
                 
                 if (token.IsCancellationRequested)
@@ -236,7 +240,7 @@ namespace Stage
                         LogEx.Log("Turn loop cancelled.");
                         return;
                     }
-                    if(StageManager.CheckStageFail())
+                    if(StageManager.CheckStageFail(false))
                     {
                         await UniTask.WaitForSeconds(0.3f);
                         LogEx.Log("Stage Failed!");
@@ -251,8 +255,15 @@ namespace Stage
                     
                     using var playerActionArgs = BeforePlayerActionEventArgs.Get();
                     await ExecEventBus<BeforePlayerActionEventArgs>.InvokeMerged(playerActionArgs);
-                    
+
+                    //TODO : 점수 계산 로직 개선 필요
+                    int prevScore = playerStatus.CurrentStageScore;
                     await playerInputHandler.HandlePlayerInput(playerInputData, token);
+                    int gainedScore = playerStatus.CurrentStageScore - prevScore;
+                    if (gainedScore > 0)
+                    {
+                        playerStatus.StageBestPlacement = Math.Max(playerStatus.StageBestPlacement, gainedScore);
+                    }
                     
                     using var afterPlayerActionArgs = AfterPlayerActionEventArgs.Get();
                     await ExecEventBus<AfterPlayerActionEventArgs>.InvokeMerged(afterPlayerActionArgs);
@@ -266,7 +277,7 @@ namespace Stage
                         return;
                     }
                     
-                    if(StageManager.CheckStageFail())
+                    if(StageManager.CheckStageFail(false))
                     {
                         LogEx.Log("Stage Failed!");
                         StageManager.FailStage(token);
@@ -278,6 +289,18 @@ namespace Stage
                     await ExecEventBus<PlayerActionLoopEndEventArgs>.InvokeMerged(playerActionLoopEndArgs);
                     
                 }
+                
+                if(StageManager.CheckStageFail(true))
+                {
+                    LogEx.Log("Stage Failed!");
+                    StageManager.FailStage(token);
+                    StopTurnLoop();
+                    return;
+                }
+                
+                 /*
+                 * 턴 마무리 단계
+                 */
                  
                 LogEx.Log($"Turn {_turnCount} ended.");
                 State = TurnState.Item;

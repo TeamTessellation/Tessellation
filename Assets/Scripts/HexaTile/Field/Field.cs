@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using SaveLoad;
 using Stage;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -13,7 +14,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using static Field;
 
-public class Field : MonoBehaviour, ISaveTarget
+public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
 {
     public struct Line
     {
@@ -208,7 +209,7 @@ public class Field : MonoBehaviour, ISaveTarget
     public void ResetField(int size)
     {
         SetFieldBySize(size);
-        RemoveAllTile();
+        ResetAllTiles();
     }
 
     private void RemoveAllTile()
@@ -216,6 +217,18 @@ public class Field : MonoBehaviour, ISaveTarget
         foreach (var cell in _allCell.Values)
         {
             cell.UnSet();
+        }
+    }
+
+    /// <summary>
+    /// 모든 타일을 초기화 상태로 되돌린다.
+    /// </summary>
+    private void ResetAllTiles()
+    {
+        foreach (var cell in _allCell.Values)
+        {
+            cell.UnSet();
+            cell.ResetSize();
         }
     }
 
@@ -396,5 +409,18 @@ public class Field : MonoBehaviour, ISaveTarget
             tileData.TileData = cell.Value.Tile.Data;
             data.FieldTileData.Add(tileData);
         }
+    }
+
+    public IEnumerator<Cell> GetEnumerator()
+    {
+        foreach (var cell in _allCell.Values)
+        {
+            yield return cell;
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }

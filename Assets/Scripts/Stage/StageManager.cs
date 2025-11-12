@@ -13,6 +13,7 @@ using UnityEngine;
 
 namespace Stage
 {
+    
     public class StageManager : Singleton<StageManager>, ISaveTarget
     {
         public override bool IsDontDestroyOnLoad => false;
@@ -116,8 +117,10 @@ namespace Stage
             // 6각형 타일 맵 초기화
             Field.Instance.gameObject.SetActive(true);
             Field.Instance.ResetField(playerStatus.FieldSize);
+            
             // 핸드 초기화
-            HandCanvas.Instance.gameObject.SetActive(true);
+            HandCanvas handCanvas = HandCanvas.Instance;
+            handCanvas.Show();
             HandManager.Instance.ResetHand(playerStatus.HandSize);
             // 점수 초기화
             ScoreManager.Instance.Reset();
@@ -138,7 +141,7 @@ namespace Stage
             UM.MainTitleUI.Hide();
             UM.FailResultUI.Hide();
             UM.InGameUI.Show();
-            
+
             
             using var initStageArgs = StageStartEventArgs.Get();
             initStageArgs.StageModel = _currentStage;
@@ -161,6 +164,11 @@ namespace Stage
             TurnManager.StartTurnLoop();
         }
         
+        /// <summary>
+        /// 스테이지를 정상적으로 종료합니다.
+        /// 계산도 포함됩니다.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
         private async UniTask EndStageAsync(CancellationToken cancellationToken)
         {
             if (token == CancellationToken.None)
@@ -174,16 +182,62 @@ namespace Stage
              */
             using var endStageArgs = StageEndEventArgs.Get();
             await ExecEventBus<StageEndEventArgs>.InvokeMerged(endStageArgs);
+            /*
+             * PlayerStatus에서 처리해야할 것들 처리
+             * Best/Total Score 갱신, 이자 등
+             */
             
-            await UniTask.Delay(1000);
+            // 점수 갱신
+            PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
+            playerStatus.BestStageScore = Math.Max(playerStatus.BestStageScore, playerStatus.CurrentStageScore);
+            playerStatus.TotalScore += playerStatus.CurrentStageScore;
+            
+            // 코인 이자 지급
+            int interest = (int)(playerStatus.CurrentCoins * playerStatus.CoinInterestRate);
+            interest = Math.Clamp(interest, 0, playerStatus.MaxInterestCoins);
+            playerStatus.StageCoinsObtained += interest;
+            playerStatus.StageInterestEarnedCoins = interest;
+            playerStatus.StageCoinsObtained += playerStatus.StageClearedLines;
+            playerStatus.StageCoinsObtained += playerStatus.RemainingTurns;
+            LogEx.Log($"Stage Coins Obtained: {playerStatus.StageCoinsObtained} (Interest: {interest}, Cleared Lines: {playerStatus.StageClearedLines}, Remaining Turns: {playerStatus.RemainingTurns})");
+            
+            // Best/Total Stage Clear 갱신
+            playerStatus.BestScorePlacement = Math.Max(playerStatus.BestScorePlacement, ScoreManager.Instance.CurrentScore);
+            playerStatus.BestStageClearedLines = Math.Max(playerStatus.BestStageClearedLines, playerStatus.StageClearedLines);
+            playerStatus.BestStageAbilityUseCount = Math.Max(playerStatus.BestStageAbilityUseCount, playerStatus.StageAbilityUseCount);
+            playerStatus.BestStageCoinsObtained = Math.Max(playerStatus.BestStageCoinsObtained, playerStatus.StageCoinsObtained);
+            
+            playerStatus.TotalObtainedCoins += playerStatus.StageCoinsObtained;
+            playerStatus.TotalClearedLines += playerStatus.StageClearedLines;
+            playerStatus.TotalAbilityUseCount += playerStatus.StageAbilityUseCount;
+            playerStatus.TotalInterestEarnedCoins += playerStatus.StageInterestEarnedCoins;
+            
+            
+            // await UniTask.Delay(1000);
             // 결과 팝업
-            // TODO : ClearResultUI 구현 필요
+            ClearResultUI clearResultUI = UIManager.Instance.ClearResultUI;
+            await UniTask.WhenAny(clearResultUI.ShowClearResultsAsync(token), clearResultUI.WaitForSkipButtonAsync(token));
+            
+            clearResultUI.gameObject.SetActive(false);
+
             
             // 상점 파트
             // TODO : ShopUI 구현 필요
             
             LogEx.Log("Stage Ended.");
             // 스테이지 시작으로 돌아가기
+            
+            /*
+             * PlayerStatus의 Stage값 초기화, 
+             */
+            for(PlayerStatus.VariableKey key = PlayerStatus.StageStart;
+                key <= PlayerStatus.StageEnd;
+                key++)
+            {
+                playerStatus[key.ToString()].IntValue = 0;
+            }
+            
+            
             GoToNextStage();
             StartStage(token);
             
@@ -200,6 +254,24 @@ namespace Stage
             await ExecEventBus<StageFailEventArgs>.InvokeMerged(failStageArgs);
             var UM = UIManager.Instance;
             // UM.InGameUI.Hide();
+            
+            // 남아 있는 Stage 관련 값 집계
+            // Fail에서는 실패한 스테이지의  BestStageAbilityUseCount 같은건 갱신 안하므로 별도로 작성함
+            
+            PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
+            playerStatus.BestStageScore = Math.Max(playerStatus.BestStageScore, playerStatus.CurrentStageScore);
+            // Score는 ScoreManager에서 이미 TotalScore에 반영됨
+            // TODO : 개선 필요
+            
+            playerStatus.TotalObtainedCoins += playerStatus.StageCoinsObtained;
+            playerStatus.TotalClearedLines += playerStatus.StageClearedLines;
+            playerStatus.TotalAbilityUseCount += playerStatus.StageAbilityUseCount;
+            playerStatus.TotalInterestEarnedCoins += playerStatus.StageInterestEarnedCoins;
+            
+            playerStatus.BestScorePlacement = Math.Max(playerStatus.BestScorePlacement, playerStatus.StageBestPlacement);
+            
+            
+            
             await UM.FailResultUI.ShowFailResult();
             
         }
@@ -225,13 +297,16 @@ namespace Stage
             return _isStageCleared;
         }
 
-        public bool CheckStageFail()
+        public bool CheckStageFail(bool includeTurnLimit)
         {
             // 턴 수 초과 확인
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
-            if (playerStatus.RemainingTurns <= 0 && !CheckStageClear())
+            if (includeTurnLimit)
             {
-                return true;
+                if (playerStatus.RemainingTurns <= 0 && !CheckStageClear())
+                {
+                    return true;
+                }
             }
             // 핸드에 놓을 수 있는 타일이 없는지 확인
             if (HandManager.Instance.HandCount > 0 && !HandManager.Instance.CanPlace())
@@ -284,6 +359,12 @@ namespace Stage
         public static void SetFail()
         {
             Instance.FailStage(Instance.token);
+        }
+
+        [ConsoleCommand("StageClear", "강제 스테이지 클리어 처리")]
+        public static void SetClear()
+        {
+            Instance.EndStage(Instance.token);
         }
     }
 }

@@ -192,11 +192,15 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
             await tile.OnLineCleared();
         }
 
+        // 1차 이펙트 처리
         LineClearHandler lineClearHandler = new LineClearHandler();
         for (int i = 0; i < lineClearEvent.ClearedLineCount; i++)
         {
             await lineClearHandler.ClearLineAsync(lineClearEvent.ClearedLine[i], tileRemoveInterval);  
         }
+        
+        // TODO : 2차 이펙트 처리
+        
         
         _turnResultInfo.ClearedLineCount += lineClearEvent.ClearedLineCount;
         _turnResultInfo.ClearedTiles.AddRange(lineClearEvent.Tiles);
@@ -234,6 +238,9 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         if (eventDelegate == null) return;
         
         await ExecEventBus<TurnResultInfo>.InvokeMerged(info);
+        PlayerStatus playerStatus = PlayerStatus.Current;
+        
+        playerStatus.StageClearedLines += info.ClearedLineCount;
         
         foreach (var handler in eventDelegate.GetInvocationList()
                      .Cast<Func<TurnResultInfo, UniTask>>())

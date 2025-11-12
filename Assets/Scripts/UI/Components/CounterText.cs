@@ -15,6 +15,17 @@ namespace UI.Components
         [SerializeField] private string formatString = "{0} 점";
         [SerializeField] private char paddingChar = '0';
         private int _counterValue;
+
+        public void Reset()
+        {
+            counterTMPText = GetComponent<TMP_Text>();
+            _counterValue = 0;
+            numberPaddingLength = 0;
+            formatString = "{0}";
+            paddingChar = '0';
+            SetCounterValue(_counterValue);
+        }
+
         public int CounterValue
         {
             get => _counterValue;

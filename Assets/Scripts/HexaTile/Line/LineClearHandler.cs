@@ -1,6 +1,8 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using Core;
+using Player;
 using UnityEngine;
 using static Field;
 
@@ -220,7 +222,9 @@ public class LineClearHandler
 
     private void EndLineClear(Line line)
     {
-
+        PlayerStatus status = GameManager.Instance.PlayerStatus;
+        status.StageClearedLines += 1;
+        // status.TotalClearedLines += 1; // 집계는 StageManager에서 처리
     }
 
     private void EndAllLineClear(List<Line> line)

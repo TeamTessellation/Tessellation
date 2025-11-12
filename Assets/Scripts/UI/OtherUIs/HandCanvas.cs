@@ -1,4 +1,6 @@
 ﻿using Machamy.Utils;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace UI.OtherUIs
 {
@@ -20,10 +22,13 @@ namespace UI.OtherUIs
                 return _instance;
             }
         }
+        [field:SerializeField] public EventTrigger HandEventTrigger { get; private set; }
+        [field:SerializeField] public RectTransform EntryLayoutTransform { get; private set; }
         
         public void Show()
         {
             gameObject.SetActive(true);
+            transform.localScale = Vector3.one;
         }
         
         public void Hide()

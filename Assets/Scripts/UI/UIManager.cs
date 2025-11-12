@@ -37,6 +37,20 @@ namespace UI
             }
         }
         
+        private GameObject _worldScene;
+
+        public GameObject WorldScene
+        {
+            get
+            {
+                if (_worldScene == null)
+                {
+                    _worldScene = GameObject.Find("#WorldScene");
+                }
+                return _worldScene;
+            }
+        }
+        
 
         [Header("Main UIs")]
         [field:SerializeField] public MainTitleUI MainTitleUI{ get; private set; }
@@ -46,10 +60,13 @@ namespace UI
         [Header("GameUI Child UIs")]
         [field:SerializeField] public StageInfoUI StageInfoUI{ get; private set; }
         [field:SerializeField] public FailResultUI FailResultUI{ get; private set; }
+        [field:SerializeField] public ClearResultUI ClearResultUI{ get; private set; }
         [Header("Setting Child UIs")]
         [field:SerializeField] public PauseUI PauseUI { get; private set; }
         [field:SerializeField] public SoundSettingUI SoundSettingUI { get; private set; }  
         [field:Space(20)]
+        [Header("World UIs")]
+        [field:SerializeField] public HandCanvas HandCanvas{ get; private set; }
         [Header("Other UIs")]
         [field:SerializeField] public TransitionUI TransitionUI{ get; private set; }
 
@@ -63,13 +80,6 @@ namespace UI
 
         private void OnEnable()
         {
-            void Init()
-            {
-                RegisterUIs();
-                BindEventsToUIs();
-                SetMainMenu();
-            }
-            
             if (GameManager.Instance.CurrentGameState == GlobalGameState.Initializing)
             {
                 void OnInitialized(GlobalGameState newState)
@@ -91,7 +101,14 @@ namespace UI
         {
             UnbindEventsFromUIs();
         }
-
+        
+        void Init()
+        {
+            RegisterUIs();
+            BindEventsToUIs();
+            SetMainMenu();
+        }
+        
         private void BindEventsToUIs()
         {
             InGameUI.RegisterEvents();
@@ -117,6 +134,16 @@ namespace UI
                 return ui;
             }
             
+            T FindWorldUI<T>() where T : Component
+            {
+                var ui = WorldScene.GetComponentInChildren<T>(true);
+                if (ui == null)
+                {
+                    LogEx.LogError($"UIManager: {typeof(T).Name} not found in the WorldScene.");
+                }
+                return ui;
+            }
+            
             SettingParentUI = FindUI<SettingParentUI>();
             PauseUI = FindUI<PauseUI>();
             MainTitleUI = FindUI<MainTitleUI>();
@@ -126,6 +153,9 @@ namespace UI
             StageInfoUI = FindUI<StageInfoUI>();
             // TransitionUI = FindUI<TransitionUI>();
             FailResultUI = FindUI<FailResultUI>();
+            ClearResultUI = FindUI<ClearResultUI>();
+            
+            HandCanvas = FindWorldUI<HandCanvas>();
         }
 
         public void ShowPauseUI()

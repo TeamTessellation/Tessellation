@@ -253,6 +253,8 @@ MonoBehaviour:
   canvas: {fileID: 5348101050405880108}
   savedSortingLayerID: 1307112341
   savedSortingOrder: -1
+  <HandEventTrigger>k__BackingField: {fileID: 1659448927262438451}
+  <EntryLayoutTransform>k__BackingField: {fileID: 7853979558930463835}
 --- !u!1 &4686640455704980081
 GameObject:
   m_ObjectHideFlags: 0
