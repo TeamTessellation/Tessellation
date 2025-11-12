@@ -10,6 +10,8 @@ namespace ExecEvents
         Normal = 0,
         
         
+        UIDefault = 1000,
+        
         Last = Int32.MaxValue // UI등등
     }
 }

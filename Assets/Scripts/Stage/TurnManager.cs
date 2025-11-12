@@ -6,6 +6,7 @@ using ExecEvents;
 using Machamy.DeveloperConsole.Attributes;
 using Machamy.Utils;
 using Player;
+using SaveLoad;
 using UnityEngine;
 
 namespace Stage
@@ -64,7 +65,7 @@ namespace Stage
     /// <summary>
     /// 게임의 턴을 관리하는 매니저 클래스입니다.
     /// </summary>
-    public class TurnManager : Singleton<TurnManager>
+    public class TurnManager : Singleton<TurnManager>, ISaveTarget
     {
         public override bool IsDontDestroyOnLoad => false;
         
@@ -214,6 +215,8 @@ namespace Stage
                     if (basicTurnLogic == null) continue;
                     await basicTurnLogic.OnTurnStart(_turnCount, token);
                 }
+
+                
                 /*
                  * 유저
                  */
@@ -224,6 +227,9 @@ namespace Stage
                     using var playerActionLoopStartArgs = PlayerActionLoopStartEventArgs.Get();
                     await ExecEventBus<PlayerActionLoopStartEventArgs>.InvokeMerged(playerActionLoopStartArgs);
                     // 플레이어가 행동할 수 있는 동안 반복
+                    
+                    HistoryManager.Instance.SaveCurrentState();
+                    SaveLoadManager.Instance.SimpleSave();
                     
                     if (token.IsCancellationRequested)
                     {
@@ -317,6 +323,17 @@ namespace Stage
             {
                 LogEx.LogWarning("No TurnManager found in the scene.");
             }
+        }
+
+        public Guid Guid { get; init; } = Guid.NewGuid();
+        public void LoadData(GameData data)
+        {
+            _turnCount = data.TurnCount;
+        }
+
+        public void SaveData(ref GameData data)
+        {
+            data.TurnCount = _turnCount;
         }
     }
 }
