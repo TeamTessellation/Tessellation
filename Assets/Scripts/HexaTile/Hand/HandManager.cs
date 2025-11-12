@@ -160,6 +160,10 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     {
         _targetHandBox.HoldTileSet.SetOrderInHand();
         Field.Instance.ClearSilhouette();
+
+        if (!InputManager.Instance.IsPlayerInputEnabled)
+            return;
+
         if (Field.Instance.TryPlace(_targetHandBox.HoldTileSet, worldPos.ToCoor(Field.Instance.TileOffset), out var placeTiles))
         {
             _remainHand--;

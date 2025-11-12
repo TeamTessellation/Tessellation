@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Custom_InGameBG
+  m_Shader: {fileID: 4800000, guid: bb6110c5c788e934cab0148f0f716a65, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 3cb3b5832a00db342845ddd946593af9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTexture:
+        m_Texture: {fileID: 2800000, guid: 431bfadfcbfa59a4e81e7315c4e4e01f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Amplitude: 0.1
+    - _Angle: 0
+    - _BrightLineSize: 18.84
+    - _BrightMax: 0.01
+    - _BrightMin: 0
+    - _Direction: 1
+    - _DistAmp: 0.2
+    - _DistFreq: 0.1
+    - _DistSpeed: 0.4
+    - _EndX: 2
+    - _Frequency: 22.2
+    - _Interval: 1
+    - _LineSize: 6.2
+    - _Progress: 1
+    - _Speed: 1.97
+    - _StartX: 1
+    - _TileSize: 2
+    - _XCount: 2
+    - _XFreq: 2
+    - _XSpeed: 5.32
+    - _distSpeed: 1.55
+    m_Colors:
+    - _BaseColor: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 1}
+    - _Direction: {r: 0.98, g: 0.79, b: 0.66, a: 0.14}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
