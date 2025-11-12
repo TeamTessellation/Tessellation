@@ -1,16 +1,58 @@
+using Abilities;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class RemoveActiveUpAbility : MonoBehaviour
+namespace Abilities
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class RemoveActiveUpAbility : AbilityBase
     {
-        
+        protected override void OnAbilityApplied()
+        {
+            base.OnAbilityApplied();
+            
+            
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public class RerollActiveUpAbility : AbilityBase
     {
-        
+        protected override void OnAbilityApplied()
+        {
+            base.OnAbilityApplied();
+        }
+    }
+
+    public class UndoActiveUpAbility : AbilityBase
+    {
+        protected override void OnAbilityApplied()
+        {
+            base.OnAbilityApplied();
+        }
+    }
+
+    public class RotateActiveUpAbility : AbilityBase
+    {
+        protected override void OnAbilityApplied()
+        {
+            base.OnAbilityApplied();
+        }
+    }
+
+    public class OverwriteActiveUpAbility : AbilityBase
+    {
+        protected override void OnAbilityApplied()
+        {
+            base.OnAbilityApplied();
+            
+        }
+    }
+    
+    public class CopyActiveUpAbility : AbilityBase
+    {
+        protected override void OnAbilityApplied()
+        {
+            base.OnAbilityApplied();
+            
+        }
     }
 }

@@ -7,14 +7,22 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
+    // === Properties ===
+    [Tooltip("테스팅용, 테스트 원하는 어빌리티를 순서대로 배치")]
     [SerializeField] private List<AbilityDataSO> TestCreateAbilites = new List<AbilityDataSO>();
     
+    [Tooltip("현재 적용중인 어빌리티")]
     [SerializeReference] private List<AbilityBase> _abilities = new List<AbilityBase>();
     private int _currentAbilityCount = 0;
     private int _maxAbilityCount = 5;
-
+    
+    public InputManager.Item CurrentItem = InputManager.Item.None;
+    public int CurrentItemCount = 5;
+    public int MaxItemCount = 5;
+    
     private TilePlaceHandler _tilePlaceHandler;
-
+        
+    // === Functions ===
     private void Awake()
     {
         for (int i = 0; i < _maxAbilityCount; i++)
@@ -72,7 +80,7 @@ public class PlayerInventory : MonoBehaviour
 
     public void AddAbility(AbilityDataSO abilityData)
     {
-        // A. abilityData SynthesisRequirements에 해당하는 어빌리티들을 제거하기
+        // abilityData SynthesisRequirements에 해당하는 어빌리티들을 제거하기
         if (abilityData.SynthesisRequirements != null)
         {
             for (int i = 0; i < abilityData.SynthesisRequirements.Length; i++)
@@ -81,19 +89,19 @@ public class PlayerInventory : MonoBehaviour
             }
         }
         
-        // A-1. 인벤토리 크기 체킹
+        // 인벤토리 크기 체킹
         if (_currentAbilityCount >= _maxAbilityCount)
         {
             Debug.Log("인벤토리가 Max입니다");
             return;
         }
         
-        // B. AbilityFactory 통해서 Ability 생성
+        // AbilityFactory 통해서 Ability 생성
         AbilityBase newAbility = AbilityFactory.Create(abilityData);
         if (newAbility == null) return;
         newAbility.Initialize(_tilePlaceHandler);
         
-        // C. 맨 앞 빈곳에 생성한 어빌리티 추가
+        // 맨 앞 빈곳에 생성한 어빌리티 추가
         for (int i = 0; i < _maxAbilityCount; i++)
         {
             if (_abilities[i] == null)
@@ -104,7 +112,7 @@ public class PlayerInventory : MonoBehaviour
             }
         }
         
-        // D. 빈칸 없도록 어빌리티들을 앞으로 압축하기
+        // 빈칸 없도록 어빌리티들을 앞으로 압축하기
         RefreshInventory();
     }
 
@@ -129,6 +137,7 @@ public class PlayerInventory : MonoBehaviour
     private void RefreshInventory()
     {
         
+        RefreshPriorities();
     }
 
     private void RemoveAbility(AbilityBase ability)
