@@ -1,16 +1,12 @@
 using Cysharp.Threading.Tasks;
-using Player;
 using SaveLoad;
 using Stage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 {
