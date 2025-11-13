@@ -17,7 +17,7 @@
     "Enum<eItemType>",
     "string",
     "string",
-    "Enum< >",
+    "Enum<eRarity>",
     "List<float>",
     "int",
     "List<string>",

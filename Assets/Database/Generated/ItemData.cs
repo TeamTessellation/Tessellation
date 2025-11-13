@@ -18,9 +18,8 @@ namespace Database.Generated
         public string itemNameID;
         /// <summary> 아이템 설명 key </summary>
         public string DescriptionID;
-        /// <summary> (Reference:Enum< >) 
-         /// 아이템 등급 </summary>
-        public string Rarity;
+        /// <summary> 아이템 등급 </summary>
+        public Abilities.eRarity Rarity;
         /// <summary> 아이템 효과 숫자 </summary>
         public List<float> input;
         /// <summary> 아이템 가격 </summary>
