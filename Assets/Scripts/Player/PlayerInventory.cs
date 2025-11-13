@@ -4,49 +4,51 @@ using Abilities;
 using Core;
 using Cysharp.Threading.Tasks;
 using Machamy.Utils;
+using NUnit.Framework;
 using Stage;
 using UnityEngine;
 
-public class PlayerInventory : MonoBehaviour
+[Serializable]
+public class PlayerInventory
 {
-    // === Properties ===
-    [Tooltip("테스팅용, 테스트 원하는 어빌리티를 순서대로 배치")]
-    [SerializeField] private List<AbilityDataSO> TestCreateAbilites = new List<AbilityDataSO>();
-    
     [Tooltip("현재 적용중인 어빌리티")]
     [SerializeReference] private List<AbilityBase> _abilities = new List<AbilityBase>();
-    private int _currentAbilityCount = 0;
-    private int _maxAbilityCount = 5;
+    
+    [SerializeField] private int _currentAbilityCount = 0;
+    [SerializeField] private int _maxAbilityCount = 5;
     
     public InputManager.Item CurrentItem = InputManager.Item.None;
     public int CurrentItemCount = 5;
     public int MaxItemCount = 5;
     
-    private TilePlaceHandler _tilePlaceHandler;
+    [NonSerialized] private TilePlaceHandler _tilePlaceHandler;
+
+    private TilePlaceHandler Handler
+    {
+        get
+        {
+            if (_tilePlaceHandler == null)
+            {
+                _tilePlaceHandler = TurnManager.Instance.GetComponent<TilePlaceHandler>();
+
+                if (_tilePlaceHandler == null)
+                {
+                    Debug.LogError("TilePlaceHandler가 할당되지 않음! TurnManager 확인..");
+                }
+            }
+            return _tilePlaceHandler;
+        }
+    }
         
     // === Functions ===
-    private void Awake()
+    public PlayerInventory()
     {
         for (int i = 0; i < _maxAbilityCount; i++)
         {
             _abilities.Add(null);
         }
     }
-
-    private async UniTask Start()
-    {
-        await GameManager.WaitForInit();
-        _tilePlaceHandler = TurnManager.Instance.GetComponent<TilePlaceHandler>();
-        if (_tilePlaceHandler == null)
-        {
-            Debug.LogError("TilePlaceHandler가 할당되지 않음! TurnManager 확인..");
-        }
-
-#if UNITY_EDITOR
-        TestAddAbility();
-#endif
-    }
-
+    
     public List<AbilityDataSO> GetOwnedAbilities()
     {
         List<AbilityDataSO> ownedAbilities = new List<AbilityDataSO>();
@@ -57,28 +59,6 @@ public class PlayerInventory : MonoBehaviour
         }
 
         return ownedAbilities;
-    }
-
-    /// <summary>
-    /// Will be deprecated
-    /// </summary>
-    private void TestAddAbility()
-    {
-        for (int i = 0; i < TestCreateAbilites.Count; i++)
-        {
-            AddAbility(TestCreateAbilites[i]);
-        }
-    }
-
-    private void OnDestroy()
-    {
-        for (int i = 0; i < _maxAbilityCount; i++)
-        {
-            if (_abilities[i] != null)
-            {
-                _abilities[i].Remove(_tilePlaceHandler);
-            }
-        }
     }
 
     public void AddAbility(AbilityDataSO abilityData)
@@ -102,7 +82,7 @@ public class PlayerInventory : MonoBehaviour
         // AbilityFactory 통해서 Ability 생성
         AbilityBase newAbility = AbilityFactory.Create(abilityData);
         if (newAbility == null) return;
-        newAbility.Initialize(_tilePlaceHandler);
+        newAbility.Initialize(Handler);
         
         // 맨 앞 빈곳에 생성한 어빌리티 추가
         for (int i = 0; i < _maxAbilityCount; i++)
@@ -145,7 +125,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void RemoveAbility(AbilityBase ability)
     {
-        ability.Remove(_tilePlaceHandler);
+        ability.Remove(Handler);
     }
     
     public void RemoveAbility(int slotIdx)

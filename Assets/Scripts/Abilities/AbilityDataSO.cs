@@ -54,7 +54,6 @@ namespace Abilities
         public eRarity Rarity;
         public string AbilityName;
         [TextArea(3, 5)] public string Description;
-        [Tooltip("Rarity == Normal만 레벨을 가진다")] public int MaxLevel;
         public Sprite ItemIcon;
 
         [Space(40)] 
