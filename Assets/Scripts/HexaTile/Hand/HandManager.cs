@@ -1,16 +1,13 @@
 using Cysharp.Threading.Tasks;
-using Player;
 using SaveLoad;
 using Stage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
+using Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 {
@@ -35,8 +32,9 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 
     public Guid Guid { get; init; }
 
-    private void Awake()
+    private async UniTask Awake()
     {
+        await GameManager.WaitForInit();
         Instance = this;
         _hand = new HandBox[0];
         _handRoot = GameObject.FindWithTag("HandRoot").transform;

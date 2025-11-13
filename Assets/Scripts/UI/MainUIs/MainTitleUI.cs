@@ -94,17 +94,33 @@ namespace UI.MainUIs
             bool hasSavedGame = false;
             
             
-            SaveLoadManager saveLoadManager = SaveLoadManager.Instance;
-            if (saveLoadManager != null)
+            
+            if (SaveLoadManager.HasInstance)
             {
+                SaveLoadManager saveLoadManager = SaveLoadManager.Instance;
                 hasSavedGame = saveLoadManager.HasSimpleSave();
+                if(GameManager.Instance.DisableContinueInMainMenu)
+                {
+                    hasSavedGame = false;
+                }
+                SetContinueButtonInteractable(hasSavedGame);
+            }
+            else
+            {
+                async UniTask WaitForSaveLoadManager()
+                {
+                    await UniTask.WaitUntil(() => SaveLoadManager.HasInstance);
+                    hasSavedGame = SaveLoadManager.Instance.HasSimpleSave();
+                    if (GameManager.Instance.DisableContinueInMainMenu)
+                    {
+                        hasSavedGame = false;
+                    }
+                    SetContinueButtonInteractable(hasSavedGame);
+                }
+                WaitForSaveLoadManager().Forget();
             }
             
-            if(GameManager.Instance.DisableContinueInMainMenu)
-            {
-                hasSavedGame = false;
-            }
-            SetContinueButtonInteractable(hasSavedGame);
+
         }
 
         public void OnStartButtonClicked()

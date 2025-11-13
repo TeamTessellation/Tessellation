@@ -103,7 +103,7 @@ namespace UI.Components
             return tween;
         }
         
-        public TweenerCore<int, int, NoOptions> DoCount(int to, float duration, bool setPaddingToToValue = true)
+        public Tween DoCount(int to, float duration, bool setPaddingToToValue = true)
         {
             return DoCount(_counterValue, to, duration, setPaddingToToValue);
         }

@@ -20,7 +20,8 @@ MonoBehaviour:
     rid: 1215832379904229443
   m_OverrideGlobalSceneList: 0
   m_Scenes: []
-  m_ScriptingDefines: []
+  m_ScriptingDefines:
+  - UNITASK_DOTWEEN_SUPPORT
   m_PlayerSettingsYaml:
     m_Settings: []
   references:

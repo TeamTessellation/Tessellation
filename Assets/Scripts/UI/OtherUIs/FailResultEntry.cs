@@ -25,9 +25,8 @@ namespace UI.OtherUIs
         
         public string VariableKey => variableKey.ToString();
         
-        protected override void Reset()
+        protected void Reset()
         {
-            base.Reset();
             failResultUI = GetComponentInParent<FailResultUI>();
             failCountText = GetComponentInChildren<CounterText>();
         }

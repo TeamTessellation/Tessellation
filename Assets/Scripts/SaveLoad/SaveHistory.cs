@@ -10,7 +10,7 @@ namespace SaveLoad
     [System.Serializable]
     public class SaveHistory : IReadOnlyList<GameData>
     {
-        public static readonly SaveHistory Empty = new SaveHistory();
+        public static SaveHistory Empty => new SaveHistory();
         
         [SerializeField] private List<GameData> _saves = new();
 

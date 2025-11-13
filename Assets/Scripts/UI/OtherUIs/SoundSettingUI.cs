@@ -102,8 +102,12 @@ namespace UI.OtherUIs
 
         private void OnEnable()
         {
-            bgmSlider.value = SoundManager.Instance.MusicVolume;
-            sfxSlider.value = SoundManager.Instance.SfxVolume;
+            if (SoundManager.HasInstance)
+            {
+                bgmSlider.value = SoundManager.Instance.MusicVolume;
+                sfxSlider.value = SoundManager.Instance.SfxVolume;
+            }
+
         }
         public void CancelEnabledTransitions()
         {

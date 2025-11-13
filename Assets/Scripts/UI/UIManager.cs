@@ -23,15 +23,6 @@ namespace UI
                 if (_globalCanvas == null)
                 {
                     _globalCanvas = FindAnyObjectByType<GlobalCanvas>()?.GetComponent<Canvas>();
-                    if (_globalCanvas == null)
-                    {
-                        var canvasGO = new GameObject("#GlobalCanvas");
-                        _globalCanvas = canvasGO.AddComponent<Canvas>();
-                        canvasGO.AddComponent<GlobalCanvas>();
-                        canvasGO.AddComponent<CanvasScaler>();
-                        canvasGO.AddComponent<GraphicRaycaster>();
-                        _globalCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-                    }
                 }
                 return _globalCanvas;
             }
@@ -77,35 +68,27 @@ namespace UI
         // ReSharper disable once Unity.IncorrectMethodSignature
         private async UniTaskVoid Start()
         {
-            await InitialLoader.WaitUntilInitialized();
-        }
-
-        private void OnEnable()
-        {
-            if (GameManager.Instance.CurrentGameState == GlobalGameState.Initializing)
+            cnt++;
+            LogEx.Log($"UIUIStart {GetInstanceID()}, {GetEntityId()}, {name}, Scene: {gameObject.scene.name}");
+            if (cnt > 1)
             {
-                void OnInitialized(GlobalGameState newState)
-                {
-                    if (newState != GlobalGameState.Initializing)
-                    {
-                        GameManager.Instance.OnGameStateChanged -= OnInitialized;
-                        Init();
-                    }
-                }
-                GameManager.Instance.OnGameStateChanged += OnInitialized;
+                LogEx.LogWarning($"UIManager Start called multiple times! Count: {cnt}");
+                Debug.Assert(false, "UIManager Start called multiple times!");
             }
+            await GameManager.WaitForInit();
             Init();
-            
             InteractionManager.Instance.CancelEvent += OnCancelInput;
         }
         
-        private void OnDisable()
+        private void OnDestroy()
         {
             UnbindEventsFromUIs();
         }
-        
+
+        private static int cnt = 0;
         void Init()
         {
+            
             RegisterUIs();
             BindEventsToUIs();
             SetMainMenu();
@@ -119,13 +102,17 @@ namespace UI
         {
             if (InGameUI == null)
             {
-                InGameUI = GlobalCanvas.GetComponentInChildren<InGameUI>(true);
+                InGameUI = GlobalCanvas?.GetComponentInChildren<InGameUI>(true);
             }
-            InGameUI.UnregisterEvents();
+            if (InGameUI != null)
+            {
+                InGameUI.UnregisterEvents();
+            }
         }
 
         private void RegisterUIs()
         {
+            LogEx.Log("Registering UIs...");
             T FindUI<T>() where T : Component
             {
                 var ui = GlobalCanvas.GetComponentInChildren<T>(true);

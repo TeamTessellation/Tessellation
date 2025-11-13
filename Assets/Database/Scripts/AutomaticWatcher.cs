@@ -7,8 +7,10 @@ using UnityEngine;
 
 namespace Database
 {
+    
     public class AutomaticWatcher
     {
+#if UNITY_EDITOR
         public string Path { get; private set; }
         public string Extension { get; }
         private string TempPrefix = null;
@@ -141,5 +143,7 @@ namespace Database
                 AssetDatabase.Refresh();
             };
         }
+#endif
     }
+
 }
