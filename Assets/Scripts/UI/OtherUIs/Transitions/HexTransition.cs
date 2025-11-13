@@ -3,6 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Machamy.Attributes;
+using Machamy.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -128,11 +129,15 @@ namespace UI.OtherUIs.Transitions
 #endif
         }
 
+        ResolutionWatcher _watcher;
+
         private void Awake()
         {
             _image = GetComponent<Image>();
             _image.material = new Material(_image.material); // 인스턴스 복사
             InitEffect();
+            _watcher = new();
+            _watcher.OnResolutionChanged += InitEffect;
         }
 
         
@@ -159,6 +164,27 @@ namespace UI.OtherUIs.Transitions
             StartX = startX;
             EndX = xEnd;    
             
+        }
+
+        public void InitEffect(Vector2Int size)
+        {
+            if (_image == null)
+            {
+                _image = GetComponent<Image>();
+            }
+            _tileSize = _image.material.GetFloat(TileSizeHash);
+            float dist = _image.transform.position.z - Camera.main.transform.position.z;
+            int start = ((Vector2)(Camera.main.ScreenToWorldPoint(new Vector3(0, 0, dist)))).ToCoor(_tileSize).Pos.x;
+            int end = ((Vector2)(Camera.main.ScreenToWorldPoint(new Vector3(size.x, size.y, dist))))
+                .ToCoor(_tileSize).Pos.x;
+
+            float xCount = end - start + 1;
+            XCount = xCount;
+            float startX = start;
+            float xEnd = end;
+            StartX = startX;
+            EndX = xEnd;
+
         }
 
         public void SetProgress(float progress)

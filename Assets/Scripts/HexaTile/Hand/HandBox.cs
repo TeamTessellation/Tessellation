@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using SaveLoad;
+using DG.Tweening;
 
 public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
 {
@@ -66,6 +67,30 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
         }
     }
 
+    public float StartScale = 0.3f;
+    public float Duration = 1;
+    public Ease ScaleEase;
+
+    public void TileSetDrawEffect()
+    {
+        if (IsUsed)
+            return;
+
+        DOTween.Kill(this);
+
+        float progress = StartScale;
+
+        int maxRadius = 0;
+        for (int j = 0; j < HoldTileSet.Data.Data.Count; j++)
+        {
+            maxRadius = Mathf.Max(HoldTileSet.Data.Data[j].Coor.CircleRadius, maxRadius);
+        }
+        float size = (maxRadius * 2 + 1 > 3) ? 5 / (Mathf.Sqrt(3) * (maxRadius * 2 + 1)) : 0.6f;
+
+        DOTween.To(() => progress, x => { HoldTileSet.transform.localScale = Vector3.one * progress; progress = x; }, size, Duration)
+            .SetEase(ScaleEase).OnComplete(() => HoldTileSet.transform.localScale = Vector3.one * size);
+    }
+
     public void SetOnHand()
     {
         int maxRadius = 0;
@@ -97,6 +122,7 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
     {
         HoldTileSet = Pool<TileSet, TileSetData>.Get(data);
         HoldTileSet.transform.SetParent(transform, false);
+        TileSetDrawEffect();
 
         SetOnHand();
         SetOnHandAsync().Forget();
