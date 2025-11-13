@@ -69,9 +69,9 @@ namespace Core
         
         public bool AutoPauseInBackground = false;
 
-        protected override void Awake()
+        protected override void AfterAwake()
         {
-            base.Awake();
+            base.AfterAwake();
             
             OnGameStateChanged += (newState) =>
             {
@@ -89,8 +89,11 @@ namespace Core
         public async UniTaskVoid Start()
         {
             LogEx.Log("GameManager 시작");
+            CurrentGameState = GlobalGameState.Initializing;
+            await UniTask.Yield();
             if (InitialLoader.Initialized)
             {
+                await UniTask.Yield();
                 CurrentGameState = GlobalGameState.MainMenu;
             }
             else
@@ -107,12 +110,12 @@ namespace Core
         {
             InteractionManager.CancelEvent += OnInputCancel;
             
-            SaveLoadManager.Instance.RegisterSaveTarget(this);
+            SaveLoadManager.RegisterPendingSavable(this);
         }
         
         private void OnDestroy()
         {
-            if (InteractionManager != null)
+            if (InteractionManager.HasInstance)
             {
                 InteractionManager.CancelEvent -= OnInputCancel;
             }
@@ -354,5 +357,14 @@ namespace Core
             _playerStatus.SaveData(ref data);
         }
 
+
+
+        public static async UniTask WaitForInit()
+        {
+            await InitialLoader.WaitUntilInitialized();
+            await UniTask.Yield();
+            await UniTask.WaitUntil(() => GameManager.HasInstance);
+            await UniTask.WaitUntil(() => GameManager.Instance.CurrentGameState != GlobalGameState.Initializing);
+        }
     }
 }

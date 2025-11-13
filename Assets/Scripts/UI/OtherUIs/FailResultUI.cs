@@ -47,8 +47,10 @@ namespace UI.OtherUIs
         
         private List<Tween> tweenList = new List<Tween>();
         
-        private void Awake()
+        private async UniTask Awake()
         {
+            await GameManager.WaitForInit();
+            
             _skipButton.onClick.AddListener(OnSkipButtonClicked);
             _retryButton.onClick.AddListener(OnRetryButtonClicked);
             _homeButton.onClick.AddListener(OnHomeButtonClicked);
@@ -65,8 +67,12 @@ namespace UI.OtherUIs
 
         private void OnEnable()
         {
-            InteractionManager.Instance.ConfirmEvent += OnConfirmed;
+            if (InteractionManager.HasInstance)
+            {
+                InteractionManager.Instance.ConfirmEvent += OnConfirmed;
+            }
         }
+        
         private void OnDisable()
         {
             InteractionManager.Instance.ConfirmEvent -= OnConfirmed;
