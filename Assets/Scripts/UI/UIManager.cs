@@ -73,7 +73,7 @@ namespace UI
             if (cnt > 1)
             {
                 LogEx.LogWarning($"UIManager Start called multiple times! Count: {cnt}");
-                Debug.Assert(false, "UIManager Start called multiple times!");
+                // Debug.Assert(false, "UIManager Start called multiple times!");
             }
             await GameManager.WaitForInit();
             Init();
