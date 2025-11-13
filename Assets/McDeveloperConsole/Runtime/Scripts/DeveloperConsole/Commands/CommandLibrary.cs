@@ -110,6 +110,19 @@ namespace Machamy.DeveloperConsole.Commands
             {
                 foreach (var type in assembly.GetTypes())
                 {
+                    var classAttrs = type.GetCustomAttributes(typeof(ConsoleCommandClassAttribute), false);
+                    if (classAttrs.Length > 0)
+                    {
+                        object command = Activator.CreateInstance(type);
+                        if (command is IConsoleCommand consoleCommand)
+                        {
+                            RegisterCommand(consoleCommand);
+                        }
+                        else
+                        {
+                            LogEx.LogWarning($"Failed to create console command for class \"{type.FullName}\". \n Make sure the class implements IConsoleCommand interface and has a parameterless constructor.");
+                        }
+                    }
                     foreach (var method in type.GetMethods(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic))
                     {
                         var attrs = method.GetCustomAttributes(typeof(ConsoleCommandAttribute), false);
