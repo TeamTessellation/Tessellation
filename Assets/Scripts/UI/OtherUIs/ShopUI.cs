@@ -53,6 +53,7 @@ namespace UI.OtherUIs
             gameObject.SetActive(false);
             _tokenSource.Cancel();
             _tokenSource.Dispose();
+            _tokenSource = new CancellationTokenSource();
         }
 
         private void OnEnable()
