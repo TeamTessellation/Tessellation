@@ -45,17 +45,17 @@ Material:
     - _EndX: 2
     - _Frequency: 22.2
     - _Interval: 1
-    - _LineSize: 6.2
+    - _LineSize: 1.6
     - _Progress: 1
     - _Speed: 1.97
     - _StartX: 1
-    - _TileSize: 2
+    - _TileSize: 1.5
     - _XCount: 2
     - _XFreq: 2
     - _XSpeed: 5.32
     - _distSpeed: 1.55
     m_Colors:
-    - _BaseColor: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 0.46666667}
     - _Direction: {r: 0.98, g: 0.79, b: 0.66, a: 0.14}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
