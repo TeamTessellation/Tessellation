@@ -379,12 +379,14 @@ namespace Stage
         [ConsoleCommand("StageFail", "강제 스테이지 실패 처리")]
         public static void SetFail()
         {
+            Stage.TurnManager.Instance.StopTurnLoop();
             Instance.FailStage(Instance.token);
         }
 
         [ConsoleCommand("StageClear", "강제 스테이지 클리어 처리")]
         public static void SetClear()
         {
+            Stage.TurnManager.Instance.StopTurnLoop();
             Instance.EndStage(Instance.token);
         }
     }
