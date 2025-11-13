@@ -61,7 +61,13 @@ public class PlayerInventory
         return ownedAbilities;
     }
 
-    public void AddAbility(AbilityDataSO abilityData)
+    /// <summary>
+    /// abilityData를 인자로 받아 인벤토리에 아이템을 추가합니다
+    /// 성공할 시 true, 실패했을 시 false를 반환합니다.
+    /// </summary>
+    /// <param name="abilityData"></param>
+    /// <returns></returns>
+    public bool AddAbility(AbilityDataSO abilityData)
     {
         // abilityData SynthesisRequirements에 해당하는 어빌리티들을 제거하기
         if (abilityData.SynthesisRequirements != null)
@@ -76,12 +82,12 @@ public class PlayerInventory
         if (_currentAbilityCount >= _maxAbilityCount)
         {
             Debug.Log("인벤토리가 Max입니다");
-            return;
+            return false;
         }
         
         // AbilityFactory 통해서 Ability 생성
         AbilityBase newAbility = AbilityFactory.Create(abilityData);
-        if (newAbility == null) return;
+        if (newAbility == null) return false;
         newAbility.Initialize(Handler);
         
         // 맨 앞 빈곳에 생성한 어빌리티 추가
@@ -97,6 +103,8 @@ public class PlayerInventory
         
         // 빈칸 없도록 어빌리티들을 앞으로 압축하기
         RefreshInventory();
+
+        return true;
     }
 
     public void RemoveAbilityByData(AbilityDataSO abilityData)
