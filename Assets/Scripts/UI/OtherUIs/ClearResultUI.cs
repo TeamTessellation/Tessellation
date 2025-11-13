@@ -149,14 +149,15 @@ namespace UI.OtherUIs
             var UM = UIManager.Instance;
             Field field = Field.Instance;
 
-            // 핸드 축소
+            // 필드 축소
             List<Tween> shrinkTweens = new List<Tween>();
             foreach (var cell in field)
             {
                 shrinkTweens.Add(DOTween.To(() => 1, x => cell.SetSize(x), 0f, fieldShrinkDuration).SetEase(fieldShrinkEase));
             }
 
-            shrinkTweens.Add(HandCanvas.Instance.transform.DOScale(Vector3.zero, handShrinkDuration)
+            // 핸드 축소
+            shrinkTweens.Add(HandCanvas.Instance.transform.DOScaleX(0f, handShrinkDuration)
                 .SetEase(handShrinkEase));
             
             tweenList.AddRange(shrinkTweens);
@@ -234,9 +235,10 @@ namespace UI.OtherUIs
             // Total Holder 애니메이션
             
             totalEntry.ValueText.CounterValue = 0;
-            
-            var totalHolderMoveUpTween = totalHolderCanvasGroup.transform
-                .DOLocalMoveY(totalHolderCanvasGroup.transform.localPosition.y + totalHolderMoveUpDistance, totalHolderMoveUpDuration)
+            RectTransform totalHolderRect = totalHolderCanvasGroup.GetComponent<RectTransform>();
+            Vector2 initialTotalHolderPos = totalHolderRect.anchoredPosition;
+            totalHolderRect.anchoredPosition = new Vector2(initialTotalHolderPos.x, initialTotalHolderPos.y - totalHolderMoveUpDistance);
+            var totalHolderMoveUpTween = totalHolderRect.DOAnchorPos(initialTotalHolderPos, totalHolderMoveUpDuration)
                 .SetEase(Ease.OutCubic);
             var totalHolderFadeInTween = totalHolderCanvasGroup.DOFade(1f, totalHolderFadeInDuration);
             var totalHolderSequence = DOTween.Sequence();
