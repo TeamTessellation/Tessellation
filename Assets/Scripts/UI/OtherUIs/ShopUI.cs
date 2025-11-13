@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
+using Abilities;
+using Core;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Interaction;
 using NUnit.Framework;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,10 +25,10 @@ namespace UI.OtherUIs
         [SerializeField] private int itemCount = 4;
 
         [Header("Visual Settings")] 
-        [SerializeField] private Color NormalRarityColor;
-        [SerializeField] private Color RareRarityColor;
-        [SerializeField] private Color EpicRarityColor;
-        [SerializeField] private Color SpecialRarityColor;
+        public Color NormalRarityColor;
+        public Color RareRarityColor;
+        public Color EpicRarityColor;
+        public Color SpecialRarityColor;
         
         [Header("Tween Settings")] 
         // TODO..
@@ -34,15 +38,18 @@ namespace UI.OtherUIs
         [Header("Buttons")] 
         [SerializeField] private Button _rerollButton;
         [SerializeField] private Button _skipButton;
-
+        
+        [SerializeField] private ShopItemSelector _shopItemSelector = new ShopItemSelector();
 
         private bool _isSkipping = false;
-        
         private CancellationTokenSource _tokenSource = new CancellationTokenSource();
         private List<Tween> currentTweenList = new List<Tween>();
 
         protected override void Awake()
         {
+            Debug.Log("Kexi");
+            if (currentTweenList == null) currentTweenList = new List<Tween>();
+            
             _rerollButton.onClick.AddListener(OnRerollButtonClicked);
             _skipButton.onClick.AddListener(OnSkipButtonClicked);
             gameObject.SetActive(false);
@@ -71,9 +78,14 @@ namespace UI.OtherUIs
 
             _isSkipping = false;
             currentTweenList.Clear();
-
-            InteractionManager.Instance.ConfirmEvent += OnConfirmed;
-            InteractionManager.Instance.ConfirmEvent -= OnConfirmed;
+            
+            if (_shopItemSelector != null)
+            {
+                List<AbilityDataSO> selectedItems = _shopItemSelector.SelectShopItems(itemCount);
+                for (int i = 0; i < selectedItems.Count; i++)
+                {
+                }
+            }
         }
         
         private void OnRerollButtonClicked()
@@ -83,7 +95,6 @@ namespace UI.OtherUIs
 
         private void OnSkipButtonClicked()
         {
-            Debug.LogError("Kexi");
             _isSkipping = true;
         }
 

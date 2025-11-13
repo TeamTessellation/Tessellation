@@ -30,9 +30,10 @@ namespace Player
         [SerializeField] private float coinInterestRate = 0.1f; // 코인 이자율 10%
         [SerializeField] private int maxInterestCoins = 5; // 최대 이자 코인 한도
         
-        [SerializeField]
-        private VariableContainer variables = new VariableContainer();
+        [SerializeField] private VariableContainer variables = new VariableContainer();
 
+        public PlayerInventory inventory = new PlayerInventory();
+        
         /// <summary>
         /// 내부 VariableContainer 인스턴스입니다. 외부에서 읽을 수 있고 설정은 이 클래스 내부에서만 가능합니다.
         /// Variable에 접근/수정할 때는 이 프로퍼티를 사용하세요.
@@ -42,6 +43,7 @@ namespace Player
             get => variables;
             private set => variables = value;
         }
+        
         public void Reset()
         {
             fieldSize = 4;
