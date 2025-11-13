@@ -28,7 +28,7 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
     public Direction Direction;
     private Sprite _defaultSprite;
     private Light2D _light;
-    [NonSerialized] private TileOptionBase _tileOptionBase;
+    [NonSerialized] public TileOptionBase TileOptionBase;
 
     /// <summary>
     /// 해당 Tile Data
@@ -71,7 +71,7 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
         switch(data.Option)
         {
             case TileOption.Default:
-                _tileOptionBase = new TileOptionDefault();
+                TileOptionBase = new TileOptionDefault();
                 break;
             // TO다산 여기다가 각 경우에 따라서 추가 사실 클래스 매번 생성할 필요는 없고 같은거 써도 됨 알아서 수정
         }

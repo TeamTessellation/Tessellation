@@ -175,7 +175,7 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
     {
         foreach (var tile in placeEvent.Tiles)
         {
-            await tile.OnTilePlaced();
+            await tile.TileOptionBase.OnTilePlaced(tile);
         }
         
         _turnResultInfo.PlacedTiles.AddRange(placeEvent.Tiles);
@@ -189,7 +189,7 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
     {
         foreach (var tile in lineClearEvent.Tiles)
         {
-            await tile.OnLineCleared();
+            await tile.TileOptionBase.OnLineCleared(tile);
         }
 
         // 1차 이펙트 처리
@@ -210,7 +210,7 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
     {
         foreach (var tile in removeEvent.Tiles)
         {
-            await tile.OnTileRemoved();
+            await tile.TileOptionBase.OnTileRemoved(tile);
         }
         
         _turnResultInfo.RemovedTiles.AddRange(removeEvent.Tiles);
@@ -222,7 +222,7 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
     {
         foreach (var tile in burstEvent.Tiles)
         {
-            await tile.OnTileBurst();
+            await tile.TileOptionBase.OnTileBurst(tile);
         }
         
         _turnResultInfo.BurstTiles.AddRange(burstEvent.Tiles);
