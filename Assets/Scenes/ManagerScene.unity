@@ -195,6 +195,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveLoad.SaveLoadManager
   destroyPreExisting: 0
+  lastSavedData:
+    CurrentStage: 0000000000000000
+    TurnCount: 0
+    TotalScore: 0
+    Score: 0
+    HandCount: 0
+    FieldSize: 0
+    FieldTileData: []
+    HandData: []
+    PlayerStatus:
+      fieldSize: 4
+      handSize: 3
+      coinInterestRate: 0.1
+      maxInterestCoins: 5
+      variables:
+        items:
+          defaultKey: 
+          _items: []
+    SaveHistory:
+      _saves: []
+    <Variables>k__BackingField:
+      items:
+        defaultKey: 
+        _items: []
 --- !u!4 &819279504
 Transform:
   m_ObjectHideFlags: 0
@@ -286,7 +310,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Stage.StageManager
   destroyPreExisting: 0
   _isStageCleared: 0
-  _currentStageIndex: 0
 --- !u!4 &1418308661
 Transform:
   m_ObjectHideFlags: 0
@@ -416,8 +439,10 @@ MonoBehaviour:
   <SettingParentUI>k__BackingField: {fileID: 0}
   <StageInfoUI>k__BackingField: {fileID: 0}
   <FailResultUI>k__BackingField: {fileID: 0}
+  <ClearResultUI>k__BackingField: {fileID: 0}
   <PauseUI>k__BackingField: {fileID: 0}
   <SoundSettingUI>k__BackingField: {fileID: 0}
+  <HandCanvas>k__BackingField: {fileID: 0}
   <TransitionUI>k__BackingField: {fileID: 0}
 --- !u!4 &1728006149
 Transform:
@@ -429,51 +454,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.69805, y: -1.4869, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1958929999
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1958930001}
-  - component: {fileID: 1958930000}
-  m_Layer: 0
-  m_Name: '@SaveManger'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1958930000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958929999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bad7a55fcce94e519d17d20400b9a1bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SaveLoad.SaveManager
-  destroyPreExisting: 0
---- !u!4 &1958930001
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958929999}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -565,6 +545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc49cbad543fab4faa65a63c5d73142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TilePlaceHandler
+  tileRemoveInterval: 0.1
 --- !u!1 &2094400910
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,7 +576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Database.DatabaseManager
   mcDatabase:
-    Example2List: []
+    ItemDataList: []
   isInitialized: 0
   googleSheetUrl: URL_HERE
   localJsonPath: Database/
@@ -647,7 +628,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Core.GameManager
   destroyPreExisting: 0
+  mainMenuScene: {fileID: 11400000, guid: e292e954af541de4d9e59eb0222e2a34, type: 2}
   _currentGameState: 0
+  <DisableContinueInMainMenu>k__BackingField: 0
+  _playerStatus:
+    fieldSize: 4
+    handSize: 3
+    coinInterestRate: 0.1
+    maxInterestCoins: 5
+    variables:
+      items:
+        defaultKey: 
+        _items: []
   AutoPauseInBackground: 0
 --- !u!4 &2104037631
 Transform:
@@ -670,12 +662,11 @@ SceneRoots:
   m_Roots:
   - {fileID: 1480622180}
   - {fileID: 2104037631}
+  - {fileID: 1728006149}
   - {fileID: 1418308661}
   - {fileID: 326705272}
-  - {fileID: 1958930001}
   - {fileID: 1449891191}
   - {fileID: 819279504}
   - {fileID: 1231704939}
   - {fileID: 2025349029}
-  - {fileID: 1728006149}
   - {fileID: 2094400912}

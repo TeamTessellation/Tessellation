@@ -7,10 +7,12 @@ using Interaction;
 using Machamy.Utils;
 using Player;
 using SaveLoad;
+using SceneManagement;
 using Stage;
 using UI;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Core
 {
@@ -29,6 +31,8 @@ namespace Core
     public class GameManager : Singleton<GameManager>, ISaveTarget
     {
         public override bool IsDontDestroyOnLoad => true;
+        
+        [SerializeField] SceneReference mainMenuScene;
 
         /// <summary>
         /// 게임 전체를 취소할 수 있는 토큰 소스입니다.
@@ -94,6 +98,7 @@ namespace Core
             if (InitialLoader.Initialized)
             {
                 await UniTask.Yield();
+                await UniTask.WaitUntil(() => SceneManager.GetActiveScene().name == mainMenuScene.SceneName);
                 CurrentGameState = GlobalGameState.MainMenu;
             }
             else
@@ -101,6 +106,7 @@ namespace Core
                 CurrentGameState = GlobalGameState.Initializing;
                 await InitialLoader.WaitUntilInitialized();
                 await UniTask.Yield();
+                await UniTask.WaitUntil(() => SceneManager.GetActiveScene().name == mainMenuScene.SceneName);
                 CurrentGameState = GlobalGameState.MainMenu;
             }
             Initialize();
@@ -297,13 +303,12 @@ namespace Core
              * 3. 스테이지 매니저 초기화(플레이어에 종속적)
              * 3-n. 스테이지 매니저가 스테이지 초기화시 필요한 로직 수행
              * 4. 일시정지 UI 숨기기
-             * 5. 메인메뉴 UI로 전환
              */
             CurrentGameState = GlobalGameState.MainMenu;
             PlayerStatus.Reset();
             StageManager.ResetStage();
             UIManager.HidePauseUI();
-            UIManager.SwitchToMainMenu();
+
             
             _gameCancellationTokenSource = new CancellationTokenSource();
         }
