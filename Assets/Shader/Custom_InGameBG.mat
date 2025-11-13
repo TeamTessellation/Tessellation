@@ -52,7 +52,7 @@ Material:
     - _TileSize: 1.5
     - _XCount: 2
     - _XFreq: 2
-    - _XSpeed: 5.32
+    - _XSpeed: 10
     - _distSpeed: 1.55
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0.46666667}

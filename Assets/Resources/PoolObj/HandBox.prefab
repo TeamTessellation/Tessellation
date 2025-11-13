@@ -188,6 +188,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2c9c223f37a05ed4db54f2625d2991e8, type: 3}
   - {fileID: 21300000, guid: 20a2b3a54a8911c46b19768b166899ed, type: 3}
   - {fileID: 21300000, guid: f632143f843a5054d8142bcd5b0306ba, type: 3}
+  StartScale: 0.3
+  Duration: 0.25
+  ScaleEase: 5
 --- !u!114 &3190230216626207209
 MonoBehaviour:
   m_ObjectHideFlags: 0
