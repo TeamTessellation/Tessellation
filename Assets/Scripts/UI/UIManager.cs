@@ -23,15 +23,6 @@ namespace UI
                 if (_globalCanvas == null)
                 {
                     _globalCanvas = FindAnyObjectByType<GlobalCanvas>()?.GetComponent<Canvas>();
-                    if (_globalCanvas == null)
-                    {
-                        var canvasGO = new GameObject("#GlobalCanvas");
-                        _globalCanvas = canvasGO.AddComponent<Canvas>();
-                        canvasGO.AddComponent<GlobalCanvas>();
-                        canvasGO.AddComponent<CanvasScaler>();
-                        canvasGO.AddComponent<GraphicRaycaster>();
-                        _globalCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-                    }
                 }
                 return _globalCanvas;
             }
@@ -75,6 +66,13 @@ namespace UI
         // ReSharper disable once Unity.IncorrectMethodSignature
         private async UniTaskVoid Start()
         {
+            cnt++;
+            LogEx.Log($"UIUIStart {GetInstanceID()}, {GetEntityId()}, {name}, Scene: {gameObject.scene.name}");
+            if (cnt > 1)
+            {
+                LogEx.LogWarning($"UIManager Start called multiple times! Count: {cnt}");
+                Debug.Assert(false, "UIManager Start called multiple times!");
+            }
             await GameManager.WaitForInit();
             Init();
             InteractionManager.Instance.CancelEvent += OnCancelInput;
@@ -84,9 +82,11 @@ namespace UI
         {
             UnbindEventsFromUIs();
         }
-        
+
+        private static int cnt = 0;
         void Init()
         {
+            
             RegisterUIs();
             BindEventsToUIs();
             SetMainMenu();
@@ -100,7 +100,7 @@ namespace UI
         {
             if (InGameUI == null)
             {
-                InGameUI = GlobalCanvas.GetComponentInChildren<InGameUI>(true);
+                InGameUI = GlobalCanvas?.GetComponentInChildren<InGameUI>(true);
             }
             if (InGameUI != null)
             {
