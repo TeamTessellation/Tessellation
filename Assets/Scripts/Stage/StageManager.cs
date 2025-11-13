@@ -235,7 +235,12 @@ namespace Stage
             coinCounter.DoCount(playerStatus.CurrentCoins, 0.2f, false);
             
             // 상점 파트
-            // TODO : ShopUI 구현 필요
+            ShopUI shopUI = UIManager.Instance.ShopUI;
+            
+            await shopUI.ShowShopItemAsync(token);
+            await shopUI.WaitForSkipButtonAsync(token);
+            
+            shopUI.Hide();
             
             LogEx.Log("Stage Ended.");
             // 스테이지 시작으로 돌아가기
