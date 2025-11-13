@@ -207,7 +207,7 @@ namespace Stage
             LogEx.Log($"Stage Coins Obtained: {playerStatus.StageCoinsObtained} (Interest: {interest}, Cleared Lines: {playerStatus.StageClearedLines}, Remaining Turns: {playerStatus.RemainingTurns})");
             
             // Best/Total Stage Clear 갱신
-            playerStatus.BestScorePlacement = Math.Max(playerStatus.BestScorePlacement, ScoreManager.Instance.CurrentScore);
+            playerStatus.BestScorePlacement = Math.Max(playerStatus.BestScorePlacement, playerStatus.StageBestPlacement);
             playerStatus.BestStageClearedLines = Math.Max(playerStatus.BestStageClearedLines, playerStatus.StageClearedLines);
             playerStatus.BestStageAbilityUseCount = Math.Max(playerStatus.BestStageAbilityUseCount, playerStatus.StageAbilityUseCount);
             playerStatus.BestStageCoinsObtained = Math.Max(playerStatus.BestStageCoinsObtained, playerStatus.StageCoinsObtained);
