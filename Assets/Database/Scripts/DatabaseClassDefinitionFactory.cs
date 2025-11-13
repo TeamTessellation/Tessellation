@@ -124,8 +124,9 @@ namespace Database
                     Debug.LogWarning($"[MDatabase] FindTargetVariables에 유효하지 않은 변수명이 포함되어 있습니다: '{varName}'");
                     continue;
                 }
-                
-                sb.AppendLine($"        public T FindBy{pascalVarName}<T>(string {varName}) where T : class");
+
+                string argName = varName[0].ToString().ToLower() + varName.Substring(1);
+                sb.AppendLine($"        public T FindBy{pascalVarName}<T>(string {argName}) where T : class");
                 sb.AppendLine("        {");
                 sb.AppendLine("            if (typeof(T) == null) return null;");
                 sb.AppendLine("            switch (typeof(T).Name)");
@@ -140,7 +141,7 @@ namespace Database
                     sb.AppendLine($"                case \"{className}\":");
                     sb.AppendLine($"                    foreach (var instance in {className}List)");
                     sb.AppendLine($"                    {{");
-                    sb.AppendLine($"                        if (instance.{varName} == {varName.ToLower()})");
+                    sb.AppendLine($"                        if (instance.{varName} == {argName})");
                     sb.AppendLine($"                            return instance as T;");
                     sb.AppendLine($"                    }}");
                     sb.AppendLine("                    break;");

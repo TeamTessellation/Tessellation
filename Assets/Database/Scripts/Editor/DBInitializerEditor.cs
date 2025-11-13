@@ -270,53 +270,8 @@ function compactOrNullPad(arr) {
                 EditorUtility.DisplayDialog("Copy to Clipboard", "Google Apps Script code copied to clipboard", "OK");
             }
 
-            // --- 추가된 부분: 캐시 관리 버튼 ---
-            EditorGUILayout.Space(20);
-            GUILayout.Label("Image Cache Management", EditorStyles.boldLabel);
 
-            if (GUILayout.Button("Open Cache Folder"))
-            {
-                // 아래에 추가할 정적 메소드 호출
-                OpenPersistentDataPath();
-            }
-
-            if (GUILayout.Button("Clear Image Cache"))
-            {
-                // 사용자에게 정말 삭제할지 한번 더 물어봅니다.
-                if (EditorUtility.DisplayDialog("Clear Image Cache",
-                    "Are you sure you want to delete all cached images? This action cannot be undone.",
-                    "Yes, clear cache", "Cancel"))
-                {
-                    // 아래에 추가할 정적 메소드 호출
-                    ClearImageCache();
-                }
-            }
-        }
-        // --- 수정된 부분 끝 ---
-
-
-        // --- 추가된 부분 시작: 상단 메뉴 및 캐시 관리 정적 메소드들 ---
-
-        [MenuItem("Tools/Database/Open Cache Folder")]
-        private static void OpenPersistentDataPath()
-        {
-            EditorUtility.RevealInFinder(Application.persistentDataPath);
         }
 
-        [MenuItem("Tools/Database/Clear Image Cache")]
-        private static void ClearImageCache()
-        {
-            string cachePath = Path.Combine(Application.persistentDataPath, "ImageCache");
-            if (Directory.Exists(cachePath))
-            {
-                Directory.Delete(cachePath, true);
-                Debug.Log($"Image cache cleared: {cachePath}");
-            }
-            else
-            {
-                Debug.Log("Image cache folder does not exist.");
-            }
-        }
-        // --- 추가된 부분 끝 ---
     }
 }
