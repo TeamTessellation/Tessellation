@@ -442,7 +442,8 @@ namespace Machamy.DeveloperConsole
             float newSize = root.resolvedStyle.fontSize + step;
             Message(MessageType.Gray,$"Font size up to {newSize}");
             root.style.fontSize = newSize;
-            
+            previewContainer.MarkDirtyRepaint(); 
+
         }
 
         public void FontSizeDown(int step = 2)
@@ -452,6 +453,7 @@ namespace Machamy.DeveloperConsole
                 newSize = 6;
             Message(MessageType.Gray,$"Font size down to {newSize}");
             root.style.fontSize = newSize;
+            previewContainer.MarkDirtyRepaint(); 
         }
 
     /// <summary>

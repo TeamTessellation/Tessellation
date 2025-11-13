@@ -112,23 +112,7 @@
     gap: 6px;
     padding: 4px;
 }
-#PreviewContainer {
-    overflow: visible; /* 세로로 늘어나도록 허용 */
-    height: auto;
-    min-height: 0;
-    max-height: none;
-    padding-bottom: 12px;
-}
 
-#PreviewContainer .unity-scroll-view__content-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 6px;
-    align-items: flex-start;
-    min-height: 24px;
-    max-height: 48px;
-}
 
 .preview .suggest {
     padding: 2px 6px;
@@ -196,10 +180,16 @@
     display: none;
 }
 
-/* 프리뷰: 가로 스크롤만 */
+
 #PreviewContainer {
-    overflow: hidden; /* 세로 스크롤 숨김 */
+    overflow: visible;
+    flex-shrink: 0;
+    min-height: 34px;
+    height: auto;
+    flex-grow: 0;
+    padding-bottom: 12px;
 }
+
 /* 프리뷰의 컨텐츠를 가로로 배치 + 줄바꿈 없음 */
 #PreviewContainer .unity-scroll-view__content-container {
     display: flex;
