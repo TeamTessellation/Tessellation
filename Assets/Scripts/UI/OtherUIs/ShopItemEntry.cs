@@ -32,6 +32,8 @@ namespace UI.OtherUIs
 
         public void InitializeData(AbilityDataSO abilityData)
         {
+            ResetButton();
+            
             _abilityData = abilityData;
             
             if (_shopUI == null)
@@ -96,11 +98,26 @@ namespace UI.OtherUIs
                     playerStatus.CurrentCoins -= _abilityData.AbilityPrice;
                     
                     // 버튼 비활성화
-                    _thisButton.interactable = false;
-                    CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
-                    canvasGroup.alpha = 0.5f;
+                    DisableButton();
                 }
             }
+        }
+
+        private void ResetButton()
+        {
+            if (_thisButton == null)
+            {
+                _thisButton = GetComponent<Button>();
+            }
+            _thisButton.interactable = true;
+            CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+            canvasGroup.alpha = 1f;
+        }
+        private void DisableButton()
+        {
+            _thisButton.interactable = false;
+            CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+            canvasGroup.alpha = 0.5f;
         }
     }
 }
