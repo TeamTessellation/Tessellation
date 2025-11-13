@@ -323,12 +323,14 @@ namespace Stage
             {
                 if (playerStatus.RemainingTurns <= 0 && !CheckStageClear())
                 {
+                    LogEx.Log("Stage Failed: No remaining turns.");
                     return true;
                 }
             }
             // 핸드에 놓을 수 있는 타일이 없는지 확인
             if (HandManager.Instance.HandCount > 0 && !HandManager.Instance.CanPlace())
             {
+                LogEx.Log("Stage Failed: No placeable tiles in hand.");
                 return true;
             }
             
