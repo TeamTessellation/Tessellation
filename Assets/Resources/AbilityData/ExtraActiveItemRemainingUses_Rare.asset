@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9fc628945da38f43987756c6c3b7d49, type: 3}
+  m_Name: ExtraActiveItemRemainingUses_Rare
+  m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
+  AbilityType: 1
+  Rarity: 1
+  AbilityName: "\uC561\uD2F0\uBE0C\uC544\uC774\uD15C"
+  Description: "\uC561\uD2F0\uBE0C\uC544\uC774\uD15C \uC99D\uAC00\uD55C\uB2E4"
+  ItemIcon: {fileID: 21300000, guid: 2c9c223f37a05ed4db54f2625d2991e8, type: 3}
+  AbilityPrice: 5
+  CanAppearInShop: 1
+  ConflictingAbilities: []
+  IsSynthesisItem: 1
+  SynthesisRequirements:
+  - {fileID: 11400000, guid: 35088e6bf9a7ace4c92b4275d49fff14, type: 2}
