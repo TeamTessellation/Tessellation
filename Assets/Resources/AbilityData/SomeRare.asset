@@ -10,17 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9fc628945da38f43987756c6c3b7d49, type: 3}
-  m_Name: TestAbility_Lv2
+  m_Name: SomeRare
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
-  AbilityType: 0
-  Rarity: 2
-  AbilityName: "\uC628\uB9AC\uBC30\uCE58 Lv.2"
-  Description: "\uBC30\uCE58\uC810\uC218\uAC00 2\uBC30\uAC00 \uB41C\uB2E4 \uC640\uC6B0!"
-  MaxLevel: 3
-  ItemIcon: {fileID: 21300000, guid: 2c9c223f37a05ed4db54f2625d2991e8, type: 3}
-  AbilityPrice: 5
+  AbilityType: 5
+  Rarity: 1
+  AbilityName: "\uC5F0\uC1C4\uD3ED\uD314"
+  Description: "\uD3ED\uD0C4\uC774 \uC5F0\uC1C4\uD3ED\uD314\uD55C\uB2E4"
+  ItemIcon: {fileID: 21300000, guid: 0ff55dc06456c9a4192f2079c3011241, type: 3}
+  AbilityPrice: 4
   CanAppearInShop: 1
   ConflictingAbilities: []
   IsSynthesisItem: 0
-  SynthesisRequirements:
-  - {fileID: 11400000, guid: bc805b53accc4ae45ad66c2ba6f5e19d, type: 2}
+  SynthesisRequirements: []
