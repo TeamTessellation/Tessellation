@@ -150,14 +150,22 @@ namespace Core
             _initializationCallback?.Invoke();
         }
         
-        private void Start()
+        private async UniTask Start()
         {
             DontDestroyOnLoad(gameObject);
-            StartLoadingScene().ContinueWith(() =>
-            {
-                SceneManager.LoadScene(nextScene.SceneName);
-                Destroy(gameObject);
-            }).Forget();
+     
+            await StartLoadingScene();
+
+            await UniTask.Delay(100);
+            
+            SceneManager.LoadScene(nextScene.SceneName);
+            Destroy(gameObject);
+            
+            // StartLoadingScene().ContinueWith(() =>
+            // {
+            //     SceneManager.LoadScene(nextScene.SceneName);
+            //     Destroy(gameObject);
+            // }).Forget();
         }
         
         

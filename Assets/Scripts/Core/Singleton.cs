@@ -18,6 +18,8 @@ namespace Core
         
         protected static T _instance;
 
+        public static bool HasInstance => _instance != null;
+        
         public static T Instance
         {
             get
@@ -37,7 +39,7 @@ namespace Core
             }
         }
         
-        protected virtual void Awake()
+        private void Awake()
         {
             
             void SetDontDestroyOnLoad()

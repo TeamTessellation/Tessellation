@@ -164,13 +164,16 @@ namespace UI.OtherUIs
         {
             resumeButton.onClick.AddListener(OnResumeButtonClicked);
             homeButton.onClick.AddListener(OnHomeButtonClicked);
-            ;
+            soundButton.onClick.AddListener(OnSoundButtonClicked);
+            retryButton.onClick.AddListener(OnRetryButtonClicked);
         }
         
         private void OnDisable()
         {
             resumeButton.onClick.RemoveListener(OnResumeButtonClicked);
             homeButton.onClick.RemoveListener(OnHomeButtonClicked);
+            soundButton.onClick.RemoveListener(OnSoundButtonClicked);
+            retryButton.onClick.RemoveListener(OnRetryButtonClicked);
         }
         
         public void CancelEnabledTransitions()
