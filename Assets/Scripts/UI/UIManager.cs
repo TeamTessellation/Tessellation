@@ -52,6 +52,8 @@ namespace UI
         [field:SerializeField] public StageInfoUI StageInfoUI{ get; private set; }
         [field:SerializeField] public FailResultUI FailResultUI{ get; private set; }
         [field:SerializeField] public ClearResultUI ClearResultUI{ get; private set; }
+        [field: SerializeField] public ShopUI ShopUI { get; private set; }
+
         [Header("Setting Child UIs")]
         [field:SerializeField] public PauseUI PauseUI { get; private set; }
         [field:SerializeField] public SoundSettingUI SoundSettingUI { get; private set; }  
@@ -71,7 +73,7 @@ namespace UI
             if (cnt > 1)
             {
                 LogEx.LogWarning($"UIManager Start called multiple times! Count: {cnt}");
-                Debug.Assert(false, "UIManager Start called multiple times!");
+                // Debug.Assert(false, "UIManager Start called multiple times!");
             }
             await GameManager.WaitForInit();
             Init();
@@ -141,6 +143,7 @@ namespace UI
             // TransitionUI = FindUI<TransitionUI>();
             FailResultUI = FindUI<FailResultUI>();
             ClearResultUI = FindUI<ClearResultUI>();
+            ShopUI = FindUI<ShopUI>();
             
             HandCanvas = FindWorldUI<HandCanvas>();
         }

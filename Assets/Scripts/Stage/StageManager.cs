@@ -235,7 +235,12 @@ namespace Stage
             coinCounter.DoCount(playerStatus.CurrentCoins, 0.2f, false);
             
             // 상점 파트
-            // TODO : ShopUI 구현 필요
+            ShopUI shopUI = UIManager.Instance.ShopUI;
+            
+            await shopUI.ShowShopItemAsync(token);
+            await shopUI.WaitForSkipButtonAsync(token);
+            
+            shopUI.Hide();
             
             LogEx.Log("Stage Ended.");
             // 스테이지 시작으로 돌아가기
@@ -318,12 +323,14 @@ namespace Stage
             {
                 if (playerStatus.RemainingTurns <= 0 && !CheckStageClear())
                 {
+                    LogEx.Log("Stage Failed: No remaining turns.");
                     return true;
                 }
             }
             // 핸드에 놓을 수 있는 타일이 없는지 확인
             if (HandManager.Instance.HandCount > 0 && !HandManager.Instance.CanPlace())
             {
+                LogEx.Log("Stage Failed: No placeable tiles in hand.");
                 return true;
             }
             
