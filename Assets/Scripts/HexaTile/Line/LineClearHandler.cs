@@ -5,6 +5,7 @@ using Core;
 using Player;
 using UnityEngine;
 using static Field;
+using System;
 
 public class LineClearHandler
 {
@@ -91,7 +92,7 @@ public class LineClearHandler
         return true;
     }
 
-    public async UniTask ClearLineAsync(Line line, float interval = 1f)
+    public async UniTask ClearLineAsync(Line line, float interval = 1f, Action<Tile> remainAction = null)
     {
         Direction up = Direction.R;
         Direction down = Direction.L;
@@ -119,15 +120,15 @@ public class LineClearHandler
 
         await UniTask.WaitForSeconds(0.3f);
 
-        allTask.Add(Field.Instance.SafeRemoveTile(line.Start));
+        allTask.Add(Field.Instance.SafeRemoveTile(line.Start, remainAction));
         await UniTask.WaitForSeconds(interval);
         while (Field.Instance.CheckAbleCoor(upCorrect) || Field.Instance.CheckAbleCoor(downCorrect))
         {
             upCorrect += up;
             downCorrect += down;
             await UniTask.WaitForSeconds(interval);
-            allTask.Add(Field.Instance.SafeRemoveTile(upCorrect));
-            allTask.Add(Field.Instance.SafeRemoveTile(downCorrect));
+            allTask.Add(Field.Instance.SafeRemoveTile(upCorrect, remainAction));
+            allTask.Add(Field.Instance.SafeRemoveTile(downCorrect, remainAction));
         }
 
         await allTask;
@@ -135,17 +136,18 @@ public class LineClearHandler
         EndLineClear(line);
     }
     
-    private async UniTask ClearLinesAsync(List<Line> line, float interval = 1f)
+    public async UniTask ClearLinesAsync(List<Line> line, float interval = 1f)
     {
         //UniTask[] tasks = new UniTask[line.Count];
+        List<Tile> remainTile = new();
 
         for (int i = 0; i < line.Count; i++)
         {
-            await ClearLineAsync(line[i], interval);
+            await ClearLineAsync(line[i], interval, (tile) => remainTile.Add(tile));
         }
         //await UniTask.WhenAll(tasks);
         await UniTask.WaitForSeconds(interval);
-        EndAllLineClear(line);
+        await EndAllLineClear(line, interval, remainTile);
     }
 
     public List<Tile> GetTilesFromLine(Line line)
@@ -227,8 +229,19 @@ public class LineClearHandler
         // status.TotalClearedLines += 1; // 집계는 StageManager에서 처리
     }
 
-    private void EndAllLineClear(List<Line> line)
+    private async UniTask EndAllLineClear(List<Line> line, float interval = 1, List<Tile> remainTile = null)
     {
-        Debug.Log("Line 클리어");
+        if (remainTile != null)
+        {
+            List<UniTask> tasks = new();
+
+            for (int i = 0; i < remainTile.Count; i++)
+            {
+                await UniTask.WaitForSeconds(interval);
+                tasks.Add(remainTile[i].RemoveEffect());
+            }
+
+            await tasks;
+        }
     }
 }

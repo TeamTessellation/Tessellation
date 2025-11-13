@@ -156,9 +156,13 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
 
         ClearSilhouette();
 
+        HashSet<Coordinate> coors = new();
         for (int i = 0; i < tileSet.Tiles.Count; i++)
         {
             var correctCoor = coor + tileSet.Tiles[i].transform.localPosition.ToCoor();
+            if (coors.Contains(correctCoor))
+                continue;
+            coors.Add(correctCoor);
             GenerateSilhouetteTile(correctCoor);
         }
     }
@@ -182,20 +186,25 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
     private void RemoveTile(Coordinate coor)
     {
         //_allCell[coor].UnSet();
-        RemoveTileEffect(_allCell[coor]).Forget();
+        ActiveTileEffect(_allCell[coor]).Forget();
     }
 
-    private async UniTask RemoveTileEffect(Cell cell)
+    private async UniTask ActiveTileEffect(Cell cell, Action<Tile> remainAction = null)
     {
-        await cell.Tile.ActiveEffect(cell.UnSet);
+        await cell.Tile.ActiveEffect(cell.UnSet, remainAction);
     }
 
-    public async UniTask SafeRemoveTile(Coordinate coor)
+    public async UniTask RemoveTileEffect(Cell cell, Action<Tile> remainAction = null)
+    {
+        await cell.Tile.RemoveEffect();
+    }
+
+    public async UniTask SafeRemoveTile(Coordinate coor, Action<Tile> remainAction = null)
     {
         if (CheckAbleCoor(coor) && !_allCell[coor].IsEmpty)
         {
             var cell = _allCell[coor];
-            await RemoveTileEffect(cell);
+            await ActiveTileEffect(cell, remainAction);
         }
         await UniTask.CompletedTask;
     }

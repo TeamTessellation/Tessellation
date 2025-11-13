@@ -7,13 +7,14 @@ Shader "Custom/InGameBG"
         _TileSize ("Tile Size", float) = 1
         _LineSize ("Line Size", Range(0, 100)) = 40
         _Angle ("Angle", float) = 0
+        _Offset ("Offset", Vector) = (0, 0, 0, 0)
 
         _XSpeed     ("X Wave Speed", Range(0.0, 10.0)) = 1.0
         _BrightMin  ("Min Brightness", Range(0.0, 2.0)) = 0.4
         _BrightMax  ("Max Brightness", Range(0.0, 2.0)) = 1.8 
         _BrightLineSize ("Bright Line Size", float) = 1
 
-        _Amplitude ("Wave Amplitude", Range(0, 0.1)) = 0.03
+        _Amplitude ("Wave Amplitude", Range(0, 1)) = 0.03
         _Frequency ("Wave Frequency", Range(0, 50))  = 10
         _Speed     ("Wave Speed", Range(0, 10))      = 2
         _Direction ("Wave Direction (XY)", Vector)   = (1,0,0,0)
@@ -61,6 +62,7 @@ Shader "Custom/InGameBG"
                 float _TileSize;
                 float _Angle;
                 float _LineSize;
+                float4 _Offset;
 
                 float _XSpeed;
                 float _BrightMin;
@@ -143,13 +145,13 @@ Shader "Custom/InGameBG"
 
             half4 frag(Varyings IN) : SV_Target
             {
-                float2 dir = normalize(_Direction.xy + float2(1e-4, 0));
+                float2 dir = normalize(float2(_Time.y * 0.1, - 0.05 * _Time.y) + float2(1e-4, 0));
                 float2 centeredUV = IN.uv - 0.5;
                 float phase = dot(centeredUV, dir) * _Frequency + _Time.y * _Speed;
                 float2 waveOffset = dir * (sin(phase) * _Amplitude);
 
                 float2 worldPos = IN.worldPos;
-                worldPos = worldPos + waveOffset;
+                worldPos = worldPos + waveOffset + _Offset.xy;
 
                 float3 coor = WorldToCoor(worldPos, _TileSize);
                 float3 centerPos = CoorToWorld(coor, _TileSize);
