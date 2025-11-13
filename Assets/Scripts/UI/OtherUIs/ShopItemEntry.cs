@@ -1,16 +1,16 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ShopItemEntry : MonoBehaviour
+namespace UI.OtherUIs
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class ShopItemEntry : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [Header("Shop UI Components")] 
+        [SerializeField] private Image itemImage;
+        [SerializeField] private TMP_Text itemRarityText;
+        [SerializeField] private TMP_Text itemNameText;
+        [SerializeField] private TMP_Text costText;
     }
 }
+
