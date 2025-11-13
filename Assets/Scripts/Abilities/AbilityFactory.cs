@@ -9,8 +9,18 @@ namespace Abilities
     {
         private static Dictionary<eAbilityType, Func<AbilityBase>> abiltyFuncs = new()
         {
-            { eAbilityType.OnlyPlace , () => new OnlyPlaceAbility() },
-            // Add..            
+            { eAbilityType.ExtraLife, () => new OnlyPlaceAbility() },
+            { eAbilityType.ExtraActiveItemRemainingUses, () => new OnlyPlaceAbility() },
+            { eAbilityType.AddBombTileset, () => new OnlyPlaceAbility() },
+            { eAbilityType.IncreaseExplosionRange, () => new OnlyPlaceAbility() },
+            { eAbilityType.BombImmediatelyExplosion, () => new OnlyPlaceAbility() },
+            { eAbilityType.ChainExplosion, () => new OnlyPlaceAbility() },
+            { eAbilityType.AddExtraScoreTileset, () => new OnlyPlaceAbility() },
+            { eAbilityType.AddMultipleTileset, () => new OnlyPlaceAbility() },
+            { eAbilityType.AddGoldTileset, () => new OnlyPlaceAbility() },
+            { eAbilityType.GoldTilesetCoinScaledExtraScore, () => new OnlyPlaceAbility() },
+            { eAbilityType.AdditionalInterest, () => new OnlyPlaceAbility() },
+            { eAbilityType.CoinScaledMultiple, () => new OnlyPlaceAbility() },
         };
         
         public static AbilityBase Create(AbilityDataSO abilitydata)
