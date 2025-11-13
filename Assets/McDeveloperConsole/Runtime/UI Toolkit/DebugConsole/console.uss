@@ -112,6 +112,13 @@
     gap: 6px;
     padding: 4px;
 }
+#PreviewContainer {
+    overflow: visible; /* 세로로 늘어나도록 허용 */
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    padding-bottom: 12px;
+}
 
 #PreviewContainer .unity-scroll-view__content-container {
     display: flex;
@@ -126,7 +133,6 @@
 .preview .suggest {
     padding: 2px 6px;
     border-radius: 4px;
-    font-size: 12px;
     min-height: 20px;
     background-color: rgb(35, 42, 47);
     color: rgb(137, 255, 163);
