@@ -19,58 +19,68 @@ namespace Machamy.DeveloperConsole
     public class ConsoleUI : MonoBehaviour, IConsoleWindow
     {
         private static ConsoleUI _instance;
+
         public static ConsoleUI Instance => _instance;
+
         /*
          *  Default Variables
          */
-        [Header("Default Variables")]
-        [SerializeField][ReadOnly] private GameObject consolePanel;
+        [Header("Default Variables")] [SerializeField] [ReadOnly]
+        private GameObject consolePanel;
+
         [SerializeField, VisibleOnly] private bool _isInitialized = false;
         [SerializeField] private bool _isOpen = false;
         [SerializeField] private bool _useAutoComplete = false;
         [SerializeField] private bool autoScrollToBottomOnNewMessage = true;
         [SerializeField] private bool autoScrollToBottomOnNewPrint = true;
         [SerializeField] private bool useResolutionWatcher = true;
-        [Header("Binding Config")]
+
+        [Header("Binding Config")] 
         [SerializeField] InputAction _toggleConsoleAction;
+        [SerializeField] InputAction _ctrlAction;
+        [SerializeField] InputAction _sizeUpAction;
+        [SerializeField] InputAction _sizeDownAction;
+
         // [SerializeField] InputAction _autoCompleteConsoleAction;
-        [Header("Size Config")]
-        [SerializeField] private Vector2 minSize = new Vector2(360, 200);
+        [Header("Size Config")] [SerializeField]
+        private Vector2 minSize = new Vector2(360, 200);
+
         [SerializeField] private Vector2 maxSize = new Vector2(1920, 1200);
         public bool IsInitialized => _isInitialized;
         public bool IsOpen => _isOpen;
         public McConsole Console => McConsole.Instance;
-        
+
         /*
          * UI 관련
          */
         private VisualElement trueRoot = null;
         private VisualElement root = null;
         TextField textField = null;
-        
+
         ScrollView previewContainer = null;
         ScrollView historyContainer = null;
-        
+
         /*
          * 상태
          */
-        
+
         private bool _shouldScrollToBottom = false;
         public string CurrentInput => textField.value.TrimEnd();
-        
+
         /*
          * 자동완성 관련
          */
-        [Header("자동완성 관련")]
-        private AutoCompleter _autoCompleter = new AutoCompleter();
+        [Header("자동완성 관련")] private AutoCompleter _autoCompleter = new AutoCompleter();
+
         /// <summary>
         /// 해당 텍스트 변경이 자동완성 요청에 의한 것인지 여부.
         /// </summary>
         private bool _wasAutoCompleteJustRequested = false;
+
         private List<string> _submittedCommands = new List<string>();
         private int _currentRecallIndex = -1;
         public IReadOnlyList<string> SubmittedCommands => _submittedCommands.AsReadOnly();
-        
+
         private void Reset()
         {
             consolePanel = this.gameObject;
@@ -79,9 +89,9 @@ namespace Machamy.DeveloperConsole
 
         private void Awake()
         {
-            #if DO_NOT_USE_DEBUG_CONSOLE
+#if DO_NOT_USE_DEBUG_CONSOLE
             Destroy(this.gameObject);
-            #else
+#else
             /*
              * 기초 설정
              */
@@ -91,13 +101,15 @@ namespace Machamy.DeveloperConsole
                 Destroy(gameObject);
                 return;
             }
+
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
-            
+
             if (consolePanel == null)
             {
                 consolePanel = this.gameObject;
             }
+
             if (trueRoot == null)
             {
                 var uiDocument = GetComponent<UIDocument>();
@@ -111,26 +123,26 @@ namespace Machamy.DeveloperConsole
                     LogEx.LogError("ConsoleUI: No UIDocument found!");
                     return;
                 }
-                
+
             }
-            
+
             Console.RegisterWindow(this);
-            
-            
+
+
             /*
              * UI 요소 찾기
              */
             root = trueRoot.Q<VisualElement>("Root");
             LogEx.Log($"ConsoleUI: {trueRoot}, {root}");
-            
-            
+
+
             textField = trueRoot.Q<TextField>("InputField");
             previewContainer = trueRoot.Q<ScrollView>("PreviewContainer");
             historyContainer = trueRoot.Q<ScrollView>("HistoryContainer");
             historyContainer.AddToClassList("history");
-            
+
             textField.value = "";
-            
+
             /*
              * Manipulator 설정
              */
@@ -141,17 +153,19 @@ namespace Machamy.DeveloperConsole
             var eastManipulator = new ResizeManipulator(resizeEast, root, ResizeEdge.East);
             var southManipulator = new ResizeManipulator(resizeSouth, root, ResizeEdge.South);
             var southEastManipulator = new ResizeManipulator(resizeSouthEast, root, ResizeEdge.SouthEast);
-            
+
             void SetResizeMinMaxSize(Vector2 min, Vector2 max)
             {
                 eastManipulator.MinSize = southManipulator.MinSize = southEastManipulator.MinSize = min;
                 eastManipulator.MaxSize = southManipulator.MaxSize = southEastManipulator.MaxSize = max;
                 southEastManipulator.Clamp();
             }
+
             SetResizeMinMaxSize(minSize, maxSize);
-            eastManipulator.ClampToParentBounds = southManipulator.ClampToParentBounds = southEastManipulator.ClampToParentBounds = true;
-            
-            if(useResolutionWatcher)
+            eastManipulator.ClampToParentBounds = southManipulator.ClampToParentBounds =
+                southEastManipulator.ClampToParentBounds = true;
+
+            if (useResolutionWatcher)
             {
                 T AddOrGetComponent<T>(GameObject obj) where T : Component
                 {
@@ -177,17 +191,17 @@ namespace Machamy.DeveloperConsole
                     };
                 }
             }
-            
+
             resizeEast.AddManipulator(eastManipulator);
             resizeSouth.AddManipulator(southManipulator);
             resizeSouthEast.AddManipulator(southEastManipulator);
-            
+
             var topBar = trueRoot.Q<VisualElement>("TopBar");
             var dragManipulator = new DragManipulator(topBar, root);
             dragManipulator.ClampToParentBounds = true;
-            dragManipulator.Padding = new RectOffset(5,5,5,5);
+            dragManipulator.Padding = new RectOffset(5, 5, 5, 5);
             topBar.AddManipulator(dragManipulator);
-            
+
             /*
              * 토글 단축키 설정
              */
@@ -195,6 +209,23 @@ namespace Machamy.DeveloperConsole
             {
                 _toggleConsoleAction.performed += OnToggleKeyPressed;
                 _toggleConsoleAction.Enable();
+                _ctrlAction?.Enable();
+                _sizeUpAction?.Enable();
+                _sizeDownAction?.Enable();
+                _sizeUpAction.performed += ctx =>
+                {
+                    if (_ctrlAction != null && _ctrlAction.IsPressed())
+                    {
+                        FontSizeUp();
+                    }
+                };
+                _sizeDownAction.performed += ctx =>
+                {
+                    if (_ctrlAction != null && _ctrlAction.IsPressed())
+                    {
+                        FontSizeDown();
+                    }
+                };
             }
             else
             {
@@ -204,19 +235,33 @@ namespace Machamy.DeveloperConsole
                     {
                         Toggle();
                     }
+
+                    if (Keyboard.current.ctrlKey.isPressed)
+                    {
+                        if (c == '+')
+                        {
+                            FontSizeUp();
+                        }
+                        else if (c == '-')
+                        {
+                            FontSizeDown();
+                        }
+                    }
                 };
             }
             
+
             _isInitialized = true;
             Close();
-            #endif
+#endif
         }
 
         private void OnEnable()
         {
             RegisterHandlers();
-            
+
         }
+
         private void OnDisable()
         {
             UnregisterHandlers();
@@ -246,12 +291,12 @@ namespace Machamy.DeveloperConsole
         private void RegisterHandlers()
         {
             LogEx.Log("RegisterHandlers");
-            
+
             textField.RegisterValueChangedCallback(OnTextChanged);
             textField.RegisterCallback<FocusOutEvent>(OnTextFieldUnfocused);
             textField.RegisterCallback<KeyDownEvent>(OnTextFieldKeyDown, TrickleDown.TrickleDown);
         }
-        
+
         private void UnregisterHandlers()
         {
             LogEx.Log("UnregisterHandlers");
@@ -264,7 +309,7 @@ namespace Machamy.DeveloperConsole
         {
             _isOpen = true;
             trueRoot.style.display = DisplayStyle.Flex;
-            
+
             ScrollToBottom();
 
             textField.schedule.Execute(() =>
@@ -272,7 +317,7 @@ namespace Machamy.DeveloperConsole
                 if (!IsOpen) return;
                 textField.Focus();
                 OnTextChanged(CurrentInput);
-                
+
             }).ExecuteLater(5);
         }
 
@@ -282,6 +327,7 @@ namespace Machamy.DeveloperConsole
             trueRoot.style.display = DisplayStyle.None;
             textField.Blur();
         }
+
         public void Toggle()
         {
             if (!IsInitialized) return;
@@ -293,6 +339,7 @@ namespace Machamy.DeveloperConsole
         {
             Message(MessageType.Default, message);
         }
+
         public void Message(MessageType type, string message)
         {
             var label = new Label(message);
@@ -306,7 +353,7 @@ namespace Machamy.DeveloperConsole
                 _shouldScrollToBottom = true;
             }
         }
-        
+
         private void Message(MessageType type, string message, params string[] additionalClasses)
         {
             var label = new Label(message);
@@ -317,7 +364,7 @@ namespace Machamy.DeveloperConsole
             {
                 label.AddToClassList(cls);
             }
-            
+
             historyContainer.Add(label);
             historyContainer.ScrollTo(label);
             if (autoScrollToBottomOnNewMessage)
@@ -330,7 +377,7 @@ namespace Machamy.DeveloperConsole
         {
             Print(LogType.Log, message);
         }
-        
+
         public void Print(LogType type, string message)
         {
             if (!IsInitialized)
@@ -352,7 +399,7 @@ namespace Machamy.DeveloperConsole
                     label.AddToClassList("info");
                     break;
             }
-            
+
             historyContainer.Add(label);
             historyContainer.ScrollTo(label);
             if (autoScrollToBottomOnNewPrint)
@@ -370,7 +417,7 @@ namespace Machamy.DeveloperConsole
                 return;
             historyContainer.Clear();
         }
-        
+
         /// <summary>
         /// Scroll History to Bottom
         /// </summary>
@@ -380,7 +427,7 @@ namespace Machamy.DeveloperConsole
             Scroller scroller = scrollView.verticalScroller;
             scroller.value = scroller.highValue > 0 ? scroller.highValue : 0;
         }
-        
+
         /// <summary>
         /// Change ConsoleUI Opacity
         /// </summary>
@@ -390,7 +437,24 @@ namespace Machamy.DeveloperConsole
             root.style.opacity = Mathf.Clamp01(opacity);
         }
         
-        /// <summary>
+        public void FontSizeUp(int step = 2)
+        {
+            float newSize = root.resolvedStyle.fontSize + step;
+            Message(MessageType.Gray,$"Font size up to {newSize}");
+            root.style.fontSize = newSize;
+            
+        }
+
+        public void FontSizeDown(int step = 2)
+        {
+            float newSize = root.resolvedStyle.fontSize - step;
+            if (newSize < 6)
+                newSize = 6;
+            Message(MessageType.Gray,$"Font size down to {newSize}");
+            root.style.fontSize = newSize;
+        }
+
+    /// <summary>
         /// Request AutoCompletion.
         /// If there are already suggestions, select the next one.
         /// </summary>
