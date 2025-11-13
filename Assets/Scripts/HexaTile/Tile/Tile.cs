@@ -28,6 +28,7 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
     public Direction Direction;
     private Sprite _defaultSprite;
     private Light2D _light;
+    [NonSerialized] private TileOptionBase _tileOptionBase;
 
     /// <summary>
     /// 해당 Tile Data
@@ -66,6 +67,14 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
         _light.color = TileEffectSO[data.Option].LightColor;
 
         _sr.color = new Color(1, 1, 1, 1);
+
+        switch(data.Option)
+        {
+            case TileOption.Default:
+                _tileOptionBase = new TileOptionDefault();
+                break;
+            // TO다산 여기다가 각 경우에 따라서 추가 사실 클래스 매번 생성할 필요는 없고 같은거 써도 됨 알아서 수정
+        }
     }
 
     public void Reset()
@@ -73,8 +82,9 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
         _sr.sprite = _defaultSprite;
     }
 
-    public async UniTask ActiveEffect(Action endAction)
+    public async UniTask ActiveEffect(Action endAction, Action<Tile> remainAction)
     {
+        _endAction = endAction;
         TileEffectSO effectData;
         if (TileEffectSO.ContainsKey(Data.Option))
             effectData = TileEffectSO[Data.Option];
@@ -93,15 +103,17 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
 
         if (effectData.WaitForEnd)
         {
-
+            remainAction?.Invoke(this);
         }
         else
         {
-            await RemoveEffect(endAction);
+            await RemoveEffect();
         }
     }
 
-    public async UniTask RemoveEffect(Action endAction)
+    private Action _endAction = null;
+
+    public async UniTask RemoveEffect()
     {
         TileEffectSO effectData;
         if (TileEffectSO.ContainsKey(Data.Option))
@@ -120,37 +132,11 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
             .ToUniTask();
 
         _sr.color = new Color(_sr.color.r, _sr.color.g, _sr.color.b, 0);
-        endAction?.Invoke();
+        _endAction?.Invoke();
     }
 
     private void SetLight(float light)
     {
         _light.intensity = light;
-    }
-
-    public async UniTask OnTilePlaced()
-    {
-        int baseScore = Data.Score;
-        int finalScore = ScoreManager.Instance.CalculateTileScore(eTileEventType.Place, this, baseScore);
-        ScoreManager.Instance.AddCurrentScore(finalScore);
-
-        Vector2 popUpPosition = Coor.ToWorld(Field.Instance.TileOffset);
-    }
-
-    public async UniTask OnLineCleared()
-    {
-        int baseScore = Data.Score * 5;
-        int finalScore = ScoreManager.Instance.CalculateTileScore(eTileEventType.LineClear, this, baseScore);
-        ScoreManager.Instance.AddCurrentScore(finalScore);
-    }
-    
-    public async UniTask OnTileRemoved()
-    {
-        
-    }
-    
-    public async UniTask OnTileBurst()
-    {
-        ScoreManager.Instance.AddCurrentScore(Data.Score);
     }
 }

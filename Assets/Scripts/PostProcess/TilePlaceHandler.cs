@@ -194,14 +194,12 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
 
         // 1차 이펙트 처리
         LineClearHandler lineClearHandler = new LineClearHandler();
-        for (int i = 0; i < lineClearEvent.ClearedLineCount; i++)
-        {
-            await lineClearHandler.ClearLineAsync(lineClearEvent.ClearedLine[i], tileRemoveInterval);  
-        }
-        
+
+        await lineClearHandler.ClearLinesAsync(lineClearEvent.ClearedLine, tileRemoveInterval);
+
         // TODO : 2차 이펙트 처리
-        
-        
+
+
         _turnResultInfo.ClearedLineCount += lineClearEvent.ClearedLineCount;
         _turnResultInfo.ClearedTiles.AddRange(lineClearEvent.Tiles);
         
