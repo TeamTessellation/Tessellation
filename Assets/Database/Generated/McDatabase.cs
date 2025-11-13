@@ -39,6 +39,25 @@ namespace Database
             return null;
         }
 
+        public T FindByItemID<T>(string itemID) where T : class
+        {
+            if (typeof(T) == null) return null;
+            switch (typeof(T).Name)
+            {
+                case "ItemData":
+                    foreach (var instance in ItemDataList)
+                    {
+                        if (instance.ItemID == itemID)
+                            return instance as T;
+                    }
+                    break;
+                default:
+                    Debug.LogWarning($"[MDatabase] 정의되지 않은 클래스 타입: {typeof(T).Name}");
+                    return null;
+            }
+            return null;
+        }
+
         public void ClearAll()
         {
             ItemDataList.Clear();

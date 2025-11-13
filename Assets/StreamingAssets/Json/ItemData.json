@@ -1,13 +1,395 @@
 [
   {
-    "itemID": "",
-    "itemNameID": "",
-    "ItemInscriptionID": "",
-    "rank": "",
-    "price": 0,
+    "ItemID": "ExtraLife",
+    "eItemType": "ExtraLife",
+    "itemNameID": "ExtraLife_name",
+    "DescriptionID": "ExtraLife_description",
+    "Rarity": "Normal",
+    "input": [
+      1.0
+    ],
+    "ItemPrice": 3,
+    "ConflictingItems": [],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "ExtraLifeII",
+    "eItemType": "ExtraLife",
+    "itemNameID": "ExtraLifeII_name",
+    "DescriptionID": "ExtraLifeII_description",
+    "Rarity": "Rare",
+    "input": [
+      2.0
+    ],
+    "ItemPrice": 5,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"ExtraLifeII\""
+    ]
+  },
+  {
+    "ItemID": "ExtraLifeIII",
+    "eItemType": "ExtraLife",
+    "itemNameID": "ExtraLifeIII_name",
+    "DescriptionID": "ExtraLifeIII_description",
+    "Rarity": "Epic",
+    "input": [
+      4.0
+    ],
+    "ItemPrice": 8,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"ExtraLifeIII\""
+    ]
+  },
+  {
+    "ItemID": "ExtraActiveItemRemainingUses",
+    "eItemType": "ExtraActiveItemRemainingUses",
+    "itemNameID": "ExtraActiveItemRemainingUses_name",
+    "DescriptionID": "ExtraActiveItemRemainingUses_description",
+    "Rarity": "Normal",
+    "input": [
+      1.0
+    ],
+    "ItemPrice": 3,
+    "ConflictingItems": [],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "ExtraActiveItemRemainingUsesII",
+    "eItemType": "ExtraActiveItemRemainingUses",
+    "itemNameID": "ExtraActiveItemRemainingUsesII_name",
+    "DescriptionID": "ExtraActiveItemRemainingUsesII_description",
+    "Rarity": "Rare",
+    "input": [
+      2.0
+    ],
+    "ItemPrice": 5,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"ExtraActiveItemRemainingUses\""
+    ]
+  },
+  {
+    "ItemID": "ExtraActiveItemRemainingUsesIII",
+    "eItemType": "ExtraActiveItemRemainingUses",
+    "itemNameID": "ExtraActiveItemRemainingUsesIII_name",
+    "DescriptionID": "ExtraActiveItemRemainingUsesIII_description",
+    "Rarity": "Epic",
+    "input": [
+      4.0
+    ],
+    "ItemPrice": 8,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"ExtraActiveItemRemainingUsesII\""
+    ]
+  },
+  {
+    "ItemID": "AddBombTileset",
+    "eItemType": "AddBombTileset",
+    "itemNameID": "AddBombTileset_name",
+    "DescriptionID": "AddBombTileset_description",
+    "Rarity": "Normal",
+    "input": [
+      3.0
+    ],
+    "ItemPrice": 4,
+    "ConflictingItems": [],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "AddBombTilesetII",
+    "eItemType": "AddBombTileset",
+    "itemNameID": "AddBombTilesetII_name",
+    "DescriptionID": "AddBombTilesetII_description",
+    "Rarity": "Rare",
+    "input": [
+      6.0
+    ],
+    "ItemPrice": 6,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"AddBombTileset\""
+    ]
+  },
+  {
+    "ItemID": "AddBombTilesetIII",
+    "eItemType": "AddBombTileset",
+    "itemNameID": "AddBombTilesetIII_name",
+    "DescriptionID": "AddBombTilesetIII_description",
+    "Rarity": "Epic",
+    "input": [
+      9.0
+    ],
+    "ItemPrice": 9,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"AddBombTilesetII\""
+    ]
+  },
+  {
+    "ItemID": "IncreaseExplosionRage",
+    "eItemType": "IncreaseExplosionRage",
+    "itemNameID": "IncreaseExplosionRage_name",
+    "DescriptionID": "IncreaseExplosionRage_description",
+    "Rarity": "Rare",
+    "input": [
+      1.0
+    ],
+    "ItemPrice": 8,
+    "ConflictingItems": [],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "IncreaseExplosionRageII",
+    "eItemType": "IncreaseExplosionRage",
+    "itemNameID": "IncreaseExplosionRageII_name",
+    "DescriptionID": "IncreaseExplosionRageII_description",
+    "Rarity": "Epic",
+    "input": [
+      2.0
+    ],
+    "ItemPrice": 12,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"IncreaseExplosionRage\""
+    ]
+  },
+  {
+    "ItemID": "BombImmediatlyExplosion",
+    "eItemType": "BombImmediatlyExplosion",
+    "itemNameID": "BombImmediatlyExplosion_name",
+    "DescriptionID": "BombImmediatlyExplosion_description",
+    "Rarity": "Rare",
     "input": [],
-    "effectPriority": 0,
-    "requiredItemID": [],
-    "iconPath": ""
+    "ItemPrice": 12,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"IncreaseExplosionRage\""
+    ]
+  },
+  {
+    "ItemID": "BombChainExplosion",
+    "eItemType": "ChainExplosion",
+    "itemNameID": "BombChainExplosion_name",
+    "DescriptionID": "BombChainExplosion_description",
+    "Rarity": "Epic",
+    "input": [],
+    "ItemPrice": 12,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"IncreaseExplosionRage\""
+    ]
+  },
+  {
+    "ItemID": "AddExtraScoreTileset",
+    "eItemType": "AddExtraScoreTileset",
+    "itemNameID": "AddExtraScoreTileset_name",
+    "DescriptionID": "AddExtraScoreTileset_description",
+    "Rarity": "Normal",
+    "input": [
+      3.0
+    ],
+    "ItemPrice": 4,
+    "ConflictingItems": [],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "AddExtraScoreTilesetII",
+    "eItemType": "AddExtraScoreTileset",
+    "itemNameID": "AddExtraScoreTilesetII_name",
+    "DescriptionID": "AddExtraScoreTilesetII_description",
+    "Rarity": "Rare",
+    "input": [
+      6.0
+    ],
+    "ItemPrice": 6,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"AddExtraScoreTileset\""
+    ]
+  },
+  {
+    "ItemID": "AddExtraScoreTilesetIII",
+    "eItemType": "AddExtraScoreTileset",
+    "itemNameID": "AddExtraScoreTilesetIII_name",
+    "DescriptionID": "AddExtraScoreTilesetIII_description",
+    "Rarity": "Epic",
+    "input": [
+      9.0
+    ],
+    "ItemPrice": 9,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"AddExtraScoreTilesetII\""
+    ]
+  },
+  {
+    "ItemID": "AddMutlipleTileset",
+    "eItemType": "AddMutlipleScoreTileset",
+    "itemNameID": "AddMutlipleTileset_name",
+    "DescriptionID": "AddMutlipleTileset_description",
+    "Rarity": "Rare",
+    "input": [
+      3.0
+    ],
+    "ItemPrice": 12,
+    "ConflictingItems": [],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "AddMutlipleTilesetII",
+    "eItemType": "AddMutlipleScoreTileset",
+    "itemNameID": "AddMutlipleTilesetII_name",
+    "DescriptionID": "AddMutlipleTilesetII_description",
+    "Rarity": "Epic",
+    "input": [
+      6.0
+    ],
+    "ItemPrice": 18,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"AddMutlipleTileset\""
+    ]
+  },
+  {
+    "ItemID": "AddGoldTileset",
+    "eItemType": "AddGoldTileset",
+    "itemNameID": "AddGoldTileset_name",
+    "DescriptionID": "AddGoldTileset_description",
+    "Rarity": "Normal",
+    "input": [
+      3.0
+    ],
+    "ItemPrice": 6,
+    "ConflictingItems": [],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "AddGoldTilesetII",
+    "eItemType": "AddGoldTileset",
+    "itemNameID": "AddGoldTilesetII_name",
+    "DescriptionID": "AddGoldTilesetII_description",
+    "Rarity": "Rare",
+    "input": [
+      6.0
+    ],
+    "ItemPrice": 10,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"AddGoldTileset\""
+    ]
+  },
+  {
+    "ItemID": "AddGoldTilesetIII",
+    "eItemType": "AddGoldTileset",
+    "itemNameID": "AddGoldTilesetIII_name",
+    "DescriptionID": "AddGoldTilesetIII_description",
+    "Rarity": "Epic",
+    "input": [
+      9.0
+    ],
+    "ItemPrice": 15,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"AddGoldTilesetII\""
+    ]
+  },
+  {
+    "ItemID": "GoldTilsetCoinScaledExtraScore",
+    "eItemType": "GetExtraScoreClearGoldTileset",
+    "itemNameID": "GoldTilsetCoinScaledExtraScore_name",
+    "DescriptionID": "GoldTilsetCoinScaledExtraScore_description",
+    "Rarity": "Epic",
+    "input": [
+      1.0
+    ],
+    "ItemPrice": 15,
+    "ConflictingItems": [],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "AdditionalInterest",
+    "eItemType": "MoreInterest",
+    "itemNameID": "AdditionalInterest_name",
+    "DescriptionID": "AdditionalInterest_description",
+    "Rarity": "Normal",
+    "input": [
+      80.0
+    ],
+    "ItemPrice": 5,
+    "ConflictingItems": [],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "AdditionalInterestII",
+    "eItemType": "MoreInterest",
+    "itemNameID": "AdditionalInterestII_name",
+    "DescriptionID": "AdditionalInterestII_description",
+    "Rarity": "Rare",
+    "input": [
+      100.0
+    ],
+    "ItemPrice": 7,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"AdditionalInterest\""
+    ]
+  },
+  {
+    "ItemID": "AdditionalInterestIII",
+    "eItemType": "MoreInterest",
+    "itemNameID": "AdditionalInterestIII_name",
+    "DescriptionID": "AdditionalInterestIII_description",
+    "Rarity": "Epic",
+    "input": [
+      150.0
+    ],
+    "ItemPrice": 10,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "\"AdditionalInterestII\""
+    ]
+  },
+  {
+    "ItemID": "CoinScaledMutiple",
+    "eItemType": "CoinScaledMutiple",
+    "itemNameID": "CoinScaledMutiple_name",
+    "DescriptionID": "CoinScaledMutiple_description",
+    "Rarity": "Rare",
+    "input": [
+      5.0,
+      0.1
+    ],
+    "ItemPrice": 8,
+    "ConflictingItems": [],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
   }
 ]
