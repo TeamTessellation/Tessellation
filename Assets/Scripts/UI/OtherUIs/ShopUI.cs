@@ -19,7 +19,7 @@ namespace UI.OtherUIs
         [Header("Shop UI Components")] 
         [SerializeField] private CanvasGroup shopCanvasGroup;
 
-        [SerializeField] private List<ClearResultEntry> entries = new List<ClearResultEntry>();
+        [SerializeField] private List<ShopItemEntry> entries = new List<ShopItemEntry>();
         
         [Header("Shop Settings")]
         [SerializeField] private int itemCount = 4;
@@ -47,7 +47,6 @@ namespace UI.OtherUIs
 
         protected override void Awake()
         {
-            Debug.Log("Kexi");
             if (currentTweenList == null) currentTweenList = new List<Tween>();
             
             _rerollButton.onClick.AddListener(OnRerollButtonClicked);
@@ -79,11 +78,13 @@ namespace UI.OtherUIs
             _isSkipping = false;
             currentTweenList.Clear();
             
+            // Entry들 업데이트
             if (_shopItemSelector != null)
             {
                 List<AbilityDataSO> selectedItems = _shopItemSelector.SelectShopItems(itemCount);
                 for (int i = 0; i < selectedItems.Count; i++)
                 {
+                    entries[i].InitializeData(selectedItems[i]);
                 }
             }
         }
