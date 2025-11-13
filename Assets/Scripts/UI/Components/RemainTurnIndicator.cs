@@ -129,9 +129,8 @@ namespace UI.Components
         }
   
 
-        protected override void OnValidate()
+        protected void OnValidate()
         {
-            base.OnValidate();
             if(_maxTurns < 0) _maxTurns = 0;
             if(_remainingTurns < 0) _remainingTurns = 0;
             if(_remainingTurns > _maxTurns) _remainingTurns = _maxTurns;

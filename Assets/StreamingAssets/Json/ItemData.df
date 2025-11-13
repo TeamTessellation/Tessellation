@@ -1,0 +1,49 @@
+{
+  "name": "ItemData",
+  "varNames": [
+    "itemID",
+    "itemNameID",
+    "ItemInscriptionID",
+    "rank",
+    "price",
+    "input",
+    "effectPriority",
+    "requiredItemID",
+    "iconPath"
+  ],
+  "types": [
+    "string",
+    "string",
+    "string",
+    "Enum<eItemRank>",
+    "int",
+    "List<int>",
+    "int",
+    "List<string>",
+    "string"
+  ],
+  "comments": [
+    "아이템 아이디",
+    "아이템 이름 key",
+    "아이템 설명 key",
+    "아이템 등급",
+    "아이템 가격",
+    "아이템 효과 숫자",
+    "효과 발동 우선순위",
+    "등장 요구 조건 필수 보유 아이템 ID",
+    "아이템 아이콘 위치"
+  ],
+  "data": [
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "[]",
+      "",
+      "[]",
+      ""
+    ]
+  ]
+}

@@ -15,9 +15,8 @@ namespace UI.OtherUIs
         [field: SerializeField] public CanvasGroup CanvasGroup { get; set; }
         [Header("Settings")]
         [field: SerializeField] public PlayerStatus.VariableKey VariableKey { get; set; }
-        protected override void Reset()
+        protected void Reset()
         {
-            base.Reset();
             
             Label = transform.GetChild(0).GetComponent<TMP_Text>();
             ValueText = transform.GetChild(1).GetComponent<CounterText>();

@@ -9,9 +9,9 @@ namespace Database
     [Serializable]
     public class McDatabase
     {
-        public List<Example2> Example2List = new List<Example2>();
+        public List<ItemData> ItemDataList = new List<ItemData>();
         public readonly List<string> ClassNames = new List<string> {
-            "Example2"
+            "ItemData"
         };
 
 
@@ -41,7 +41,7 @@ namespace Database
 
         public void ClearAll()
         {
-            Example2List.Clear();
+            ItemDataList.Clear();
         }
 
 
@@ -66,8 +66,8 @@ namespace Database
             {
                 switch (df.name)
                 {
-                    case "Example2":
-                        Example2List = CreateInstance<Example2>(df);
+                    case "ItemData":
+                        ItemDataList = CreateInstance<ItemData>(df);
                         break;
                     default:
                         Debug.LogWarning($"[MDatabase] 정의되지 않은 클래스 이름: {df.name}");
@@ -81,9 +81,9 @@ namespace Database
         {
             switch (className)
             {
-                case "Example2":
-                    var newExample2Items = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Example2>>(json);
-                    Example2List.AddRange(newExample2Items);
+                case "ItemData":
+                    var newItemDataItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ItemData>>(json);
+                    ItemDataList.AddRange(newItemDataItems);
                     break;
                 default:
                     Debug.LogWarning($"[MDatabase] 정의되지 않은 클래스 이름: {className}");
@@ -96,8 +96,8 @@ namespace Database
         {
             switch (className)
             {
-                case "Example2":
-                    return typeof(Example2);
+                case "ItemData":
+                    return typeof(ItemData);
                 default:
                     Debug.LogWarning($"[MDatabase] 정의되지 않은 클래스 이름: {className}");
                     return null;
