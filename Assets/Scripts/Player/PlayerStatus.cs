@@ -395,7 +395,7 @@ namespace Player
 
             public void Execute(string[] args)
             {
-                if (args.Length != 2)
+                if (args.Length < 2)
                 {
                     McConsole.MessageError("Usage: " + Signature);
                     return;
