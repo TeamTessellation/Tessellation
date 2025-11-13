@@ -75,29 +75,12 @@ namespace UI
         // ReSharper disable once Unity.IncorrectMethodSignature
         private async UniTaskVoid Start()
         {
-            await InitialLoader.WaitUntilInitialized();
-        }
-
-        private void OnEnable()
-        {
-            if (GameManager.Instance.CurrentGameState == GlobalGameState.Initializing)
-            {
-                void OnInitialized(GlobalGameState newState)
-                {
-                    if (newState != GlobalGameState.Initializing)
-                    {
-                        GameManager.Instance.OnGameStateChanged -= OnInitialized;
-                        Init();
-                    }
-                }
-                GameManager.Instance.OnGameStateChanged += OnInitialized;
-            }
+            await GameManager.WaitForInit();
             Init();
-            
             InteractionManager.Instance.CancelEvent += OnCancelInput;
         }
         
-        private void OnDisable()
+        private void OnDestroy()
         {
             UnbindEventsFromUIs();
         }
@@ -119,11 +102,15 @@ namespace UI
             {
                 InGameUI = GlobalCanvas.GetComponentInChildren<InGameUI>(true);
             }
-            InGameUI.UnregisterEvents();
+            if (InGameUI != null)
+            {
+                InGameUI.UnregisterEvents();
+            }
         }
 
         private void RegisterUIs()
         {
+            LogEx.Log("Registering UIs...");
             T FindUI<T>() where T : Component
             {
                 var ui = GlobalCanvas.GetComponentInChildren<T>(true);

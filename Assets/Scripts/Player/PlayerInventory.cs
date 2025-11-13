@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Abilities;
+using Core;
+using Cysharp.Threading.Tasks;
 using Machamy.Utils;
 using Stage;
 using UnityEngine;
@@ -31,8 +33,9 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    private void Start()
+    private async UniTask Start()
     {
+        await GameManager.WaitForInit();
         _tilePlaceHandler = TurnManager.Instance.GetComponent<TilePlaceHandler>();
         if (_tilePlaceHandler == null)
         {
