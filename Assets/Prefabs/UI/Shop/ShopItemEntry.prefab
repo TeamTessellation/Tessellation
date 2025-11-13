@@ -607,6 +607,7 @@ GameObject:
   - component: {fileID: 7408571885260358653}
   - component: {fileID: 5627260594251811632}
   - component: {fileID: 7374139997087201680}
+  - component: {fileID: 4087924913009043143}
   m_Layer: 0
   m_Name: ShopItemEntry
   m_TagString: Untagged
@@ -719,3 +720,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4087924913009043143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8895375672484385745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0844dbb2d02ac7244bd8c220f6320f99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.OtherUIs.ShopItemEntry
+  itemImage: {fileID: 1041338551873219677}
+  itemRarityText: {fileID: 2502843449195712206}
+  itemNameText: {fileID: 4400686840811353540}
+  costText: {fileID: 3763744513617264927}

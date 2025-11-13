@@ -49,10 +49,6 @@ public class ShopItemSelector
     {
         // 나타날 수 있는 어빌리티 목록 가져오기
         List<AbilityDataSO> availableAbilities = GetAvailableAbilities();
-        foreach (var va in availableAbilities)
-        {
-            Debug.Log($"후보 아이템 : {va.AbilityName}");
-        }
         
         // 등급별로 분류 (Dictionary<eRarity, List<AbilityDataSO>>)
         var abilitiesByRarity = availableAbilities

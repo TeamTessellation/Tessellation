@@ -81,8 +81,12 @@ MonoBehaviour:
   canvas: {fileID: 4447328928358073549}
   savedSortingLayerID: 0
   savedSortingOrder: 1
-  shopCanvasGroup: {fileID: 0}
-  entries: []
+  shopCanvasGroup: {fileID: 1877105503286013489}
+  entries:
+  - {fileID: 5308941332233674648}
+  - {fileID: 8570374153187964124}
+  - {fileID: 4442276469042321375}
+  - {fileID: 585437464073674443}
   itemCount: 4
   NormalRarityColor: {r: 0.42352942, g: 0.42352942, b: 0.42352942, a: 0}
   RareRarityColor: {r: 0.3529412, g: 0.8666667, b: 0.44705883, a: 0}
@@ -90,6 +94,16 @@ MonoBehaviour:
   SpecialRarityColor: {r: 1, g: 0.27058825, b: 0.57254905, a: 0}
   _rerollButton: {fileID: 1945664825167105499}
   _skipButton: {fileID: 7141856066534161665}
+  _shopItemSelector:
+    _rarityWeights:
+    - Rarity: 0
+      Weight: 68
+    - Rarity: 1
+      Weight: 22
+    - Rarity: 2
+      Weight: 5
+    - Rarity: 3
+      Weight: 5
 --- !u!225 &1877105503286013489
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -467,7 +481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8309872201461587593
 RectTransform:
   m_ObjectHideFlags: 0
@@ -630,6 +644,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1372832931840078727, guid: d84d92eac518ec34d8b2dfefb227951d, type: 3}
   m_PrefabInstance: {fileID: 368478116995641624}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4442276469042321375 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4087924913009043143, guid: d84d92eac518ec34d8b2dfefb227951d, type: 3}
+  m_PrefabInstance: {fileID: 368478116995641624}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9110678616799371977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0844dbb2d02ac7244bd8c220f6320f99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.OtherUIs.ShopItemEntry
 --- !u!1 &9110678616799371977 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8895375672484385745, guid: d84d92eac518ec34d8b2dfefb227951d, type: 3}
@@ -747,6 +772,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7643419895960512056}
   m_SourcePrefab: {fileID: 100100000, guid: d84d92eac518ec34d8b2dfefb227951d, type: 3}
+--- !u!114 &585437464073674443 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4087924913009043143, guid: d84d92eac518ec34d8b2dfefb227951d, type: 3}
+  m_PrefabInstance: {fileID: 3505170815652902924}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5464668733141937117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0844dbb2d02ac7244bd8c220f6320f99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.OtherUIs.ShopItemEntry
 --- !u!224 &2569750049370639243 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1372832931840078727, guid: d84d92eac518ec34d8b2dfefb227951d, type: 3}
@@ -891,6 +927,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1372832931840078727, guid: d84d92eac518ec34d8b2dfefb227951d, type: 3}
   m_PrefabInstance: {fileID: 5641655660759912987}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8570374153187964124 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4087924913009043143, guid: d84d92eac518ec34d8b2dfefb227951d, type: 3}
+  m_PrefabInstance: {fileID: 5641655660759912987}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3835262470570623434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0844dbb2d02ac7244bd8c220f6320f99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.OtherUIs.ShopItemEntry
 --- !u!1001 &8148731427420305759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1019,6 +1066,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &5308941332233674648 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4087924913009043143, guid: d84d92eac518ec34d8b2dfefb227951d, type: 3}
+  m_PrefabInstance: {fileID: 8148731427420305759}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748904876450753166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0844dbb2d02ac7244bd8c220f6320f99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.OtherUIs.ShopItemEntry
 --- !u!114 &5477640840601472155 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4400686840811353540, guid: d84d92eac518ec34d8b2dfefb227951d, type: 3}
