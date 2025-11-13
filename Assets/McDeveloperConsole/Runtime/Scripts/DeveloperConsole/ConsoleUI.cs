@@ -215,7 +215,7 @@ namespace Machamy.DeveloperConsole
         private void OnEnable()
         {
             RegisterHandlers();
-            textField.Focus();
+            
         }
         private void OnDisable()
         {

@@ -15,9 +15,11 @@ namespace Core
 {
     public class InitialLoader : MonoBehaviour
     {
+        private static bool _notStartedInitialization = true;
         private static bool _initialized = false;
         private static Action _initializationCallback;
         public static bool Initialized => _initialized;
+        public static bool NotStartedInitialization => _notStartedInitialization;
         
         
         [SerializeField,Tooltip("함께 로드할 씬 목록입니다.")] private SceneReference[] scenesToLoad;
@@ -145,20 +147,40 @@ namespace Core
             
             await UniTask.WhenAll(loadTasks);
             Progress = 1f;
-            IsDone = true;
-            _initialized = true;
-            _initializationCallback?.Invoke();
+
         }
         
         private async UniTask Start()
         {
             DontDestroyOnLoad(gameObject);
+            _notStartedInitialization = false;
      
             await StartLoadingScene();
 
             await UniTask.Delay(100);
             
-            SceneManager.LoadScene(nextScene.SceneName);
+            var op = SceneManager.LoadSceneAsync(nextScene.SceneName, LoadSceneMode.Additive);
+            while (!op.isDone)
+            {
+                await UniTask.Yield();
+            }
+            // nextScene을 acitive 씬으로 설정
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            var loadedScene = SceneManager.GetSceneByName(nextScene.SceneName);
+            SceneManager.SetActiveScene(loadedScene);
+            
+            IsDone = true;
+            _initialized = true;
+            _initializationCallback?.Invoke();
+            
+            // 현재 씬 언로드
+            var currentScene = SceneManager.GetSceneByName(currentSceneName);
+            var unloadOp = SceneManager.UnloadSceneAsync(currentScene);
+            while (!unloadOp.isDone)
+            {
+                await UniTask.Yield();
+            }
+            
             Destroy(gameObject);
             
             // StartLoadingScene().ContinueWith(() =>

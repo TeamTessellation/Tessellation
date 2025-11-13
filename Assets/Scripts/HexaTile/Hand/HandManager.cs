@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Core;
+using Machamy.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -34,7 +35,9 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 
     private async UniTask Awake()
     {
+        LogEx.Log($"Instance id : {GetInstanceID()} - {gameObject.scene.name}, {gameObject.name}");
         await GameManager.WaitForInit();
+         
         Instance = this;
         _hand = new HandBox[0];
         _handRoot = GameObject.FindWithTag("HandRoot").transform;
