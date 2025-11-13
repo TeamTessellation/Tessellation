@@ -156,9 +156,13 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
 
         ClearSilhouette();
 
+        HashSet<Coordinate> coors = new();
         for (int i = 0; i < tileSet.Tiles.Count; i++)
         {
             var correctCoor = coor + tileSet.Tiles[i].transform.localPosition.ToCoor();
+            if (coors.Contains(correctCoor))
+                continue;
+            coors.Add(correctCoor);
             GenerateSilhouetteTile(correctCoor);
         }
     }

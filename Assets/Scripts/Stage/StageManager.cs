@@ -187,6 +187,7 @@ namespace Stage
              * PlayerStatus에서 처리해야할 것들 처리
              * Best/Total Score 갱신, 이자 등
              */
+            Field.Instance.ClearSilhouette();
             CoinCounter coinCounter = UIManager.Instance.InGameUI.CoinCounter;
             coinCounter.autoUpdate = false;
             

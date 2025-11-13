@@ -7,6 +7,7 @@ Shader "Custom/InGameBG"
         _TileSize ("Tile Size", float) = 1
         _LineSize ("Line Size", Range(0, 100)) = 40
         _Angle ("Angle", float) = 0
+        _Offset ("Offset", Vector) = (0, 0, 0, 0)
 
         _XSpeed     ("X Wave Speed", Range(0.0, 10.0)) = 1.0
         _BrightMin  ("Min Brightness", Range(0.0, 2.0)) = 0.4
@@ -61,6 +62,7 @@ Shader "Custom/InGameBG"
                 float _TileSize;
                 float _Angle;
                 float _LineSize;
+                float4 _Offset;
 
                 float _XSpeed;
                 float _BrightMin;
@@ -149,7 +151,7 @@ Shader "Custom/InGameBG"
                 float2 waveOffset = dir * (sin(phase) * _Amplitude);
 
                 float2 worldPos = IN.worldPos;
-                worldPos = worldPos + waveOffset;
+                worldPos = worldPos + waveOffset + _Offset.xy;
 
                 float3 coor = WorldToCoor(worldPos, _TileSize);
                 float3 centerPos = CoorToWorld(coor, _TileSize);
