@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core;
 using Cysharp.Threading.Tasks;
 using ExecEvents;
+using Machamy.DeveloperConsole;
+using Machamy.DeveloperConsole.Attributes;
+using Machamy.DeveloperConsole.Commands;
 using SaveLoad;
 using UnityEngine;
 // ReSharper disable ArrangeAccessorOwnerBody
@@ -23,10 +27,10 @@ namespace Player
     public class PlayerStatus : ISaveTarget
     {
         public static PlayerStatus Current => GameManager.Instance.PlayerStatus;
-        
+
         [SerializeField] private int fieldSize = 4;
         [SerializeField] private int handSize = 3;
-        
+
         [SerializeField] private float coinInterestRate = 0.1f; // 코인 이자율 10%
         [SerializeField] private int maxInterestCoins = 5; // 최대 이자 코인 한도
         
@@ -43,7 +47,6 @@ namespace Player
             get => variables;
             private set => variables = value;
         }
-        
         public void Reset()
         {
             fieldSize = 4;
@@ -54,39 +57,41 @@ namespace Player
                 Variables.SetInteger(key.ToString(), 0);
             }
         }
-        
+
         public enum VariableKey
         {
-            BestScorePlacement,// 최고 득점 배치
-            BestStageScore,// 최고 스테이지 점수
-            BestStageClearedLines,// 최고 스테이지 지운 줄 수
-            BestStageAbilityUseCount,// 최고 스테이지 능력 사용 횟수
-            BestStageCoinsObtained,// 최고 스테이지 획득 코인
-            BestStageInterestEarnedCoins,// 최고 스테이지 이자 코인
-            
-            TotalScore,// 총 점수
-            TotalClearedLines,// 총 지운 줄 수
-            TotalAbilityUseCount,// 능력 사용 횟수
-            TotalObtainedCoins,// 지금까지 얻었던 코인
-            TotalInterestEarnedCoins,// 총 얻었던 이자 코인
-            
-            StageBestPlacement,// 해당 스테이지 최고 배치
-            StageScore,// 해당 스테이지 점수
-            StageClearedLines,// 해당 스테이지 지운 줄 수
-            StageAbilityUseCount,// 해당 스테이지 능력 사용 횟수
-            StageCoinsObtained,// 해당 스테이지 획득 코인
-            StageInterestEarnedCoins,// 해당 스테이지 이자
-            
-            CurrentTurn,// 현재 턴
-            CurrentRemainingTurns,// 현재 남은 턴
-            CurrentCoins,// 현재 코인
-            
-            
+            BestScorePlacement, // 최고 득점 배치
+            BestStageScore, // 최고 스테이지 점수
+            BestStageClearedLines, // 최고 스테이지 지운 줄 수
+            BestStageAbilityUseCount, // 최고 스테이지 능력 사용 횟수
+            BestStageCoinsObtained, // 최고 스테이지 획득 코인
+            BestStageInterestEarnedCoins, // 최고 스테이지 이자 코인
+
+            TotalScore, // 총 점수
+            TotalClearedLines, // 총 지운 줄 수
+            TotalAbilityUseCount, // 능력 사용 횟수
+            TotalObtainedCoins, // 지금까지 얻었던 코인
+            TotalInterestEarnedCoins, // 총 얻었던 이자 코인
+
+            StageBestPlacement, // 해당 스테이지 최고 배치
+            StageScore, // 해당 스테이지 점수
+            StageClearedLines, // 해당 스테이지 지운 줄 수
+            StageAbilityUseCount, // 해당 스테이지 능력 사용 횟수
+            StageCoinsObtained, // 해당 스테이지 획득 코인
+            StageInterestEarnedCoins, // 해당 스테이지 이자
+
+            CurrentTurn, // 현재 턴
+            CurrentRemainingTurns, // 현재 남은 턴
+            CurrentCoins, // 현재 코인
+
+
         }
+
         public enum eActiveItemType
         {
-            
+
         }
+
         // for 문 사용 편의성
         public static readonly VariableKey BestStart = VariableKey.BestScorePlacement;
         public static readonly VariableKey BestEnd = VariableKey.BestStageInterestEarnedCoins;
@@ -95,11 +100,11 @@ namespace Player
         public static readonly VariableKey StageStart = VariableKey.StageBestPlacement;
         public static readonly VariableKey StageEnd = VariableKey.StageInterestEarnedCoins;
 
-        
-        
+
+
         public int FieldSize => fieldSize;
         public int HandSize => handSize;
-        
+
         public float CoinInterestRate => coinInterestRate;
         public int MaxInterestCoins => maxInterestCoins;
 
@@ -297,12 +302,13 @@ namespace Player
         // => TurnManager.Instance.RemainingTurns;
 
         public Guid Guid { get; init; }
+
         public void LoadData(GameData data)
         {
 
             data.PlayerStatus.CopyTo(this);
             using var evt = ScoreManager.CurrentScoreChangedEventArgs.Get();
-            evt.NewCurrentScore = this.CurrentStageScore;    
+            evt.NewCurrentScore = this.CurrentStageScore;
             ExecEventBus<ScoreManager.CurrentScoreChangedEventArgs>.InvokeMerged(evt).Forget();
             using var totalEvt = ScoreManager.TotalScoreChangedEventArgs.Get();
             totalEvt.NewTotalScore = this.TotalScore;
@@ -318,12 +324,12 @@ namespace Player
 
 
 
-        
+
         public PlayerStatus()
         {
             Guid = System.Guid.NewGuid();
         }
-        
+
         public VariableContainer.Variable this[string key]
         {
             get
@@ -341,10 +347,11 @@ namespace Player
                 {
                     return Variables.Items[key];
                 }
+
                 return null;
             }
         }
-        
+
         public void SaveVariable(string key, int value)
         {
             Variables.SetInteger(key, value);
@@ -354,14 +361,14 @@ namespace Player
         {
             Variables.SetFloat(key, value);
         }
-        
+
         public PlayerStatus Clone()
         {
             var clone = new PlayerStatus();
             this.CopyTo(clone);
             return clone;
         }
-        
+
         public void CopyTo(PlayerStatus target)
         {
             target.fieldSize = this.fieldSize;
@@ -369,21 +376,168 @@ namespace Player
             target.coinInterestRate = this.coinInterestRate;
             // target.CurrentScore = this.CurrentScore;
             // target.TotalScore = this.TotalScore;
-            
+
             target.Variables = this.Variables.Clone();
         }
+
         public void CopyFrom(PlayerStatus source)
         {
             source.CopyTo(this);
         }
+
+
+        [ConsoleCommandClass]
+        public class ModifyVariableCommand : IConsoleCommand
+        {
+            public string Command => "modify";
+            public string Description => "플레이어의 변수를 수정합니다. 기본 동작은 set입니다.";
+            public string Signature => "modify <VariableKey> <value> [set(default)|add|subtract]";
+
+            public void Execute(string[] args)
+            {
+                if (args.Length != 2)
+                {
+                    McConsole.MessageError("Usage: " + Signature);
+                    return;
+                }
+
+                string variableKey = args[0];
+                if (!Enum.TryParse<PlayerStatus.VariableKey>(variableKey, out var key))
+                {
+                    McConsole.MessageError($"Invalid VariableKey: {variableKey}");
+                    return;
+                }
+
+                if (!int.TryParse(args[1], out int value))
+                {
+                    McConsole.MessageError($"Invalid value: {args[1]}");
+                    return;
+                }
+
+                int behavior = 0; // 0: set, 1: add, 2: subtract
+                if (args.Length >= 3)
+                {
+                    switch (args[2].ToLower())
+                    {
+                        case "set":
+                            behavior = 0;
+                            break;
+                        case "add":
+                            behavior = 1;
+                            break;
+                        case "subtract":
+                            behavior = 2;
+                            break;
+                        default:
+                            McConsole.MessageError($"Invalid behavior: {args[2]}");
+                            return;
+                    }
+                }
+
+                void Set(int v)
+                {
+                    switch (key)
+                    {
+                        case VariableKey.CurrentCoins:
+                            PlayerStatus.Current.CurrentCoins = v;
+                            break;
+                        default:
+                            PlayerStatus.Current.SaveVariable(key.ToString(), v);
+                            break;
+                    }
+                }
+
+                void Add(int v)
+                {
+                    int current = 0;
+                    switch (key)
+                    {
+                        case VariableKey.CurrentCoins:
+                            current = PlayerStatus.Current.CurrentCoins;
+                            break;
+                        default:
+                            current = PlayerStatus.Current.Variables.GetVariable(key.ToString()).IntValue;
+                            break;
+                    }
+
+                    Set(current + v);
+                }
+
+                void Subtract(int v)
+                {
+                    int current = 0;
+                    switch (key)
+                    {
+                        case VariableKey.CurrentCoins:
+                            current = PlayerStatus.Current.CurrentCoins;
+                            break;
+                        default:
+                            current = PlayerStatus.Current.Variables.GetVariable(key.ToString()).IntValue;
+                            break;
+                    }
+
+                    Set(current - v);
+                }
+
+                switch (behavior)
+                {
+                    case 0:
+                        Set(value);
+                        McConsole.MessageInfo($"Set {variableKey} to {value}");
+                        break;
+                    case 1:
+                        Add(value);
+                        McConsole.MessageInfo($"Added {value} to {variableKey}");
+                        break;
+                    case 2:
+                        Subtract(value);
+                        McConsole.MessageInfo($"Subtracted {value} from {variableKey}");
+                        break;
+                }
+            }
+
+            public void AutoComplete(Span<string> args, ref List<string> suggestions)
+            {
+                if (args.Length == 1)
+                {
+                    foreach (var name in Enum.GetNames(typeof(PlayerStatus.VariableKey)))
+                    {
+                        if (name.StartsWith(args[0], StringComparison.OrdinalIgnoreCase))
+                        {
+                            suggestions.Add(name);
+                        }
+                    }
+                }
+                else if (args.Length == 2)
+                {
+                    // Suggest some example values
+                    suggestions.Add("0");
+                    suggestions.Add("10");
+                    suggestions.Add("100");
+                    suggestions.Add("1000");
+                    suggestions.Add("10000");
+                }
+                else if (args.Length == 3)
+                {
+                    string[] behaviors = { "set", "add", "subtract" };
+                    foreach (var behavior in behaviors)
+                    {
+                        if (behavior.StartsWith(args[2], StringComparison.OrdinalIgnoreCase))
+                        {
+                            suggestions.Add(behavior);
+                        }
+                    }
+                }
+            }
+        }
     }
-    
+
     public class CurrentCoinChangedEventArgs : ExecEventArgs<CurrentCoinChangedEventArgs>
     {
         public int OldCurrentCoin { get; set; }
         public int NewCurrentCoin { get; set; }
     }
     
-
 }
+
 

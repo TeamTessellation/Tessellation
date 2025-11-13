@@ -23,6 +23,7 @@ MonoBehaviour:
   dbFindTarget:
   - name
   - identifier
+  - ItemID
   xlsxExtension: .xlsx
   autoLoadXlsx: 0
   jsonExtension: .json
