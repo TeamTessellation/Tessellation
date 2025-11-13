@@ -78,7 +78,11 @@ namespace UI.OtherUIs
             _isSkipping = false;
             currentTweenList.Clear();
             
-            // Entry들 업데이트
+            RefreshShopItems();
+        }
+
+        private void RefreshShopItems()
+        {
             if (_shopItemSelector != null)
             {
                 List<AbilityDataSO> selectedItems = _shopItemSelector.SelectShopItems(itemCount);
@@ -91,7 +95,7 @@ namespace UI.OtherUIs
         
         private void OnRerollButtonClicked()
         {
-            
+            RefreshShopItems();   
         }
 
         private void OnSkipButtonClicked()
