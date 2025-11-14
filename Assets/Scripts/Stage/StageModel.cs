@@ -92,8 +92,8 @@ namespace Stage
             }
             float[] levelMultipliers = { 1.0f, 1.5f, 2.0f, 2.0f };
     
-            int baseScore = 250;
-    
+            int baseScore = 100;
+     
             // Stage Multiplier 계산: 2.5^(a-1)
             float stageMultiplier = Mathf.Pow(2.5f, a - 1);
             

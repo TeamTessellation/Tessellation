@@ -269,8 +269,7 @@ PlayerSettings:
   AndroidTargetArchitectures: 2
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: "C:/Users/user/Desktop/\uD3F4\uB354 \uC815\uB9AC/\uC720\uB2C8\uD2F0
-    \uAD00\uB828/\uD0A4/Tessellation.keystore"
+  AndroidKeystoreName: '{inproject}: KeyStore/Tessellation.keystore'
   AndroidKeyaliasName: tessellation
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidEnableArm64MTE: 0
@@ -532,6 +531,9 @@ PlayerSettings:
       m_SubKind: 
   m_BuildTargetBatching:
   - m_BuildTarget: Android
+    m_StaticBatching: 1
+    m_DynamicBatching: 0
+  - m_BuildTarget: Standalone
     m_StaticBatching: 1
     m_DynamicBatching: 0
   m_BuildTargetShaderSettings: []

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SomeEpic
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   AbilityType: 5
-  Rarity: 0
+  Rarity: 2
   AbilityName: "\uC5F0\uC1C4\uD3ED\uD314"
   Description: "\uD3ED\uD0C4\uC774 \uC5F0\uC1C4\uD3ED\uD314\uD55C\uB2E4"
   ItemIcon: {fileID: 21300000, guid: 0ff55dc06456c9a4192f2079c3011241, type: 3}
