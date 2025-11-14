@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Core;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Machamy.Attributes;
@@ -136,11 +137,21 @@ namespace UI.OtherUIs.Transitions
             _image = GetComponent<Image>();
             _image.material = new Material(_image.material); // 인스턴스 복사
             InitEffect();
-            _watcher = new();
-            _watcher.OnResolutionChanged += InitEffect;
         }
 
-        
+        private async UniTaskVoid Start()
+        {
+            await GameManager.WaitForInit();
+            _watcher = GameManager.Instance.ResolutionWatcher;
+            if (_watcher != null)
+            {
+                _watcher.OnResolutionChanged += InitEffect;
+            }
+
+            InitEffect();
+        }
+
+
         /// <summary>
         /// 정해진 TileSize에 맞춰 이펙트를 초기화합니다. <br/>
         /// XCount, StartX, XEnd 값을 자동으로 설정합니다.
