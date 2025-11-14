@@ -189,10 +189,11 @@ namespace UI.OtherUIs
              * 1. 전체 페이드 인 + 조금 위로 올라감
              */
             
-            
+            var initialEntryHolderPos = entryHolderCanvasGroup.transform.localPosition;
+            entryHolderCanvasGroup.transform.localPosition = new Vector2(initialEntryHolderPos.x, initialEntryHolderPos.y - moveUpDistance);
             var fadeInTween = entryHolderCanvasGroup.DOFade(1f, fadeInDuration);
             var moveUpTween = entryHolderCanvasGroup.transform
-                .DOLocalMoveY(entryHolderCanvasGroup.transform.localPosition.y + moveUpDistance, moveUpDuration)
+                .DOLocalMoveY(initialEntryHolderPos.y, moveUpDuration)
                 .SetEase(Ease.OutCubic);
 
             
