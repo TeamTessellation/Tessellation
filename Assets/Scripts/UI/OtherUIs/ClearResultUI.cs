@@ -7,6 +7,7 @@ using DG.Tweening;
 using Interaction;
 using Machamy.Utils;
 using Player;
+using Sound;
 using TMPro;
 using UI.Components;
 using UnityEngine;
@@ -145,6 +146,9 @@ namespace UI.OtherUIs
             clearCanvasGroup.alpha = 0f;
             _confirmRequested = false;
             tweenList.Clear();
+            
+            SoundManager.Instance.PlaySfx(SoundReference.RoundClear);
+            
             /*
              * 0. 이전 UI 없애기, 이건 confirm 으로 스킵 불가
              */
@@ -280,8 +284,9 @@ namespace UI.OtherUIs
             await UniTask.WhenAll(countTweens.ConvertAll(t => t.ToUniTask(cancellationToken: cancellationToken)));
             
             // 코인 카운터 업데이트
+            SoundManager.Instance.PlaySfx(SoundReference.GoldGet);
             CoinCounter coinCounter = UIManager.Instance.InGameUI.CoinCounter;
-            var coinUpdateTween = coinCounter.DoCount(coinCounter.CounterValue, coinCounter.CounterValue + totalCoins, 1.0f)
+            var coinUpdateTween = coinCounter.DoCount(coinCounter.CounterValue, coinCounter.CounterValue + totalCoins, 0.2f)
                 .SetEase(Ease.OutCubic);
             tweenList.Add(coinUpdateTween);
             await coinUpdateTween.ToUniTask(cancellationToken: cancellationToken);

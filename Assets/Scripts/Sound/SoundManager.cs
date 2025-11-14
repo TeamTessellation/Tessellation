@@ -301,6 +301,27 @@ namespace Sound
             soundEmitter.SimplePlayAudioClip(clip, isLoop);
         }
         
+        /// <summary>
+        /// 전역 사운드 재생
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="isLoop"></param>
+        /// <param name="isSpatial"></param>
+        public void PlaySfx(string path, bool isLoop = false,bool isSpatial = false)
+        {
+            AudioClip clip = GetAuidoClip(path);
+            if (clip == null)
+                return;
+            SoundEmitter soundEmitter = Pool<SoundEmitter>.Get();
+            soundEmitter.transform.SetParent(transform);
+            soundEmitter.transform.position = Vector3.zero;
+            AudioSource audioSource = soundEmitter.GetComponent<AudioSource>();
+            audioSource.outputAudioMixerGroup = sfxGroup;
+            audioSource.spatialize = isSpatial;
+            
+            soundEmitter.SimplePlayAudioClip(clip, isLoop);
+        }
+        
         public void FadeOutBackgroundMusic(float fadeOutTime)
         {
             if (string.IsNullOrEmpty(_currentPlayingBackgroundMusicPath) == false)

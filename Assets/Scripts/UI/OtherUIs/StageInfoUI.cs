@@ -4,6 +4,7 @@ using Core;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Interaction;
+using Sound;
 using Stage;
 using TMPro;
 using UI.Components;
@@ -111,6 +112,9 @@ namespace UI.OtherUIs
             }
             InteractionManager.Instance.ConfirmEvent += OnConfirmed;
             // 보이기
+            SoundManager sm = SoundManager.Instance;
+            sm.PlaySfx(SoundReference.SceneTransitionIn);
+            
             Show();
             CurrentStageNameView = stageModel.StageName;
 
@@ -164,6 +168,8 @@ namespace UI.OtherUIs
             {
                 gameObject.SetActive(true);
             }
+            SoundManager.Instance.PlaySfx(SoundReference.SceneTransitionOut);
+            
             await DOTween.To(() => 1f, SetFade, 0f, 0.2f)
                 .SetEase(stageInfoUISettingSO.hideFadeOutEase)
                 .ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, cancellationToken: cancellationToken);
