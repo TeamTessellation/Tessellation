@@ -216,8 +216,20 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     {
         RemoveItemIcon();
         _handSize = handSize;
-        for (int i = 0; i < _hand.Length; i++)
-            Pool<HandBox>.Return(_hand[i]);
+        
+        // 기존 hand 배열의 HandBox들을 Pool에 반환
+        if (_hand != null)
+        {
+            for (int i = 0; i < _hand.Length; i++)
+            {
+                if (_hand[i] != null)
+                    Pool<HandBox>.Return(_hand[i]);
+            }
+        }
+        
+        // 배열을 새로 초기화 (중요!)
+        _hand = new HandBox[0];
+        _remainHand = 0;
     }
 
     public void SetHand()

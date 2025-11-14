@@ -76,10 +76,55 @@ namespace UI.OtherUIs
 
         public void Hide()
         {
+            // 모든 활성 트윈 종료
+            if (currentTweenList != null && currentTweenList.Count > 0)
+            {
+                foreach (var tween in currentTweenList)
+                {
+                    if (tween != null && tween.IsActive())
+                    {
+                        tween.Kill();
+                    }
+                }
+                currentTweenList.Clear();
+            }
+            
+            // 이벤트 리스너 제거
+            if (InteractionManager.HasInstance)
+            {
+                InteractionManager.Instance.ConfirmEvent -= OnConfirmed;
+            }
+            
+            // 캔슬레이션 토큰 취소
+            if (_tokenSource != null && !_tokenSource.IsCancellationRequested)
+            {
+                _tokenSource.Cancel();
+                _tokenSource.Dispose();
+                _tokenSource = new CancellationTokenSource();
+            }
+            
+            // UI 요소 초기화
+            if (shopCanvasGroup != null)
+            {
+                shopCanvasGroup.alpha = 0f;
+            }
+            
+            // 엔트리 위치 초기화
+            for (int i = 0; i < entries.Count && i < entryOriginPosition.Count; i++)
+            {
+                var rect = entries[i].GetComponent<RectTransform>();
+                if (rect != null)
+                {
+                    rect.anchoredPosition = entryOriginPosition[i];
+                }
+            }
+            
+            // 플래그 초기화
+            _isSkipping = false;
+            _isAnimating = false;
+            
+            // GameObject 비활성화
             gameObject.SetActive(false);
-            _tokenSource.Cancel();
-            _tokenSource.Dispose();
-            _tokenSource = new CancellationTokenSource();
         }
 
         private void OnEnable()
@@ -97,7 +142,7 @@ namespace UI.OtherUIs
 
             _isSkipping = false;
             currentTweenList.Clear();
-    
+            shopCanvasGroup.alpha = 1f;
             RefreshShopItems();
     
             await PlayEntryAnimation(cancellationToken);

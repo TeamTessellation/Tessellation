@@ -60,10 +60,48 @@ namespace UI.OtherUIs
 
         public void Hide()
         {
+            // 모든 활성 트윈 종료
+            if (tweenList != null && tweenList.Count > 0)
+            {
+                foreach (var tween in tweenList)
+                {
+                    if (tween != null && tween.IsActive())
+                    {
+                        tween.Kill();
+                    }
+                }
+                tweenList.Clear();
+            }
+            
+            // 이벤트 리스너 제거
+            if (InteractionManager.HasInstance)
+            {
+                InteractionManager.Instance.ConfirmEvent -= OnConfirmed;
+            }
+            
+            // 캔슬레이션 토큰 취소
+            if (_tokenSource != null && !_tokenSource.IsCancellationRequested)
+            {
+                _tokenSource.Cancel();
+                _tokenSource.Dispose();
+                _tokenSource = new CancellationTokenSource();
+            }
+            
+            // UI 요소 초기화 - 엔트리들을 원래 위치로 복구하고 알파값 초기화
+            for (int i = 0; i < failResultEntries.Count; i++)
+            {
+                var entry = failResultEntries[i];
+                var cg = entry.GetComponent<CanvasGroup>();
+                if (cg != null)
+                {
+                    cg.alpha = 0f;
+                }
+                entry.FailCountText.CounterValue = 0;
+                entry.gameObject.SetActive(false);
+            }
+            
+            // GameObject 비활성화
             gameObject.SetActive(false);
-            _tokenSource.Cancel();
-            _tokenSource.Dispose();
-            _tokenSource = new CancellationTokenSource();
         }
 
         private void OnEnable()
@@ -83,7 +121,10 @@ namespace UI.OtherUIs
         
         void OnConfirmed()
         {
-            LogEx.Log("Fail Result UI confirmed by player.");
+            if (gameObject.activeSelf)
+            {
+                LogEx.Log("Fail Result UI confirmed by player.");
+            }
             foreach (var tween in tweenList)
             {
                 if (tween.IsActive() && tween.IsPlaying())
