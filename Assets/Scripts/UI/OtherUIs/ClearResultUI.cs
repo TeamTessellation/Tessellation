@@ -37,6 +37,8 @@ namespace UI.OtherUIs
         [SerializeField] private Ease fieldShrinkEase = Ease.InBack;
         [SerializeField] private float handShrinkDuration = 0.2f;
         [SerializeField] private Ease handShrinkEase = Ease.InBack;
+        [SerializeField] private float inventoryShrinkDuration = 0.2f;
+        [SerializeField] private Ease inventoryShrinkEase = Ease.InBack;
         [SerializeField] private float itemMoveUpDuration = 0.3f;
         [SerializeField] private Ease itemMoveUpEase = Ease.OutCubic;
 
@@ -159,6 +161,12 @@ namespace UI.OtherUIs
             // 핸드 축소
             shrinkTweens.Add(HandCanvas.Instance.transform.DOScaleX(0f, handShrinkDuration)
                 .SetEase(handShrinkEase));
+
+            foreach (var itemPlaceEntry in UIManager.Instance.InGameUI.ItemPlaceEntries)
+            {
+                shrinkTweens.Add(itemPlaceEntry.transform.DOScaleX(0f, inventoryShrinkDuration)
+                    .SetEase(inventoryShrinkEase));
+            }
             
             tweenList.AddRange(shrinkTweens);
             await UniTask.WhenAll(shrinkTweens.ConvertAll(t => t.ToUniTask(cancellationToken: cancellationToken)));
