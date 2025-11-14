@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Sound
 {
@@ -79,14 +80,21 @@ namespace Sound
         /// </summary>
         /// <param name="clip"></param>
         /// <param name="isLoop"></param>
-        public void SimplePlayAudioClip(AudioClip clip, bool isLoop)
+        public void SimplePlayAudioSource(AudioResource resource, bool isLoop)
         {
-            _audioSource.clip = clip;
+            _audioSource.resource = resource;
             _audioSource.loop = isLoop;
             _audioSource.Play();
             if (!isLoop)
             {
-                StartCoroutine(SoundTimer(clip.length));
+                if (resource is AudioClip clip)
+                {
+                    StartCoroutine(SoundTimer(clip.length));
+                }
+                else
+                {
+                    StartCoroutine(SoundPlayingTimer());
+                }   
             }
         }
         
@@ -123,6 +131,19 @@ namespace Sound
             yield return new WaitForSeconds(time);
             Pool<SoundEmitter>.Return(this);
             
+        }
+        
+        /// <summary>
+        /// isPlaying을 확인하는 사운드 타이머
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator SoundPlayingTimer()
+        {
+            while (_audioSource.isPlaying)
+            {
+                yield return null;
+            }
+            Pool<SoundEmitter>.Return(this);
         }
         
         
