@@ -32,7 +32,13 @@ namespace UI.OtherUIs
 
         public void InitializeData(AbilityDataSO abilityData)
         {
-            ResetButton();
+            if (abilityData == null)
+            {
+                SetEntryEmpty();
+                return;
+            }
+            
+            ResetEntry();
             
             _abilityData = abilityData;
             
@@ -40,8 +46,6 @@ namespace UI.OtherUIs
             {
                 _shopUI = GetComponentInParent<ShopUI>();
             }
-                
-            if(abilityData == null || _shopUI == null) return;
             
             if (itemImage != null)
             {
@@ -103,6 +107,22 @@ namespace UI.OtherUIs
             }
         }
 
+        // 아이템이 null로 들어왔을 때..
+        private void SetEntryEmpty()
+        {
+            DisableButton();
+            itemImage.enabled = false;
+            itemNameText.text = "NULL";
+            costText.text = "0";
+            itemRarityText.text = "NULL";
+        }
+
+        private void ResetEntry()
+        {
+            ResetButton();
+            itemImage.enabled = true;
+        }
+        
         private void ResetButton()
         {
             if (_thisButton == null)
