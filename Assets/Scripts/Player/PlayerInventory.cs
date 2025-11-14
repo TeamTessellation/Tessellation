@@ -11,6 +11,13 @@ using UnityEngine;
 [Serializable]
 public class PlayerInventory
 {
+    
+    /// <summary>
+    /// 인벤토리 슬롯에 변화가 생겼을 때 호출된다
+    /// int : 슬롯 번호 / AbilityBase : 바뀐 아이템 (삭제되었다면 null)
+    /// </summary>
+    public event Action<int, AbilityBase> OnInventorySlotChanged;
+    
     [Tooltip("현재 적용중인 어빌리티")]
     [SerializeReference] private List<AbilityBase> _abilities = new List<AbilityBase>();
     
@@ -46,6 +53,15 @@ public class PlayerInventory
         for (int i = 0; i < _maxAbilityCount; i++)
         {
             _abilities.Add(null);
+        }
+    }
+
+    private void SetAbility(int index, AbilityBase newAbility)
+    {
+        if (_abilities[index] != newAbility)
+        {
+            _abilities[index] = newAbility;
+            OnInventorySlotChanged?.Invoke(index, _abilities[index]);
         }
     }
     
@@ -95,7 +111,7 @@ public class PlayerInventory
         {
             if (_abilities[i] == null)
             {
-                _abilities[i] = newAbility;
+                SetAbility(i, newAbility);
                 _currentAbilityCount++;
                 break;
             }
@@ -115,11 +131,24 @@ public class PlayerInventory
 
             if (_abilities[i].dataSO == abilityData)
             {
-                RemoveAbility(_abilities[i]);
-                _abilities[i] = null;
+                _abilities[i].Remove(Handler);
+                SetAbility(i, null);
                 _currentAbilityCount--;
+                break;
             }
         }
+    }
+    
+    public void RemoveAbilityByIndex(int slotIdx)
+    {
+        if (_abilities[slotIdx] == null) return;
+        if (slotIdx < 0 || slotIdx >= _maxAbilityCount) return;
+
+        _abilities[slotIdx].Remove(Handler);
+        SetAbility(slotIdx, null);
+        _currentAbilityCount--;
+        
+        RefreshInventory();
     }
 
     /// <summary>
@@ -127,37 +156,43 @@ public class PlayerInventory
     /// </summary>
     private void RefreshInventory()
     {
-        
-        RefreshPriorities();
-    }
-
-    private void RemoveAbility(AbilityBase ability)
-    {
-        ability.Remove(Handler);
-    }
-    
-    public void RemoveAbility(int slotIdx)
-    {
-        if (slotIdx < 0 || slotIdx >= _maxAbilityCount) return;
-
-        for (int i = slotIdx; i < _currentAbilityCount - 1; i++)
+        // 앞으로 압축
+        List<AbilityBase> tmp = new List<AbilityBase>();
+        for (int i = 0; i < _maxAbilityCount; i++)
         {
-            _abilities[i] = _abilities[i + 1];
+            if (_abilities[i] != null)
+            {
+                tmp.Add(_abilities[i]);
+            }
         }
 
-        _abilities[_currentAbilityCount + 1] = null;
-        _currentAbilityCount--;
+        // 정보 갱신
+        for (int i = 0; i < _maxAbilityCount; i++)
+        {
+            if (i < tmp.Count)
+            {
+                SetAbility(i, tmp[i]);
+            }
+            else
+            {
+                SetAbility(i, null);
+            }
+        }
+
+        _currentAbilityCount = tmp.Count;
         
         RefreshPriorities();
     }
 
     public void SwapAbilities(int slotIdx1, int slotIdx2)
     {
-        if (slotIdx1 < 0 || slotIdx1 >= _currentAbilityCount) return;
-        if (slotIdx2 < 0 || slotIdx2 >= _currentAbilityCount) return;
+        if (slotIdx1 < 0 || slotIdx1 >= _maxAbilityCount) return;
+        if (slotIdx2 < 0 || slotIdx2 >= _maxAbilityCount) return;
         if (slotIdx1 == slotIdx2) return;
 
-        (_abilities[slotIdx1], _abilities[slotIdx2]) = (_abilities[slotIdx2], _abilities[slotIdx1]);
+        AbilityBase temp = _abilities[slotIdx1];
+        SetAbility(slotIdx1, _abilities[slotIdx2]);
+        SetAbility(slotIdx2, temp);
         
         RefreshPriorities();
     }
