@@ -16,6 +16,9 @@ namespace Sound
         
         // private Poolable poolable;
         private AudioSource _audioSource;
+        
+        
+        public AudioSource AudioSource => _audioSource;
         private void Awake()
         {
             // poolable = GetComponent<Poolable>();

@@ -307,19 +307,21 @@ namespace Sound
         /// <param name="path"></param>
         /// <param name="isLoop"></param>
         /// <param name="isSpatial"></param>
-        public void PlaySfx(string path, bool isLoop = false,bool isSpatial = false)
+        public SoundEmitter PlaySfx(string path, bool isLoop = false,bool isSpatial = false, float pitch = 1f)
         {
             AudioResource clip = GetAudioSource(path);
             if (clip == null)
-                return;
+                return null;
             SoundEmitter soundEmitter = Pool<SoundEmitter>.Get();
             soundEmitter.transform.SetParent(transform);
             soundEmitter.transform.position = Vector3.zero;
             AudioSource audioSource = soundEmitter.GetComponent<AudioSource>();
             audioSource.outputAudioMixerGroup = sfxGroup;
             audioSource.spatialize = isSpatial;
+            audioSource.pitch = pitch;
             
             soundEmitter.SimplePlayAudioSource(clip, isLoop);
+            return soundEmitter;
         }
         
         public void FadeOutBackgroundMusic(float fadeOutTime)
