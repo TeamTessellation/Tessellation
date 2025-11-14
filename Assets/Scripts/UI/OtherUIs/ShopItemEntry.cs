@@ -27,7 +27,7 @@ namespace UI.OtherUIs
             thisButton = GetComponent<Button>();
             if (thisButton)
             {
-                thisButton.onClick.AddListener(PurchaseItem);
+                thisButton.onClick.AddListener(OnEntryClicked);
             }
         }
 
@@ -87,6 +87,15 @@ namespace UI.OtherUIs
             }
         }
 
+        private void OnEntryClicked()
+        {
+            if (_shopUI.IsAnimating)
+            {
+                return;
+            }
+            PurchaseItem();
+        }
+        
         private void PurchaseItem()
         {
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;

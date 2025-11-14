@@ -37,8 +37,8 @@ namespace UI.OtherUIs
         [SerializeField] private Ease fieldShrinkEase = Ease.InBack;
         [SerializeField] private float handShrinkDuration = 0.2f;
         [SerializeField] private Ease handShrinkEase = Ease.InBack;
-        [SerializeField] private float inventoryShrinkDuration = 0.2f;
-        [SerializeField] private Ease inventoryShrinkEase = Ease.InBack;
+        [SerializeField] private float inventoryMoveDuration = 0.4f;
+        [SerializeField] private Ease inventoryMoveEase = Ease.InBack;
         [SerializeField] private float itemMoveUpDuration = 0.3f;
         [SerializeField] private Ease itemMoveUpEase = Ease.OutCubic;
 
@@ -162,13 +162,15 @@ namespace UI.OtherUIs
             shrinkTweens.Add(HandCanvas.Instance.transform.DOScaleX(0f, handShrinkDuration)
                 .SetEase(handShrinkEase));
 
-            foreach (var itemPlaceEntry in UIManager.Instance.InGameUI.ItemPlaceEntries)
+            List<Tween> moveTweens = new List<Tween>();
+            foreach (var entry in UM.InGameUI.ItemPlaceEntries)
             {
-                shrinkTweens.Add(itemPlaceEntry.transform.DOScaleX(0f, inventoryShrinkDuration)
-                    .SetEase(inventoryShrinkEase));
+                moveTweens.Add(entry.transform.DOMoveY(UM.InGameUI.ShopInventoryPosition.position.y, inventoryMoveDuration)
+                    .SetEase(inventoryMoveEase));
             }
             
             tweenList.AddRange(shrinkTweens);
+            tweenList.AddRange(moveTweens);
             await UniTask.WhenAll(shrinkTweens.ConvertAll(t => t.ToUniTask(cancellationToken: cancellationToken)));
             
             // todo : 아이템 위치 이동

@@ -14,7 +14,10 @@ namespace UI.MainUIs
         [SerializeField] private TMP_Text currentStageText;
         [field:SerializeField] public CoinCounter CoinCounter { get; private set; }
 
-        [field: SerializeField] public List<ItemPlaceEntry> ItemPlaceEntries { get; private set; }
+        [field:SerializeField] public List<ItemPlaceEntry> ItemPlaceEntries { get; private set; }
+
+        [field:SerializeField] public Transform IngameInventoryPosition { get; private set; }
+        [field:SerializeField] public Transform ShopInventoryPosition { get; private set; }
 
         protected override void Awake()
         {
