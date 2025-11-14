@@ -449,32 +449,14 @@ namespace Player
 
                 void Add(int v)
                 {
-                    int current = 0;
-                    switch (key)
-                    {
-                        case VariableKey.CurrentCoins:
-                            current = PlayerStatus.Current.CurrentCoins;
-                            break;
-                        default:
-                            current = PlayerStatus.Current.Variables.GetVariable(key.ToString()).IntValue;
-                            break;
-                    }
+                    int current = Current.Variables.GetVariable(key.ToString()).IntValue;
 
                     Set(current + v);
                 }
 
                 void Subtract(int v)
                 {
-                    int current = 0;
-                    switch (key)
-                    {
-                        case VariableKey.CurrentCoins:
-                            current = PlayerStatus.Current.CurrentCoins;
-                            break;
-                        default:
-                            current = PlayerStatus.Current.Variables.GetVariable(key.ToString()).IntValue;
-                            break;
-                    }
+                    int current = Current.Variables.GetVariable(key.ToString()).IntValue;
 
                     Set(current - v);
                 }
