@@ -8,6 +8,7 @@ using Interaction;
 using Machamy.Utils;
 using Player;
 using SaveLoad;
+using Sound;
 using Stage;
 using TMPro;
 using UnityEngine;
@@ -99,6 +100,7 @@ namespace UI.OtherUIs
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
 
             
+            SoundManager.Instance.PlaySfx(SoundReference.GameOver);
 
 
             

@@ -4,6 +4,7 @@ using Core;
 using Cysharp.Threading.Tasks;
 using Machamy.Utils;
 using SaveLoad;
+using Sound;
 using Stage;
 using TMPro;
 using UnityEngine;
@@ -127,24 +128,26 @@ namespace UI.MainUIs
         {
             LogEx.Log("Start Button Clicked");
             GameManager.Instance.StartGame();
+            SoundManager.Instance.PlaySfx(SoundReference.UIClick);
         }
         
         public void OnContinueButtonClicked()
         {
             LogEx.Log("Continue Button Clicked");
             GameManager.Instance.ContinueTurn();
-            
+            SoundManager.Instance.PlaySfx(SoundReference.UIClick);
         }
         public void OnSettingsButtonClicked()
         {
             LogEx.Log("Settings Button Clicked");
             UIManager.Instance.SettingParentUI.Show();
             UIManager.Instance.SoundSettingUI.ShowDefaultAsync().Forget();
-
+            SoundManager.Instance.PlaySfx(SoundReference.UIClick);
         }
         public void OnExitButtonClicked()
         {
             LogEx.Log("Exit Button Clicked");
+            SoundManager.Instance.PlaySfx(SoundReference.UIClick);
             Application.Quit();
         }
 

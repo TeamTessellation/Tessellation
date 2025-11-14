@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Machamy.Attributes;
 using Machamy.Utils;
+using Sound;
 using Stage;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
@@ -281,6 +282,10 @@ namespace UI.OtherUIs
         }
         
         
+        /// <summary>
+        /// 기본적인 PuaseUI 활성화 애니메이션 재생
+        /// </summary>
+        /// <param name="cancellationToken"></param>
         public async UniTask PlayOnEnableTransitionsAsync(CancellationToken cancellationToken)
         {
             using var handle = ListPool<UniTask>.Get(out var transitionTasks);
@@ -410,6 +415,10 @@ namespace UI.OtherUIs
             await UniTask.WhenAll(transitionTasks);
         }
 
+        /// <summary>
+        /// 사운드 설정 UI로 전환
+        /// </summary>
+        /// <param name="cancellationToken"></param>
         public async UniTask SwitchToSoundSettingsAsync(CancellationToken cancellationToken)
         {
             LogEx.Log("SwitchToSoundSettingsAsync 시작");
@@ -485,12 +494,14 @@ namespace UI.OtherUIs
         public void OnSoundButtonClicked()
         {
             LogEx.Log("사운드 버튼 클릭됨");
+            SoundManager.Instance.PlaySfx(SoundReference.MenuSetting);
             SwitchToSoundSettingsAsync(switchingCancellationTokenSource.Token).Forget();
         }
         public void OnRetryButtonClicked()
         {
             // Hide();
             LogEx.Log("재시작 버튼 클릭됨");
+            SoundManager.Instance.PlaySfx(SoundReference.MenuSetting);
             GameManager.Instance.StartGame();
         }
 
@@ -498,6 +509,7 @@ namespace UI.OtherUIs
         {
             // Hide();
             LogEx.Log("재개 버튼 클릭됨");
+            SoundManager.Instance.PlaySfx(SoundReference.MenuSetting);
             GameManager.Instance.ResumeGame();
         }
         
@@ -505,6 +517,7 @@ namespace UI.OtherUIs
         {
             // Hide();
             LogEx.Log("홈 버튼 클릭됨");
+            SoundManager.Instance.PlaySfx(SoundReference.MenuSetting);
             GameManager.Instance.ResetGameAndReturnToMainMenu();
         }
 

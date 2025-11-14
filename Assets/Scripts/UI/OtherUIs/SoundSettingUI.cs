@@ -319,6 +319,7 @@ namespace UI.OtherUIs
         
         public void OnClickBackButton()
         {
+            SoundManager.Instance.PlaySfx(SoundReference.MenuSetting);
             if (returnType == ReturnType.ToMainUI)
             {
                 CancelAllTransitions();
