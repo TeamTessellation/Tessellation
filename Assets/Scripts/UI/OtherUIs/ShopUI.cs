@@ -221,20 +221,26 @@ namespace UI.OtherUIs
             {
                 await UniTask.Yield(cancellationToken);
             }
-            
+            if (cancellationToken.IsCancellationRequested) return;
+            if(isHiding) return;
             await HideShopUIAsync(cancellationToken);
         }
 
+        bool isHiding = false;
         private async UniTask HideShopUIAsync(CancellationToken cancellationToken)
         {
             Debug.Log("HideSHop");
             UIManager UM = UIManager.Instance;
+            if (isHiding) return;
+            isHiding = true;
             List<Tween> moveTweens = new List<Tween>();
-            foreach (var entry in UM.InGameUI.ItemPlaceEntries)
-            {
-                moveTweens.Add(entry.transform.DOMoveY(UM.InGameUI.IngameInventoryPosition.position.y, inventoryMoveDuration)
-                    .SetEase(inventoryMoveEase));
-            }
+            // foreach (var entry in UM.InGameUI.ItemPlaceEntries)
+            // {
+            //     moveTweens.Add(entry.transform.DOMoveY(UM.InGameUI.IngameInventoryPosition.position.y, inventoryMoveDuration)
+            //         .SetEase(inventoryMoveEase));
+            // }
+            var tween = UM.InGameUI.MoveInventoryYToIngamePosition(inventoryMoveDuration, inventoryMoveEase);
+            moveTweens.Add(tween);
             
             currentTweenList.AddRange(moveTweens);
 
