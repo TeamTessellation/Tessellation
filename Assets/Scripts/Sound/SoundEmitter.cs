@@ -97,7 +97,7 @@ namespace Sound
                 else
                 {
                     StartCoroutine(SoundPlayingTimer());
-                }   
+                }
             }
         }
         

@@ -104,8 +104,8 @@ namespace UI.OtherUIs
         {
             if (SoundManager.HasInstance)
             {
-                bgmSlider.value = SoundManager.Instance.MusicVolume;
-                sfxSlider.value = SoundManager.Instance.SfxVolume;
+                bgmSlider.value = SoundManager.Instance.GetMusicVolume();
+                sfxSlider.value = SoundManager.Instance.GetSfxVolume();
             }
 
         }
