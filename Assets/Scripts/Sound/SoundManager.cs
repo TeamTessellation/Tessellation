@@ -25,7 +25,7 @@ namespace Sound
         // [Range(0.0001f, 1f)] [SerializeField] private float debugSfxVolume = 0.75f;
         // #endif
         
-        private Dictionary<string, AudioClip> _cachedAudioClips = new Dictionary<string, AudioClip>();
+        private Dictionary<string, AudioResource> _cachedAudioClips = new Dictionary<string, AudioResource>();
         private Dictionary<string, SoundEmitter> _cachedBackgroundSoundEmitters = new Dictionary<string, SoundEmitter>();
         private string _currentPlayingBackgroundMusicPath = string.Empty;
 
@@ -145,18 +145,18 @@ namespace Sound
             return PlayerPrefs.GetFloat("SFXVolume", defaultVolume);
         }
 
-        private AudioClip GetAuidoClip(string name)
+        private AudioResource GetAudioSource(string name)
         {
-            AudioClip clip;
-            if (_cachedAudioClips.TryGetValue(name, out  clip))
+            AudioResource resource;
+            if (_cachedAudioClips.TryGetValue(name, out  resource))
             {
-                return clip;
+                return resource;
             }
-            clip = Resources.Load<AudioClip>($"Audio/{name}");
-            if (clip != null)
+            resource = Resources.Load<AudioResource>($"Audio/{name}");
+            if (resource != null)
             {
-                _cachedAudioClips.Add(name, clip);
-                return clip;
+                _cachedAudioClips.Add(name, resource);
+                return resource;
             }
             Debug.LogError($"Audio clip not found: {name}");
             return null;
@@ -193,7 +193,7 @@ namespace Sound
         /// <param name="ifPausedResume">이전에 일시정지 되었다면, 이어서 재생</param>
         public SoundEmitter PlayBackgroundMusic(string path, bool ifPausedResume = false)
         {
-            AudioClip clip = GetAuidoClip(path);
+            AudioResource clip = GetAudioSource(path);
             if (clip == null)
                 return null;
             SoundEmitter soundEmitter;
@@ -230,7 +230,7 @@ namespace Sound
                 {
                     soundEmitter.transform.SetParent(transform);
                     soundEmitter.transform.position = Vector3.zero;
-                    audioSource.clip = clip;
+                    audioSource.resource = clip;
                     audioSource.loop = true;
                     audioSource.time = 0;
                     audioSource.volume = 1f;
@@ -244,7 +244,7 @@ namespace Sound
                 soundEmitter.transform.position = Vector3.zero;
                 AudioSource audioSource = soundEmitter.GetComponent<AudioSource>();
                 audioSource.outputAudioMixerGroup = musicGroup;
-                audioSource.clip = clip;
+                audioSource.resource = clip;
                 audioSource.loop = true;
                 audioSource.volume = 1f;
                 audioSource.Play();
@@ -266,7 +266,7 @@ namespace Sound
         /// <param name="isLoop"></param>
         public void PlaySfxTo(string path, Transform target, bool stopOnTargetNull = true, bool isLoop = false,bool isSpatial = true)
         {
-            AudioClip clip = GetAuidoClip(path);
+            AudioResource clip = GetAudioSource(path);
             if (clip == null)
                 return;
             SoundEmitter soundEmitter = Pool<SoundEmitter>.Get();
@@ -277,7 +277,7 @@ namespace Sound
             audioSource.outputAudioMixerGroup = sfxGroup;
             audioSource.spatialize = isSpatial;
             
-            soundEmitter.SimplePlayAudioClip(clip, isLoop);
+            soundEmitter.SimplePlayAudioSource(clip, isLoop);
         }
         
         /// <summary>
@@ -288,7 +288,7 @@ namespace Sound
         /// <param name="isLoop"></param>
         public void PlaySfxAt(string path, Vector3 position, bool isLoop = false,bool isSpatial = true)
         {
-            AudioClip clip = GetAuidoClip(path);
+            AudioResource clip = GetAudioSource(path);
             if (clip == null)
                 return;
             SoundEmitter soundEmitter = Pool<SoundEmitter>.Get();
@@ -298,7 +298,7 @@ namespace Sound
             audioSource.outputAudioMixerGroup = sfxGroup;
             audioSource.spatialize = isSpatial;
             
-            soundEmitter.SimplePlayAudioClip(clip, isLoop);
+            soundEmitter.SimplePlayAudioSource(clip, isLoop);
         }
         
         /// <summary>
@@ -309,7 +309,7 @@ namespace Sound
         /// <param name="isSpatial"></param>
         public void PlaySfx(string path, bool isLoop = false,bool isSpatial = false)
         {
-            AudioClip clip = GetAuidoClip(path);
+            AudioResource clip = GetAudioSource(path);
             if (clip == null)
                 return;
             SoundEmitter soundEmitter = Pool<SoundEmitter>.Get();
@@ -319,7 +319,7 @@ namespace Sound
             audioSource.outputAudioMixerGroup = sfxGroup;
             audioSource.spatialize = isSpatial;
             
-            soundEmitter.SimplePlayAudioClip(clip, isLoop);
+            soundEmitter.SimplePlayAudioSource(clip, isLoop);
         }
         
         public void FadeOutBackgroundMusic(float fadeOutTime)
