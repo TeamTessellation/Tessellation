@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 using Database;
+using Machamy.Utils;
 using SceneManagement;
 using TMPro;
 using UnityEditor;
@@ -13,6 +14,7 @@ using Action = System.Action;
 
 namespace Core
 {
+    [DefaultExecutionOrder(-100000)]
     public class InitialLoader : MonoBehaviour
     {
         private static bool _notStartedInitialization = true;
@@ -146,6 +148,13 @@ namespace Core
         
         private async UniTask Start()
         {
+            LogEx.Log("InitialLoader started.");
+            if (!_notStartedInitialization)
+            {
+                LogEx.Log("InitialLoader: Initialization already started. Exiting.");
+                Destroy(gameObject);
+                return;
+            }
             DontDestroyOnLoad(gameObject);
             _notStartedInitialization = false;
      

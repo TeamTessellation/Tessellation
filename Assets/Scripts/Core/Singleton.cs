@@ -53,6 +53,7 @@ namespace Core
                     }
                 }
             }
+            Debug.Log($"Awake called for {typeof(T).Name}, Id: {GetInstanceID()}");
             
             if (_instance == null)
             {
