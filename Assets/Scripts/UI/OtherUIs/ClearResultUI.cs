@@ -228,7 +228,7 @@ namespace UI.OtherUIs
                 
                 // 대기: Delay 또는 Confirm 신호 중 먼저 발생한 쪽으로 넘어감
                 var delayTask = UniTask.Delay(TimeSpan.FromSeconds(entryDelay), cancellationToken: cancellationToken);
-                var confirmTask = UniTask.WaitUntil(() => _confirmRequested);
+                var confirmTask = UniTask.WaitUntil(() => (_confirmRequested || _isSkipping), cancellationToken: cancellationToken);
                 await UniTask.WhenAny(delayTask, confirmTask);
                     
                 if (_confirmRequested)
