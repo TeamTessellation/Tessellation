@@ -283,13 +283,19 @@ namespace UI.OtherUIs
             tweenList.AddRange(countTweens);
             await UniTask.WhenAll(countTweens.ConvertAll(t => t.ToUniTask(cancellationToken: cancellationToken)));
             
-            // 코인 카운터 업데이트
-            SoundManager.Instance.PlaySfx(SoundReference.GoldGet);
             CoinCounter coinCounter = UIManager.Instance.InGameUI.CoinCounter;
-            var coinUpdateTween = coinCounter.DoCount(coinCounter.CounterValue, coinCounter.CounterValue + totalCoins, 0.2f)
-                .SetEase(Ease.OutCubic);
-            tweenList.Add(coinUpdateTween);
-            await coinUpdateTween.ToUniTask(cancellationToken: cancellationToken);
+            int finalTotalCoins = playerStatus.CurrentCoins;
+            if (!_isSkipping || coinCounter.CounterValue < finalTotalCoins)
+            {
+                // 코인 카운터 업데이트
+                SoundManager.Instance.PlaySfx(SoundReference.GoldGet);
+
+                var coinUpdateTween = coinCounter.DoCount(coinCounter.CounterValue, finalTotalCoins, 0.2f)
+                    .SetEase(Ease.OutCubic);
+                tweenList.Add(coinUpdateTween);
+                await coinUpdateTween.ToUniTask(cancellationToken: cancellationToken);
+            }
+
             
             InteractionManager.Instance.ConfirmEvent -= ConfirmHandler;
         }

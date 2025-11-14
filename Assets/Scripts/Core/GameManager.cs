@@ -283,6 +283,8 @@ namespace Core
             StageManager.ResetStage();
             UIManager.HidePauseUI();
             UIManager.SwitchToMainMenu();
+            TurnManager.StopTurnLoop();
+            
             
             _gameCancellationTokenSource = new CancellationTokenSource();
         }
@@ -311,6 +313,7 @@ namespace Core
             PlayerStatus.Reset();
             StageManager.ResetStage();
             UIManager.HidePauseUI();
+            TurnManager.StopTurnLoop();
 
             
             _gameCancellationTokenSource = new CancellationTokenSource();
