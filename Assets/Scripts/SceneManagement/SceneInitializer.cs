@@ -1,6 +1,7 @@
 
 using Core;
 using Cysharp.Threading.Tasks;
+using Machamy.Utils;
 using UnityEngine;
 using Utils;
 
@@ -19,6 +20,7 @@ namespace SceneManagement{
         {
             if(InitialLoader.NotStartedInitialization)
             {
+                LogEx.Log("SceneInitializer: Starting scene initialization.");
                 // 아직 초기화가 시작되지 않은 경우, 씬을 로드합니다.
                 await SceneUtil.LoadScenesAsync(sceneToLoad);
 

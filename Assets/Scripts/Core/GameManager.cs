@@ -30,6 +30,7 @@ namespace Core
     
 
     [RequireComponent(typeof(ResolutionWatcher))]
+    [DefaultExecutionOrder(-100)]
     public class GameManager : Singleton<GameManager>, ISaveTarget
     {
         public override bool IsDontDestroyOnLoad => true;
@@ -87,6 +88,7 @@ namespace Core
         
         
         public bool AutoPauseInBackground = false;
+        
 
         protected override void AfterAwake()
         {
@@ -105,8 +107,11 @@ namespace Core
                 }
             };
         }
+        
         public async UniTaskVoid Start()
         {
+
+            
             LogEx.Log("GameManager 시작");
             CurrentGameState = GlobalGameState.Initializing;
             await UniTask.Yield();
