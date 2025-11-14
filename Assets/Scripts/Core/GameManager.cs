@@ -29,6 +29,7 @@ namespace Core
     }
     
 
+    [RequireComponent(typeof(ResolutionWatcher))]
     public class GameManager : Singleton<GameManager>, ISaveTarget
     {
         public override bool IsDontDestroyOnLoad => true;
@@ -59,6 +60,19 @@ namespace Core
             }
         }
 
+        ResolutionWatcher _resolutionWatcher;
+        
+        public ResolutionWatcher ResolutionWatcher
+        {
+            get
+            {
+                if (_resolutionWatcher == null)
+                {
+                    _resolutionWatcher = GetComponent<ResolutionWatcher>();
+                }
+                return _resolutionWatcher;
+            }
+        }
         StageManager StageManager => StageManager.Instance;
         TurnManager TurnManager => TurnManager.Instance;
         UIManager UIManager => UIManager.Instance;

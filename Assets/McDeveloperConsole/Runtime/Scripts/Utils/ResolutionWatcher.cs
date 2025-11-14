@@ -5,7 +5,6 @@ namespace Machamy.Utils
 {
     public class ResolutionWatcher : MonoBehaviour
     {
-
         public Vector2Int CurrentResolution { get; private set; }
         public event System.Action<Vector2Int> OnResolutionChanged;
         
