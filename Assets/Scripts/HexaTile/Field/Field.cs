@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Sound;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -199,11 +200,12 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
         await cell.Tile.RemoveEffect();
     }
 
-    public async UniTask SafeRemoveTile(Coordinate coor, Action<Tile> remainAction = null)
+    public async UniTask SafeRemoveTile(Coordinate coor, Action<Tile> remainAction = null, float sfx_pitch = 1f)
     {
         if (CheckAbleCoor(coor) && !_allCell[coor].IsEmpty)
         {
             var cell = _allCell[coor];
+            SoundManager.Instance.PlaySfx(SoundReference.TileClear, pitch:sfx_pitch);
             await ActiveTileEffect(cell, remainAction);
         }
         await UniTask.CompletedTask;
