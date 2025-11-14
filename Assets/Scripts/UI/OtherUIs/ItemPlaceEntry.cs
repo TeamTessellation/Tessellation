@@ -1,5 +1,6 @@
 using Abilities;
 using Core;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,10 +16,25 @@ namespace UI.OtherUIs
         protected override void OnEnable()
         {
             base.OnEnable();
-            PlayerInventory inventory = GameManager.Instance.PlayerStatus.inventory;
-            inventory.OnInventorySlotChanged += OnInventorySlotChanged;
+            if (GameManager.HasInstance)
+            {
+                PlayerInventory inventory = GameManager.Instance.PlayerStatus.inventory;
+                inventory.OnInventorySlotChanged += OnInventorySlotChanged;
+                ClearSlot();
+            }
+            else
+            {
+                UniTask.WaitUntil(() => GameManager.HasInstance).ContinueWith(() =>
+                {
+                    PlayerInventory inventory = GameManager.Instance.PlayerStatus.inventory;
+                    inventory.OnInventorySlotChanged += OnInventorySlotChanged;
+                    ClearSlot();
+                }).Forget();
+            }
             
-            ClearSlot();
+            
+            
+            
         }
 
         protected override void OnDisable()
