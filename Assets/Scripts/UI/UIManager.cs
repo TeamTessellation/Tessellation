@@ -3,6 +3,7 @@ using Core;
 using Cysharp.Threading.Tasks;
 using Interaction;
 using Machamy.Utils;
+using Sound;
 using UI.MainUIs;
 using UI.OtherUIs;
 using UnityEngine;
@@ -209,6 +210,7 @@ namespace UI
             }
             else if (PauseUI.isActiveAndEnabled)
             {
+                SoundManager.Instance.PlaySfx(SoundReference.UIClick);
                 HidePauseUI();
                 GameManager.Instance.ResumeGame();
             }
@@ -216,10 +218,12 @@ namespace UI
             {
                 if (GameManager.Instance.CurrentGameState == GlobalGameState.InGame)
                 {
+                    SoundManager.Instance.PlaySfx(SoundReference.UIClick);
                     GameManager.Instance.PauseGameWithUI();
                 }
                 else
                 {
+                    SoundManager.Instance.PlaySfx(SoundReference.UIClick);
                     SoundSettingUI.ShowDefaultAsync().Forget();
                 }
             }

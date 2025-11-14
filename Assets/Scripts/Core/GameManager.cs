@@ -8,6 +8,7 @@ using Machamy.Utils;
 using Player;
 using SaveLoad;
 using SceneManagement;
+using Sound;
 using Stage;
 using UI;
 using Unity.VisualScripting;
@@ -117,6 +118,8 @@ namespace Core
             InteractionManager.CancelEvent += OnInputCancel;
             
             SaveLoadManager.RegisterPendingSavable(this);
+            
+            SoundManager.Instance.PlayBackgroundMusic(SoundReference.InGameBGM);
         }
         
         private void OnDestroy()
