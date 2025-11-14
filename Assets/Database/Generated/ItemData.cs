@@ -26,6 +26,7 @@ namespace Database.Generated
         public int ItemPrice;
         /// <summary> 중복 불가 아이템 ID </summary>
         public List<string> ConflictingItems;
+        /// <summary> 합성아이템 여부 </summary>
         public bool IsSynthesisItem;
         /// <summary> 등장 요구 조건 필수 보유 아이템 ID </summary>
         public List<string> SynthesisRequirements;

@@ -1,10 +1,10 @@
 [
   {
-    "ItemID": "ExtraLife",
-    "eItemType": "ExtraLife",
-    "itemNameID": "ExtraLife_name",
-    "DescriptionID": "ExtraLife_description",
-    "Rarity": "Normal",
+    "ItemID": "ExtraTurn",
+    "eItemType": "ExtraTurn",
+    "itemNameID": "ExtraTurn_name",
+    "DescriptionID": "ExtraTurn_description",
+    "Rarity": 0,
     "input": [
       1.0
     ],
@@ -14,11 +14,11 @@
     "SynthesisRequirements": []
   },
   {
-    "ItemID": "ExtraLifeII",
-    "eItemType": "ExtraLife",
-    "itemNameID": "ExtraLifeII_name",
-    "DescriptionID": "ExtraLifeII_description",
-    "Rarity": "Rare",
+    "ItemID": "ExtraTurnII",
+    "eItemType": "ExtraTurn",
+    "itemNameID": "ExtraTurnII_name",
+    "DescriptionID": "ExtraTurnII_description",
+    "Rarity": 1,
     "input": [
       2.0
     ],
@@ -30,11 +30,11 @@
     ]
   },
   {
-    "ItemID": "ExtraLifeIII",
-    "eItemType": "ExtraLife",
-    "itemNameID": "ExtraLifeIII_name",
-    "DescriptionID": "ExtraLifeIII_description",
-    "Rarity": "Epic",
+    "ItemID": "ExtraTurnIII",
+    "eItemType": "ExtraTurn",
+    "itemNameID": "ExtraTurnIII_name",
+    "DescriptionID": "ExtraTurnIII_description",
+    "Rarity": 2,
     "input": [
       4.0
     ],
@@ -50,7 +50,7 @@
     "eItemType": "ExtraActiveItemRemainingUses",
     "itemNameID": "ExtraActiveItemRemainingUses_name",
     "DescriptionID": "ExtraActiveItemRemainingUses_description",
-    "Rarity": "Normal",
+    "Rarity": 0,
     "input": [
       1.0
     ],
@@ -64,7 +64,7 @@
     "eItemType": "ExtraActiveItemRemainingUses",
     "itemNameID": "ExtraActiveItemRemainingUsesII_name",
     "DescriptionID": "ExtraActiveItemRemainingUsesII_description",
-    "Rarity": "Rare",
+    "Rarity": 1,
     "input": [
       2.0
     ],
@@ -80,7 +80,7 @@
     "eItemType": "ExtraActiveItemRemainingUses",
     "itemNameID": "ExtraActiveItemRemainingUsesIII_name",
     "DescriptionID": "ExtraActiveItemRemainingUsesIII_description",
-    "Rarity": "Epic",
+    "Rarity": 2,
     "input": [
       4.0
     ],
@@ -96,7 +96,7 @@
     "eItemType": "AddBombTileset",
     "itemNameID": "AddBombTileset_name",
     "DescriptionID": "AddBombTileset_description",
-    "Rarity": "Normal",
+    "Rarity": 0,
     "input": [
       3.0
     ],
@@ -110,7 +110,7 @@
     "eItemType": "AddBombTileset",
     "itemNameID": "AddBombTilesetII_name",
     "DescriptionID": "AddBombTilesetII_description",
-    "Rarity": "Rare",
+    "Rarity": 1,
     "input": [
       6.0
     ],
@@ -126,7 +126,7 @@
     "eItemType": "AddBombTileset",
     "itemNameID": "AddBombTilesetIII_name",
     "DescriptionID": "AddBombTilesetIII_description",
-    "Rarity": "Epic",
+    "Rarity": 2,
     "input": [
       9.0
     ],
@@ -142,7 +142,7 @@
     "eItemType": "IncreaseExplosionRage",
     "itemNameID": "IncreaseExplosionRage_name",
     "DescriptionID": "IncreaseExplosionRage_description",
-    "Rarity": "Rare",
+    "Rarity": 1,
     "input": [
       1.0
     ],
@@ -156,7 +156,7 @@
     "eItemType": "IncreaseExplosionRage",
     "itemNameID": "IncreaseExplosionRageII_name",
     "DescriptionID": "IncreaseExplosionRageII_description",
-    "Rarity": "Epic",
+    "Rarity": 2,
     "input": [
       2.0
     ],
@@ -172,7 +172,7 @@
     "eItemType": "BombImmediatlyExplosion",
     "itemNameID": "BombImmediatlyExplosion_name",
     "DescriptionID": "BombImmediatlyExplosion_description",
-    "Rarity": "Rare",
+    "Rarity": 1,
     "input": [],
     "ItemPrice": 12,
     "ConflictingItems": [],
@@ -186,7 +186,7 @@
     "eItemType": "ChainExplosion",
     "itemNameID": "BombChainExplosion_name",
     "DescriptionID": "BombChainExplosion_description",
-    "Rarity": "Epic",
+    "Rarity": 2,
     "input": [],
     "ItemPrice": 12,
     "ConflictingItems": [],
@@ -200,7 +200,7 @@
     "eItemType": "AddExtraScoreTileset",
     "itemNameID": "AddExtraScoreTileset_name",
     "DescriptionID": "AddExtraScoreTileset_description",
-    "Rarity": "Normal",
+    "Rarity": 0,
     "input": [
       3.0
     ],
@@ -214,7 +214,7 @@
     "eItemType": "AddExtraScoreTileset",
     "itemNameID": "AddExtraScoreTilesetII_name",
     "DescriptionID": "AddExtraScoreTilesetII_description",
-    "Rarity": "Rare",
+    "Rarity": 1,
     "input": [
       6.0
     ],
@@ -230,7 +230,7 @@
     "eItemType": "AddExtraScoreTileset",
     "itemNameID": "AddExtraScoreTilesetIII_name",
     "DescriptionID": "AddExtraScoreTilesetIII_description",
-    "Rarity": "Epic",
+    "Rarity": 2,
     "input": [
       9.0
     ],
@@ -246,7 +246,7 @@
     "eItemType": "AddMutlipleScoreTileset",
     "itemNameID": "AddMutlipleTileset_name",
     "DescriptionID": "AddMutlipleTileset_description",
-    "Rarity": "Rare",
+    "Rarity": 1,
     "input": [
       3.0
     ],
@@ -260,7 +260,7 @@
     "eItemType": "AddMutlipleScoreTileset",
     "itemNameID": "AddMutlipleTilesetII_name",
     "DescriptionID": "AddMutlipleTilesetII_description",
-    "Rarity": "Epic",
+    "Rarity": 2,
     "input": [
       6.0
     ],
@@ -276,7 +276,7 @@
     "eItemType": "AddGoldTileset",
     "itemNameID": "AddGoldTileset_name",
     "DescriptionID": "AddGoldTileset_description",
-    "Rarity": "Normal",
+    "Rarity": 0,
     "input": [
       3.0
     ],
@@ -290,7 +290,7 @@
     "eItemType": "AddGoldTileset",
     "itemNameID": "AddGoldTilesetII_name",
     "DescriptionID": "AddGoldTilesetII_description",
-    "Rarity": "Rare",
+    "Rarity": 1,
     "input": [
       6.0
     ],
@@ -306,7 +306,7 @@
     "eItemType": "AddGoldTileset",
     "itemNameID": "AddGoldTilesetIII_name",
     "DescriptionID": "AddGoldTilesetIII_description",
-    "Rarity": "Epic",
+    "Rarity": 2,
     "input": [
       9.0
     ],
@@ -318,11 +318,11 @@
     ]
   },
   {
-    "ItemID": "GoldTilsetCoinScaledExtraScore",
-    "eItemType": "GetExtraScoreClearGoldTileset",
-    "itemNameID": "GoldTilsetCoinScaledExtraScore_name",
-    "DescriptionID": "GoldTilsetCoinScaledExtraScore_description",
-    "Rarity": "Epic",
+    "ItemID": "GoldTilesetCoinScaledExtraScore",
+    "eItemType": "GoldTilesetCoinScaledExtraScore",
+    "itemNameID": "GoldTilesetCoinScaledExtraScore_name",
+    "DescriptionID": "GoldTilesetCoinScaledExtraScore_description",
+    "Rarity": 2,
     "input": [
       1.0
     ],
@@ -333,10 +333,10 @@
   },
   {
     "ItemID": "AdditionalInterest",
-    "eItemType": "MoreInterest",
+    "eItemType": "AdditionalInterest",
     "itemNameID": "AdditionalInterest_name",
     "DescriptionID": "AdditionalInterest_description",
-    "Rarity": "Normal",
+    "Rarity": 0,
     "input": [
       80.0
     ],
@@ -347,10 +347,10 @@
   },
   {
     "ItemID": "AdditionalInterestII",
-    "eItemType": "MoreInterest",
+    "eItemType": "AdditionalInterest",
     "itemNameID": "AdditionalInterestII_name",
     "DescriptionID": "AdditionalInterestII_description",
-    "Rarity": "Rare",
+    "Rarity": 1,
     "input": [
       100.0
     ],
@@ -363,10 +363,10 @@
   },
   {
     "ItemID": "AdditionalInterestIII",
-    "eItemType": "MoreInterest",
+    "eItemType": "AdditionalInterest",
     "itemNameID": "AdditionalInterestIII_name",
     "DescriptionID": "AdditionalInterestIII_description",
-    "Rarity": "Epic",
+    "Rarity": 2,
     "input": [
       150.0
     ],
@@ -382,13 +382,139 @@
     "eItemType": "CoinScaledMutiple",
     "itemNameID": "CoinScaledMutiple_name",
     "DescriptionID": "CoinScaledMutiple_description",
-    "Rarity": "Rare",
+    "Rarity": 1,
     "input": [
       5.0,
       0.1
     ],
     "ItemPrice": 8,
     "ConflictingItems": [],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "GetTilesetDelete",
+    "eItemType": "GetTilesetDelete",
+    "itemNameID": "GetTilesetDelete_name",
+    "DescriptionID": "GetTilesetDelete_description",
+    "Rarity": 0,
+    "input": [
+      5.0
+    ],
+    "ItemPrice": 3,
+    "ConflictingItems": [
+      "\"GetTilesetReroll\"",
+      "\"GetRevert\"",
+      "\"GetTilesetRotate\"",
+      "\"GetTilesetDelete\"",
+      "\"GetTilesetChangeOverwrite\"",
+      "\"GetTilesetCopy\""
+    ],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "GetTilesetReroll",
+    "eItemType": "GetTilesetReroll",
+    "itemNameID": "GetTilesetReroll_name",
+    "DescriptionID": "GetTilesetReroll_description",
+    "Rarity": 0,
+    "input": [
+      3.0
+    ],
+    "ItemPrice": 3,
+    "ConflictingItems": [
+      "\"GetTilesetReroll\"",
+      "\"GetRevert\"",
+      "\"GetTilesetRotate\"",
+      "\"GetTilesetDelete\"",
+      "\"GetTilesetChangeOverwrite\"",
+      "\"GetTilesetCopy\""
+    ],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "GetRevert",
+    "eItemType": "GetRevert",
+    "itemNameID": "GetRevert_name",
+    "DescriptionID": "GetRevert_description",
+    "Rarity": 0,
+    "input": [
+      4.0
+    ],
+    "ItemPrice": 3,
+    "ConflictingItems": [
+      "\"GetTilesetReroll\"",
+      "\"GetRevert\"",
+      "\"GetTilesetRotate\"",
+      "\"GetTilesetDelete\"",
+      "\"GetTilesetChangeOverwrite\"",
+      "\"GetTilesetCopy\""
+    ],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "GetTilesetRotate",
+    "eItemType": "GetTilesetRotate",
+    "itemNameID": "GetTilesetRotate_name",
+    "DescriptionID": "GetTilesetRotate_description",
+    "Rarity": 0,
+    "input": [
+      5.0
+    ],
+    "ItemPrice": 3,
+    "ConflictingItems": [
+      "\"GetTilesetReroll\"",
+      "\"GetRevert\"",
+      "\"GetTilesetRotate\"",
+      "\"GetTilesetDelete\"",
+      "\"GetTilesetChangeOverwrite\"",
+      "\"GetTilesetCopy\""
+    ],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "GetTilesetChangeOverwrite",
+    "eItemType": "GetTilesetChangeOverwrite",
+    "itemNameID": "GetTilesetChangeOverwrite_name",
+    "DescriptionID": "GetTilesetChangeOverwrite_description",
+    "Rarity": 0,
+    "input": [
+      3.0
+    ],
+    "ItemPrice": 3,
+    "ConflictingItems": [
+      "\"GetTilesetReroll\"",
+      "\"GetRevert\"",
+      "\"GetTilesetRotate\"",
+      "\"GetTilesetDelete\"",
+      "\"GetTilesetChangeOverwrite\"",
+      "\"GetTilesetCopy\""
+    ],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "GetTilesetCopy",
+    "eItemType": "GetTilesetCopy",
+    "itemNameID": "GetTilesetCopy_name",
+    "DescriptionID": "GetTilesetCopy_description",
+    "Rarity": 0,
+    "input": [
+      3.0
+    ],
+    "ItemPrice": 3,
+    "ConflictingItems": [
+      "\"GetTilesetReroll\"",
+      "\"GetRevert\"",
+      "\"GetTilesetRotate\"",
+      "\"GetTilesetDelete\"",
+      "\"GetTilesetChangeOverwrite\"",
+      "\"GetTilesetCopy\""
+    ],
     "IsSynthesisItem": false,
     "SynthesisRequirements": []
   }
