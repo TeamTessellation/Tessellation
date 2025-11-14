@@ -6,6 +6,7 @@ using Player;
 using UnityEngine;
 using static Field;
 using System;
+using Sound;
 
 public class LineClearHandler
 {
@@ -92,8 +93,9 @@ public class LineClearHandler
         return true;
     }
 
-    public async UniTask ClearLineAsync(Line line, float interval = 1f, Action<Tile> remainAction = null)
+    public async UniTask ClearLineAsync(Line line, float interval = 1f, Action<Tile> remainAction = null, float sfxPitch = 1.0f)
     {
+        
         Direction up = Direction.R;
         Direction down = Direction.L;
 
@@ -117,18 +119,18 @@ public class LineClearHandler
         Coordinate downCorrect = line.Start;
 
         List<UniTask> allTask = new();
-
-        await UniTask.WaitForSeconds(0.3f);
-
-        allTask.Add(Field.Instance.SafeRemoveTile(line.Start, remainAction));
+        
+        allTask.Add(Field.Instance.SafeRemoveTile(line.Start, remainAction, sfxPitch));
+        sfxPitch *= 1.2f;
+        
         await UniTask.WaitForSeconds(interval);
         while (Field.Instance.CheckAbleCoor(upCorrect) || Field.Instance.CheckAbleCoor(downCorrect))
         {
             upCorrect += up;
             downCorrect += down;
             await UniTask.WaitForSeconds(interval);
-            allTask.Add(Field.Instance.SafeRemoveTile(upCorrect, remainAction));
-            allTask.Add(Field.Instance.SafeRemoveTile(downCorrect, remainAction));
+            allTask.Add(Field.Instance.SafeRemoveTile(upCorrect, remainAction, sfxPitch));
+            allTask.Add(Field.Instance.SafeRemoveTile(downCorrect, remainAction, sfxPitch));
         }
 
         await allTask;
@@ -140,10 +142,14 @@ public class LineClearHandler
     {
         //UniTask[] tasks = new UniTask[line.Count];
         List<Tile> remainTile = new();
-
+        
+        float sfxPitch = 1.0f;
+        
         for (int i = 0; i < line.Count; i++)
         {
-            await ClearLineAsync(line[i], interval, (tile) => remainTile.Add(tile));
+            await ClearLineAsync(line[i], interval, (tile) => remainTile.Add(tile), sfxPitch);
+            sfxPitch = Mathf.Min(5f, sfxPitch*1.5f);
+            interval = Mathf.Max(0.05f, interval*0.8f);
         }
         //await UniTask.WhenAll(tasks);
         await UniTask.WaitForSeconds(interval);
