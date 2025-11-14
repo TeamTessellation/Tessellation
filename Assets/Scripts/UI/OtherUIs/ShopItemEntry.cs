@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI.OtherUIs
@@ -15,18 +16,18 @@ namespace UI.OtherUIs
         [SerializeField] private TMP_Text itemRarityText;
         [SerializeField] private TMP_Text itemNameText;
         [SerializeField] private TMP_Text costText;
-
+        [SerializeField] private Button thisButton;
+        
         private AbilityDataSO _abilityData;
         private ShopUI _shopUI;
-        private Button _thisButton;
 
         protected override void Start()
         {
             base.Start();
-            _thisButton = GetComponent<Button>();
-            if (_thisButton)
+            thisButton = GetComponent<Button>();
+            if (thisButton)
             {
-                _thisButton.onClick.AddListener(PurchaseItem);
+                thisButton.onClick.AddListener(PurchaseItem);
             }
         }
 
@@ -125,17 +126,17 @@ namespace UI.OtherUIs
         
         private void ResetButton()
         {
-            if (_thisButton == null)
+            if (thisButton == null)
             {
-                _thisButton = GetComponent<Button>();
+                thisButton = GetComponent<Button>();
             }
-            _thisButton.interactable = true;
+            thisButton.interactable = true;
             CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
             canvasGroup.alpha = 1f;
         }
         private void DisableButton()
         {
-            _thisButton.interactable = false;
+            thisButton.interactable = false;
             CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
             canvasGroup.alpha = 0.5f;
         }

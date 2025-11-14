@@ -736,3 +736,4 @@ MonoBehaviour:
   itemRarityText: {fileID: 2502843449195712206}
   itemNameText: {fileID: 4400686840811353540}
   costText: {fileID: 3763744513617264927}
+  thisButton: {fileID: 7374139997087201680}
