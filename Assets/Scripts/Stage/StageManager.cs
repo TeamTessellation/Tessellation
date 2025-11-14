@@ -114,6 +114,12 @@ namespace Stage
              
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
             
+            // UI 숨기기
+            UM.MainTitleUI.Hide();
+            UM.FailResultUI.Hide();
+            UM.InGameUI.Show();
+            UM.ClearResultUI.Hide();
+            UM.ShopUI.Hide();
             
             // 6각형 타일 맵 초기화
             Field.Instance.gameObject.SetActive(true);
@@ -138,10 +144,7 @@ namespace Stage
             // # 스테이지 모델에 정의된 제약 조건들을 필드에 적용
             // # TODO : 현재 없음
             
-            // UI 숨기기
-            UM.MainTitleUI.Hide();
-            UM.FailResultUI.Hide();
-            UM.InGameUI.Show();
+
 
             
             using var initStageArgs = StageStartEventArgs.Get();

@@ -319,6 +319,69 @@ namespace UI.OtherUIs
             // 스킵 버튼 눌렀을 때 처리 로직 구현
             _isSkipping = true;
         }
+
+        public void Hide()
+        {
+            // 모든 활성 트윈 종료
+            if (tweenList != null && tweenList.Count > 0)
+            {
+                foreach (var tween in tweenList)
+                {
+                    if (tween != null && tween.IsActive())
+                    {
+                        tween.Kill();
+                    }
+                }
+                tweenList.Clear();
+            }
+            
+            // HandCanvas 스케일 복원 (중요!)
+  
+            HandCanvas.Instance.transform.localScale = Vector3.one;
+            
+            
+            // Field 크기 복원
+            foreach (var cell in Field.Instance)
+            {
+                cell.SetSize(1f);
+            }
+            
+            
+            // 이벤트 리스너 제거
+            if (InteractionManager.HasInstance)
+            {
+                InteractionManager.Instance.ConfirmEvent -= ConfirmHandler;
+            }
+            
+            // 캔슬레이션 토큰 취소
+            if (_confirmationTokenSource != null && !_confirmationTokenSource.IsCancellationRequested)
+            {
+                _confirmationTokenSource.Cancel();
+                _confirmationTokenSource.Dispose();
+                _confirmationTokenSource = new CancellationTokenSource();
+            }
+            
+            // UI 요소 초기화
+            clearCanvasGroup.alpha = 0f;
+            entryHolderCanvasGroup.alpha = 0f;
+            totalHolderCanvasGroup.alpha = 0f;
+            
+            foreach (var entry in entries)
+            {
+                entry.CanvasGroup.alpha = 0f;
+                entry.ValueText.CounterValue = 0;
+            }
+            
+            totalEntry.CanvasGroup.alpha = 0f;
+            totalEntry.ValueText.CounterValue = 0;
+            
+            // 플래그 초기화
+            _isSkipping = false;
+            _confirmRequested = false;
+            _isHandlingConfirm = false;
+            
+            // GameObject 비활성화
+            gameObject.SetActive(false);
+        }
     }
 }
-

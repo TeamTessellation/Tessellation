@@ -127,7 +127,7 @@ public static class Pool<T> where T : MonoBehaviour, IPoolAble
     {
         obj.Reset();
         obj.gameObject.SetActive(false);
-        obj.transform.SetParent(_poolRoot);
+        obj.transform.SetParent(_poolRoot, false);
         _pool.Push(obj);
     }
 
