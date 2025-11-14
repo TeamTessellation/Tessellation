@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using ExecEvents;
 using Player;
+using Sound;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,7 @@ namespace UI.Components
             SetCounterValue(CounterValue);
         }
         [field:SerializeField] public bool autoUpdate { get; set; } = true;
+        [field:SerializeField] public bool playChangeSound { get; set; } = true;
         
         public Image GoldIconImage
         {
@@ -50,6 +52,10 @@ namespace UI.Components
         {
             if (autoUpdate)
             {
+                if (playChangeSound)
+                {
+                    SoundManager.Instance.PlaySfx(SoundReference.GoldGet);
+                }
                 CounterValue = newGoldAmount;
             }
         }
@@ -57,6 +63,10 @@ namespace UI.Components
         {
             if (autoUpdate)
             {
+                if (playChangeSound)
+                {
+                    SoundManager.Instance.PlaySfx(SoundReference.GoldGet);
+                }
                 CounterValue = evt.NewCurrentCoin;
             }
             return UniTask.CompletedTask;
