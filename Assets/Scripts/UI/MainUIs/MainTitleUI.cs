@@ -142,7 +142,7 @@ namespace UI.MainUIs
             LogEx.Log("Settings Button Clicked");
             UIManager.Instance.SettingParentUI.Show();
             UIManager.Instance.SoundSettingUI.ShowDefaultAsync().Forget();
-            SoundManager.Instance.PlaySfx(SoundReference.UIClick);
+            SoundManager.Instance.PlaySfx(SoundReference.MenuSetting);
         }
         public void OnExitButtonClicked()
         {

@@ -494,14 +494,14 @@ namespace UI.OtherUIs
         public void OnSoundButtonClicked()
         {
             LogEx.Log("사운드 버튼 클릭됨");
-            SoundManager.Instance.PlaySfx(SoundReference.MenuSetting);
+            SoundManager.Instance.PlaySfx(SoundReference.UIClick);
             SwitchToSoundSettingsAsync(switchingCancellationTokenSource.Token).Forget();
         }
         public void OnRetryButtonClicked()
         {
             // Hide();
             LogEx.Log("재시작 버튼 클릭됨");
-            SoundManager.Instance.PlaySfx(SoundReference.MenuSetting);
+            SoundManager.Instance.PlaySfx(SoundReference.UIClick);
             GameManager.Instance.StartGame();
         }
 
@@ -509,7 +509,7 @@ namespace UI.OtherUIs
         {
             // Hide();
             LogEx.Log("재개 버튼 클릭됨");
-            SoundManager.Instance.PlaySfx(SoundReference.MenuSetting);
+            SoundManager.Instance.PlaySfx(SoundReference.UIClick);
             GameManager.Instance.ResumeGame();
         }
         
@@ -517,7 +517,7 @@ namespace UI.OtherUIs
         {
             // Hide();
             LogEx.Log("홈 버튼 클릭됨");
-            SoundManager.Instance.PlaySfx(SoundReference.MenuSetting);
+            SoundManager.Instance.PlaySfx(SoundReference.UIClick);
             GameManager.Instance.ResetGameAndReturnToMainMenu();
         }
 
