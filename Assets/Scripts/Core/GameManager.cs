@@ -113,7 +113,11 @@ namespace Core
             if (InitialLoader.Initialized)
             {
                 await UniTask.Yield();
-                await UniTask.WaitUntil(() => SceneManager.GetActiveScene().name == mainMenuScene.SceneName);
+                await UniTask.WaitUntil(() =>
+                {
+                    LogEx.Log(SceneManager.GetActiveScene().name);
+                    return SceneManager.GetActiveScene().name == mainMenuScene.SceneName;
+                });
                 CurrentGameState = GlobalGameState.MainMenu;
             }
             else

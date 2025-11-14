@@ -22,6 +22,7 @@ namespace SceneManagement{
                 // 아직 초기화가 시작되지 않은 경우, 씬을 로드합니다.
                 await SceneUtil.LoadScenesAsync(sceneToLoad);
 
+                await UniTask.Delay(200);
                 InitialLoader.NotifySceneInitialized();
             }
             Destroy(gameObject);

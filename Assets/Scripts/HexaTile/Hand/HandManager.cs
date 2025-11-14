@@ -35,10 +35,11 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 
     private async UniTask Awake()
     {
-        LogEx.Log($"Instance id : {GetInstanceID()} - {gameObject.scene.name}, {gameObject.name}");
+        // LogEx.Log($"Instance id : {GetInstanceID()} - {gameObject.scene.name}, {gameObject.name}");
+        Instance = this;
         await GameManager.WaitForInit();
          
-        Instance = this;
+        
         _hand = new HandBox[0];
         _handRoot = GameObject.FindWithTag("HandRoot").transform;
         _dragTileSet = false;

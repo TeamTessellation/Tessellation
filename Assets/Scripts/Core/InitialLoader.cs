@@ -71,13 +71,7 @@ namespace Core
         
         public static async UniTask WaitUntilInitialized()
         {
-            if (_initialized)
-            {
-                return;
-            }
-            var tcs = new UniTaskCompletionSource();
-            WaitForInitialization(() => tcs.TrySetResult());
-            await tcs.Task;
+            await UniTask.WaitUntil(() => _initialized);
         }
         
         /// <summary>

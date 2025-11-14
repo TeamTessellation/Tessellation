@@ -138,6 +138,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2613411705685657411, guid: 93d3f4657318363438a75c0a2852265f, type: 3}
+      propertyPath: _ctrlAction.m_Name
+      value: Ctrl
+      objectReference: {fileID: 0}
+    - target: {fileID: 2613411705685657411, guid: 93d3f4657318363438a75c0a2852265f, type: 3}
+      propertyPath: _sizeUpAction.m_Name
+      value: Size Up
+      objectReference: {fileID: 0}
+    - target: {fileID: 2613411705685657411, guid: 93d3f4657318363438a75c0a2852265f, type: 3}
+      propertyPath: _sizeDownAction.m_Name
+      value: Size Down
+      objectReference: {fileID: 0}
     - target: {fileID: 5160266128926049352, guid: 93d3f4657318363438a75c0a2852265f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 637.55493
@@ -329,81 +341,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!1 &346888279
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 346888281}
-  - component: {fileID: 346888280}
-  m_Layer: 0
-  m_Name: '@GameManager'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &346888280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 346888279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 523bbc7e8a95414689fc6b4f7f5cabc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Core.GameManager
-  destroyPreExisting: 0
-  mainMenuScene: {fileID: 0}
-  _currentGameState: 0
-  <DisableContinueInMainMenu>k__BackingField: 0
-  _playerStatus:
-    fieldSize: 4
-    handSize: 3
-    coinInterestRate: 0.1
-    maxInterestCoins: 5
-    variables:
-      items:
-        defaultKey: 
-        _items: []
-    inventory:
-      _abilities:
-      - rid: -2
-      - rid: -2
-      - rid: -2
-      - rid: -2
-      - rid: -2
-      _currentAbilityCount: 0
-      _maxAbilityCount: 5
-      CurrentItem: 0
-      CurrentItemCount: 5
-      MaxItemCount: 5
-  AutoPauseInBackground: 0
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
---- !u!4 &346888281
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 346888279}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2353,4 +2290,3 @@ SceneRoots:
   - {fileID: 1354172843}
   - {fileID: 532915699}
   - {fileID: 690360328}
-  - {fileID: 346888281}
