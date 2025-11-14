@@ -33,15 +33,15 @@
     "아이템 효과 숫자",
     "아이템 가격",
     "중복 불가 아이템 ID",
-    "",
+    "합성아이템 여부",
     "등장 요구 조건 필수 보유 아이템 ID"
   ],
   "data": [
     [
-      "ExtraLife",
-      "ExtraLife",
-      "ExtraLife_name",
-      "ExtraLife_description",
+      "ExtraTurn",
+      "ExtraTurn",
+      "ExtraTurn_name",
+      "ExtraTurn_description",
       "Normal",
       "[\r\n  1\r\n]",
       "3",
@@ -50,10 +50,10 @@
       "[]"
     ],
     [
-      "ExtraLifeII",
-      "ExtraLife",
-      "ExtraLifeII_name",
-      "ExtraLifeII_description",
+      "ExtraTurnII",
+      "ExtraTurn",
+      "ExtraTurnII_name",
+      "ExtraTurnII_description",
       "Rare",
       "[\r\n  2\r\n]",
       "5",
@@ -62,10 +62,10 @@
       "[\r\n  \"ExtraLifeII\"\r\n]"
     ],
     [
-      "ExtraLifeIII",
-      "ExtraLife",
-      "ExtraLifeIII_name",
-      "ExtraLifeIII_description",
+      "ExtraTurnIII",
+      "ExtraTurn",
+      "ExtraTurnIII_name",
+      "ExtraTurnIII_description",
       "Epic",
       "[\r\n  4\r\n]",
       "8",
@@ -290,10 +290,10 @@
       "[\r\n  \"AddGoldTilesetII\"\r\n]"
     ],
     [
-      "GoldTilsetCoinScaledExtraScore",
-      "GetExtraScoreClearGoldTileset",
-      "GoldTilsetCoinScaledExtraScore_name",
-      "GoldTilsetCoinScaledExtraScore_description",
+      "GoldTilesetCoinScaledExtraScore",
+      "GoldTilesetCoinScaledExtraScore",
+      "GoldTilesetCoinScaledExtraScore_name",
+      "GoldTilesetCoinScaledExtraScore_description",
       "Epic",
       "[\r\n  1\r\n]",
       "15",
@@ -303,7 +303,7 @@
     ],
     [
       "AdditionalInterest",
-      "MoreInterest",
+      "AdditionalInterest",
       "AdditionalInterest_name",
       "AdditionalInterest_description",
       "Normal",
@@ -315,7 +315,7 @@
     ],
     [
       "AdditionalInterestII",
-      "MoreInterest",
+      "AdditionalInterest",
       "AdditionalInterestII_name",
       "AdditionalInterestII_description",
       "Rare",
@@ -327,7 +327,7 @@
     ],
     [
       "AdditionalInterestIII",
-      "MoreInterest",
+      "AdditionalInterest",
       "AdditionalInterestIII_name",
       "AdditionalInterestIII_description",
       "Epic",
@@ -346,6 +346,78 @@
       "[\r\n  5,\r\n  0.1\r\n]",
       "8",
       "[]",
+      "False",
+      "[]"
+    ],
+    [
+      "GetTilesetDelete",
+      "GetTilesetDelete",
+      "GetTilesetDelete_name",
+      "GetTilesetDelete_description",
+      "Normal",
+      "[\r\n  5\r\n]",
+      "3",
+      "[\r\n  \"GetTilesetReroll\",\r\n  \"GetRevert\",\r\n  \"GetTilesetRotate\",\r\n  \"GetTilesetDelete\",\r\n  \"GetTilesetChangeOverwrite\",\r\n  \"GetTilesetCopy\"\r\n]",
+      "False",
+      "[]"
+    ],
+    [
+      "GetTilesetReroll",
+      "GetTilesetReroll",
+      "GetTilesetReroll_name",
+      "GetTilesetReroll_description",
+      "Normal",
+      "[\r\n  3\r\n]",
+      "3",
+      "[\r\n  \"GetTilesetReroll\",\r\n  \"GetRevert\",\r\n  \"GetTilesetRotate\",\r\n  \"GetTilesetDelete\",\r\n  \"GetTilesetChangeOverwrite\",\r\n  \"GetTilesetCopy\"\r\n]",
+      "False",
+      "[]"
+    ],
+    [
+      "GetRevert",
+      "GetRevert",
+      "GetRevert_name",
+      "GetRevert_description",
+      "Normal",
+      "[\r\n  4\r\n]",
+      "3",
+      "[\r\n  \"GetTilesetReroll\",\r\n  \"GetRevert\",\r\n  \"GetTilesetRotate\",\r\n  \"GetTilesetDelete\",\r\n  \"GetTilesetChangeOverwrite\",\r\n  \"GetTilesetCopy\"\r\n]",
+      "False",
+      "[]"
+    ],
+    [
+      "GetTilesetRotate",
+      "GetTilesetRotate",
+      "GetTilesetRotate_name",
+      "GetTilesetRotate_description",
+      "Normal",
+      "[\r\n  5\r\n]",
+      "3",
+      "[\r\n  \"GetTilesetReroll\",\r\n  \"GetRevert\",\r\n  \"GetTilesetRotate\",\r\n  \"GetTilesetDelete\",\r\n  \"GetTilesetChangeOverwrite\",\r\n  \"GetTilesetCopy\"\r\n]",
+      "False",
+      "[]"
+    ],
+    [
+      "GetTilesetChangeOverwrite",
+      "GetTilesetChangeOverwrite",
+      "GetTilesetChangeOverwrite_name",
+      "GetTilesetChangeOverwrite_description",
+      "Normal",
+      "[\r\n  3\r\n]",
+      "3",
+      "[\r\n  \"GetTilesetReroll\",\r\n  \"GetRevert\",\r\n  \"GetTilesetRotate\",\r\n  \"GetTilesetDelete\",\r\n  \"GetTilesetChangeOverwrite\",\r\n  \"GetTilesetCopy\"\r\n]",
+      "False",
+      "[]"
+    ],
+    [
+      "GetTilesetCopy",
+      "GetTilesetCopy",
+      "GetTilesetCopy_name",
+      "GetTilesetCopy_description",
+      "Normal",
+      "[\r\n  3\r\n]",
+      "3",
+      "[\r\n  \"GetTilesetReroll\",\r\n  \"GetRevert\",\r\n  \"GetTilesetRotate\",\r\n  \"GetTilesetDelete\",\r\n  \"GetTilesetChangeOverwrite\",\r\n  \"GetTilesetCopy\"\r\n]",
       "False",
       "[]"
     ]
