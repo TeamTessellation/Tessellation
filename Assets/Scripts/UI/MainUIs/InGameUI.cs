@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using ExecEvents;
 using Stage;
 using TMPro;
@@ -39,6 +40,7 @@ namespace UI.MainUIs
         public void Show()
         {
             gameObject.SetActive(true);
+            ResetInventoryPositionY();
         }
 
         public void Hide()
@@ -62,6 +64,37 @@ namespace UI.MainUIs
             currentStageText.text = args.StageModel.StageName;
             return UniTask.CompletedTask;
         }
-        
+
+        public void ResetInventoryPositionY()
+        {
+            foreach (var itemPlaceEntry in ItemPlaceEntries)
+            {
+                var position = itemPlaceEntry.transform.position;
+                position.y = IngameInventoryPosition.position.y;
+                itemPlaceEntry.transform.position = position;
+            }
+        }
+        public Tween MoveInventoryYToShopPosition(float duration, Ease ease)
+        {
+            var tweens = new List<Tween>();
+            foreach (var itemPlaceEntry in ItemPlaceEntries)
+            {
+                var tween = itemPlaceEntry.transform.DOMoveY(ShopInventoryPosition.position.y, duration).SetEase(ease);
+                tweens.Add(tween);
+            }
+            
+            return DOTween.Sequence().AppendInterval(0).Join(tweens[0]);
+        }
+        public Tween MoveInventoryYToIngamePosition(float duration, Ease ease)
+        {
+            var tweens = new List<Tween>();
+            foreach (var itemPlaceEntry in ItemPlaceEntries)
+            {
+                var tween = itemPlaceEntry.transform.DOMoveY(IngameInventoryPosition.position.y, duration).SetEase(ease);
+                tweens.Add(tween);
+            }
+            return DOTween.Sequence().AppendInterval(0).Join(tweens[0]);
+        }
+
     }
 }

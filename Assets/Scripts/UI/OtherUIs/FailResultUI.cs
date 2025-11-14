@@ -38,8 +38,10 @@ namespace UI.OtherUIs
         [SerializeField] private Ease countEase = Ease.OutBack;
         
         
+        
         [Space]
         [Header("Buttons")]
+        [SerializeField] private CanvasGroup buttonCanvasGroup;
         [SerializeField] private Button _skipButton;
         [SerializeField] private Button _retryButton;
         [SerializeField] private Button _homeButton;
@@ -136,6 +138,8 @@ namespace UI.OtherUIs
         public async UniTask ShowFailResult()
         {
             gameObject.SetActive(true);
+            buttonCanvasGroup.alpha = 0f;
+            buttonCanvasGroup.gameObject.SetActive(false);
             LogEx.Log("Showing Fail Result UI");
             stageNameText.text = $"stage {StageManager.Instance.CurrentStage.StageName}";
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
@@ -144,6 +148,7 @@ namespace UI.OtherUIs
             SoundManager.Instance.PlaySfx(SoundReference.GameOver);
 
 
+            
             
             _tokenSource.Cancel();
             _tokenSource = new CancellationTokenSource();
@@ -158,7 +163,20 @@ namespace UI.OtherUIs
             {
                 failResultEntries[i].gameObject.SetActive(false);
             }
+            // 인벤토리 올리고 버튼들 페이드인
+            {
+                buttonCanvasGroup.alpha = 0f;
+                buttonCanvasGroup.gameObject.SetActive(true);
+                var seq = DOTween.Sequence();
+                seq.Append(UIManager.Instance.InGameUI.MoveInventoryYToShopPosition(moveDuration, moveEase));
+                var fadeTween = buttonCanvasGroup.DOFade(1f, fadeDuration).SetEase(fadeEase);
+                seq.Append(fadeTween);
+                
+            }
             
+            
+            
+            // 각 엔트리 애니메이션 실행
             for (int i = 0; i < failResultEntries.Count; i++)
             {
                 if (token.IsCancellationRequested)

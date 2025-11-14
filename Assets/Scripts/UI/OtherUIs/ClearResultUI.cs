@@ -166,24 +166,12 @@ namespace UI.OtherUIs
             shrinkTweens.Add(HandCanvas.Instance.transform.DOScaleX(0f, handShrinkDuration)
                 .SetEase(handShrinkEase));
 
-            List<Tween> moveTweens = new List<Tween>();
-            foreach (var entry in UM.InGameUI.ItemPlaceEntries)
-            {
-                moveTweens.Add(entry.transform.DOMoveY(UM.InGameUI.ShopInventoryPosition.position.y, inventoryMoveDuration)
-                    .SetEase(inventoryMoveEase));
-            }
-            
+            var inventoryTween = UM.InGameUI.MoveInventoryYToShopPosition(inventoryMoveDuration, inventoryMoveEase);
             tweenList.AddRange(shrinkTweens);
-            tweenList.AddRange(moveTweens);
+            tweenList.Add(inventoryTween);
             await UniTask.WhenAll(shrinkTweens.ConvertAll(t => t.ToUniTask(cancellationToken: cancellationToken)));
             
-            // todo : 아이템 위치 이동
-            // _originalItemHolderPos = HandCanvas.Instance.GetComponent<RectTransform>().anchoredPosition;
-            // var handMoveTween = HandCanvas.Instance.GetComponent<RectTransform>()
-            //     .DOAnchorPos(handTransformMoveTarget.anchoredPosition, itemMoveUpDuration)
-            //     .SetEase(itemMoveUpEase);
-            // tweenList.Add(handMoveTween);
-            // await handMoveTween.ToUniTask(cancellationToken: cancellationToken);
+
             // 클리어 타이틀 페이드 인
             var clearTitleFadeInTween = clearCanvasGroup.DOFade(1f, 0.5f);
             tweenList.Add(clearTitleFadeInTween);
