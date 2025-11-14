@@ -93,7 +93,7 @@ MonoBehaviour:
   EpicRarityColor: {r: 0.3529412, g: 0.27058825, b: 1, a: 0}
   SpecialRarityColor: {r: 1, g: 0.27058825, b: 0.57254905, a: 0}
   shopEntryMoveDuration: 0.6
-  shopEntryMoveDistance: 20
+  shopEntryMoveDistance: 2000
   shopEntryMoveInterval: 0.2
   shopEntryMoveEase: 27
   inventoryMoveDuration: 0.4
@@ -112,6 +112,7 @@ MonoBehaviour:
       Weight: 5
     - Rarity: 3
       Weight: 5
+  entryOriginPosition: []
 --- !u!225 &1877105503286013489
 CanvasGroup:
   m_ObjectHideFlags: 0

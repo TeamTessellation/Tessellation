@@ -51,7 +51,7 @@ namespace UI.OtherUIs
         [SerializeField] private Button _skipButton;
         
         [SerializeField] private ShopItemSelector _shopItemSelector = new ShopItemSelector();
-        [SerializeField] private List<Vector3> entryOriginPosition = new List<Vector3>();
+        [SerializeField] private List<Vector2> entryOriginPosition = new List<Vector2>();
         
         private bool _isSkipping = false;
         private bool _isAnimating = true;
@@ -70,7 +70,7 @@ namespace UI.OtherUIs
 
             for (int i = 0; i < entries.Count; i++)
             {
-                entryOriginPosition.Add(entries[i].transform.position);
+                entryOriginPosition.Add(entries[i].GetComponent<RectTransform>().anchoredPosition);
             }
         }
 
@@ -97,31 +97,10 @@ namespace UI.OtherUIs
 
             _isSkipping = false;
             currentTweenList.Clear();
-            
+    
             RefreshShopItems();
-            
-            // 1. 스테이지 글씨 변경
-
-            // Entries들을 위에서 순서대로 왼쪽에서 등장시킨다
-            for (int i = 0; i < entries.Count; i++)
-            {
-                entries[i].transform.position = entryOriginPosition[i] + Vector3.left * shopEntryMoveDistance;
-            }
-
-            List<Tween> moveTweens = new List<Tween>();
-
-            for (int i = 0; i < entries.Count; i++)
-            {
-                moveTweens.Add(entries[i].transform.DOMoveX(entryOriginPosition[i].x, shopEntryMoveDuration)
-                    .SetEase(shopEntryMoveEase)
-                    .SetDelay(shopEntryMoveInterval * i));
-            }
-
-            currentTweenList.AddRange(moveTweens);
-            
-            await UniTask.WhenAll(moveTweens.ConvertAll(t => t.ToUniTask(cancellationToken: cancellationToken)));
-
-            _isAnimating = false;
+    
+            await PlayEntryAnimation(cancellationToken);
         }
 
         private void RefreshShopItems()
@@ -135,10 +114,39 @@ namespace UI.OtherUIs
                 }
             }
         }
+
+        private async UniTask PlayEntryAnimation(CancellationToken cancellationToken)
+        {
+            _isAnimating = true;
+            currentTweenList.Clear();
+    
+            // Entries들을 보이지 않는 왼쪽으로 이동
+            for (int i = 0; i < entries.Count; i++)
+            {
+                entries[i].GetComponent<RectTransform>().anchoredPosition = entryOriginPosition[i] + Vector2.left * shopEntryMoveDistance;
+            }
+
+            // 이동 애니메이션
+            List<Tween> moveTweens = new List<Tween>();
+            for (int i = 0; i < entries.Count; i++)
+            {
+                moveTweens.Add(entries[i].GetComponent<RectTransform>().DOAnchorPosX(entryOriginPosition[i].x, shopEntryMoveDuration)
+                    .SetEase(shopEntryMoveEase)
+                    .SetDelay(shopEntryMoveInterval * i));
+            }
+            
+            currentTweenList.AddRange(moveTweens);
+            await UniTask.WhenAll(moveTweens.ConvertAll(t => t.ToUniTask()));
+            _isAnimating = false;
+        }
         
         private void OnRerollButtonClicked()
         {
-            RefreshShopItems();   
+            OnConfirmed();
+            
+            RefreshShopItems();
+
+            PlayEntryAnimation(_tokenSource.Token).Forget();
         }
 
         private void OnSkipButtonClicked()
