@@ -86,12 +86,7 @@ namespace Player
 
 
         }
-
-        public enum eActiveItemType
-        {
-
-        }
-
+        
         // for 문 사용 편의성
         public static readonly VariableKey BestStart = VariableKey.BestScorePlacement;
         public static readonly VariableKey BestEnd = VariableKey.BestStageInterestEarnedCoins;
