@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Database;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -47,6 +49,7 @@ namespace Abilities
         public string ItemID;
         [TextArea(3, 5)] public string Description;
         public Sprite ItemIcon;
+        public List<float> input;
         
         [Space(40)] 
     
