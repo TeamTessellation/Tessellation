@@ -300,6 +300,8 @@ namespace Machamy.DeveloperConsole
         private void UnregisterHandlers()
         {
             LogEx.Log("UnregisterHandlers");
+            if (textField == null)
+                return;
             textField.UnregisterValueChangedCallback(OnTextChanged);
             textField.UnregisterCallback<FocusOutEvent>(OnTextFieldUnfocused);
             textField.UnregisterCallback<KeyDownEvent>(OnTextFieldKeyDown, TrickleDown.TrickleDown);
