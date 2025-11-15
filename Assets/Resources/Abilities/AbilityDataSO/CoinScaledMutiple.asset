@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 11
   Rarity: 1
-  ItemName: 
+  ItemName: "\uCF54\uC778 \uBE44\uB840 \uCD94\uAC00 \uC810\uC218"
   ItemID: CoinScaledMutiple
-  Description: 
-  ItemIcon: {fileID: 0}
+  Description: "\uBCF4\uC720\uD55C 0.10\uCF54\uC778\uB2F9 \uBAA8\uB4E0 \uC810\uC218\uC5D0
+    \uB300\uD574 5\uBC30\uC758 \uCD94\uAC00 \uC810\uC218\uB97C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
   input:
   - 5
   - 0.1

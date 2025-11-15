@@ -39,51 +39,51 @@
     ],
     [
       "ExtraActiveItemRemainingUses_name",
-      ""
+      "사용 아이템 추가 횟수"
     ],
     [
       "ExtraActiveItemRemainingUses_description",
-      ""
+      "사용 아이템 횟수를 {0}만큼 추가로 얻습니다."
     ],
     [
       "ExtraActiveItemRemainingUsesII_name",
-      ""
+      "사용 아이템 추가 횟수 II"
     ],
     [
       "ExtraActiveItemRemainingUsesII_description",
-      ""
+      "사용 아이템 횟수를 {0}만큼 추가로 얻습니다."
     ],
     [
       "ExtraActiveItemRemainingUsesIII_name",
-      ""
+      "사용 아이템 추가 횟수 III"
     ],
     [
       "ExtraActiveItemRemainingUsesIII_description",
-      ""
+      "사용 아이템 횟수를 {0}만큼 추가로 얻습니다."
     ],
     [
       "AddBombTileset_name",
-      "폭탄 타일셋 획득"
+      "폭탄 타일 획득"
     ],
     [
       "AddBombTileset_description",
-      "폭탄 타일셋 등장 확률이 조금 증가합니다."
+      "폭탄 타일 등장 확률이 조금 증가합니다."
     ],
     [
       "AddBombTilesetII_name",
-      "폭탄 타일셋 획득 II"
+      "폭탄 타일 획득 II"
     ],
     [
       "AddBombTilesetII_description",
-      "폭탄 타일셋 등장 확률이 증가합니다."
+      "폭탄 타일 등장 확률이 증가합니다."
     ],
     [
       "AddBombTilesetIII_name",
-      "폭탄 타일셋 획득 III"
+      "폭탄 타일 획득 III"
     ],
     [
       "AddBombTilesetIII_description",
-      "폭탄 타일셋 등장 확률이 많이 증가합니다."
+      "폭탄 타일 등장 확률이 많이 증가합니다."
     ],
     [
       "IncreaseExplosionRange_name",
@@ -91,7 +91,7 @@
     ],
     [
       "IncreaseExplosionRange_description",
-      "폭탄의 폭팔 범위가 {0}만큼 증가합니다."
+      "폭탄의 폭발 범위가 {0}만큼 증가합니다."
     ],
     [
       "IncreaseExplosionRangeII_name",
@@ -99,7 +99,7 @@
     ],
     [
       "IncreaseExplosionRangeII_description",
-      "폭탄의 폭팔 범위가 {0}만큼 증가합니다."
+      "폭탄의 폭발 범위가 {0}만큼 증가합니다."
     ],
     [
       "BombImmediatelyExplosion_name",
@@ -107,7 +107,7 @@
     ],
     [
       "BombImmediatelyExplosion_description",
-      "폭탄의 폭팔 범위가 {0}만큼 증가하고 폭탄 타일셋이 배치하면 바로 폭발합니다."
+      "폭탄의 폭발 범위가 {0}만큼 증가하고 폭탄 타일셋이 배치하면 바로 폭발합니다."
     ],
     [
       "BombChainExplosion_name",
@@ -115,159 +115,159 @@
     ],
     [
       "BombChainExplosion_description",
-      "폭탄의 폭팔 범위가 {0}만큼 증가하고 폭탄이 터질때 폭파 범위내의 폭탄이 바로 터집니다."
+      "폭탄의 폭발 범위가 {0}만큼 증가하고 폭탄이 터질때 폭파 범위내의 폭탄이 바로 터집니다."
     ],
     [
       "AddExtraScoreTileset_name",
-      "추가 점수 타일셋 획득"
+      "추가 점수 타일 획득"
     ],
     [
       "AddExtraScoreTileset_description",
-      "추가 점수 타일셋 등장 확률이 조금 증가합니다."
+      "추가 점수 타일 등장 확률이 조금 증가합니다."
     ],
     [
       "AddExtraScoreTilesetII_name",
-      "추가 점수 타일셋 획득 II"
+      "추가 점수 타일 획득 II"
     ],
     [
       "AddExtraScoreTilesetII_description",
-      "추가 점수 타일셋 등장 확률이 증가합니다."
+      "추가 점수 타일 등장 확률이 증가합니다."
     ],
     [
       "AddExtraScoreTilesetIII_name",
-      "추가 점수 타일셋 획득 III"
+      "추가 점수 타일 획득 III"
     ],
     [
       "AddExtraScoreTilesetIII_description",
-      "추가 점수 타일셋 등장 확률이 많이 증가합니다."
+      "추가 점수 타일 등장 확률이 많이 증가합니다."
     ],
     [
       "AddMultipleTileset_name",
-      "배수 타일셋 획득"
+      "배수 타일 획득"
     ],
     [
       "AddMultipleTileset_description",
-      "배수 타일셋 등장 확률이 조금 증가합니다."
+      "배수 타일 등장 확률이 조금 증가합니다."
     ],
     [
       "AddMultipleTilesetII_name",
-      "배수 타일셋 획득 II"
+      "배수 타일 획득 II"
     ],
     [
       "AddMultipleTilesetII_description",
-      "배수 타일셋 등장 확률이 조금 증가합니다."
+      "배수 타일 등장 확률이 증가합니다."
     ],
     [
       "AddGoldTileset_name",
-      "배수 타일셋 획득"
+      "골드 타일 획득"
     ],
     [
       "AddGoldTileset_description",
-      "배수 타일셋 등장 확률이 조금 증가합니다."
+      "골드 타일 등장 확률이 조금 증가합니다."
     ],
     [
       "AddGoldTilesetII_name",
-      ""
+      "골드 타일 획득 II"
     ],
     [
       "AddGoldTilesetII_description",
-      ""
+      "골드 타일 등장 확률이 증가합니다."
     ],
     [
       "AddGoldTilesetIII_name",
-      ""
+      "골드 타일 획득 III"
     ],
     [
       "AddGoldTilesetIII_description",
-      ""
+      "골드 타일 등장 확률이 조금 증가합니다."
     ],
     [
       "GoldTilesetCoinScaledExtraScore_name",
-      ""
+      "골드 타일 추가 점수"
     ],
     [
       "GoldTilesetCoinScaledExtraScore_description",
-      ""
+      "골드 타일이 지워질때 현재 보유한 코인 수 만큼 추가 점수를 획득합니다."
     ],
     [
       "AdditionalInterest_name",
-      ""
+      "추가 이자"
     ],
     [
       "AdditionalInterest_description",
-      ""
+      "최대 이자가 {0}만큼 증가합니다."
     ],
     [
       "AdditionalInterestII_name",
-      ""
+      "추가 이자 II"
     ],
     [
       "AdditionalInterestII_description",
-      ""
+      "최대 이자가 {0}만큼 증가합니다."
     ],
     [
       "AdditionalInterestIII_name",
-      ""
+      "추가 이자 III"
     ],
     [
       "AdditionalInterestIII_description",
-      ""
+      "최대 이자가 {0}만큼 증가합니다."
     ],
     [
       "CoinScaledMutiple_name",
-      ""
+      "코인 비례 추가 점수"
     ],
     [
       "CoinScaledMutiple_description",
-      ""
+      "보유한 {1}코인당 모든 점수에 대해 {0}배의 추가 점수를 획득합니다."
     ],
     [
       "GetTilesetDelete_name",
-      ""
+      "타일 삭제 아이템 획득"
     ],
     [
       "GetTilesetDelete_description",
-      ""
+      "타일 삭제 사용 아이템을 획득합니다."
     ],
     [
       "GetTilesetReroll_name",
-      ""
+      "타일 다시뽑기 획득"
     ],
     [
       "GetTilesetReroll_description",
-      ""
+      "타일 다시 뽑기 사용 아이템을 획득합니다."
     ],
     [
       "GetRevert_name",
-      ""
+      "되돌리기 획득"
     ],
     [
       "GetRevert_description",
-      ""
+      "되돌리기 사용 아이템을 획득합니다."
     ],
     [
       "GetTilesetRotate_name",
-      ""
+      "타일 회전 아이템 획득"
     ],
     [
       "GetTilesetRotate_description",
-      ""
+      "타일 회전 사용 아이템 획득"
     ],
     [
       "GetTilesetChangeOverwrite_name",
-      ""
+      "유령 타일 변환 아이템 획득"
     ],
     [
       "GetTilesetChangeOverwrite_description",
-      ""
+      "유령 타일 변환 사용 아이템을 획득합니다."
     ],
     [
       "GetTilesetCopy_name",
-      ""
+      "타일 복사 아이템 획득"
     ],
     [
       "GetTilesetCopy_description",
-      ""
+      "타일 복사 사용 아이템을 획득합니다."
     ]
   ]
 }

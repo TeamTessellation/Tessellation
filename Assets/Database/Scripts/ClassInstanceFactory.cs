@@ -169,7 +169,11 @@ namespace Database
 
             // 문자열
             if (targetType == typeof(string))
+            {
+                if (value.Length >= 2 && value[0] == '"' && value[value.Length - 1] == '"')
+                    return value.Substring(1, value.Length - 2);
                 return value;
+            }
 
             // 불리언(0/1도 허용)
             if (targetType == typeof(bool))

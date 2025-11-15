@@ -14,14 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 8
   Rarity: 2
-  ItemName: 
+  ItemName: "\uACE8\uB4DC \uD0C0\uC77C \uD68D\uB4DD III"
   ItemID: AddGoldTilesetIII
-  Description: 
-  ItemIcon: {fileID: 0}
+  Description: "\uACE8\uB4DC \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774 \uC870\uAE08
+    \uC99D\uAC00\uD569\uB2C8\uB2E4."
+  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
   input:
   - 9
   ItemPrice: 15
   CanAppearInShop: 1
   ConflictingItems: []
   IsSynthesisItem: 1
-  SynthesisRequirements: []
+  SynthesisRequirements:
+  - {fileID: 11400000, guid: 6b2741e8fb650e7499f7b7335bcac9c7, type: 2}
