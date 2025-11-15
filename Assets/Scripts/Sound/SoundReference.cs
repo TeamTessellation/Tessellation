@@ -4,7 +4,7 @@
     {
         // BGM
         // public static readonly SoundReference MainTitleBGM = new SoundReference("BGM/MainTitleBGM_V1");
-        public static readonly SoundReference InGameBGM = new SoundReference("BGM/Ingame_V1");
+        public static readonly SoundReference InGameBGM = new SoundReference("BGM/Ingame");
         
         // SFX
         public static readonly SoundReference GameOver = new SoundReference("SFX/GameOver_V2");
