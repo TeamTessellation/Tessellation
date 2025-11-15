@@ -11,9 +11,8 @@ namespace Database.Generated
 
         /// <summary> 아이템 아이디 </summary>
         public string ItemID;
-        /// <summary> (Reference:Enum<eItemType>) 
-         /// 아이템 타입 </summary>
-        public string eItemType;
+        /// <summary> 아이템 타입 </summary>
+        public Abilities.eItemType eItemType;
         /// <summary> 아이템 이름 key </summary>
         public string itemNameID;
         /// <summary> 아이템 설명 key </summary>

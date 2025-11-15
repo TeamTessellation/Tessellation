@@ -59,7 +59,7 @@
       "5",
       "[]",
       "True",
-      "[\r\n  \"ExtraLifeII\"\r\n]"
+      "[\r\n  \"ExtraTurn\"\r\n]"
     ],
     [
       "ExtraTurnIII",
@@ -71,7 +71,7 @@
       "8",
       "[]",
       "True",
-      "[\r\n  \"ExtraLifeIII\"\r\n]"
+      "[\r\n  \"ExtraTurnII\"\r\n]"
     ],
     [
       "ExtraActiveItemRemainingUses",
@@ -146,10 +146,10 @@
       "[\r\n  \"AddBombTilesetII\"\r\n]"
     ],
     [
-      "IncreaseExplosionRage",
-      "IncreaseExplosionRage",
-      "IncreaseExplosionRage_name",
-      "IncreaseExplosionRage_description",
+      "IncreaseExplosionRange",
+      "IncreaseExplosionRange",
+      "IncreaseExplosionRange_name",
+      "IncreaseExplosionRange_description",
       "Rare",
       "[\r\n  1\r\n]",
       "8",
@@ -158,28 +158,28 @@
       "[]"
     ],
     [
-      "IncreaseExplosionRageII",
-      "IncreaseExplosionRage",
-      "IncreaseExplosionRageII_name",
-      "IncreaseExplosionRageII_description",
+      "IncreaseExplosionRangeII",
+      "IncreaseExplosionRange",
+      "IncreaseExplosionRangeII_name",
+      "IncreaseExplosionRangeII_description",
       "Epic",
       "[\r\n  2\r\n]",
       "12",
       "[]",
       "True",
-      "[\r\n  \"IncreaseExplosionRage\"\r\n]"
+      "[\r\n  \"IncreaseExplosionRange\"\r\n]"
     ],
     [
-      "BombImmediatlyExplosion",
-      "BombImmediatlyExplosion",
-      "BombImmediatlyExplosion_name",
-      "BombImmediatlyExplosion_description",
+      "BombImmediatelyExplosion",
+      "BombImmediatelyExplosion",
+      "BombImmediatelyExplosion_name",
+      "BombImmediatelyExplosion_description",
       "Rare",
-      "[]",
+      "[\r\n  1\r\n]",
       "12",
       "[]",
       "True",
-      "[\r\n  \"IncreaseExplosionRage\"\r\n]"
+      "[\r\n  \"IncreaseExplosionRange\"\r\n]"
     ],
     [
       "BombChainExplosion",
@@ -187,11 +187,11 @@
       "BombChainExplosion_name",
       "BombChainExplosion_description",
       "Epic",
-      "[]",
+      "[\r\n  1\r\n]",
       "12",
       "[]",
       "True",
-      "[\r\n  \"IncreaseExplosionRage\"\r\n]"
+      "[\r\n  \"IncreaseExplosionRange\"\r\n]"
     ],
     [
       "AddExtraScoreTileset",
@@ -230,10 +230,10 @@
       "[\r\n  \"AddExtraScoreTilesetII\"\r\n]"
     ],
     [
-      "AddMutlipleTileset",
-      "AddMutlipleScoreTileset",
-      "AddMutlipleTileset_name",
-      "AddMutlipleTileset_description",
+      "AddMultipleTileset",
+      "AddMultipleScoreTileset",
+      "AddMultipleTileset_name",
+      "AddMultipleTileset_description",
       "Rare",
       "[\r\n  3\r\n]",
       "12",
@@ -242,16 +242,16 @@
       "[]"
     ],
     [
-      "AddMutlipleTilesetII",
-      "AddMutlipleScoreTileset",
-      "AddMutlipleTilesetII_name",
-      "AddMutlipleTilesetII_description",
+      "AddMultipleTilesetII",
+      "AddMultipleScoreTileset",
+      "AddMultipleTilesetII_name",
+      "AddMultipleTilesetII_description",
       "Epic",
       "[\r\n  6\r\n]",
       "18",
       "[]",
       "True",
-      "[\r\n  \"AddMutlipleTileset\"\r\n]"
+      "[\r\n  \"AddMultipleTileset\"\r\n]"
     ],
     [
       "AddGoldTileset",
@@ -339,7 +339,7 @@
     ],
     [
       "CoinScaledMutiple",
-      "CoinScaledMutiple",
+      "CoinScaledMultiple",
       "CoinScaledMutiple_name",
       "CoinScaledMutiple_description",
       "Rare",

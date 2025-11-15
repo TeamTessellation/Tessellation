@@ -53,6 +53,13 @@ namespace Database
                             return instance as T;
                     }
                     break;
+                case "StringData":
+                    foreach (var instance in StringDataList)
+                    {
+                        if (instance.ItemID == itemID)
+                            return instance as T;
+                    }
+                    break;
                 default:
                     Debug.LogWarning($"[MDatabase] 정의되지 않은 클래스 타입: {typeof(T).Name}");
                     return null;

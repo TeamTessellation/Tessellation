@@ -1,1 +1,258 @@
-[]
+[
+  {
+    "ItemID": "ExtraTurn_name",
+    "kr": "추가 턴"
+  },
+  {
+    "ItemID": "ExtraTurn_description",
+    "kr": "턴을 추가로 {input[0]}만큼 얻습니다."
+  },
+  {
+    "ItemID": "ExtraTurnII_name",
+    "kr": "추가 턴 II"
+  },
+  {
+    "ItemID": "ExtraTurnII_description",
+    "kr": "턴을 추가로 {input[0]}만큼 얻습니다."
+  },
+  {
+    "ItemID": "ExtraTurnIII_name",
+    "kr": "추가 턴 III"
+  },
+  {
+    "ItemID": "ExtraTurnIII_description",
+    "kr": "턴을 추가로 {input[0]}만큼 얻습니다."
+  },
+  {
+    "ItemID": "ExtraActiveItemRemainingUses_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "ExtraActiveItemRemainingUses_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "ExtraActiveItemRemainingUsesII_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "ExtraActiveItemRemainingUsesII_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "ExtraActiveItemRemainingUsesIII_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "ExtraActiveItemRemainingUsesIII_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddBombTileset_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddBombTileset_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddBombTilesetII_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddBombTilesetII_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddBombTilesetIII_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddBombTilesetIII_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "IncreaseExplosionRange_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "IncreaseExplosionRange_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "IncreaseExplosionRangeII_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "IncreaseExplosionRangeII_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "BombImmediatelyExplosion_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "BombImmediatelyExplosion_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "BombChainExplosion_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "BombChainExplosion_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddExtraScoreTileset_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddExtraScoreTileset_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddExtraScoreTilesetII_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddExtraScoreTilesetII_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddExtraScoreTilesetIII_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddExtraScoreTilesetIII_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddMultipleTileset_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddMultipleTileset_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddMultipleTilesetII_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddMultipleTilesetII_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddGoldTileset_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddGoldTileset_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddGoldTilesetII_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddGoldTilesetII_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddGoldTilesetIII_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "AddGoldTilesetIII_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "GoldTilesetCoinScaledExtraScore_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "GoldTilesetCoinScaledExtraScore_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "AdditionalInterest_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "AdditionalInterest_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "AdditionalInterestII_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "AdditionalInterestII_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "AdditionalInterestIII_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "AdditionalInterestIII_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "CoinScaledMutiple_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "CoinScaledMutiple_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "GetTilesetDelete_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "GetTilesetDelete_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "GetTilesetReroll_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "GetTilesetReroll_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "GetRevert_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "GetRevert_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "GetTilesetRotate_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "GetTilesetRotate_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "GetTilesetChangeOverwrite_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "GetTilesetChangeOverwrite_description",
+    "kr": ""
+  },
+  {
+    "ItemID": "GetTilesetCopy_name",
+    "kr": ""
+  },
+  {
+    "ItemID": "GetTilesetCopy_description",
+    "kr": ""
+  }
+]

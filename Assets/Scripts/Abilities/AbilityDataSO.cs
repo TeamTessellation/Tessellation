@@ -1,4 +1,5 @@
 using System;
+using Database;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -23,23 +24,17 @@ namespace Abilities
         BombImmediatelyExplosion,
         ChainExplosion,
         AddExtraScoreTileset,
-        AddMultipleTileset,
+        AddMultipleScoreTileset,
         AddGoldTileset,
         GoldTilesetCoinScaledExtraScore,
         AdditionalInterest,
         CoinScaledMultiple,
-    }
-
-    public class AbilityDataGenerator
-    {
-#if UNITY_EDITOR
-        private const string ABILITY_DATA_PATH = "Assets/Resources/AbilityData";
-
-        public static void GenerateAbilityDataFromDataBase()
-        {
-            
-        }
-#endif
+        GetTilesetDelete,
+        GetTilesetReroll,
+        GetRevert,
+        GetTilesetRotate,
+        GetTilesetChangeOverwrite,
+        GetTilesetCopy,
     }
     
     [CreateAssetMenu(fileName = "AbilityData", menuName = "GameData/AbilityData")]
@@ -49,6 +44,7 @@ namespace Abilities
         public eItemType ItemType;
         public eRarity Rarity;
         public string ItemName;
+        public string ItemID;
         [TextArea(3, 5)] public string Description;
         public Sprite ItemIcon;
         

@@ -86,27 +86,27 @@
       ""
     ],
     [
-      "IncreaseExplosionRage_name",
+      "IncreaseExplosionRange_name",
       ""
     ],
     [
-      "IncreaseExplosionRage_description",
+      "IncreaseExplosionRange_description",
       ""
     ],
     [
-      "IncreaseExplosionRageII_name",
+      "IncreaseExplosionRangeII_name",
       ""
     ],
     [
-      "IncreaseExplosionRageII_description",
+      "IncreaseExplosionRangeII_description",
       ""
     ],
     [
-      "BombImmediatlyExplosion_name",
+      "BombImmediatelyExplosion_name",
       ""
     ],
     [
-      "BombImmediatlyExplosion_description",
+      "BombImmediatelyExplosion_description",
       ""
     ],
     [
@@ -142,19 +142,19 @@
       ""
     ],
     [
-      "AddMutlipleTileset_name",
+      "AddMultipleTileset_name",
       ""
     ],
     [
-      "AddMutlipleTileset_description",
+      "AddMultipleTileset_description",
       ""
     ],
     [
-      "AddMutlipleTilesetII_name",
+      "AddMultipleTilesetII_name",
       ""
     ],
     [
-      "AddMutlipleTilesetII_description",
+      "AddMultipleTilesetII_description",
       ""
     ],
     [
