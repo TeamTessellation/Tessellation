@@ -187,6 +187,10 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
     
     private async UniTask ProcessLineCompleted(LineClearEvent lineClearEvent, CancellationToken token)
     {
+        // FIXME 일단 빠르게 넣음
+        ScoreManager.Instance.multiplier = lineClearEvent.ClearedLineCount;
+        Debug.Log($"XXXXXXXXXXXXXX : {lineClearEvent.ClearedLineCount}");
+        
         foreach (var tile in lineClearEvent.Tiles)
         {
             await tile.TileOptionBase.OnLineCleared(tile);
@@ -203,7 +207,10 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         _turnResultInfo.ClearedLineCount += lineClearEvent.ClearedLineCount;
         _turnResultInfo.ClearedTiles.AddRange(lineClearEvent.Tiles);
         
+        // abilities들 부른다
         await InvokeTileEventAsync(OnLineClearedAsync, _turnResultInfo, token);
+        
+        // FIXME 일단 빠르게 넣음
     }
 
     private async UniTask ProcessTileRemoved(TileRemoveEvent removeEvent, CancellationToken token)

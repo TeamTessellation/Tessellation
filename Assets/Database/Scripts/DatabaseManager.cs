@@ -346,6 +346,7 @@ namespace Database
                 return anyUrl; // 실패 시 원본 URL 반환
             }
         }
+        
 #if UNITY_EDITOR
         /// <summary>
         /// OnInitialized 이후 (데이터베이스 초기화 완료 후) 호출된다.
@@ -382,6 +383,20 @@ namespace Database
             
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+
+            foreach (var itemData in mcDatabase.ItemDataList)
+            {
+                string assetPath = Path.Combine(abilitySOFolder, $"{itemData.ItemID}.asset");
+                AbilityDataSO dataSO = AssetDatabase.LoadAssetAtPath<AbilityDataSO>(assetPath);
+
+                if (dataSO == null) continue;
+                
+                UpdateAbilitySORef(dataSO, itemData);
+                EditorUtility.SetDirty(dataSO);
+            }
+            
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
             
             Debug.Log($"[AbilityDataSO 생성 완료] 생성 : {createdCount}, 갱신 : {updatedCount}");
         }
@@ -389,10 +404,35 @@ namespace Database
         private void UpdateAbilitySO(AbilityDataSO dataSO, ItemData itemData)
         {
             // 기본 정보
-            dataSO.ItemName = itemData.ItemID;
+            dataSO.ItemType = itemData.eItemType;
             dataSO.Rarity = itemData.Rarity;
+            dataSO.ItemName = GetStringData(itemData.itemNameID);
+            dataSO.ItemID = itemData.ItemID;
+            dataSO.Description = GetStringData(itemData.DescriptionID);
+            // ItemIcon도 다른곳에서..
             dataSO.ItemPrice = itemData.ItemPrice;
+            dataSO.CanAppearInShop = true;
+            // conflictingItems도 다른곳에서..
             dataSO.IsSynthesisItem = itemData.IsSynthesisItem;
+            // isSynthesisItem도 다른곳에서..
+            
+            // conflictingItems와 isSynthesisItem은 AssetDatabase.SaveAssets 다 끝나고 해야할듯
+        }
+
+        private string GetStringData(string stringID)
+        {
+            foreach (var stringData in mcDatabase.StringDataList)
+            {
+                if (stringID == stringData.ItemID)
+                {
+                    return stringData.kr;
+                }
+            }
+            return "STR_NULL";
+        }
+
+        private void UpdateAbilitySORef(AbilityDataSO dataSO, ItemData itemData)
+        {
             
         }
 #endif

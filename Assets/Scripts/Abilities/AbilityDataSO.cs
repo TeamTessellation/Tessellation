@@ -52,7 +52,7 @@ namespace Abilities
     
         [Header("Shop Settings")] 
         public int ItemPrice;
-        public bool CanAppearInShop = true;
+        public bool CanAppearInShop;
         [Tooltip("해당 어빌리티 중 하나라도 보유하고있으면 상점에 등장하지 않음")]
         public AbilityDataSO[] ConflictingItems;
 

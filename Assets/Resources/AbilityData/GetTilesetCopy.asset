@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9fc628945da38f43987756c6c3b7d49, type: 3}
   m_Name: GetTilesetCopy
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
-  ItemType: 0
+  ItemType: 17
   Rarity: 0
-  ItemName: GetTilesetCopy
-  ItemID: 
+  ItemName: 
+  ItemID: GetTilesetCopy
   Description: 
   ItemIcon: {fileID: 0}
   ItemPrice: 3

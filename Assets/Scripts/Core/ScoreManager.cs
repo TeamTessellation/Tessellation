@@ -55,6 +55,9 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     public delegate int TileScoreModifierDelegate(eTileEventType tileEventType, Tile tile, int baseScore);
 
     public List<TileScoreModifierDelegate> _tileScoreModifiers = new List<TileScoreModifierDelegate>();
+
+    // FIXME
+    public int multiplier = 1;
     
     // === Properties ===
     // 여러 턴에 누적되어 최종 합산된 점수
