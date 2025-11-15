@@ -12,6 +12,10 @@ public abstract class TileOptionBase
     public virtual async UniTask OnLineCleared(Tile tile)
     {
         int baseScore = tile.Data.Score * 5;
+        
+        // FIXME 임시코드
+        baseScore *= ScoreManager.Instance.multiplier;
+        
         int finalScore = ScoreManager.Instance.CalculateTileScore(eTileEventType.LineClear, tile, baseScore);
         ScoreManager.Instance.AddCurrentScore(finalScore);
     }

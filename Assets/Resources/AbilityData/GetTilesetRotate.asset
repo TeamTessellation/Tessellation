@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9fc628945da38f43987756c6c3b7d49, type: 3}
   m_Name: GetTilesetRotate
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
-  ItemType: 0
+  ItemType: 15
   Rarity: 0
   ItemName: 
-  ItemID: 
+  ItemID: GetTilesetRotate
   Description: 
   ItemIcon: {fileID: 0}
-  ItemPrice: 0
+  ItemPrice: 3
   CanAppearInShop: 1
   ConflictingItems: []
   IsSynthesisItem: 0
