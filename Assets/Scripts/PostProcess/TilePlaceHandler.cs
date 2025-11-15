@@ -151,6 +151,9 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
                     await ProcessTileRemoved((TileRemoveEvent)currentEvent, token);
                     break;
             }
+
+            await OnMiniTurnProcessed();
+            
             PushExtraQueue();
         }
         
@@ -159,6 +162,12 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         _turnResultInfo.Dispose();
     }
 
+    private async UniTask OnMiniTurnProcessed()
+    {
+        // 큐가 한 번 돌 때마다 CurrentScore가 초기화된다.
+        
+    }
+    
     private void PushExtraQueue()
     {
         // 라인 완성 확인
@@ -189,7 +198,6 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
     {
         // FIXME 일단 빠르게 넣음
         ScoreManager.Instance.multiplier = lineClearEvent.ClearedLineCount;
-        Debug.Log($"XXXXXXXXXXXXXX : {lineClearEvent.ClearedLineCount}");
         
         foreach (var tile in lineClearEvent.Tiles)
         {
@@ -209,8 +217,6 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         
         // abilities들 부른다
         await InvokeTileEventAsync(OnLineClearedAsync, _turnResultInfo, token);
-        
-        // FIXME 일단 빠르게 넣음
     }
 
     private async UniTask ProcessTileRemoved(TileRemoveEvent removeEvent, CancellationToken token)

@@ -30,7 +30,7 @@ public class ScoreSlider : MonoBehaviour
     
     private void OnEnable()
     {
-        ExecEventBus<ScoreManager.CurrentScoreChangedEventArgs>.RegisterStatic(11,ScoreChange);
+        ExecEventBus<ScoreManager.CurrentScoreChangedEventArgs>.RegisterStatic((int)ExecPriority.UIDefault,ScoreChange);
         ExecEventBus<StageStartEventArgs>.RegisterDynamic(OnStageStart);
     }
 
@@ -95,8 +95,6 @@ public class ScoreSlider : MonoBehaviour
 
             // 트윈 완료까지 대기
             await _sequence.ToUniTask(cancellationToken: token);
-            
-            _currentScore = args.NewCurrentScore;
         }
         catch (OperationCanceledException)
         {
