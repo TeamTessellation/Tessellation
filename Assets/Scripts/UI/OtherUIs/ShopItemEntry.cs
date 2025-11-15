@@ -78,12 +78,12 @@ namespace UI.OtherUIs
 
             if (itemNameText != null)
             {
-                itemNameText.text = abilityData.AbilityName;
+                itemNameText.text = abilityData.ItemName;
             }
 
             if (costText != null)
             {
-                costText.text = abilityData.AbilityPrice.ToString();
+                costText.text = abilityData.ItemPrice.ToString();
             }
         }
 
@@ -101,7 +101,7 @@ namespace UI.OtherUIs
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
 
             // 구매 가능한지 체크
-            bool canPurchase = playerStatus.CurrentCoins >= _abilityData.AbilityPrice;
+            bool canPurchase = playerStatus.CurrentCoins >= _abilityData.ItemPrice;
             if (canPurchase)
             {
                 // 인벤토리에 아이템 추가를 시도해본다
@@ -109,7 +109,7 @@ namespace UI.OtherUIs
                 if (canAdd)
                 {
                     // 성공 시 돈 깎기
-                    playerStatus.CurrentCoins -= _abilityData.AbilityPrice;
+                    playerStatus.CurrentCoins -= _abilityData.ItemPrice;
                     
                     // 버튼 비활성화
                     DisableButton();

@@ -134,7 +134,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         DeckSO.Deck.Remove(data);
     }
 
-    public void SetItemIcon(InputManager.Item item)
+    public void SetItemIcon(InputManager.eActiveItemType item)
     {
         for (int i = 0; i < _hand.Length; i++)
         {
