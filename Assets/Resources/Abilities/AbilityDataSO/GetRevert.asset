@@ -14,14 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 14
   Rarity: 0
-  ItemName: 
+  ItemName: "\uB418\uB3CC\uB9AC\uAE30 \uD68D\uB4DD"
   ItemID: GetRevert
-  Description: 
-  ItemIcon: {fileID: 0}
+  Description: "\uB418\uB3CC\uB9AC\uAE30 \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
   input:
   - 4
   ItemPrice: 3
   CanAppearInShop: 1
-  ConflictingItems: []
+  ConflictingItems:
+  - {fileID: 11400000, guid: 57a35405ecc75214f92f9f5c5561dff9, type: 2}
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: fa94783c5bfe5084da2e25903e47b766, type: 2}
+  - {fileID: 11400000, guid: 74e0b63013fdd1f46a5f824c810e1997, type: 2}
+  - {fileID: 11400000, guid: 75b4c156903c6bf4891e0e99ff501dc1, type: 2}
+  - {fileID: 11400000, guid: 2930bb44a6154064eb09c8ff1455943c, type: 2}
   IsSynthesisItem: 0
   SynthesisRequirements: []

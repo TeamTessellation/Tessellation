@@ -423,7 +423,7 @@ namespace Database
 
         private Sprite GetItemSprite(eItemType itemType)
         {
-            string abilityIconFolder = "Assets/Resources/AbilityIcons";
+            string abilityIconFolder = "Assets/Resources/Abilities/AbilityIcons";
             string itemTypeName = itemType.ToString();
 
             string iconPath = Path.Combine(abilityIconFolder, $"{itemTypeName}.png");
@@ -493,7 +493,7 @@ namespace Database
                 dataSO.ConflictingItems = new AbilityDataSO[itemData.ConflictingItems.Count];
                 for(int i = 0; i < itemData.ConflictingItems.Count; i++)
                 {
-                    string assetPath = Path.Combine(abilitySOFolder, $"{itemData.ConflictingItems[i]}.asset");
+                    string assetPath = Path.Combine(abilitySOFolder, $"{itemData.ConflictingItems[i]}.asset");  
                     AbilityDataSO conflictDataSO = AssetDatabase.LoadAssetAtPath<AbilityDataSO>(assetPath);
                     dataSO.ConflictingItems[i] = conflictDataSO;
                 }
@@ -503,9 +503,11 @@ namespace Database
             // SynthesisRequirements 설정
             if (itemData.SynthesisRequirements != null && itemData.SynthesisRequirements.Count > 0)
             {
+                Debug.Log(itemData.SynthesisRequirements[0]);
                 dataSO.SynthesisRequirements = new AbilityDataSO[itemData.SynthesisRequirements.Count];
                 for (int i = 0; i < itemData.SynthesisRequirements.Count; i++)
                 {
+                    Debug.Log(itemData.SynthesisRequirements[0]);
                     string assetPath = Path.Combine(abilitySOFolder, $"{itemData.SynthesisRequirements[i]}.asset");
                     AbilityDataSO synthesisDataSO = AssetDatabase.LoadAssetAtPath<AbilityDataSO>(assetPath);
                     dataSO.SynthesisRequirements[i] = synthesisDataSO;

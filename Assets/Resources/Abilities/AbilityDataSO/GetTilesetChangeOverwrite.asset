@@ -14,14 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 16
   Rarity: 0
-  ItemName: 
+  ItemName: "\uC720\uB839 \uD0C0\uC77C \uBCC0\uD658 \uC544\uC774\uD15C \uD68D\uB4DD"
   ItemID: GetTilesetChangeOverwrite
-  Description: 
-  ItemIcon: {fileID: 0}
+  Description: "\uC720\uB839 \uD0C0\uC77C \uBCC0\uD658 \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744
+    \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
   input:
   - 3
   ItemPrice: 3
   CanAppearInShop: 1
-  ConflictingItems: []
+  ConflictingItems:
+  - {fileID: 11400000, guid: 57a35405ecc75214f92f9f5c5561dff9, type: 2}
+  - {fileID: 11400000, guid: da09f913b1001104cbd061517cae133e, type: 2}
+  - {fileID: 11400000, guid: fa94783c5bfe5084da2e25903e47b766, type: 2}
+  - {fileID: 11400000, guid: 74e0b63013fdd1f46a5f824c810e1997, type: 2}
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: 2930bb44a6154064eb09c8ff1455943c, type: 2}
   IsSynthesisItem: 0
   SynthesisRequirements: []

@@ -36,7 +36,7 @@ public class ShopItemSelector
         {
             if (_abilities == null)
             {
-                _abilities = Resources.LoadAll<AbilityDataSO>("AbilityData").ToList();
+                _abilities = Resources.LoadAll<AbilityDataSO>("Abilities/AbilityDataSO").ToList();
             }
             return _abilities;
         }

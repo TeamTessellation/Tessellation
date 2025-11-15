@@ -14,14 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 10
   Rarity: 2
-  ItemName: 
+  ItemName: "\uCD94\uAC00 \uC774\uC790 III"
   ItemID: AdditionalInterestIII
-  Description: 
-  ItemIcon: {fileID: 0}
+  Description: "\uCD5C\uB300 \uC774\uC790\uAC00 150\uB9CC\uD07C \uC99D\uAC00\uD569\uB2C8\uB2E4."
+  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
   input:
   - 150
   ItemPrice: 10
   CanAppearInShop: 1
   ConflictingItems: []
   IsSynthesisItem: 1
-  SynthesisRequirements: []
+  SynthesisRequirements:
+  - {fileID: 11400000, guid: fbc3d7b6852cf43448f3b119bd34b06e, type: 2}
