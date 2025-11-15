@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using Database.DataReader;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ using UnityEngine.Networking;
 #if UNITY_EDITOR
 using Abilities;
 using Database.Generated;
+using Machamy.Utils;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 #endif
@@ -354,7 +356,7 @@ namespace Database
         /// </summary>
         private void ExportAbilitiesToSO()
         {
-            const string abilitySOFolder = "Assets/Resources/AbilityData";
+            string abilitySOFolder = "Assets/Resources/Abilities/AbilityDataSO";
 
             int createdCount = 0;
             int updatedCount = 0;
@@ -406,34 +408,110 @@ namespace Database
             // 기본 정보
             dataSO.ItemType = itemData.eItemType;
             dataSO.Rarity = itemData.Rarity;
-            dataSO.ItemName = GetStringData(itemData.itemNameID);
+            dataSO.ItemName = GetItemName(itemData.itemNameID);
             dataSO.ItemID = itemData.ItemID;
-            dataSO.Description = GetStringData(itemData.DescriptionID);
-            // ItemIcon도 다른곳에서..
+            dataSO.Description = GetItemDescription(itemData.DescriptionID, itemData.input);
+            dataSO.ItemIcon = GetItemSprite(itemData.eItemType);
+            dataSO.input = itemData.input;
             dataSO.ItemPrice = itemData.ItemPrice;
             dataSO.CanAppearInShop = true;
-            // conflictingItems도 다른곳에서..
             dataSO.IsSynthesisItem = itemData.IsSynthesisItem;
-            // isSynthesisItem도 다른곳에서..
+            
             
             // conflictingItems와 isSynthesisItem은 AssetDatabase.SaveAssets 다 끝나고 해야할듯
         }
 
-        private string GetStringData(string stringID)
+        private Sprite GetItemSprite(eItemType itemType)
+        {
+            string abilityIconFolder = "Assets/Resources/AbilityIcons";
+            string itemTypeName = itemType.ToString();
+
+            string iconPath = Path.Combine(abilityIconFolder, $"{itemTypeName}.png");
+            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(iconPath);
+
+            if (sprite == null)
+            {
+                iconPath = Path.Combine(abilityIconFolder, "Default.png");
+                sprite = AssetDatabase.LoadAssetAtPath<Sprite>(iconPath);
+                
+                LogEx.LogError($"{itemTypeName}에 대한 Sprite 필요!");
+            }
+
+            return sprite;
+        }
+        
+        private string GetItemName(string itemNameID)
         {
             foreach (var stringData in mcDatabase.StringDataList)
             {
-                if (stringID == stringData.ItemID)
+                if (itemNameID == stringData.ItemID)
                 {
                     return stringData.kr;
                 }
             }
-            return "STR_NULL";
+            return "__NULL__";
         }
 
+        private string GetItemDescription(string itemDescriptionID, List<float> input)
+        {
+            foreach (var stringData in mcDatabase.StringDataList)
+            {
+                if (itemDescriptionID == stringData.ItemID)
+                {
+                    string template = stringData.kr;
+            
+                    if (input != null)
+                    {
+                        for (int i = 0; i < input.Count; i++)
+                        {
+                            float value = input[i];
+                            string formattedValue;
+                    
+                            // 정수면 소수점 없이, 실수면 소수점 포함
+                            if (value == (int)value)
+                                formattedValue = value.ToString("F0");
+                            else
+                                formattedValue = value.ToString("F2");
+                    
+                            template = template.Replace($"{{{i}}}", formattedValue);
+                        }
+                    }
+            
+                    return template;
+                }
+            }
+    
+            return "NULL";
+        }
         private void UpdateAbilitySORef(AbilityDataSO dataSO, ItemData itemData)
         {
+            string abilitySOFolder = "Assets/Resources/Abilities/AbilityDataSO";
             
+            // Conflict 설정
+            if (itemData.ConflictingItems != null && itemData.ConflictingItems.Count > 0)
+            {
+                dataSO.ConflictingItems = new AbilityDataSO[itemData.ConflictingItems.Count];
+                for(int i = 0; i < itemData.ConflictingItems.Count; i++)
+                {
+                    string assetPath = Path.Combine(abilitySOFolder, $"{itemData.ConflictingItems[i]}.asset");
+                    AbilityDataSO conflictDataSO = AssetDatabase.LoadAssetAtPath<AbilityDataSO>(assetPath);
+                    dataSO.ConflictingItems[i] = conflictDataSO;
+                }
+            }
+            else dataSO.ConflictingItems = Array.Empty<AbilityDataSO>();
+            
+            // SynthesisRequirements 설정
+            if (itemData.SynthesisRequirements != null && itemData.SynthesisRequirements.Count > 0)
+            {
+                dataSO.SynthesisRequirements = new AbilityDataSO[itemData.SynthesisRequirements.Count];
+                for (int i = 0; i < itemData.SynthesisRequirements.Count; i++)
+                {
+                    string assetPath = Path.Combine(abilitySOFolder, $"{itemData.SynthesisRequirements[i]}.asset");
+                    AbilityDataSO synthesisDataSO = AssetDatabase.LoadAssetAtPath<AbilityDataSO>(assetPath);
+                    dataSO.SynthesisRequirements[i] = synthesisDataSO;
+                }
+            }
+            else dataSO.SynthesisRequirements = Array.Empty<AbilityDataSO>();
         }
 #endif
     }
