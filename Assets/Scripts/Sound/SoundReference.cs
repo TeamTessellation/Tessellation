@@ -15,7 +15,7 @@
         public static readonly SoundReference SceneTransitionIn = new SoundReference("SFX/SceneTransitionIn_V1");
         public static readonly SoundReference SceneTransitionOut = new SoundReference("SFX/SceneTransitionOut_V1");
         public static readonly SoundReference TileBomb = new SoundReference("SFX/TileBomb_V1");
-        public static readonly SoundReference TileClear = new SoundReference("SFX/TileClear_V1");
+        public static readonly SoundReference TileClear = new SoundReference("SFX/TileClear_V2");
         public static readonly SoundReference TileGold = new SoundReference("SFX/TileGold_V1");
         public static readonly SoundReference TileMultiple = new SoundReference("SFX/TileMultiple_V1");
         public static readonly SoundReference TileOptionTrigger = new SoundReference("SFX/TileOptionTrigger_V1");
