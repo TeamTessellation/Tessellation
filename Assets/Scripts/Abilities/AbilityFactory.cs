@@ -7,27 +7,27 @@ namespace Abilities
 {
     public static class AbilityFactory
     {
-        private static Dictionary<eAbilityType, Func<AbilityBase>> abiltyFuncs = new()
+        private static Dictionary<eItemType, Func<AbilityBase>> abiltyFuncs = new()
         {
-            { eAbilityType.ExtraLife, () => new OnlyPlaceAbility() },
-            { eAbilityType.ExtraActiveItemRemainingUses, () => new OnlyPlaceAbility() },
-            { eAbilityType.AddBombTileset, () => new OnlyPlaceAbility() },
-            { eAbilityType.IncreaseExplosionRange, () => new OnlyPlaceAbility() },
-            { eAbilityType.BombImmediatelyExplosion, () => new OnlyPlaceAbility() },
-            { eAbilityType.ChainExplosion, () => new OnlyPlaceAbility() },
-            { eAbilityType.AddExtraScoreTileset, () => new OnlyPlaceAbility() },
-            { eAbilityType.AddMultipleTileset, () => new OnlyPlaceAbility() },
-            { eAbilityType.AddGoldTileset, () => new OnlyPlaceAbility() },
-            { eAbilityType.GoldTilesetCoinScaledExtraScore, () => new OnlyPlaceAbility() },
-            { eAbilityType.AdditionalInterest, () => new OnlyPlaceAbility() },
-            { eAbilityType.CoinScaledMultiple, () => new OnlyPlaceAbility() },
+            { eItemType.ExtraTurn, () => new OnlyPlaceAbility() },
+            { eItemType.ExtraActiveItemRemainingUses, () => new OnlyPlaceAbility() },
+            { eItemType.AddBombTileset, () => new OnlyPlaceAbility() },
+            { eItemType.IncreaseExplosionRange, () => new OnlyPlaceAbility() },
+            { eItemType.BombImmediatelyExplosion, () => new OnlyPlaceAbility() },
+            { eItemType.ChainExplosion, () => new OnlyPlaceAbility() },
+            { eItemType.AddExtraScoreTileset, () => new OnlyPlaceAbility() },
+            { eItemType.AddMultipleTileset, () => new OnlyPlaceAbility() },
+            { eItemType.AddGoldTileset, () => new OnlyPlaceAbility() },
+            { eItemType.GoldTilesetCoinScaledExtraScore, () => new OnlyPlaceAbility() },
+            { eItemType.AdditionalInterest, () => new OnlyPlaceAbility() },
+            { eItemType.CoinScaledMultiple, () => new OnlyPlaceAbility() },
         };
         
         public static AbilityBase Create(AbilityDataSO abilitydata)
         {
-            if (!abiltyFuncs.ContainsKey(abilitydata.AbilityType)) return null;
+            if (!abiltyFuncs.ContainsKey(abilitydata.ItemType)) return null;
 
-            AbilityBase newAbility = abiltyFuncs[abilitydata.AbilityType]();
+            AbilityBase newAbility = abiltyFuncs[abilitydata.ItemType]();
             newAbility.InitializeData(abilitydata);
             
             return newAbility;

@@ -71,7 +71,7 @@ public class ShopItemSelector
                 AbilityDataSO selected = abilities[randIdx];
                 
                 selectedAbilities.Add(selected);
-                Debug.Log($"뽑힌 아이템 : {selected.AbilityName}");
+                Debug.Log($"뽑힌 아이템 : {selected.ItemName}");
                 abilities.RemoveAt(randIdx);
             }
             // 없다면 다른 등급 아이템 찾는다
@@ -101,12 +101,12 @@ public class ShopItemSelector
         List<AbilityDataSO> availableAbilities = new List<AbilityDataSO>();
 
         // 가진것보다 낮은 등급 어빌리티 거르기 위해 Dictionary 생성
-        Dictionary<eAbilityType, eRarity> playerAbilityInfo = new Dictionary<eAbilityType, eRarity>();
+        Dictionary<eItemType, eRarity> playerAbilityInfo = new Dictionary<eItemType, eRarity>();
         foreach (AbilityDataSO ability in ownedAbilities)
         {
-            if (!playerAbilityInfo.ContainsKey(ability.AbilityType))
+            if (!playerAbilityInfo.ContainsKey(ability.ItemType))
             {
-                playerAbilityInfo[ability.AbilityType] = ability.Rarity;
+                playerAbilityInfo[ability.ItemType] = ability.Rarity;
             }
         }
         
@@ -119,7 +119,7 @@ public class ShopItemSelector
             if (HasConflictingAbility(abilityData, ownedAbilities)) continue;
             
             // 같은 타임의 어빌리티 중 낮은건 거르기 (자동으로 같은 아이템은 걸러진다)
-            if (playerAbilityInfo.TryGetValue(abilityData.AbilityType, out eRarity currentRarity))
+            if (playerAbilityInfo.TryGetValue(abilityData.ItemType, out eRarity currentRarity))
             {
                 if (abilityData.Rarity <= currentRarity) continue;
             }
@@ -130,8 +130,8 @@ public class ShopItemSelector
                 bool isSatisfied = true;
                 foreach (var requireAbility in abilityData.SynthesisRequirements)
                 {
-                    if (!playerAbilityInfo.ContainsKey(requireAbility.AbilityType) || 
-                        requireAbility.Rarity != playerAbilityInfo[requireAbility.AbilityType])
+                    if (!playerAbilityInfo.ContainsKey(requireAbility.ItemType) || 
+                        requireAbility.Rarity != playerAbilityInfo[requireAbility.ItemType])
                     {
                         isSatisfied = false;
                         break;
@@ -148,10 +148,10 @@ public class ShopItemSelector
 
     private bool HasConflictingAbility(AbilityDataSO abilityDataSo, List<AbilityDataSO> ownedAbilities)
     {
-        if (abilityDataSo.ConflictingAbilities == null || abilityDataSo.ConflictingAbilities.Length == 0)
+        if (abilityDataSo.ConflictingItems == null || abilityDataSo.ConflictingItems.Length == 0)
             return false;
 
-        foreach (AbilityDataSO conflictAbility in abilityDataSo.ConflictingAbilities)
+        foreach (AbilityDataSO conflictAbility in abilityDataSo.ConflictingItems)
         {
             if (ownedAbilities.Contains(conflictAbility))
                 return true;
