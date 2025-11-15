@@ -307,7 +307,7 @@ namespace Stage
         public bool CheckStageClear()
         {
             // 목표 점수 도달 확인
-            if (_currentStage.StageTargetScore <= ScoreManager.Instance.CurrentScore)
+            if (_currentStage.StageTargetScore <= ScoreManager.Instance.TotalScore)
             {
                 _isStageCleared = true;
             }

@@ -8,8 +8,6 @@ public class TileOptionDefault : TileOptionBase
         int baseScore = tile.Data.Score;
         int finalScore = ScoreManager.Instance.CalculateTileScore(eTileEventType.Place, tile, baseScore);
         ScoreManager.Instance.AddCurrentScore(finalScore);
-
-        Vector2 popUpPosition = tile.Coor.ToWorld(Field.Instance.TileOffset);
     }
 
     public virtual async UniTask OnLineCleared(Tile tile)
