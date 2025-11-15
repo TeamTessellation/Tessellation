@@ -16,7 +16,7 @@ namespace Abilities
             { eItemType.BombImmediatelyExplosion, () => new OnlyPlaceAbility() },
             { eItemType.ChainExplosion, () => new OnlyPlaceAbility() },
             { eItemType.AddExtraScoreTileset, () => new OnlyPlaceAbility() },
-            { eItemType.AddMultipleTileset, () => new OnlyPlaceAbility() },
+            { eItemType.AddMultipleScoreTileset, () => new OnlyPlaceAbility() },
             { eItemType.AddGoldTileset, () => new OnlyPlaceAbility() },
             { eItemType.GoldTilesetCoinScaledExtraScore, () => new OnlyPlaceAbility() },
             { eItemType.AdditionalInterest, () => new OnlyPlaceAbility() },

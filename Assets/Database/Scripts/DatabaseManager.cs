@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using UnityEngine.Networking;
 
 #if UNITY_EDITOR
+using Abilities;
+using Database.Generated;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 #endif
@@ -52,6 +54,8 @@ namespace Database
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
+
+            OnInitialized += ExportAbilitiesToSO;
         }
 
         private void Start()
@@ -342,6 +346,56 @@ namespace Database
                 return anyUrl; // 실패 시 원본 URL 반환
             }
         }
+#if UNITY_EDITOR
+        /// <summary>
+        /// OnInitialized 이후 (데이터베이스 초기화 완료 후) 호출된다.
+        /// 데이터를 가져다 AbilityDataSO를 만든다
+        /// </summary>
+        private void ExportAbilitiesToSO()
+        {
+            const string abilitySOFolder = "Assets/Resources/AbilityData";
+
+            int createdCount = 0;
+            int updatedCount = 0;
+
+            foreach (var itemData in mcDatabase.ItemDataList)
+            {
+                // 현재 SO가 있는지 판단
+                string assetPath = Path.Combine(abilitySOFolder, $"{itemData.ItemID}.asset");
+                AbilityDataSO dataSO = AssetDatabase.LoadAssetAtPath<AbilityDataSO>(assetPath);
+
+                // 없다면 새로운 SO 생성
+                if (dataSO == null)
+                {
+                    dataSO = ScriptableObject.CreateInstance<AbilityDataSO>();
+                    AssetDatabase.CreateAsset(dataSO, assetPath);
+                    createdCount++;
+                }
+                else
+                {
+                    updatedCount++;
+                }
+                
+                UpdateAbilitySO(dataSO, itemData);
+                EditorUtility.SetDirty(dataSO);
+            }
+            
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            
+            Debug.Log($"[AbilityDataSO 생성 완료] 생성 : {createdCount}, 갱신 : {updatedCount}");
+        }
+
+        private void UpdateAbilitySO(AbilityDataSO dataSO, ItemData itemData)
+        {
+            // 기본 정보
+            dataSO.ItemName = itemData.ItemID;
+            dataSO.Rarity = itemData.Rarity;
+            dataSO.ItemPrice = itemData.ItemPrice;
+            dataSO.IsSynthesisItem = itemData.IsSynthesisItem;
+            
+        }
+#endif
     }
     
 }
