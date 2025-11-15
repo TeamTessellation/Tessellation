@@ -5,10 +5,10 @@ namespace Abilities
 {
     public class ActiveUpAbility : AbilityBase
     {
-        private InputManager.Item _activeItemType;
+        private InputManager.eActiveItemType _activeItemType;
         private int _itemAmount;
         
-        public ActiveUpAbility(InputManager.Item activeItemType, int itemAmount)
+        public ActiveUpAbility(InputManager.eActiveItemType activeItemType, int itemAmount)
         {
             _activeItemType = activeItemType;
             _itemAmount = itemAmount;
@@ -29,7 +29,7 @@ namespace Abilities
 
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
             
-            playerStatus.inventory.SetActiveItem(InputManager.Item.None, 0);
+            playerStatus.inventory.SetActiveItem(InputManager.eActiveItemType.None, 0);
         }
     }
 }

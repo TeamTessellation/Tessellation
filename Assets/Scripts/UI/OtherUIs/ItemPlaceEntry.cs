@@ -54,7 +54,7 @@ namespace UI.OtherUIs
                 return;
             }
 
-            _abilityData = abilityBase.dataSO;
+            _abilityData = abilityBase.DataSO;
             RefreshSlot();
         }
 

@@ -12,7 +12,7 @@ using UnityEngine.EventSystems;
 public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 {
     [System.Serializable]
-    public enum Item
+    public enum eActiveItemType
     {
         None,
         Add,
@@ -31,14 +31,14 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     private bool _dataReady;
 
-    public bool ReadyItem => (_readyItem != Item.End);
-    private Item _readyItem;
+    public bool ReadyItem => (_readyItem != eActiveItemType.End);
+    private eActiveItemType _readyItem;
 
     private void Awake()
     {
         Instance = this;
         _dataReady = false;
-        _readyItem = Item.End;
+        _readyItem = eActiveItemType.End;
     }
 
     private void BindBtn()
@@ -55,13 +55,13 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
         var itemHold = Pool<ItemHold>.Get();
         itemHold.transform.SetParent(itemRoot, false);
-        itemHold.RegisterClickEvent(SetItem, Item.Rotate);
+        itemHold.RegisterClickEvent(SetItem, eActiveItemType.Rotate);
         itemHold.transform.localScale = Vector3.one;
     }
 
     public void HandBoxClick(HandBox target)
     {
-        if (_readyItem == Item.End)
+        if (_readyItem == eActiveItemType.End)
             return;
 
         UseItem(target);
@@ -71,17 +71,17 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
     {
         Debug.Log("아이템 사용");
         UseItemAction?.Invoke(target);
-        _readyItem = Item.End;
+        _readyItem = eActiveItemType.End;
         HandManager.Instance.RemoveItemIcon();
         PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
         playerStatus.StageAbilityUseCount += 1;
     }
 
-    public void SetItem(Item item)
+    public void SetItem(eActiveItemType item)
     {
         if (_readyItem == item)
         {
-            _readyItem = Item.End;
+            _readyItem = eActiveItemType.End;
             HandManager.Instance.RemoveItemIcon();
             UseItemAction = null;
         }
@@ -90,13 +90,13 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
         switch (item)
         {
-            case Item.Add:
+            case eActiveItemType.Add:
                 UseItemAction = AddTileSetItem;
                 break;
-            case Item.Delete:
+            case eActiveItemType.Delete:
                 UseItemAction = DeleteTileSetItem;
                 break;
-            case Item.Rotate:
+            case eActiveItemType.Rotate:
                 UseItemAction = RotateTileSetItem;
                 break;
         }
@@ -105,7 +105,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     public void UnSetItem()
     {
-        _readyItem = Item.End;
+        _readyItem = eActiveItemType.End;
         HandManager.Instance.RemoveItemIcon();
         UseItemAction = null;
     }

@@ -27,7 +27,7 @@ namespace Player
         [SerializeField] private int _currentAbilityCount = 0;
         [SerializeField] private int _maxAbilityCount = 5;
 
-        public InputManager.Item CurrentItem { get; private set; }
+        public InputManager.eActiveItemType CurrentItem { get; private set; }
         public int CurrentItemCount { get; private set; }
         public int MaxItemCount { get; private set; }
 
@@ -59,7 +59,7 @@ namespace Player
             }
         }
 
-        public void SetActiveItem(InputManager.Item activeItemType, int itemAmount)
+        public void SetActiveItem(InputManager.eActiveItemType activeItemType, int itemAmount)
         {
             CurrentItem = activeItemType;
             MaxItemCount = itemAmount;
@@ -81,7 +81,7 @@ namespace Player
             for (int i = 0; i < _maxAbilityCount; i++)
             {
                 if (_abilities[i] == null) continue;
-                ownedAbilities.Add(_abilities[i].dataSO);
+                ownedAbilities.Add(_abilities[i].DataSO);
             }
 
             return ownedAbilities;
@@ -139,7 +139,7 @@ namespace Player
             {
                 if (_abilities[i] == null) continue;
 
-                if (_abilities[i].dataSO == abilityData)
+                if (_abilities[i].DataSO == abilityData)
                 {
                     _abilities[i].Remove(Handler);
                     SetAbility(i, null);

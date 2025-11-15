@@ -41,7 +41,7 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
 
     public void RegisterDownEvent(Action<HandBox> downEvent) => _downEvent += downEvent;
 
-    public void SetItemIcon(InputManager.Item item)
+    public void SetItemIcon(InputManager.eActiveItemType item)
     {
         _sprite.color = new Color(1, 1, 1, 1);
         if (ItemSelectIcon.Count > (int)item)

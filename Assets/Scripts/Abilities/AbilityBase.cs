@@ -4,6 +4,7 @@ using Machamy.Utils;
 using Stage;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Abilities
 {
@@ -11,9 +12,13 @@ namespace Abilities
     public abstract class AbilityBase
     {
         // === Properties ===
-        public AbilityDataSO dataSO;
+        /// <summary>
+        /// 어빌리티 불변 데이터를 저장합니다. InitializeData 외 절대 수정하지 말 것
+        /// </summary>
+        public AbilityDataSO DataSO { get; private set; }
+
         public int AbilityPriority;
-        
+
         protected virtual bool ReactsToTilePlaced => false;
         protected virtual bool ReactsToLineCleared => false;
         protected virtual bool ReactsToTileRemoved => false;
@@ -21,11 +26,20 @@ namespace Abilities
         protected virtual bool ReactsToTurnProcessed => false;
 
         // === Functions ===
+        
+        /// <summary>
+        /// 생성자 이후 처음으로 불리는 함수입니다. AbilityDataSO(불변 데이터)를 저장해요
+        /// </summary>
+        /// <param name="data"></param>
         public void InitializeData(AbilityDataSO data)
         {
-            dataSO = data;
+            DataSO = data;
         }
         
+        /// <summary>
+        /// InitializeData 이후 불리는 함수입니다. 여기서 추가 세팅 하시면 됨
+        /// </summary>
+        /// <param name="tilePlaceHandler"></param>
         public virtual void Initialize(TilePlaceHandler tilePlaceHandler)
         {
             if (tilePlaceHandler == null)
@@ -62,19 +76,19 @@ namespace Abilities
         }
 
         /// <summary>
-        /// 아이템이 인벤토리에 추가될 때 불리는 함수
+        /// 아이템이 인벤토리에 추가될 때 불리는 함수. Initialize 이후 실행돼요
         /// </summary>
         protected virtual void OnAbilityApplied()
         {
-            Debug.Log($"{dataSO.AbilityName} 생성됨");
+            Debug.Log($"{DataSO.ItemName} 생성됨");
         }
 
         /// <summary>
-        /// 아이템이 인벤토리에서 제거될 때 불리는 함수0
+        /// 아이템이 인벤토리에서 제거될 때 불리는 함수
         /// </summary>
         protected virtual void OnAbilityRemoved()
         {
-            Debug.Log($"{dataSO.AbilityName} 삭제됨");
+            Debug.Log($"{DataSO.ItemName} 삭제됨");
         }
                 
         protected virtual async UniTask HandleTilePlacedAsync(TurnResultInfo info)

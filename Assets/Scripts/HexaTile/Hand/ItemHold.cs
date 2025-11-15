@@ -18,7 +18,7 @@ public class ItemHold : MonoBehaviour, IPoolAble
         _eventTrigger = transform.GetComponent<EventTrigger>();
         _image = transform.GetChild(0).GetComponent<Image>();
     }
-    public void SetItemIcon(InputManager.Item item)
+    public void SetItemIcon(InputManager.eActiveItemType item)
     {
         _image.color = new Color(1, 1, 1, 1);
         if (ItemIcon.Count > (int)item)
@@ -27,7 +27,7 @@ public class ItemHold : MonoBehaviour, IPoolAble
             _image.sprite = ItemIcon[ItemIcon.Count - 1];
     }
 
-    public void RegisterClickEvent(Action<InputManager.Item> action, InputManager.Item item)
+    public void RegisterClickEvent(Action<InputManager.eActiveItemType> action, InputManager.eActiveItemType item)
     {
         SetItemIcon(item);
         var entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
