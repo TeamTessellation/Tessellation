@@ -57,7 +57,9 @@ namespace Database
         {
             DontDestroyOnLoad(gameObject);
 
+#if UNITY_EDITOR
             OnInitialized += ExportAbilitiesToSO;
+#endif
         }
 
         private void Start()
