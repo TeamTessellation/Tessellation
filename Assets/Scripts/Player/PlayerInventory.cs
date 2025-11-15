@@ -8,6 +8,7 @@ using NUnit.Framework;
 using Player;
 using Stage;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -28,8 +29,8 @@ namespace Player
         [SerializeField] private int _maxAbilityCount = 5;
 
         public InputManager.eActiveItemType CurrentItem { get; private set; }
-        public int CurrentItemCount { get; private set; }
         public int MaxItemCount { get; private set; }
+        public int currentItemCount;
 
         [NonSerialized] private TilePlaceHandler _tilePlaceHandler;
 
@@ -63,7 +64,7 @@ namespace Player
         {
             CurrentItem = activeItemType;
             MaxItemCount = itemAmount;
-            CurrentItemCount = itemAmount;
+            currentItemCount = itemAmount;
         }
         
         private void SetAbility(int index, AbilityBase newAbility)

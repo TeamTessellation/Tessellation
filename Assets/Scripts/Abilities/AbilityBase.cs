@@ -17,6 +17,7 @@ namespace Abilities
         /// </summary>
         public AbilityDataSO DataSO { get; private set; }
 
+        [SerializeField] private string AbilityName;
         public int AbilityPriority;
 
         protected virtual bool ReactsToTilePlaced => false;
@@ -34,6 +35,7 @@ namespace Abilities
         public void InitializeData(AbilityDataSO data)
         {
             DataSO = data;
+            AbilityName = data.ItemName;
         }
         
         /// <summary>

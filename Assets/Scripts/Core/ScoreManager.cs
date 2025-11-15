@@ -41,17 +41,6 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
 
     #endregion
     
-    //
-    // // === Events ===
-    // // 총 점수가 변경될 때 호출
-    // public event Func<int, UniTask> OnTotalScoreChangedAsync;
-    // // 현재 점수가 변경될 때 호출 (UI 갱신 등)
-    // public event Func<int, UniTask> OnCurrentScoreChangedAsync;
-    // // 새로운 게임이 시작되어 점수 초기화될 때 호출
-    // public event Func<UniTask> OnScoreResetAsync;
-    // // 곱 배수가 스택에 추가될 때 호출
-    // public event Func<float, UniTask> OnMultiplierAddedAsync;
-
     public delegate int TileScoreModifierDelegate(eTileEventType tileEventType, Tile tile, int baseScore);
 
     public List<TileScoreModifierDelegate> _tileScoreModifiers = new List<TileScoreModifierDelegate>();
