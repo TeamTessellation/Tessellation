@@ -16,19 +16,16 @@ namespace Abilities
                     _activeItemType = InputManager.eActiveItemType.Delete;
                     break;
                 case eItemType.GetTilesetReroll:
-                    // TODO 미구현
-                    //_activeItemType = InputManager.eActiveItemType.Reroll;
+                    _activeItemType = InputManager.eActiveItemType.Reroll;
                     break;
                 case eItemType.GetRevert:
-                    // TODO 미구현
-                    //_activeItemType = InputManager.eActiveItemType.Revert;
+                    _activeItemType = InputManager.eActiveItemType.Revert;
                     break;
                 case eItemType.GetTilesetRotate:
                     _activeItemType = InputManager.eActiveItemType.Rotate;
                     break;
                 case eItemType.GetTilesetChangeOverwrite:
-                    // TODO 미구현
-                    // _activeItemType = InputManager.eActiveItemType.ChangeOverwrite;
+                    _activeItemType = InputManager.eActiveItemType.Overwrite;
                     break;
                 case eItemType.GetTilesetCopy:
                     _activeItemType = InputManager.eActiveItemType.Add;
