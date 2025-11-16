@@ -83,7 +83,8 @@ namespace Player
             CurrentTurn, // 현재 턴
             CurrentRemainingTurns, // 현재 남은 턴
             CurrentCoins, // 현재 코인
-            CurrentExtraTurns, // 현재 추가 턴 TODO : 아이템에 의해 변경된다면 저장/로드 를 어디서 할지 고민 필요
+            CurrentExtraTurns, // 현재 추가 턴 
+            CurrentExtraInterestMaxCoins, // 현재 추가 이자 최대 코인
             
         }
         
@@ -95,7 +96,7 @@ namespace Player
         public static readonly VariableKey StageStart = VariableKey.StageBestPlacement;
         public static readonly VariableKey StageEnd = VariableKey.StageInterestEarnedCoins;
         public static readonly VariableKey CurrentStart = VariableKey.CurrentTurn;
-        public static readonly VariableKey CurrentEnd = VariableKey.CurrentCoins;
+        public static readonly VariableKey CurrentEnd = VariableKey.CurrentExtraInterestMaxCoins;
 
 
 
@@ -103,7 +104,7 @@ namespace Player
         public int HandSize => handSize;
 
         public float CoinInterestRate => coinInterestRate;
-        public int MaxInterestCoins => maxInterestCoins;
+        public int MaxInterestCoins => maxInterestCoins + CurrentExtraInterestMaxCoins;
 
         // --- PlayerStatus Properties (VariableKey에 매핑된 프로퍼티들) ---
 
@@ -299,6 +300,12 @@ namespace Player
             get { return Variables.GetVariable(nameof(VariableKey.CurrentExtraTurns)).IntValue; } // TODO : 아이템에 의해 변경된다면, 여기서는 계산된 값을 반환하도록 변경 필요
             set { Variables.SetInteger(nameof(VariableKey.CurrentExtraTurns), value); }
         }
+        
+        public int CurrentExtraInterestMaxCoins
+        {
+            get { return Variables.GetVariable(nameof(VariableKey.CurrentExtraInterestMaxCoins)).IntValue; } // TODO : 아이템에 의해 변경된다면, 여기서는 계산된 값을 반환하도록 변경 필요
+            set { Variables.SetInteger(nameof(VariableKey.CurrentExtraInterestMaxCoins), value); }
+        }
 
         public int RemainingTurns
         {
@@ -329,6 +336,7 @@ namespace Player
             data.PlayerStatus.Reset();
             this.CopyTo(data.PlayerStatus);
             data.PlayerStatus.CurrentExtraTurns = 0; // 아이템에 의해 변경되는 값이므로 저장 시점에는 0으로 초기화
+            data.PlayerStatus.CurrentExtraInterestMaxCoins = 0; // 아이템에 의해 변경되는 값이므로 저장 시점에는 0으로 초기화
         }
 
 
