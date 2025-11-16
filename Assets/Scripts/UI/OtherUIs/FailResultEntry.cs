@@ -5,12 +5,13 @@ using UnityEngine.EventSystems;
 
 namespace UI.OtherUIs
 {
-    public class FailResultEntry : UIBehaviour
+    public class FailResultEntry : UIBehaviour, ISerializationCallbackReceiver
     {
         [SerializeField] private FailResultUI failResultUI;
         [SerializeField] private CounterText failCountText;
  
-        [SerializeField] private PlayerStatus.VariableKey variableKey;
+        [SerializeField] private string variableKeyString;
+        [HideInInspector][SerializeField] private PlayerStatus.VariableKey variableKey;
 
         public enum Direction
         {
@@ -23,7 +24,7 @@ namespace UI.OtherUIs
         public FailResultUI FailResultUI => failResultUI;
         public CounterText FailCountText => failCountText;
         
-        public string VariableKey => variableKey.ToString();
+        public string VariableKey => variableKeyString;
         
         protected void Reset()
         {
@@ -49,5 +50,32 @@ namespace UI.OtherUIs
             base.Start();
             // gameObject.SetActive(false);
         }
+
+        public void OnBeforeSerialize()
+        {
+            // 에디터에서는 문자열이 직접 수정되므로 enum 동기화
+            if (!string.IsNullOrEmpty(variableKeyString))
+            {
+                if (System.Enum.TryParse<PlayerStatus.VariableKey>(variableKeyString, out var parsedKey))
+                {
+                    variableKey = parsedKey;
+                }
+            }
+        }
+
+        public void OnAfterDeserialize()
+        {
+            // 문자열에서 enum으로 파싱
+            if (System.Enum.TryParse<PlayerStatus.VariableKey>(variableKeyString, out var parsedKey))
+            {
+                variableKey = parsedKey;
+            }
+            else
+            {
+                variableKey = PlayerStatus.VariableKey.TotalScore;
+                variableKeyString = variableKey.ToString();
+            }
+        }
+
     }
 }
