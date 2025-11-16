@@ -17,6 +17,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 
     [SerializeField] private DeckSO originDeckSO;
     public DeckSO DeckSO;
+    public DeckSO StageDeckSO;
 
     private Transform _handRoot;
     private HandBox[] _hand;
@@ -58,7 +59,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         _onMouseDown = false;
         _remainHand = 0;
         _lastDragCoor = new();
-        ResetHand(_handSize);
+        ResetHand();
     }
 
 
@@ -139,12 +140,12 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         }
     }
 
-    public DeckData GetDeckData(TileSetData data)
+    public DeckData GetStageDeckData(TileSetData data)
     {
-        for (int i = 0; i < DeckSO.Deck.Count; i++)
+        for (int i = 0; i < StageDeckSO.Deck.Count; i++)
         {
-            if (DeckSO.Deck[i].TileSet == data)
-                return DeckSO.Deck[i];
+            if (StageDeckSO.Deck[i].TileSet == data)
+                return StageDeckSO.Deck[i];
         }
 #if UNITY_EDITOR
         Debug.Log("해당 되는 타일셋을 덱에서 찾지 못함");
@@ -280,6 +281,16 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     }
     
 
+    public void SetStageDeck()
+    {
+        StageDeckSO = Instantiate(DeckSO);
+    }
+
+    public void ResetHand()
+    {
+        ResetHand(_handSize);
+    }
+
     public void ResetHand(int handSize)
     {
         RemoveItemIcon();
@@ -332,7 +343,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     private TileSetData[] GetRadomTileSetDataInGroup(int dataCount = 1)
     {
         TileSetData[] result = new TileSetData[dataCount];
-        var deck = DeckSO.Deck;
+        var deck = StageDeckSO.Deck;
         List<TileSetData> list = deck.Select(x => x.TileSet).ToList();
 
         if (list.Count <= dataCount)
@@ -357,6 +368,15 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
             targetIndexs.Add(target);
         }
         result = targetIndexs.Select(x => groupDic[x]).ToArray();
+
+        for (int i = 0; i < result.Length; i++)
+        {
+            for (int j = 0; j < deck.Count; j++)
+            {
+                if (deck[j].TileSet == result[i])
+                    deck[j].Count--;
+            }
+        }
 
         return result;
     }

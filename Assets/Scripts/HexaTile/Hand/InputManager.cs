@@ -15,12 +15,12 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
     public enum eActiveItemType
     {
         None,
-        Add,
-        Delete,
+        Add, // 备泅
+        Delete, // 备泅
         Overwrite,
-        Rotate,
-        Reroll,
-        Revert,
+        Rotate, // 备泅
+        Reroll, // 备泅
+        Revert, // 力寇
         End
     }
 
@@ -123,6 +123,13 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
             case eActiveItemType.Rotate:
                 UseItemAction = RotateTileSetItem;
                 break;
+            case eActiveItemType.Overwrite:
+                break;
+            case eActiveItemType.Reroll:
+                UseItemAction = RerollTileSetItem;
+                break;
+            case eActiveItemType.Revert:
+                break;
         }
         HandManager.Instance.SetItemIcon(item);
     }
@@ -144,17 +151,25 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     private void AddTileSetItem(HandBox handBox)
     {
-        var deck = HandManager.Instance.GetDeckData(handBox.HoldTileSet.Data);
+        var deck = HandManager.Instance.GetStageDeckData(handBox.HoldTileSet.Data);
         deck.Count++;
+    }
+
+    private void RerollTileSetItem(HandBox handBox)
+    {
+        HandManager.Instance.ResetHand();
+        HandManager.Instance.SetHand();
     }
 
     private void DeleteTileSetItem(HandBox handBox)
     {
-        var deck = HandManager.Instance.GetDeckData(handBox.HoldTileSet.Data);
+        var deck = HandManager.Instance.GetStageDeckData(handBox.HoldTileSet.Data);
         deck.Count--;
 
         if (deck.Count <= 0)
             HandManager.Instance.RemoveDeckData(deck);
+
+        handBox.Use();
     }
 
     private void BoomItem(HandBox handBox)
