@@ -9,6 +9,7 @@ using Core;
 using Machamy.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Player;
 
 public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 {
@@ -208,7 +209,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 
     public bool CanPlace()
     {
-        return Field.Instance.TryPlaceAllTileSet(_hand.ToList());
+        return Field.Instance.TryPlaceAllTileSet(_hand.ToList(), PlayerStatus.Current.inventory.CurrentItem == InputManager.eActiveItemType.Rotate, PlayerStatus.Current.inventory.currentItemCount);
     }
     
 
