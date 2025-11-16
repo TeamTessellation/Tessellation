@@ -87,6 +87,31 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
     }
 
     public bool TryPlaceAllTileSet(List<HandBox> handBoxs, bool canRotate, int count)
+    {
+        for (int i = 0; i < handBoxs.Count; i++)
+        {
+            if (!handBoxs[i].IsUsed)
+            {
+                foreach (var cell in _allCell)
+                {
+                    if (cell.Value.IsEmpty)
+                    {
+                        if (canRotate)
+                        {
+                            if (CanPlace(handBoxs[i].HoldTileSet, cell.Key, count))
+                                return true;
+                        }
+                        else
+                        {
+                            if (CanPlace(handBoxs[i].HoldTileSet, cell.Key))
+                                return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     public Cell GetCellByCoordinate(Coordinate coor)
     {
@@ -108,16 +133,8 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
                 {
                     if (cell.Value.IsEmpty)
                     {
-                        if (canRotate)
-                        {
-                            if (CanPlace(handBoxs[i].HoldTileSet, cell.Key, count))
-                                return true;
-                        }
-                        else
-                        {
-                            if (CanPlace(handBoxs[i].HoldTileSet, cell.Key))
-                                return true;
-                        }
+                        if (CanPlace(handBoxs[i].HoldTileSet, cell.Key))
+                            return true;
                     }
                 }
             }
