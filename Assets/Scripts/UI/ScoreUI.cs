@@ -95,7 +95,7 @@ public class ScoreUI : UIBehaviour
     private void SetMultiplierText(float value)
     {
         if (multiplierText != null)
-            multiplierText.text = $"x{value:F1}";
+            multiplierText.text = $"x{value:N0}";
     }
 
     /// <summary>
@@ -105,7 +105,7 @@ public class ScoreUI : UIBehaviour
     {
         int currentScore = args.NewCurrentScore;
         _cachedCurrentScore = currentScore;
-        
+
         totalScoreText.gameObject.SetActive(false);
         currentScoreText.gameObject.SetActive(true);
         
@@ -200,10 +200,11 @@ public class ScoreUI : UIBehaviour
                 // CurrentScore 점수 올리는 애니메이션
                 if (currentScoreText.gameObject.activeSelf && _cachedCurrentScore > 0)
                 {
+                    
                     _currentScoreSequence?.Kill();
                     _currentScoreSequence = DOTween.Sequence();
 
-                    int startScore = 0;
+                    int startScore = _cachedCurrentScore;
                     _currentScoreSequence.Append(DOTween.To(
                         () => startScore,
                         x =>
@@ -211,18 +212,16 @@ public class ScoreUI : UIBehaviour
                             startScore = x;
                             SetCurrentScoreText(x);
                         },
-                        _cachedCurrentScore,
+                        totalScore - previousTotal,
                         countUpDuration
                     ).SetEase(countUpEase));
 
                     await _currentScoreSequence.ToUniTask(cancellationToken: token);
                 }
-                
-                // 대기
-                await UniTask.Delay(confirmWaitMilliseconds, cancellationToken: token);
             }
 
-            
+            // 대기
+            await UniTask.Delay(confirmWaitMilliseconds, cancellationToken: token);
 
             // TotalScore activate하고 CurrentScore와 같이 보여주기
             totalScoreText.gameObject.SetActive(true);
