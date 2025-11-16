@@ -6,8 +6,10 @@
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/AbilityFactory.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/AbilityInfoSO.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/ActiveUpAbility.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/AdditionalTileAbility.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/ExtraActiveItemAbility.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/ExtraTurnAbility.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/GoldToGoldAbility.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/OnlyPlaceAbility.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Abilities/RemoveActiveUpAbility.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Core/EffectManager.cs" charset="UTF-8" />
