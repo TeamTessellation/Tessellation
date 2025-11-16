@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Collections;
 using Cysharp.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace UI.OtherUIs
         [SerializeField] private TransitionSettings soundSliderTransitionSettings;
 
 
-        private readonly SerializableDictionary<RectTransform, Vector2> _originalPositions = new();
+        private readonly Dictionary<RectTransform, Vector2> _originalPositions = new();
         
         public enum ReturnType
         {

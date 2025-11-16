@@ -82,6 +82,9 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
             case TileOption.Double:
                 TileOptionBase = new TileOptionDouble();
                 break;
+            default:
+                TileOptionBase = new TileOptionDefault();
+                break;
         }
     }
 
@@ -141,6 +144,22 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
 
         _sr.color = new Color(_sr.color.r, _sr.color.g, _sr.color.b, 0);
         _endAction?.Invoke();
+    }
+
+    public async UniTask OptionActiveEffect()
+    {
+        var effectData = TileEffectSO[0];
+        DOTween.Kill(this);
+
+        _light.color = effectData.LightColor;
+        float progress = effectData.LightStartPower;
+        await DOTween.To(() => progress, x => { SetLight(x); progress = x; }, effectData.LightMaxPower, effectData.LightDuration)
+            .SetEase(effectData.LightEase)
+            .ToUniTask();
+
+        _light.intensity = effectData.LightMaxPower;
+        await UniTask.WaitForSeconds(effectData.MaxRemainTime);
+        await RemoveEffect();
     }
 
     private void SetLight(float light)

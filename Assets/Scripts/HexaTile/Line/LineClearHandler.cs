@@ -161,7 +161,9 @@ public class LineClearHandler
         List<Tile> remainTile = new();
         
         float sfxPitch = 1.0f;
-        
+
+        List<UniTask> lineClearTasks = new();
+
         for (int i = 0; i < line.Count; i++)
         {
             // 콤보점수 추가
@@ -172,11 +174,12 @@ public class LineClearHandler
                 ScoreManager.Instance.AddMultiplier(baseLineClearMultiple);
             }
             
-            await ClearLineAsync(line[i], interval, (tile) => remainTile.Add(tile), sfxPitch);
+            lineClearTasks.Add(ClearLineAsync(line[i], interval, (tile) => remainTile.Add(tile), sfxPitch));
             sfxPitch = Mathf.Min(5f, sfxPitch*1.5f);
             interval = Mathf.Max(0.05f, interval*0.8f);
         }
-        //await UniTask.WhenAll(tasks);
+        await UniTask.WhenAll(lineClearTasks);
+
         await UniTask.WaitForSeconds(interval);
         await EndAllLineClear(line, interval, remainTile);
     }
@@ -269,7 +272,7 @@ public class LineClearHandler
             for (int i = 0; i < remainTile.Count; i++)
             {
                 await UniTask.WaitForSeconds(interval);
-                tasks.Add(remainTile[i].RemoveEffect());
+                tasks.Add(remainTile[i].OptionActiveEffect());
             }
 
             await tasks;
