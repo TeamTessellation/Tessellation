@@ -9,9 +9,9 @@ public class ExtraActiveItemAbility : AbilityBase
     
     public override void Initialize(TilePlaceHandler tilePlaceHandler)
     {
-        base.Initialize(tilePlaceHandler);
-
         _extraItemCount = (int)DataSO.input[0];
+        
+        base.Initialize(tilePlaceHandler);
     }
     
 
