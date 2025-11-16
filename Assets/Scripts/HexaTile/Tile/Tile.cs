@@ -73,6 +73,9 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
             case TileOption.Default:
                 TileOptionBase = new TileOptionDefault();
                 break;
+            case TileOption.Gold:
+                TileOptionBase = new TileOptionGold();
+                break;
             // TO다산 여기다가 각 경우에 따라서 추가 사실 클래스 매번 생성할 필요는 없고 같은거 써도 됨 알아서 수정
         }
     }

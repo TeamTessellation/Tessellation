@@ -68,7 +68,9 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     {
         BasePlaceScore, // 기본 칸당 배치 점수
         BaseLineClearScore, // 기본 칸당 라인클리어 점수
-        BaseLineClearMultiple // 기본 라인당 곱배수
+        BaseLineClearMultiple, // 기본 라인당 곱배수
+        BaseBurstScore, // 기본 터질 때 점수
+        BaseCoinTileValue, // 기본 골드타일 골드
     }
 
     private Dictionary<ScoreValueType, float> _scoreValues = new();
@@ -92,6 +94,8 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
         _scoreValues[ScoreValueType.BasePlaceScore] = 1;
         _scoreValues[ScoreValueType.BaseLineClearScore] = 5;
         _scoreValues[ScoreValueType.BaseLineClearMultiple] = 1;
+        _scoreValues[ScoreValueType.BaseBurstScore] = 10;
+        _scoreValues[ScoreValueType.BaseCoinTileValue] = 1;
 
         BroadCastScores();
         
