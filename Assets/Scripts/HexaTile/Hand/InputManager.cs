@@ -79,7 +79,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     public void SetItem(eActiveItemType item)
     {
-        if (!HandManager.Instance.IsPlayerInputEnabled)
+        if (!IsPlayerInputEnabled)
             return;
 
         if (_readyItem == item)

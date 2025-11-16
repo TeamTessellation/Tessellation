@@ -30,8 +30,6 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     private int _handSize = 3;
     private Coordinate _lastDragCoor;
 
-    public bool IsPlayerInputEnabled => throw new NotImplementedException();
-
     public Guid Guid { get; init; }
 
     private async UniTask Awake()
@@ -51,8 +49,21 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         SaveLoadManager.RegisterPendingSavable(this);
     }
 
+    public void StageClear()
+    {
+        _dragTileSet = false;
+        _onMouseDown = false;
+        _remainHand = 0;
+        _lastDragCoor = new();
+        ResetHand(_handSize);
+    }
+
+
     void Update()
     {
+        if (!InputManager.Instance.IsPlayerInputEnabled)
+            return;
+
         if (_onMouseDown)
         {
             Vector2 screenPos;
@@ -206,7 +217,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 
     private void HandBoxMouseDown(HandBox target)
     {
-        if (target.IsUsed || TurnManager.Instance.State != TurnState.Player)
+        if (target.IsUsed || TurnManager.Instance.State != TurnState.Player || !InputManager.Instance.IsPlayerInputEnabled)
             return;
 
         Vector2 screenPos;
