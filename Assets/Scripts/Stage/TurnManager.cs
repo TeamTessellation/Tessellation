@@ -264,9 +264,9 @@ namespace Stage
                     await ExecEventBus<BeforePlayerActionEventArgs>.InvokeMerged(playerActionArgs);
 
                     //TODO : 점수 계산 로직 개선 필요
-                    int prevScore = playerStatus.CurrentStageScore;
+                    int prevScore = playerStatus.StageScore;
                     await playerInputHandler.HandlePlayerInput(playerInputData, token);
-                    int gainedScore = playerStatus.CurrentStageScore - prevScore;
+                    int gainedScore = playerStatus.StageScore - prevScore;
                     if (gainedScore > 0)
                     {
                         playerStatus.StageBestPlacement = Math.Max(playerStatus.StageBestPlacement, gainedScore);

@@ -73,11 +73,20 @@ namespace SaveLoad
         public Guid Guid { get; init; }
         public void LoadData(GameData data)
         {
+            if (data.SaveHistory == null)
+            {
+                _saveHistory = new SaveHistory();
+                return;
+            }
             _saveHistory = data.SaveHistory.Clone();
         }
 
         public void SaveData(ref GameData data)
         {
+            if (data.SaveHistory == null)
+            {
+                data.SaveHistory = null;
+            }
             data.SaveHistory = _saveHistory.Clone();
         }
     }
