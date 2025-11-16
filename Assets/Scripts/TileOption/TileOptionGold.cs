@@ -13,7 +13,6 @@ public class TileOptionGold : TileOptionBase
     public override async UniTask OnLineCleared(Tile tile)
     {
         int baseCoin = (int)ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BaseCoinTileValue];
-        
         PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
         playerStatus.CurrentCoins += baseCoin;
     }

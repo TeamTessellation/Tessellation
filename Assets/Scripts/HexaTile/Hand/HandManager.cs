@@ -16,7 +16,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     public static HandManager Instance { get; private set; }
 
     [SerializeField] private DeckSO originDeckSO;
-    public DeckSO DeckSO;
+    [HideInInspector] public DeckSO DeckSO;
 
     private Transform _handRoot;
     private HandBox[] _hand;

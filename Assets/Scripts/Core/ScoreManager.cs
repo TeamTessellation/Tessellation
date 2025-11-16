@@ -71,6 +71,7 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
         BaseLineClearMultiple, // 기본 라인당 곱배수
         BaseBurstScore, // 기본 터질 때 점수
         BaseCoinTileValue, // 기본 골드타일 골드
+        BaseBonusScore, // 기본 보너스 점수
     }
 
     private Dictionary<ScoreValueType, float> _scoreValues = new();
@@ -96,6 +97,7 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
         _scoreValues[ScoreValueType.BaseLineClearMultiple] = 1;
         _scoreValues[ScoreValueType.BaseBurstScore] = 10;
         _scoreValues[ScoreValueType.BaseCoinTileValue] = 1;
+        _scoreValues[ScoreValueType.BaseBonusScore] = 50;
 
         BroadCastScores();
         
