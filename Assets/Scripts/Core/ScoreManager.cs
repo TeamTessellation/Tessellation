@@ -169,7 +169,7 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
         totalEvt.PrevTotalScore = TotalScore;
         
         CurrentScore = (int)(CurrentScore * Multiplier);
-        TotalScore += CurrentScore;
+        TotalScore += CurrentScore; // StageManager에서 TotalScore을 갱신 하는 대신, 여기서 갱신하는중
         
         totalEvt.NewTotalScore = TotalScore;
         

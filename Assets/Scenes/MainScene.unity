@@ -929,6 +929,92 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f754f76e699453dbe888e122445a5b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.GlobalCanvas
+--- !u!1 &975299044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 975299047}
+  - component: {fileID: 975299046}
+  - component: {fileID: 975299045}
+  m_Layer: 0
+  m_Name: '@GameManager'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &975299045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975299044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523bbc7e8a95414689fc6b4f7f5cabc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Core.GameManager
+  destroyPreExisting: 0
+  mainMenuScene: {fileID: 0}
+  _currentGameState: 0
+  <DisableContinueInMainMenu>k__BackingField: 0
+  _playerStatus:
+    fieldSize: 4
+    handSize: 3
+    coinInterestRate: 0.1
+    maxInterestCoins: 5
+    variables:
+      items:
+        defaultKey: 
+        _items: []
+    inventory:
+      _abilities:
+      - rid: -2
+      - rid: -2
+      - rid: -2
+      - rid: -2
+      - rid: -2
+      _currentAbilityCount: 0
+      _maxAbilityCount: 5
+      currentItemCount: 0
+  AutoPauseInBackground: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+--- !u!114 &975299046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975299044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f7a2f18e3148599479a4363f51a637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: McDeveloperConsole::Machamy.Utils.ResolutionWatcher
+--- !u!4 &975299047
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975299044}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1109853752
 GameObject:
   m_ObjectHideFlags: 0
@@ -1512,6 +1598,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameUI
       objectReference: {fileID: 0}
+    - target: {fileID: 117786251433225684, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: variableKey
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 117786251433225684, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: variableKeyString
+      value: TotalClearedLines
+      objectReference: {fileID: 0}
     - target: {fileID: 1052814698836110562, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1535,6 +1629,14 @@ PrefabInstance:
     - target: {fileID: 1372144967812382634, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -975
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902245279821811914, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: variableKey
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902245279821811914, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: variableKeyString
+      value: BestStageCoinsObtained
       objectReference: {fileID: 0}
     - target: {fileID: 2453682631178661387, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1612,6 +1714,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3501221576578508545, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: m_text
+      value: "\uCD1D \uC810\uC218"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688904873959516812, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: variableKey
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688904873959516812, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: variableKeyString
+      value: TotalAbilityUseCount
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175075264153663863, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: variableKey
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175075264153663863, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: variableKeyString
+      value: TotalObtainedCoins
+      objectReference: {fileID: 0}
     - target: {fileID: 4194778079640682174, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1651,6 +1773,14 @@ PrefabInstance:
     - target: {fileID: 4650319880938818492, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791612701554956829, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: variableKey
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5411414638043448427, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: m_text
+      value: "\uCD1D \uCF54\uC778"
       objectReference: {fileID: 0}
     - target: {fileID: 5495688112468812253, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
       propertyPath: m_LocalScale.x
@@ -1879,6 +2009,14 @@ PrefabInstance:
     - target: {fileID: 8828177164580624571, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9047780066934395023, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: variableKey
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9047780066934395023, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: variableKeyString
+      value: BestScorePlacement
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2266,3 +2404,4 @@ SceneRoots:
   - {fileID: 1354172843}
   - {fileID: 532915699}
   - {fileID: 690360328}
+  - {fileID: 975299047}
