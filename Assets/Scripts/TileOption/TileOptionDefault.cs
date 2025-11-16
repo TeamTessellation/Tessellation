@@ -10,19 +10,19 @@ public class TileOptionDefault : TileOptionBase
         ScoreManager.Instance.AddCurrentScore(finalScore);
     }
 
-    public virtual async UniTask OnLineCleared(Tile tile)
+    public override async UniTask OnLineCleared(Tile tile)
     {
         int baseScore = tile.Data.Score * 5;
         int finalScore = ScoreManager.Instance.CalculateTileScore(eTileEventType.LineClear, tile, baseScore);
         ScoreManager.Instance.AddCurrentScore(finalScore);
     }
 
-    public virtual async UniTask OnTileRemoved(Tile tile)
+    public override async UniTask OnTileRemoved(Tile tile)
     {
 
     }
 
-    public virtual async UniTask OnTileBurst(Tile tile)
+    public override async UniTask OnTileBurst(Tile tile)
     {
         ScoreManager.Instance.AddCurrentScore(tile.Data.Score);
     }
