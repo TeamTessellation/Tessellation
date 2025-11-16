@@ -8,12 +8,41 @@ namespace Abilities
         private InputManager.eActiveItemType _activeItemType;
         private int _itemAmount;
         
-        public ActiveUpAbility(InputManager.eActiveItemType activeItemType, int itemAmount)
+        public override void Initialize(TilePlaceHandler tilePlaceHandler)
         {
-            _activeItemType = activeItemType;
-            _itemAmount = itemAmount;
+            base.Initialize(tilePlaceHandler);
+
+            switch (DataSO.ItemType)
+            {
+                case eItemType.GetTilesetDelete:
+                    _activeItemType = InputManager.eActiveItemType.Delete;
+                    break;
+                case eItemType.GetTilesetReroll:
+                    // TODO 미구현
+                    //_activeItemType = InputManager.eActiveItemType.Reroll;
+                    break;
+                case eItemType.GetRevert:
+                    // TODO 미구현
+                    //_activeItemType = InputManager.eActiveItemType.Revert;
+                    break;
+                case eItemType.GetTilesetRotate:
+                    _activeItemType = InputManager.eActiveItemType.Rotate;
+                    break;
+                case eItemType.GetTilesetChangeOverwrite:
+                    // TODO 미구현
+                    // _activeItemType = InputManager.eActiveItemType.ChangeOverwrite;
+                    break;
+                case eItemType.GetTilesetCopy:
+                    _activeItemType = InputManager.eActiveItemType.Add;
+                    break;
+                default:
+                    _activeItemType = InputManager.eActiveItemType.None;
+                    break;
+            }
+
+            _itemAmount = (int)DataSO.input[0];
         }
-        
+
         protected override void OnAbilityApplied()
         {
             base.OnAbilityApplied();
