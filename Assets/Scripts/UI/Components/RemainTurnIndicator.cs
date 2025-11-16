@@ -41,6 +41,10 @@ namespace UI.Components
         
         public void UpdateVisuals()
         {
+            if(_maxTurns < 0) _maxTurns = 0;
+            if(_remainingTurns < 0) _remainingTurns = 0;
+            if(_remainingTurns > _maxTurns) _remainingTurns = _maxTurns;
+            
             if(transform.childCount < _maxTurns)
             {
                 for (int i = transform.childCount; i < _maxTurns; i++)
@@ -54,6 +58,10 @@ namespace UI.Components
                 {
                     transform.GetChild(i).gameObject.SetActive(false);
                 }
+            }
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(true);
             }
             
             for (int i = 0; i < transform.childCount; i++)
@@ -112,8 +120,17 @@ namespace UI.Components
 
         public UniTask OnStageStart(StageStartEventArgs args)
         {
-            _maxTurns = args.StageModel.StageTurnLimit;
-            _remainingTurns = _maxTurns;
+            if (TurnManager.HasInstance)
+            {
+                _maxTurns = TurnManager.Instance.MaxTurn;
+                _remainingTurns = _maxTurns;
+            }
+            else
+            {
+                _maxTurns = 0;
+                _remainingTurns = 0;
+            }
+
             
             UpdateVisuals();
             return UniTask.CompletedTask;
@@ -121,9 +138,16 @@ namespace UI.Components
 
         public UniTask OnTurnStart(TurnStartEventArgs args)
         {
-            _maxTurns = args.MaxTurnCount;
-            _remainingTurns = _maxTurns - args.CurrentTurnCount;
-            
+            if (TurnManager.HasInstance)
+            {
+                _maxTurns = TurnManager.Instance.MaxTurn;
+                _remainingTurns = TurnManager.Instance.RemainingTurn;
+            }
+            else
+            {
+                _maxTurns = 0;
+                _remainingTurns = 0;
+            }
             UpdateVisuals();
             return UniTask.CompletedTask;
         }
