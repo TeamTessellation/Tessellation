@@ -45,9 +45,6 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
 
     public List<TileScoreModifierDelegate> _tileScoreModifiers = new List<TileScoreModifierDelegate>();
 
-    // FIXME
-    public int multiplier = 1;
-    
     // === Properties ===
     // 여러 턴에 누적되어 최종 합산된 점수
     public int TotalScore
@@ -61,13 +58,10 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
         get => GameManager.Instance.PlayerStatus.CurrentStageScore;
         private set => GameManager.Instance.PlayerStatus.CurrentStageScore = value;
     }
+    // 현재 옆에 뜨는 곱, CurrentScore와 같은 수명
+    public float Multiplier { get; set; }
 
     public int TargetScore => StageManager.Instance.CurrentStage.StageTargetScore;
-    
-    // 현재 점수 옆에 곱셈 표시 뜨는거 저장하는 리스트
-    public IReadOnlyList<float> MultiplierStack => _multiplierStack;
-    
-    private List<float> _multiplierStack = new List<float>();
 
     // === Functions ===
     // Initialize
@@ -81,7 +75,7 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     {
         CurrentScore = 0;
         TotalScore = 0;
-        _multiplierStack.Clear();
+        Multiplier = 1;
 
         BroadCastScores();
         
@@ -117,9 +111,9 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     // 타일이나 조커로 인한 곱 연산을 MultiplierStack에 추가할 때 사용하는 함수
     public void AddMultiplier(float mulValue)
     {
-        _multiplierStack.Add(mulValue);
+        Multiplier *= mulValue;
         using var mulEvt = MultiplierAddedEventArgs.Get();
-        mulEvt.NewMultiplier = mulValue;
+        mulEvt.NewMultiplier = Multiplier;
         ExecEventBus<MultiplierAddedEventArgs>.InvokeMerged(mulEvt).Forget();
     }
     
@@ -147,32 +141,16 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     // CurrentScore에 곱계산을 추가하여 TotalScore에 더한다
     public async UniTask FinalizeScore()
     {
-        if (_multiplierStack.Count == 0) return;
-
-        float accumulatedScore = CurrentScore;
-
-        foreach (float multiplier in _multiplierStack)
-        {
-            // TODO
-            // EffectHandler에게 요청, 이펙트 재생 및 대기한다.
-            // await EffectHandler.PlayMultiplierEffect(multiplier)
-            
-            accumulatedScore *= multiplier;
-            CurrentScore = (int)accumulatedScore;
-            using var currentEvt = CurrentScoreChangedEventArgs.Get();
-            currentEvt.NewCurrentScore = CurrentScore;
-            await ExecEventBus<CurrentScoreChangedEventArgs>.InvokeMerged(currentEvt);
-        }
-        _multiplierStack.Clear();
+        Debug.Log($"Current : {CurrentScore}, Mul : {Multiplier}");
+        CurrentScore = (int)(CurrentScore * Multiplier);
         
-        // TODO
-        // EffectHandler 요청
-        // await EffectHandler.PlayAddTotalScoreEffect()
         TotalScore += CurrentScore;
-        CurrentScore = 0;
         using var totalEvt = TotalScoreChangedEventArgs.Get();
         totalEvt.NewTotalScore = TotalScore;
         await ExecEventBus<TotalScoreChangedEventArgs>.InvokeMerged(totalEvt);
+        
+        CurrentScore = 0;
+        Multiplier = 1;
     }
 
     public Guid Guid { get; init; } = Guid.NewGuid();
