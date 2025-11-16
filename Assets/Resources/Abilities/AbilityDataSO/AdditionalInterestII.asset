@@ -17,7 +17,7 @@ MonoBehaviour:
   ItemName: "\uCD94\uAC00 \uC774\uC790 II"
   ItemID: AdditionalInterestII
   Description: "\uCD5C\uB300 \uC774\uC790\uAC00 100\uB9CC\uD07C \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
+  ItemIcon: {fileID: -5309637479082286120, guid: e7e6c7de35028f74caca8f075dc7e791, type: 3}
   input:
   - 100
   ItemPrice: 7

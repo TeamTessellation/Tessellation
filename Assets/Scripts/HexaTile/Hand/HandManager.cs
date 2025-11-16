@@ -22,7 +22,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     private HandBox[] _hand;
 
     private HandBox _targetHandBox;
-    private Camera _cam;
+    private Camera _cam => Camera.main;
     private bool _onMouseDown;
     private bool _dragTileSet;
 
@@ -46,7 +46,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         _hand = new HandBox[0];
         _dragTileSet = false;
         _onMouseDown = false;
-        _cam = Camera.main;
+        // _cam = Camera.main;
         _remainHand = 0;
         _lastDragCoor = new();
         await GameManager.WaitForInit();
@@ -60,7 +60,11 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     {
         if (_onMouseDown)
         {
-            Vector2 screenPos = Pointer.current.position.ReadValue();
+            Vector2 screenPos;
+            if (Pointer.current != null)
+                screenPos = Pointer.current.position.ReadValue();
+            else
+                screenPos = Mouse.current.position.ReadValue();
             Vector2 worldPos = _cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _cam.nearClipPlane));
 
             if (Vector2.Distance(_startPos, worldPos) > 0.5f)
@@ -94,7 +98,11 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 
         if (_dragTileSet)
         {
-            Vector2 screenPos = Pointer.current.position.ReadValue();
+            Vector2 screenPos;
+            if (Pointer.current != null)
+                screenPos = Pointer.current.position.ReadValue();
+            else
+                screenPos = Mouse.current.position.ReadValue();
             Vector2 worldPos = _cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _cam.nearClipPlane));
             Coordinate dragCoor = worldPos.ToCoor(Field.Instance.TileOffset);
             if (dragCoor != _lastDragCoor)
@@ -224,7 +232,11 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         if (target.IsUsed || TurnManager.Instance.State != TurnState.Player)
             return;
 
-        Vector2 screenPos = Pointer.current.position.ReadValue();
+        Vector2 screenPos;
+        if (Pointer.current != null)
+            screenPos = Pointer.current.position.ReadValue();
+        else
+            screenPos = Mouse.current.position.ReadValue();
         _startPos = _cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _cam.nearClipPlane));
         _targetHandBox = target;
         _onMouseDown = true;
