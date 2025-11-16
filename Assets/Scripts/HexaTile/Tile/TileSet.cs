@@ -10,6 +10,7 @@ using UnityEngine.Rendering;
 public class TileSet : MonoBehaviour, IPoolAble<TileSetData>
 {
     public List<Sprite> RandomTileSprite;
+    public List<Sprite> OptionTileSprite;
     public List<Tile> Tiles = new();
     public Direction Rotation;
     public TileSetData Data { get; private set; }
@@ -73,7 +74,13 @@ public class TileSet : MonoBehaviour, IPoolAble<TileSetData>
             tile.transform.localPosition = localPos;
             transform.localScale = Vector2.one * data.Size;
             tile.transform.SetParent(_tileRoot, false);
-            tile.ChangeSprite(randomSprite);
+
+            if (tile.Data.Option == TileOption.Default)
+                tile.ChangeSprite(randomSprite);
+            else
+            {
+                tile.ChangeSprite(OptionTileSprite[(int)tile.Data.Option]);
+            }
             Tiles.Add(tile);
         }
     }
