@@ -38,7 +38,6 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     {
         public float NewMultiplier { get; set; }
     }
-    
 
     #endregion
     
@@ -63,6 +62,18 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     public float Multiplier { get; set; }
 
     public int TargetScore => StageManager.Instance.CurrentStage.StageTargetScore;
+    
+    // 체급에 대한 점수
+    public enum ScoreValueType
+    {
+        BasePlaceScore, // 기본 칸당 배치 점수
+        BaseLineClearScore, // 기본 칸당 라인클리어 점수
+        BaseLineClearMultiple // 기본 라인당 곱배수
+    }
+
+    private Dictionary<ScoreValueType, float> _scoreValues = new();
+    public IReadOnlyDictionary<ScoreValueType, float> ScoreValues => _scoreValues;
+    
 
     // === Functions ===
     // Initialize
@@ -77,6 +88,10 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
         CurrentScore = 0;
         TotalScore = 0;
         Multiplier = 1;
+
+        _scoreValues[ScoreValueType.BasePlaceScore] = 1;
+        _scoreValues[ScoreValueType.BaseLineClearScore] = 5;
+        _scoreValues[ScoreValueType.BaseLineClearMultiple] = 1;
 
         BroadCastScores();
         
@@ -109,8 +124,16 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
         ExecEventBus<CurrentScoreChangedEventArgs>.InvokeMerged(currentEvt).Forget();
     }
 
+    public void AddMultiplier(float addValue)
+    {
+        Multiplier += addValue;
+        using var mulEvt = MultiplierAddedEventArgs.Get();
+        mulEvt.NewMultiplier = Multiplier;
+        ExecEventBus<MultiplierAddedEventArgs>.InvokeMerged(mulEvt).Forget();
+    }
+    
     // 타일이나 조커로 인한 곱 연산을 MultiplierStack에 추가할 때 사용하는 함수
-    public void AddMultiplier(float mulValue)
+    public void MultiplyMultiplier(float mulValue)
     {
         Multiplier *= mulValue;
         using var mulEvt = MultiplierAddedEventArgs.Get();

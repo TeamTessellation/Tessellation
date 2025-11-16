@@ -193,17 +193,7 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
     
     private async UniTask ProcessLineCompleted(LineClearEvent lineClearEvent, CancellationToken token)
     {
-        foreach (var tile in lineClearEvent.Tiles)
-        {
-            await tile.TileOptionBase.OnLineCleared(tile);
-        }
-        
-        // Tile에 넣어줘야 한다.
-        ScoreManager.Instance.AddMultiplier(lineClearEvent.ClearedLineCount);
-
-        // 1차 이펙트 처리
         LineClearHandler lineClearHandler = new LineClearHandler();
-
         await lineClearHandler.ClearLinesAsync(lineClearEvent.ClearedLine, tileRemoveInterval);
         
         _turnResultInfo.ClearedLineCount += lineClearEvent.ClearedLineCount;
