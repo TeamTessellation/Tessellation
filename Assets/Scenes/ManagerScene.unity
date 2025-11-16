@@ -213,12 +213,27 @@ MonoBehaviour:
         items:
           defaultKey: 
           _items: []
+      inventory:
+        _abilities:
+        - rid: -2
+        - rid: -2
+        - rid: -2
+        - rid: -2
+        - rid: -2
+        _currentAbilityCount: 0
+        _maxAbilityCount: 5
+        currentItemCount: 0
     SaveHistory:
       _saves: []
     <Variables>k__BackingField:
       items:
         defaultKey: 
         _items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!4 &819279504
 Transform:
   m_ObjectHideFlags: 0
@@ -357,6 +372,9 @@ MonoBehaviour:
   destroyPreExisting: 0
   _saveHistory:
     _saves: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!4 &1449891191
 Transform:
   m_ObjectHideFlags: 0
@@ -440,6 +458,7 @@ MonoBehaviour:
   <StageInfoUI>k__BackingField: {fileID: 0}
   <FailResultUI>k__BackingField: {fileID: 0}
   <ClearResultUI>k__BackingField: {fileID: 0}
+  <ShopUI>k__BackingField: {fileID: 0}
   <PauseUI>k__BackingField: {fileID: 0}
   <SoundSettingUI>k__BackingField: {fileID: 0}
   <HandCanvas>k__BackingField: {fileID: 0}
@@ -491,7 +510,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421e043786eb35641996ca67c067ba9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandManager
-  DeckSO: {fileID: 11400000, guid: 6a65295eef7d2f24ea6140e04d67d1d4, type: 2}
+  originDeckSO: {fileID: 11400000, guid: 6a65295eef7d2f24ea6140e04d67d1d4, type: 2}
+  DeckSO: {fileID: 0}
 --- !u!114 &2025349028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,7 +525,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stage.TurnManager
   destroyPreExisting: 0
-  _turnCount: 0
 --- !u!4 &2025349029
 Transform:
   m_ObjectHideFlags: 0
@@ -577,6 +596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Database.DatabaseManager
   mcDatabase:
     ItemDataList: []
+    StringDataList: []
   isInitialized: 0
   googleSheetUrl: URL_HERE
   localJsonPath: Database/
@@ -608,6 +628,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2104037631}
   - component: {fileID: 2104037630}
+  - component: {fileID: 2104037632}
   m_Layer: 0
   m_Name: '@GameManager'
   m_TagString: Untagged
@@ -640,7 +661,22 @@ MonoBehaviour:
       items:
         defaultKey: 
         _items: []
+    inventory:
+      _abilities:
+      - rid: -2
+      - rid: -2
+      - rid: -2
+      - rid: -2
+      - rid: -2
+      _currentAbilityCount: 0
+      _maxAbilityCount: 5
+      currentItemCount: 0
   AutoPauseInBackground: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!4 &2104037631
 Transform:
   m_ObjectHideFlags: 0
@@ -656,6 +692,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2104037632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104037629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f7a2f18e3148599479a4363f51a637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: McDeveloperConsole::Machamy.Utils.ResolutionWatcher
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 {
     public static HandManager Instance { get; private set; }
 
+    [SerializeField] private DeckSO originDeckSO;
     public DeckSO DeckSO;
 
     private Transform _handRoot;
@@ -31,9 +32,13 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     private Coordinate _lastDragCoor;
 
     public Guid Guid { get; init; }
-
+    
     private async UniTask Awake()
     {
+        DeckSO = Instantiate(originDeckSO);
+        
+        AddDeckData(TileOption.Gold, 5);
+        
         // LogEx.Log($"Instance id : {GetInstanceID()} - {gameObject.scene.name}, {gameObject.name}");
         Instance = this;
         _hand = new HandBox[0];
@@ -89,7 +94,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
                 HandBoxClick();
             }
 
-            // 2. ¸ğ¹ÙÀÏ (ÅÍÄ¡)
+            // 2. ëª¨ë°”ì¼ (í„°ì¹˜)
             if (Touchscreen.current != null)
             {
                 var touch = Touchscreen.current.primaryTouch;
@@ -144,11 +149,29 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
                 return DeckSO.Deck[i];
         }
 #if UNITY_EDITOR
-        Debug.Log("ÇØ´ç µÇ´Â Å¸ÀÏ¼ÂÀ» µ¦¿¡¼­ Ã£Áö ¸øÇÔ");
+        Debug.Log("í•´ë‹¹ ë˜ëŠ” íƒ€ì¼ì…‹ì„ ë±ì—ì„œ ì°¾ì§€ ëª»í•¨");
 #endif
         return null;
     }
 
+    public void AddDeckData(TileOption tileOption, int amount)
+    {
+        OffsetTileData newOffSetTileData = new OffsetTileData();
+        newOffSetTileData.TileData = new TileData(tileOption, 1);
+        newOffSetTileData.Coor = new Coordinate(0, 0);
+        
+        TileSetData newTileSetData = new TileSetData();
+        newTileSetData.Data.Add(newOffSetTileData);
+        newTileSetData.Size = 0;
+        newTileSetData.Offset = 0;
+        
+        DeckData newDeckData = new DeckData(newTileSetData);
+        newDeckData.Count = amount;
+        
+        
+        DeckSO.Deck.Add(newDeckData);
+    }
+    
     public void RemoveDeckData(DeckData data)
     {
         DeckSO.Deck.Remove(data);
@@ -241,7 +264,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         RemoveItemIcon();
         _handSize = handSize;
         
-        // ±âÁ¸ hand ¹è¿­ÀÇ HandBoxµéÀ» Pool¿¡ ¹İÈ¯
+        // ê¸°ì¡´ hand ë°°ì—´ì˜ HandBoxë“¤ì„ Poolì— ë°˜í™˜
         if (_hand != null)
         {
             for (int i = 0; i < _hand.Length; i++)
@@ -251,7 +274,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
             }
         }
         
-        // ¹è¿­À» »õ·Î ÃÊ±âÈ­ (Áß¿ä!)
+        // ë°°ì—´ì„ ìƒˆë¡œ ì´ˆê¸°í™” (ì¤‘ìš”!)
         _hand = new HandBox[0];
         _remainHand = 0;
     }
