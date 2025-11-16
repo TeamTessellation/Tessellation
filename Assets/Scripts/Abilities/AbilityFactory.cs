@@ -18,7 +18,7 @@ namespace Abilities
             { eItemType.AddExtraScoreTileset,             () => new AdditionalTileAbility() },
             { eItemType.AddMultipleScoreTileset,          () => new AdditionalTileAbility() },
             { eItemType.AddGoldTileset,                   () => new AdditionalTileAbility() },
-            { eItemType.GoldTilesetCoinScaledExtraScore,  () => new OnlyPlaceAbility() }, // None
+            { eItemType.GoldTilesetCoinScaledExtraScore,  () => new GoldToGoldAbility() },
             { eItemType.AdditionalInterest,               () => new OnlyPlaceAbility() }, // None
             { eItemType.CoinScaledMultiple,               () => new OnlyPlaceAbility() }, // None
             { eItemType.GetTilesetDelete,                 () => new ActiveUpAbility() },
