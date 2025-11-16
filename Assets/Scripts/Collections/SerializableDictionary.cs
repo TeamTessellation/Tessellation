@@ -41,6 +41,11 @@ namespace Collections
             this.Clear();
             foreach (var item in _items)
             {
+                if(item == null)
+                {
+                    Debug.LogWarning("SerializableDictionary: Null item found during deserialization. Skipping this entry.");
+                    continue;
+                }
                 if (item.Key == null)
                 {
                     Debug.LogWarning($"SerializableDictionary: Null key found during deserialization. Skipping this entry. Value: {item.Value}");

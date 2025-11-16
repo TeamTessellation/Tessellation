@@ -48,9 +48,12 @@ namespace SaveLoad
         }
         
 
-        
+        #if UNITY_EDITOR
         [SerializeField] private SerializableDictionary<string, Variable> items = new();
-
+        #else
+        [SerializeField] private Dictionary<string, Variable> items = new();
+        #endif
+        
         public IReadOnlyDictionary<string, Variable> Items => items;
         
 

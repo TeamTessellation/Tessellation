@@ -48,7 +48,7 @@ namespace UI.OtherUIs
         [SerializeField, Tooltip("2차로 나오는 UI들")]
         private List<RectTransform> subTiles;
         
-        [SerializeField,VisibleOnly(EditableIn.EditMode)] SerializableDictionary<RectTransform, RectTransform> _originalPositions = new ();
+        [SerializeField,VisibleOnly(EditableIn.EditMode)] Dictionary<RectTransform, RectTransform> _originalPositions = new ();
 
 
         [Serializable]
