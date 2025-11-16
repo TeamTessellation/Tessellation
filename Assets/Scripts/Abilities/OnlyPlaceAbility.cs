@@ -53,7 +53,7 @@ namespace Abilities
             if (_scoreManager == null) return;
         
             Debug.Log($"실행, Priority : {AbilityPriority}");
-            _scoreManager.AddMultiplier(_multiplier);
+            _scoreManager.MultiplyMultiplier(_multiplier);
         }
     }
 }

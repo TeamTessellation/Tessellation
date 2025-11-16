@@ -86,6 +86,16 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
         SaveLoadManager.RegisterPendingSavable(this);
     }
 
+    public Cell GetCellByCoordinate(Coordinate coor)
+    {
+        if (CheckAbleCoor(coor) && !_allCell[coor].IsEmpty)
+        {
+            return _allCell[coor];
+        }
+
+        return null;
+    }
+    
     public bool TryPlaceAllTileSet(List<HandBox> handBoxs)
     {
         for (int i = 0; i < handBoxs.Count; i++)
