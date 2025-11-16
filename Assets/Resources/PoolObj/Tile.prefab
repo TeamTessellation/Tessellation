@@ -109,6 +109,11 @@ MonoBehaviour:
     m_Values: []
   TileEffectSOList:
   - {fileID: 11400000, guid: fea3bc78f85dad34f98fbdbc3592cd57, type: 2}
+  - {fileID: 11400000, guid: fea3bc78f85dad34f98fbdbc3592cd57, type: 2}
+  - {fileID: 11400000, guid: fea3bc78f85dad34f98fbdbc3592cd57, type: 2}
+  - {fileID: 11400000, guid: c6edb4c2cfc9d5347bfd11fe450ac031, type: 2}
+  - {fileID: 11400000, guid: 501c85328b694464ebfa3999cf00f283, type: 2}
+  - {fileID: 11400000, guid: fea3bc78f85dad34f98fbdbc3592cd57, type: 2}
   Coor:
     Pos: {x: 0, y: 0}
   Group: {fileID: 0}

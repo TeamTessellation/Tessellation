@@ -49,6 +49,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ca0fbea733e4c334c9bb30cac5a270d5, type: 3}
   - {fileID: 21300000, guid: 490774dbbc8430a4d9b15f9a9af3ff04, type: 3}
   - {fileID: 21300000, guid: 3c55599f2b4eb9f4ca417cdf362b6a59, type: 3}
+  OptionTileSprite:
+  - {fileID: -1131048150029037164, guid: dc281020412bef1498116c591b9acbd5, type: 3}
+  - {fileID: -1131048150029037164, guid: dc281020412bef1498116c591b9acbd5, type: 3}
+  - {fileID: -6239562839837555557, guid: 6ece5ad0805be584ba397186132cc6bf, type: 3}
+  - {fileID: 1549315823908625540, guid: 33f67ced9b73adb4d84c245633688535, type: 3}
+  - {fileID: -7371008508752679366, guid: b1642a2ebfd34b04da3639be0d7f7049, type: 3}
+  - {fileID: 1549315823908625540, guid: 33f67ced9b73adb4d84c245633688535, type: 3}
+  - {fileID: -6239562839837555557, guid: 6ece5ad0805be584ba397186132cc6bf, type: 3}
+  - {fileID: -6239562839837555557, guid: 6ece5ad0805be584ba397186132cc6bf, type: 3}
   Tiles: []
   Rotation: 0
 --- !u!1 &4698048771471433641
