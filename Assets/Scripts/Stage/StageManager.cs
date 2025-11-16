@@ -124,7 +124,9 @@ namespace Stage
             // 6각형 타일 맵 초기화
             Field.Instance.gameObject.SetActive(true);
             Field.Instance.ResetField(playerStatus.FieldSize);
-            
+
+            // 스테이지 덱 세팅
+            HandManager.Instance.SetStageDeck();
             // 핸드 초기화
             HandCanvas handCanvas = HandCanvas.Instance;
             handCanvas.Show();
