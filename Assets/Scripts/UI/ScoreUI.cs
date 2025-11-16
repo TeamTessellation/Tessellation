@@ -200,7 +200,6 @@ public class ScoreUI : UIBehaviour
                 // CurrentScore 점수 올리는 애니메이션
                 if (currentScoreText.gameObject.activeSelf && _cachedCurrentScore > 0)
                 {
-                    
                     _currentScoreSequence?.Kill();
                     _currentScoreSequence = DOTween.Sequence();
 
@@ -219,7 +218,9 @@ public class ScoreUI : UIBehaviour
                     await _currentScoreSequence.ToUniTask(cancellationToken: token);
                 }
             }
-
+            
+            _cachedCurrentScore = totalScore - previousTotal;
+            
             // 대기
             await UniTask.Delay(confirmWaitMilliseconds, cancellationToken: token);
 
@@ -231,8 +232,9 @@ public class ScoreUI : UIBehaviour
             await UniTask.Delay(confirmWaitMilliseconds, cancellationToken: token);
 
             // CurrentScore 사라지고 TotalScore 갱신
-            currentScoreText.gameObject.SetActive(false);
             
+            _currentScoreSequence?.Kill();
+            _currentScoreSequence = DOTween.Sequence();
             _totalScoreSequence?.Kill();
             _totalScoreSequence = DOTween.Sequence();
 
@@ -248,7 +250,20 @@ public class ScoreUI : UIBehaviour
                 countUpDuration
             ).SetEase(countUpEase));
 
+            _currentScoreSequence.Join(DOTween.To(
+                () => _cachedCurrentScore,
+                x =>
+                {
+                    _cachedCurrentScore = x;
+                    SetCurrentScoreText(x);
+                },
+                0,
+                countUpDuration
+            ).SetEase(countUpEase));
+
             await _totalScoreSequence.ToUniTask(cancellationToken: token);
+            
+            currentScoreText.gameObject.SetActive(false);
             
             // 최종 값 갱신
             SetTotalScoreText(totalScore);

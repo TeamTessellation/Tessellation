@@ -83,8 +83,8 @@ namespace Player
             CurrentTurn, // 현재 턴
             CurrentRemainingTurns, // 현재 남은 턴
             CurrentCoins, // 현재 코인
-
-
+            CurrentExtraTurns, // 현재 추가 턴 TODO : 아이템에 의해 변경된다면 저장/로드 를 어디서 할지 고민 필요
+            
         }
         
         // for 문 사용 편의성
@@ -94,6 +94,8 @@ namespace Player
         public static readonly VariableKey TotalEnd = VariableKey.TotalInterestEarnedCoins;
         public static readonly VariableKey StageStart = VariableKey.StageBestPlacement;
         public static readonly VariableKey StageEnd = VariableKey.StageInterestEarnedCoins;
+        public static readonly VariableKey CurrentStart = VariableKey.CurrentTurn;
+        public static readonly VariableKey CurrentEnd = VariableKey.CurrentCoins;
 
 
 
@@ -288,13 +290,21 @@ namespace Player
             get { return Variables.GetVariable(nameof(VariableKey.CurrentTurn)).IntValue; }
             set { Variables.SetInteger(nameof(VariableKey.CurrentTurn), value); }
         }
+        
+        public int CurrentExtraTurns
+        {
+            get { return Variables.GetVariable(nameof(VariableKey.CurrentExtraTurns)).IntValue; } // TODO : 아이템에 의해 변경된다면, 여기서는 계산된 값을 반환하도록 변경 필요
+            set { Variables.SetInteger(nameof(VariableKey.CurrentExtraTurns), value); }
+        }
 
         public int RemainingTurns
         {
             get { return Variables.GetVariable(nameof(VariableKey.CurrentRemainingTurns)).IntValue; }
             set { Variables.SetInteger(nameof(VariableKey.CurrentRemainingTurns), value); }
         }
-        // => TurnManager.Instance.RemainingTurns;
+        
+        
+        
 
         public Guid Guid { get; init; }
 
@@ -380,6 +390,21 @@ namespace Player
             source.CopyTo(this);
         }
 
+        [ConsoleCommand("Status", "플레이어 상태 정보를 출력합니다.")]
+        public static void PrintStats()
+        {
+            McConsole.MessageSuccess("-- PlayerStatus-- ");
+            foreach (var kvp in Current.Variables.Items)
+            {
+                McConsole.MessageInfo($"- {kvp.Key}: {kvp.Value.IntValue} (Float: {kvp.Value.FloatValue})");
+            }
+            McConsole.MessageInfo(" Non-variable stats: ");
+            McConsole.MessageInfo($" FieldSize: {Current.FieldSize}");
+            McConsole.MessageInfo($" HandSize: {Current.HandSize}");
+            McConsole.MessageInfo($" CoinInterestRate: {Current.CoinInterestRate}");
+            McConsole.MessageInfo($" MaxInterestCoins: {Current.MaxInterestCoins}");
+            McConsole.MessageSuccess("-- End of PlayerStatus --");
+        }
 
         [ConsoleCommandClass]
         public class ModifyVariableCommand : IConsoleCommand
@@ -460,15 +485,15 @@ namespace Player
                 {
                     case 0:
                         Set(value);
-                        McConsole.MessageInfo($"Set {variableKey} to {value}");
+                        McConsole.MessageSuccess($"Set {variableKey} to {value}");
                         break;
                     case 1:
                         Add(value);
-                        McConsole.MessageInfo($"Added {value} to {variableKey}");
+                        McConsole.MessageSuccess($"Added {value} to {variableKey}");
                         break;
                     case 2:
                         Subtract(value);
-                        McConsole.MessageInfo($"Subtracted {value} from {variableKey}");
+                        McConsole.MessageSuccess($"Subtracted {value} from {variableKey}");
                         break;
                 }
             }

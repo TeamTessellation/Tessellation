@@ -38,16 +38,16 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     {
         // LogEx.Log($"Instance id : {GetInstanceID()} - {gameObject.scene.name}, {gameObject.name}");
         Instance = this;
-        await GameManager.WaitForInit();
-         
-        
         _hand = new HandBox[0];
-        _handRoot = GameObject.FindWithTag("HandRoot").transform;
         _dragTileSet = false;
         _onMouseDown = false;
         _cam = Camera.main;
         _remainHand = 0;
         _lastDragCoor = new();
+        await GameManager.WaitForInit();
+        
+        _handRoot = GameObject.FindWithTag("HandRoot").transform;
+
         SaveLoadManager.RegisterPendingSavable(this);
     }
 

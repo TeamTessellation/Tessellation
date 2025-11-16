@@ -69,13 +69,18 @@ namespace Stage
     {
         public override bool IsDontDestroyOnLoad => false;
         
-        [SerializeField]private int _turnCount = 0;
-        public int TurnCount => _turnCount;
-        public TurnState State { get; private set; }
-        public int CurrentTurn => _turnCount;
-        public int MaxTurn => StageManager.Instance.CurrentStage.StageTurnLimit;
-        public int RemainingTurns => MaxTurn - _turnCount;
+        private PlayerStatus PlayerStatus => GameManager.Instance.PlayerStatus;
+
+        private int turnCount
+        {
+            get => PlayerStatus.CurrentTurn;
+            set => PlayerStatus.CurrentTurn = value;
+        }
         
+        public TurnState State { get; private set; }
+        public int MaxTurn => StageManager.Instance.CurrentStage.StageTurnLimit < 0 ? -1 : StageManager.Instance.CurrentStage.StageTurnLimit + PlayerStatus.CurrentExtraTurns;
+        public int CurrentTurn => turnCount;
+        public int RemainingTurn => PlayerStatus.RemainingTurns;
         [Header("Logics/Handlers")]
         private IFieldTurnLogic fieldTurnLogic;
         private IPlayerTurnLogic playerTurnLogic;
@@ -149,7 +154,7 @@ namespace Stage
                 return;
             }
             _cancellationTokenSource = new CancellationTokenSource();
-            _turnCount = 0;
+            turnCount = 0;
             LogEx.Log("Turn loop started.");
             var token = _cancellationTokenSource.Token;
             TurnLoop(token).Forget();
@@ -173,7 +178,7 @@ namespace Stage
         /// </summary>
         private async UniTask TurnLoop(CancellationToken token)
         {
-            LogEx.Log($"Turn {_turnCount} started.");
+            LogEx.Log($"Turn {turnCount} started.");
             
             if (fieldTurnLogic == null)
             {
@@ -186,15 +191,17 @@ namespace Stage
                 return;
             }
 
-            _turnCount = -1;
+            turnCount = -1;
             while (true)
             {
-                _turnCount++;
+                turnCount++;
                 PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
-                playerStatus.RemainingTurns = RemainingTurns;
+                
+                playerStatus.RemainingTurns = MaxTurn < 0 ? -1 : (MaxTurn - turnCount);
+                
                 using var turnStartArgs = TurnStartEventArgs.Get();
                 turnStartArgs.MaxTurnCount = MaxTurn;
-                turnStartArgs.CurrentTurnCount = _turnCount;
+                turnStartArgs.CurrentTurnCount = turnCount;
                 await ExecEventBus<TurnStartEventArgs>.InvokeMerged(turnStartArgs);
                 
                 if (token.IsCancellationRequested)
@@ -217,7 +224,7 @@ namespace Stage
                 foreach (var basicTurnLogic in basicTurnLogics)
                 {
                     if (basicTurnLogic == null) continue;
-                    await basicTurnLogic.OnTurnStart(_turnCount, token);
+                    await basicTurnLogic.OnTurnStart(turnCount, token);
                 }
 
                 
@@ -302,7 +309,7 @@ namespace Stage
                  * 턴 마무리 단계
                  */
                  
-                LogEx.Log($"Turn {_turnCount} ended.");
+                LogEx.Log($"Turn {turnCount} ended.");
                 State = TurnState.Item;
                 /*
                  * 턴 마무리 단계
@@ -311,12 +318,12 @@ namespace Stage
                 foreach (var basicTurnLogic in basicTurnLogics)
                 {
                     if (basicTurnLogic == null) continue;
-                    await basicTurnLogic.OnTurnEnd(_turnCount, token);
+                    await basicTurnLogic.OnTurnEnd(turnCount, token);
                 }
                 using var turnEndArgs = TurnEndEventArgs.Get();
                 await ExecEventBus<TurnEndEventArgs>.InvokeMerged(turnEndArgs);
                 
-                LogEx.Log($"Turn {_turnCount} fully ended.");
+                LogEx.Log($"Turn {turnCount} fully ended.");
             }
         }
 
@@ -351,12 +358,12 @@ namespace Stage
         public Guid Guid { get; init; } = Guid.NewGuid();
         public void LoadData(GameData data)
         {
-            _turnCount = data.TurnCount;
+            turnCount = data.TurnCount;
         }
 
         public void SaveData(ref GameData data)
         {
-            data.TurnCount = _turnCount;
+            data.TurnCount = turnCount;
         }
     }
 }
