@@ -196,7 +196,7 @@ namespace Stage
             
             // 점수 갱신
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
-            playerStatus.BestStageScore = Math.Max(playerStatus.BestStageScore, playerStatus.CurrentStageScore);
+            playerStatus.BestStageScore = Math.Max(playerStatus.BestStageScore, playerStatus.StageTempScore);
             // playerStatus.TotalScore += playerStatus.CurrentStageScore; // ScoreManager에서 이미 TotalScore에 반영됨
             
             // 코인 이자 지급
@@ -212,6 +212,7 @@ namespace Stage
             
             // Best/Total Stage Clear 갱신
             playerStatus.BestScorePlacement = Math.Max(playerStatus.BestScorePlacement, playerStatus.StageBestPlacement);
+            playerStatus.BestStageScore = Math.Max(playerStatus.BestStageScore, playerStatus.StageTempScore);
             playerStatus.BestStageClearedLines = Math.Max(playerStatus.BestStageClearedLines, playerStatus.StageClearedLines);
             playerStatus.BestStageAbilityUseCount = Math.Max(playerStatus.BestStageAbilityUseCount, playerStatus.StageAbilityUseCount);
             playerStatus.BestStageCoinsObtained = Math.Max(playerStatus.BestStageCoinsObtained, playerStatus.StageCoinsObtained);
@@ -220,6 +221,7 @@ namespace Stage
             playerStatus.TotalClearedLines += playerStatus.StageClearedLines;
             playerStatus.TotalAbilityUseCount += playerStatus.StageAbilityUseCount;
             playerStatus.TotalInterestEarnedCoins += playerStatus.StageInterestEarnedCoins;
+            playerStatus.TotalScore += playerStatus.StageScore;
             
             
             // await UniTask.Delay(1000);
@@ -281,7 +283,7 @@ namespace Stage
             // Fail에서는 실패한 스테이지의  BestStageAbilityUseCount 같은건 갱신 안하므로 별도로 작성함
             
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
-            playerStatus.BestStageScore = Math.Max(playerStatus.BestStageScore, playerStatus.CurrentStageScore);
+            playerStatus.BestStageScore = Math.Max(playerStatus.BestStageScore, playerStatus.StageTempScore);
             // Score는 ScoreManager에서 이미 TotalScore에 반영됨
             // TODO : 개선 필요
             
@@ -307,7 +309,7 @@ namespace Stage
         public bool CheckStageClear()
         {
             // 목표 점수 도달 확인
-            if (_currentStage.StageTargetScore <= ScoreManager.Instance.TotalScore)
+            if (_currentStage.StageTargetScore <= ScoreManager.Instance.CurrentStageScore)
             {
                 _isStageCleared = true;
             }

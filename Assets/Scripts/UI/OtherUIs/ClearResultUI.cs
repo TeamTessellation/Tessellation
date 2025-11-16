@@ -206,16 +206,30 @@ namespace UI.OtherUIs
             /*
              * 2. 개별 항목 애니메이션
              */
+            
+
+            
             for (int i = 0; i < entries.Count; i++)
             {
                 var entry = entries[i];
                 entry.ValueText.CounterValue = 0;
                 
+                var key = entry.VariableKey;
+                
+                
+                if(key == PlayerStatus.VariableKey.StageInterestEarnedCoins)
+                {
+                    // 이자 항목의 최대 이자 코인 수치 표시
+                    var thirdEntry = entries[2];
+                    int maxInterestValue = playerStatus.MaxInterestCoins;
+                    thirdEntry.Label.text = $"이자 <color=#a8a8a8ff> <size=32>(최대 {maxInterestValue})</size> </color>";
+                }
+                
                 var entryFadeInTween = entry.CanvasGroup.DOFade(1f, entryFadeInDuration);
                 await entryFadeInTween.ToUniTask(cancellationToken: cancellationToken);
                 tweenList.Add(entryFadeInTween);
                 
-                int value = playerStatus[entry.VariableKey.ToString()]?.IntValue ?? 0;
+                int value = playerStatus[key.ToString()]?.IntValue ?? 0;
                 var countTween = entry.ValueText.DoCount(0, value, entryCountDuration, true).SetEase(Ease.OutCubic);
                 countTweens.Add(countTween);
                 
