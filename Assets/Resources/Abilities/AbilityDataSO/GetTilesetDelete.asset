@@ -17,7 +17,7 @@ MonoBehaviour:
   ItemName: "\uD0C0\uC77C \uC0AD\uC81C \uC544\uC774\uD15C \uD68D\uB4DD"
   ItemID: GetTilesetDelete
   Description: "\uD0C0\uC77C \uC0AD\uC81C \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
+  ItemIcon: {fileID: -3827468903814040405, guid: 05cf679e324689143bf0f71e67349192, type: 3}
   input:
   - 5
   ItemPrice: 3
