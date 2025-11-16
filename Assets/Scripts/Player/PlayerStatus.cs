@@ -390,6 +390,21 @@ namespace Player
             source.CopyTo(this);
         }
 
+        [ConsoleCommand("Status", "플레이어 상태 정보를 출력합니다.")]
+        public static void PrintStats()
+        {
+            McConsole.MessageSuccess("-- PlayerStatus-- ");
+            foreach (var kvp in Current.Variables.Items)
+            {
+                McConsole.MessageInfo($"- {kvp.Key}: {kvp.Value.IntValue} (Float: {kvp.Value.FloatValue})");
+            }
+            McConsole.MessageInfo(" Non-variable stats: ");
+            McConsole.MessageInfo($" FieldSize: {Current.FieldSize}");
+            McConsole.MessageInfo($" HandSize: {Current.HandSize}");
+            McConsole.MessageInfo($" CoinInterestRate: {Current.CoinInterestRate}");
+            McConsole.MessageInfo($" MaxInterestCoins: {Current.MaxInterestCoins}");
+            McConsole.MessageSuccess("-- End of PlayerStatus --");
+        }
 
         [ConsoleCommandClass]
         public class ModifyVariableCommand : IConsoleCommand
@@ -470,15 +485,15 @@ namespace Player
                 {
                     case 0:
                         Set(value);
-                        McConsole.MessageInfo($"Set {variableKey} to {value}");
+                        McConsole.MessageSuccess($"Set {variableKey} to {value}");
                         break;
                     case 1:
                         Add(value);
-                        McConsole.MessageInfo($"Added {value} to {variableKey}");
+                        McConsole.MessageSuccess($"Added {value} to {variableKey}");
                         break;
                     case 2:
                         Subtract(value);
-                        McConsole.MessageInfo($"Subtracted {value} from {variableKey}");
+                        McConsole.MessageSuccess($"Subtracted {value} from {variableKey}");
                         break;
                 }
             }

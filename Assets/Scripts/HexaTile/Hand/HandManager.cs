@@ -9,6 +9,7 @@ using Core;
 using Machamy.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Player;
 
 public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 {
@@ -37,16 +38,16 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     {
         // LogEx.Log($"Instance id : {GetInstanceID()} - {gameObject.scene.name}, {gameObject.name}");
         Instance = this;
-        await GameManager.WaitForInit();
-         
-        
         _hand = new HandBox[0];
-        _handRoot = GameObject.FindWithTag("HandRoot").transform;
         _dragTileSet = false;
         _onMouseDown = false;
         _cam = Camera.main;
         _remainHand = 0;
         _lastDragCoor = new();
+        await GameManager.WaitForInit();
+        
+        _handRoot = GameObject.FindWithTag("HandRoot").transform;
+
         SaveLoadManager.RegisterPendingSavable(this);
     }
 
@@ -208,7 +209,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 
     public bool CanPlace()
     {
-        return Field.Instance.TryPlaceAllTileSet(_hand.ToList());
+        return Field.Instance.TryPlaceAllTileSet(_hand.ToList(), PlayerStatus.Current.inventory.CurrentItem == InputManager.eActiveItemType.Rotate, PlayerStatus.Current.inventory.currentItemCount);
     }
     
 
