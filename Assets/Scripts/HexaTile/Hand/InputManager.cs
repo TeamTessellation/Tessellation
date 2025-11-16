@@ -17,7 +17,10 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
         None,
         Add,
         Delete,
+        Overwrite,
         Rotate,
+        Reroll,
+        Revert,
         End
     }
 
