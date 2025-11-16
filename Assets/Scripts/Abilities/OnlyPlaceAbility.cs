@@ -12,10 +12,10 @@ namespace Abilities
 
         public override void Initialize(TilePlaceHandler tilePlaceHandler)
         {
-            base.Initialize(tilePlaceHandler);
-
             _scoreManager = ScoreManager.Instance;
             _scoreManager.RegisterScoreModifier(ModifyScore);
+            
+            base.Initialize(tilePlaceHandler);
         }
 
         protected override async UniTask HandleTurnProcessedAsync(TurnResultInfo info)
