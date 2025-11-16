@@ -21,7 +21,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     private HandBox[] _hand;
 
     private HandBox _targetHandBox;
-    private Camera _cam;
+    private Camera _cam => Camera.main;
     private bool _onMouseDown;
     private bool _dragTileSet;
 
@@ -41,7 +41,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         _hand = new HandBox[0];
         _dragTileSet = false;
         _onMouseDown = false;
-        _cam = Camera.main;
+        // _cam = Camera.main;
         _remainHand = 0;
         _lastDragCoor = new();
         await GameManager.WaitForInit();

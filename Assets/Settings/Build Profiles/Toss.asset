@@ -842,7 +842,7 @@ MonoBehaviour:
     - line: '|   blurSplashScreenBackground: 1'
     - line: '|   spritePackerPolicy: '
     - line: '|   webGLMemorySize: 32'
-    - line: '|   webGLExceptionSupport: 3'
+    - line: '|   webGLExceptionSupport: 1'
     - line: '|   webGLNameFilesAsHashes: 0'
     - line: '|   webGLShowDiagnostics: 0'
     - line: '|   webGLDataCaching: 1'

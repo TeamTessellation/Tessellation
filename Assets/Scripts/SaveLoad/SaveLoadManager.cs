@@ -28,7 +28,7 @@ namespace SaveLoad
         public TileSetData[] HandData;
         public PlayerStatus PlayerStatus;
         
-        public SaveHistory SaveHistory;
+        [SerializeReference] public SaveHistory SaveHistory; // 무한 재귀 방지를 위해 SerializeReference 사용
         
         /// <summary>
         /// 변수 컨테이너. 우선적으로 내장 변수를 사용하는 것이 권장됩니다.
