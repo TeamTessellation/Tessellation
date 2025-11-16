@@ -13,7 +13,6 @@ using Sound;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
-using static Field;
 
 public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
 {
