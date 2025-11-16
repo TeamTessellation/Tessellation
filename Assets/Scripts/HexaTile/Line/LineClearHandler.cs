@@ -272,7 +272,7 @@ public class LineClearHandler
             for (int i = 0; i < remainTile.Count; i++)
             {
                 await UniTask.WaitForSeconds(interval);
-                tasks.Add(remainTile[i].RemoveEffect());
+                tasks.Add(remainTile[i].OptionActiveEffect());
             }
 
             await tasks;
