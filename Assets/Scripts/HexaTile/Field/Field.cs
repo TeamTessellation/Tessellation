@@ -86,6 +86,33 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
         SaveLoadManager.RegisterPendingSavable(this);
     }
 
+    public bool TryPlaceAllTileSet(List<HandBox> handBoxs, bool canRotate, int count)
+    {
+        for (int i = 0; i < handBoxs.Count; i++)
+        {
+            if (!handBoxs[i].IsUsed)
+            {
+                foreach (var cell in _allCell)
+                {
+                    if (cell.Value.IsEmpty)
+                    {
+                        if (canRotate)
+                        {
+                            if (CanPlace(handBoxs[i].HoldTileSet, cell.Key, count))
+                                return true;
+                        }
+                        else
+                        {
+                            if (CanPlace(handBoxs[i].HoldTileSet, cell.Key))
+                                return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public Cell GetCellByCoordinate(Coordinate coor)
     {
         if (CheckAbleCoor(coor) && !_allCell[coor].IsEmpty)
@@ -333,6 +360,23 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
     {
         if(CanPlace(tile, coor))
             SetTileOnCell(tile, coor);
+    }
+
+    public bool CanPlace(TileSet tileSet, Coordinate coor, int rotate)
+    {
+        for (int i = 0; i < tileSet.Tiles.Count; i++)
+        {
+            var tileInfo = tileSet.Tiles[i];
+            Coordinate rotateCoor = tileSet.Tiles[i].transform.localPosition.ToCoor();
+            for (int j = 0; j < rotate; j++)
+            {
+                rotateCoor = rotateCoor.RotateR60();
+            }
+            Coordinate correctCoor = coor + rotateCoor;
+            if (!CanPlace(tileSet.Tiles[i], correctCoor))
+                return false;
+        }
+        return true;
     }
 
     /// <summary>

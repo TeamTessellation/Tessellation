@@ -197,7 +197,7 @@ namespace Stage
             // 점수 갱신
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
             playerStatus.BestStageScore = Math.Max(playerStatus.BestStageScore, playerStatus.CurrentStageScore);
-            playerStatus.TotalScore += playerStatus.CurrentStageScore;
+            // playerStatus.TotalScore += playerStatus.CurrentStageScore; // ScoreManager에서 이미 TotalScore에 반영됨
             
             // 코인 이자 지급
             int interest = (int)(playerStatus.CurrentCoins * playerStatus.CoinInterestRate);

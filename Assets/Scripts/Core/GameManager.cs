@@ -36,6 +36,7 @@ namespace Core
         public override bool IsDontDestroyOnLoad => true;
         
         [SerializeField] SceneReference mainMenuScene;
+        string MainMenuSceneName => mainMenuScene?.SceneName ?? "MainScene";
 
         /// <summary>
         /// 게임 전체를 취소할 수 있는 토큰 소스입니다.
@@ -121,7 +122,7 @@ namespace Core
                 await UniTask.WaitUntil(() =>
                 {
                     LogEx.Log(SceneManager.GetActiveScene().name);
-                    return SceneManager.GetActiveScene().name == mainMenuScene.SceneName;
+                    return SceneManager.GetActiveScene().name == MainMenuSceneName;
                 });
                 CurrentGameState = GlobalGameState.MainMenu;
             }
@@ -130,7 +131,7 @@ namespace Core
                 CurrentGameState = GlobalGameState.Initializing;
                 await InitialLoader.WaitUntilInitialized();
                 await UniTask.Yield();
-                await UniTask.WaitUntil(() => SceneManager.GetActiveScene().name == mainMenuScene.SceneName);
+                await UniTask.WaitUntil(() => SceneManager.GetActiveScene().name == MainMenuSceneName);
                 CurrentGameState = GlobalGameState.MainMenu;
             }
             Initialize();
