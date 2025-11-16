@@ -5,11 +5,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using TMPro;
 
 [PoolSize(5)]
 public class ItemHold : MonoBehaviour, IPoolAble
 {
     public List<Sprite> ItemIcon;
+    public TMP_Text Amount;
     private EventTrigger _eventTrigger;
     private Image _image;
 
@@ -25,6 +27,11 @@ public class ItemHold : MonoBehaviour, IPoolAble
             _image.sprite = ItemIcon[(int)item];
         else
             _image.sprite = ItemIcon[ItemIcon.Count - 1];
+    }
+
+    public void SetAmount(int amount)
+    {
+        Amount.text = amount.ToString();
     }
 
     public void RegisterClickEvent(Action<InputManager.eActiveItemType> action, InputManager.eActiveItemType item)
