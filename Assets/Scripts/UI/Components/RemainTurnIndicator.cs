@@ -45,6 +45,7 @@ namespace UI.Components
             if(_remainingTurns < 0) _remainingTurns = 0;
             if(_remainingTurns > _maxTurns) _remainingTurns = _maxTurns;
             
+            
             if(transform.childCount < _maxTurns)
             {
                 for (int i = transform.childCount; i < _maxTurns; i++)
@@ -59,10 +60,12 @@ namespace UI.Components
                     transform.GetChild(i).gameObject.SetActive(false);
                 }
             }
-            for (int i = 0; i < transform.childCount; i++)
+            
+            for(int i = 0; i < _maxTurns; i++)
             {
                 transform.GetChild(i).gameObject.SetActive(true);
             }
+
             
             for (int i = 0; i < transform.childCount; i++)
             {
