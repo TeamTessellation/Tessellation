@@ -66,6 +66,17 @@ namespace Player
             MaxItemCount = itemAmount;
             currentItemCount = itemAmount;
         }
+
+        public void ResetActiveItemCount()
+        {
+            currentItemCount = MaxItemCount;
+        }
+
+        public void SetActiveItemCount(int newMaxItemCount)
+        {
+            MaxItemCount = newMaxItemCount;
+            currentItemCount = MaxItemCount;
+        }
         
         private void SetAbility(int index, AbilityBase newAbility)
         {
