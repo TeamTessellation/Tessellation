@@ -15,6 +15,7 @@
     <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/Coordinate.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/Field/Field.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/Generator/Generator_Manager.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/Hand/HandManager.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/HexaTile_Enum.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/Line/LineClearHandler.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/ScriptableObjects/TileSetGroupSO.cs" charset="UTF-8" />
@@ -25,6 +26,7 @@
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Test/ScoreSlider.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Tester.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/TileOption/TileOptionBase.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/TileOption/TileOptionGold.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/UI/OtherUIs/ItemPlaceEntry.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/UI/OtherUIs/ShopItemEntry.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/UI/OtherUIs/ShopUI.cs" charset="UTF-8" />
