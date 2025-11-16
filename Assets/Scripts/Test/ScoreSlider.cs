@@ -30,13 +30,13 @@ public class ScoreSlider : MonoBehaviour
     
     private void OnEnable()
     {
-        ExecEventBus<ScoreManager.CurrentScoreChangedEventArgs>.RegisterStatic((int)ExecPriority.UIDefault,ScoreChange);
+        ExecEventBus<ScoreManager.TotalScoreChangedEventArgs>.RegisterStatic((int)ExecPriority.UIDefault,ScoreChange);
         ExecEventBus<StageStartEventArgs>.RegisterDynamic(OnStageStart);
     }
 
     private void OnDisable()
     {
-        ExecEventBus<ScoreManager.CurrentScoreChangedEventArgs>.UnregisterStatic(ScoreChange);
+        ExecEventBus<ScoreManager.TotalScoreChangedEventArgs>.UnregisterStatic(ScoreChange);
         ExecEventBus<StageStartEventArgs>.UnregisterDynamic(OnStageStart);
         
         // 진행 중인 작업 정리
@@ -56,7 +56,7 @@ public class ScoreSlider : MonoBehaviour
         fillImage.fillAmount = 0f;
     }
 
-    private async UniTask ScoreChange(ScoreManager.CurrentScoreChangedEventArgs args)
+    private async UniTask ScoreChange(ScoreManager.TotalScoreChangedEventArgs args)
     {
         // 연속 호출 대비: 이전 작업 취소
         _inFlightCts?.Cancel();
@@ -79,7 +79,7 @@ public class ScoreSlider : MonoBehaviour
             _sequence = null;
 
             float currentFillAmount = fillImage.fillAmount;
-            float targetFillAmount = Mathf.Clamp01(args.NewCurrentScore / _currentTargetScore);
+            float targetFillAmount = Mathf.Clamp01(args.NewTotalScore / _currentTargetScore);
 
             // Fill Amount 애니메이션 트윈 생성
             _sequence = DOTween.Sequence();

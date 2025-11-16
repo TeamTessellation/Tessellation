@@ -164,8 +164,7 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
 
     private async UniTask OnMiniTurnProcessed()
     {
-        // 큐가 한 번 돌 때마다 CurrentScore가 초기화된다.
-        
+        await ScoreManager.Instance.FinalizeScore();
     }
     
     private void PushExtraQueue()
@@ -190,28 +189,23 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         _turnResultInfo.PlacedTiles.AddRange(placeEvent.Tiles);
         
         await InvokeTileEventAsync(OnTilePlacedAsync, _turnResultInfo, token);
-       
-        await UniTask.Delay(1000);
     }
     
     private async UniTask ProcessLineCompleted(LineClearEvent lineClearEvent, CancellationToken token)
     {
-        // FIXME 일단 빠르게 넣음
-        ScoreManager.Instance.multiplier = lineClearEvent.ClearedLineCount;
-        
         foreach (var tile in lineClearEvent.Tiles)
         {
             await tile.TileOptionBase.OnLineCleared(tile);
         }
+        
+        // Tile에 넣어줘야 한다.
+        ScoreManager.Instance.AddMultiplier(lineClearEvent.ClearedLineCount);
 
         // 1차 이펙트 처리
         LineClearHandler lineClearHandler = new LineClearHandler();
 
         await lineClearHandler.ClearLinesAsync(lineClearEvent.ClearedLine, tileRemoveInterval);
-
-        // TODO : 2차 이펙트 처리
-
-
+        
         _turnResultInfo.ClearedLineCount += lineClearEvent.ClearedLineCount;
         _turnResultInfo.ClearedTiles.AddRange(lineClearEvent.Tiles);
         
