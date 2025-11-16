@@ -11,16 +11,16 @@ namespace Abilities
         {
             { eItemType.ExtraTurn,                        () => new ExtraTurnAbility() },
             { eItemType.ExtraActiveItemRemainingUses,     () => new ExtraActiveItemAbility() },
-            { eItemType.AddBombTileset,                   () => new OnlyPlaceAbility() },
-            { eItemType.IncreaseExplosionRange,           () => new OnlyPlaceAbility() },
-            { eItemType.BombImmediatelyExplosion,         () => new OnlyPlaceAbility() },
-            { eItemType.ChainExplosion,                   () => new OnlyPlaceAbility() },
-            { eItemType.AddExtraScoreTileset,             () => new OnlyPlaceAbility() },
-            { eItemType.AddMultipleScoreTileset,          () => new OnlyPlaceAbility() },
-            { eItemType.AddGoldTileset,                   () => new OnlyPlaceAbility() },
-            { eItemType.GoldTilesetCoinScaledExtraScore,  () => new OnlyPlaceAbility() },
-            { eItemType.AdditionalInterest,               () => new OnlyPlaceAbility() },
-            { eItemType.CoinScaledMultiple,               () => new OnlyPlaceAbility() },
+            { eItemType.AddBombTileset,                   () => new AdditionalTileAbility() },
+            { eItemType.IncreaseExplosionRange,           () => new OnlyPlaceAbility() }, // None
+            { eItemType.BombImmediatelyExplosion,         () => new OnlyPlaceAbility() }, // None
+            { eItemType.ChainExplosion,                   () => new OnlyPlaceAbility() }, // None
+            { eItemType.AddExtraScoreTileset,             () => new AdditionalTileAbility() },
+            { eItemType.AddMultipleScoreTileset,          () => new AdditionalTileAbility() },
+            { eItemType.AddGoldTileset,                   () => new AdditionalTileAbility() },
+            { eItemType.GoldTilesetCoinScaledExtraScore,  () => new OnlyPlaceAbility() }, // None
+            { eItemType.AdditionalInterest,               () => new OnlyPlaceAbility() }, // None
+            { eItemType.CoinScaledMultiple,               () => new OnlyPlaceAbility() }, // None
             { eItemType.GetTilesetDelete,                 () => new ActiveUpAbility() },
             { eItemType.GetTilesetReroll,                 () => new ActiveUpAbility() },
             { eItemType.GetRevert,                        () => new ActiveUpAbility() },
