@@ -191,6 +191,7 @@ namespace Stage
              * Best/Total Score 갱신, 이자 등
              */
             Field.Instance.ClearSilhouette();
+            HandManager.Instance.StageClear();
             CoinCounter coinCounter = UIManager.Instance.InGameUI.CoinCounter;
             coinCounter.autoUpdate = false;
             
