@@ -10,8 +10,6 @@ namespace Abilities
         
         public override void Initialize(TilePlaceHandler tilePlaceHandler)
         {
-            base.Initialize(tilePlaceHandler);
-
             switch (DataSO.ItemType)
             {
                 case eItemType.GetTilesetDelete:
@@ -41,6 +39,8 @@ namespace Abilities
             }
 
             _itemAmount = (int)DataSO.input[0];
+            
+            base.Initialize(tilePlaceHandler);
         }
 
         protected override void OnAbilityApplied()
