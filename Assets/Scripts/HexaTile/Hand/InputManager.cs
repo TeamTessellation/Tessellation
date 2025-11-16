@@ -34,6 +34,8 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     private bool _dataReady;
 
+    private ItemHold _itemHold;
+
     public bool ReadyItem => (_readyItem != eActiveItemType.End);
     private eActiveItemType _readyItem;
 
@@ -48,7 +50,11 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
     {
         var itemRoot = GameObject.FindWithTag("ItemRoot").transform;
 
-        if (itemRoot.transform.childCount > 0)
+        if (_itemHold != null)
+            Pool<ItemHold>.Return(_itemHold);
+
+        Debug.Log(PlayerStatus.Current.inventory.CurrentItem);
+        if (PlayerStatus.Current.inventory.CurrentItem == eActiveItemType.None)
             return;
 
         var unSetBtn = itemRoot.transform.parent.GetChild(0).GetComponent<EventTrigger>();
@@ -60,6 +66,9 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
         itemHold.transform.SetParent(itemRoot, false);
         itemHold.RegisterClickEvent(SetItem, eActiveItemType.Rotate);
         itemHold.transform.localScale = Vector3.one;
+        itemHold.SetAmount(PlayerStatus.Current.inventory.currentItemCount);
+        itemHold.SetItemIcon(PlayerStatus.Current.inventory.CurrentItem);
+        _itemHold = itemHold;
     }
 
     public void HandBoxClick(HandBox target)
@@ -72,8 +81,14 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     private void UseItem(HandBox target)
     {
+        if (PlayerStatus.Current.inventory.currentItemCount <= 0)
+            return;
+
         Debug.Log("아이템 사용");
         UseItemAction?.Invoke(target);
+        PlayerStatus.Current.inventory.SetActiveItemCount(PlayerStatus.Current.inventory.currentItemCount - 1);
+        Debug.Log(PlayerStatus.Current.inventory.currentItemCount);
+        _itemHold.SetAmount(PlayerStatus.Current.inventory.currentItemCount);
         _readyItem = eActiveItemType.End;
         HandManager.Instance.RemoveItemIcon();
         PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
@@ -82,6 +97,9 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     public void SetItem(eActiveItemType item)
     {
+        if (PlayerStatus.Current.inventory.currentItemCount <= 0)
+            return;
+
         if (!IsPlayerInputEnabled)
             return;
 
