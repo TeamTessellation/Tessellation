@@ -79,11 +79,14 @@ namespace Player
             StageAbilityUseCount, // 해당 스테이지 능력 사용 횟수
             StageCoinsObtained, // 해당 스테이지 획득 코인
             StageInterestEarnedCoins, // 해당 스테이지 이자
-
+            StageTempScore, // 해당 스테이지 임시 점수
+            
+            
             CurrentTurn, // 현재 턴
             CurrentRemainingTurns, // 현재 남은 턴
             CurrentCoins, // 현재 코인
-            CurrentExtraTurns, // 현재 추가 턴 TODO : 아이템에 의해 변경된다면 저장/로드 를 어디서 할지 고민 필요
+            CurrentExtraTurns, // 현재 추가 턴 
+            CurrentExtraInterestMaxCoins, // 현재 추가 이자 최대 코인
             
         }
         
@@ -93,9 +96,9 @@ namespace Player
         public static readonly VariableKey TotalStart = VariableKey.TotalScore;
         public static readonly VariableKey TotalEnd = VariableKey.TotalInterestEarnedCoins;
         public static readonly VariableKey StageStart = VariableKey.StageBestPlacement;
-        public static readonly VariableKey StageEnd = VariableKey.StageInterestEarnedCoins;
+        public static readonly VariableKey StageEnd = VariableKey.StageTempScore;
         public static readonly VariableKey CurrentStart = VariableKey.CurrentTurn;
-        public static readonly VariableKey CurrentEnd = VariableKey.CurrentCoins;
+        public static readonly VariableKey CurrentEnd = VariableKey.CurrentExtraInterestMaxCoins;
 
 
 
@@ -103,18 +106,17 @@ namespace Player
         public int HandSize => handSize;
 
         public float CoinInterestRate => coinInterestRate;
-        public int MaxInterestCoins => maxInterestCoins;
+        public int MaxInterestCoins => maxInterestCoins + CurrentExtraInterestMaxCoins;
 
         // --- PlayerStatus Properties (VariableKey에 매핑된 프로퍼티들) ---
 
         /// <summary>
-        /// 현재 스테이지의 점수입니다. (Prefix: Stage)
-        /// 사용/수정은 이 프로퍼티를 통해 수행하세요.
+        /// 해당 턴에서 기록한 임시 점수입니다. (Prefix: Stage)
         /// </summary>
-        public int CurrentStageScore
+        public int StageTempScore
         {
-            get { return Variables.GetVariable(nameof(VariableKey.StageScore)).IntValue; }
-            set { Variables.SetInteger(nameof(VariableKey.StageScore), value); }
+            get { return Variables.GetVariable(nameof(VariableKey.StageTempScore)).IntValue; }
+            set { Variables.SetInteger(nameof(VariableKey.StageTempScore), value); }
         }
 
         /// <summary>
@@ -126,6 +128,15 @@ namespace Player
             set { Variables.SetInteger(nameof(VariableKey.StageBestPlacement), value); }
         }
 
+        /// <summary>
+        /// 해당 스테이지에서 누적된 총 점수입니다. (Prefix: Stage)
+        /// </summary>
+        public int StageScore
+        {
+            get { return Variables.GetVariable(nameof(VariableKey.StageScore)).IntValue; }
+            set { Variables.SetInteger(nameof(VariableKey.StageScore), value); }
+        }
+        
         /// <summary>
         /// 현재 스테이지에서 지운 줄 수입니다. (Prefix: Stage)
         /// </summary>
@@ -164,6 +175,7 @@ namespace Player
 
         // --- Total prefix (게임 단위 누적 값) ---
 
+        
         /// <summary>
         /// 해당 게임 진행 중 누적된 총 점수입니다. (Prefix: Total)
         /// </summary>
@@ -172,6 +184,7 @@ namespace Player
             get { return Variables.GetVariable(nameof(VariableKey.TotalScore)).IntValue; }
             set { Variables.SetInteger(nameof(VariableKey.TotalScore), value); }
         }
+
 
         /// <summary>
         /// 해당 게임 진행 중 누적된 총 지운 줄 수입니다. (Prefix: Total)
@@ -276,12 +289,15 @@ namespace Player
             get { return Variables.GetVariable(nameof(VariableKey.CurrentCoins)).IntValue; }
             set
             {
-                int oldValue = CurrentCoins;
+                int oldValue = Variables.GetVariable(nameof(VariableKey.CurrentCoins)).IntValue;
                 Variables.SetInteger(nameof(VariableKey.CurrentCoins), value);
-                using var evt = CurrentCoinChangedEventArgs.Get();
-                evt.OldCurrentCoin = oldValue;
-                evt.NewCurrentCoin = value;
-                ExecEventBus<CurrentCoinChangedEventArgs>.InvokeMerged(evt).Forget();
+                if (Current == this)
+                {
+                    using var evt = CurrentCoinChangedEventArgs.Get();
+                    evt.OldCurrentCoin = oldValue;
+                    evt.NewCurrentCoin = value;
+                    ExecEventBus<CurrentCoinChangedEventArgs>.InvokeMerged(evt).Forget();
+                }
             }
         }
 
@@ -295,6 +311,12 @@ namespace Player
         {
             get { return Variables.GetVariable(nameof(VariableKey.CurrentExtraTurns)).IntValue; } // TODO : 아이템에 의해 변경된다면, 여기서는 계산된 값을 반환하도록 변경 필요
             set { Variables.SetInteger(nameof(VariableKey.CurrentExtraTurns), value); }
+        }
+        
+        public int CurrentExtraInterestMaxCoins
+        {
+            get { return Variables.GetVariable(nameof(VariableKey.CurrentExtraInterestMaxCoins)).IntValue; } // TODO : 아이템에 의해 변경된다면, 여기서는 계산된 값을 반환하도록 변경 필요
+            set { Variables.SetInteger(nameof(VariableKey.CurrentExtraInterestMaxCoins), value); }
         }
 
         public int RemainingTurns
@@ -313,10 +335,10 @@ namespace Player
 
             data.PlayerStatus.CopyTo(this);
             using var evt = ScoreManager.CurrentScoreChangedEventArgs.Get();
-            evt.NewCurrentScore = this.CurrentStageScore;
+            evt.NewCurrentScore = this.StageTempScore;
             ExecEventBus<ScoreManager.CurrentScoreChangedEventArgs>.InvokeMerged(evt).Forget();
             using var totalEvt = ScoreManager.TotalScoreChangedEventArgs.Get();
-            totalEvt.NewTotalScore = this.TotalScore;
+            totalEvt.NewTotalScore = this.StageScore;
             ExecEventBus<ScoreManager.TotalScoreChangedEventArgs>.InvokeMerged(totalEvt).Forget();
         }
 
@@ -325,6 +347,8 @@ namespace Player
             data.PlayerStatus = new PlayerStatus();
             data.PlayerStatus.Reset();
             this.CopyTo(data.PlayerStatus);
+            data.PlayerStatus.CurrentExtraTurns = 0; // 아이템에 의해 변경되는 값이므로 저장 시점에는 0으로 초기화
+            data.PlayerStatus.CurrentExtraInterestMaxCoins = 0; // 아이템에 의해 변경되는 값이므로 저장 시점에는 0으로 초기화
         }
 
 
@@ -344,7 +368,7 @@ namespace Player
                     case nameof(VariableKey.TotalScore):
                         return new VariableContainer.Variable()
                         {
-                            IntValue = TotalScore
+                            IntValue = StageScore
                         };
                 }
 
@@ -541,5 +565,3 @@ namespace Player
     }
     
 }
-
-

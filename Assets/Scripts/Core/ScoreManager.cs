@@ -47,16 +47,16 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
 
     // === Properties ===
     // 여러 턴에 누적되어 최종 합산된 점수
-    public int TotalScore
+    public int CurrentStageScore
     {
-        get => GameManager.Instance.PlayerStatus.TotalScore;
-        private set => GameManager.Instance.PlayerStatus.TotalScore = value;
+        get => GameManager.Instance.PlayerStatus.StageScore;
+        private set => GameManager.Instance.PlayerStatus.StageScore = value;
     }
     // 현재 턴에 대한 총 점수
-    public int CurrentScore
+    public int TempScore
     {
-        get => GameManager.Instance.PlayerStatus.CurrentStageScore;
-        private set => GameManager.Instance.PlayerStatus.CurrentStageScore = value;
+        get => GameManager.Instance.PlayerStatus.StageTempScore;
+        private set => GameManager.Instance.PlayerStatus.StageTempScore = value;
     }
     // 현재 옆에 뜨는 곱, CurrentScore와 같은 수명
     public float Multiplier { get; set; }
@@ -85,8 +85,8 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
 
     public void Reset()
     {
-        CurrentScore = 0;
-        TotalScore = 0;
+        TempScore = 0;
+        CurrentStageScore = 0;
         Multiplier = 1;
 
         _scoreValues[ScoreValueType.BasePlaceScore] = 1;
@@ -118,9 +118,9 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     // 더하기 연산을 CurrentStack에 적용
     public void AddCurrentScore(int addScore)
     {
-        CurrentScore += addScore;
+        TempScore += addScore;
         using var currentEvt = CurrentScoreChangedEventArgs.Get();
-        currentEvt.NewCurrentScore = CurrentScore;
+        currentEvt.NewCurrentScore = TempScore;
         ExecEventBus<CurrentScoreChangedEventArgs>.InvokeMerged(currentEvt).Forget();
     }
 
@@ -144,10 +144,10 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     public void BroadCastScores()
     {
         using var totalEvt = TotalScoreChangedEventArgs.Get();
-        totalEvt.NewTotalScore = TotalScore;
+        totalEvt.NewTotalScore = CurrentStageScore;
         ExecEventBus<TotalScoreChangedEventArgs>.InvokeMerged(totalEvt).Forget();    
         using var currentEvt = CurrentScoreChangedEventArgs.Get();
-        currentEvt.NewCurrentScore = CurrentScore;
+        currentEvt.NewCurrentScore = TempScore;
         ExecEventBus<CurrentScoreChangedEventArgs>.InvokeMerged(currentEvt).Forget(); 
     }
 
@@ -166,16 +166,16 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     public async UniTask FinalizeScore()
     {
         using var totalEvt = TotalScoreChangedEventArgs.Get();
-        totalEvt.PrevTotalScore = TotalScore;
+        totalEvt.PrevTotalScore = CurrentStageScore;
         
-        CurrentScore = (int)(CurrentScore * Multiplier);
-        TotalScore += CurrentScore; // StageManager에서 TotalScore을 갱신 하는 대신, 여기서 갱신하는중
+        TempScore = (int)(TempScore * Multiplier);
+        CurrentStageScore += TempScore; // StageManager에서 TotalScore을 갱신 하는 대신, 여기서 갱신하는중
         
-        totalEvt.NewTotalScore = TotalScore;
+        totalEvt.NewTotalScore = CurrentStageScore;
         
         await ExecEventBus<TotalScoreChangedEventArgs>.InvokeMerged(totalEvt);
         
-        CurrentScore = 0;
+        TempScore = 0;
         Multiplier = 1;
     }
 

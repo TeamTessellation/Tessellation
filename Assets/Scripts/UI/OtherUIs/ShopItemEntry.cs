@@ -51,6 +51,7 @@ namespace UI.OtherUIs
             if (itemImage != null)
             {
                 itemImage.sprite = abilityData.ItemIcon;
+                itemImage.SetNativeSize();
             }
 
             if (itemRarityText != null)
