@@ -323,7 +323,7 @@ namespace Stage
         {
             // 턴 수 초과 확인
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
-            if (includeTurnLimit)
+            if (includeTurnLimit && !_currentStage.IsInfiniteTurn)
             {
                 if (playerStatus.RemainingTurns <= 0 && !CheckStageClear())
                 {
