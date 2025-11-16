@@ -278,10 +278,13 @@ namespace Player
             {
                 int oldValue = CurrentCoins;
                 Variables.SetInteger(nameof(VariableKey.CurrentCoins), value);
-                using var evt = CurrentCoinChangedEventArgs.Get();
-                evt.OldCurrentCoin = oldValue;
-                evt.NewCurrentCoin = value;
-                ExecEventBus<CurrentCoinChangedEventArgs>.InvokeMerged(evt).Forget();
+                if (Current == this)
+                {
+                    using var evt = CurrentCoinChangedEventArgs.Get();
+                    evt.OldCurrentCoin = oldValue;
+                    evt.NewCurrentCoin = value;
+                    ExecEventBus<CurrentCoinChangedEventArgs>.InvokeMerged(evt).Forget();
+                }
             }
         }
 
@@ -325,6 +328,7 @@ namespace Player
             data.PlayerStatus = new PlayerStatus();
             data.PlayerStatus.Reset();
             this.CopyTo(data.PlayerStatus);
+            data.PlayerStatus.CurrentExtraTurns = 0; // 아이템에 의해 변경되는 값이므로 저장 시점에는 0으로 초기화
         }
 
 
