@@ -151,6 +151,7 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
         var effectData = TileEffectSO[0];
         DOTween.Kill(this);
 
+        _light.color = effectData.LightColor;
         float progress = effectData.LightStartPower;
         await DOTween.To(() => progress, x => { SetLight(x); progress = x; }, effectData.LightMaxPower, effectData.LightDuration)
             .SetEase(effectData.LightEase)
@@ -158,6 +159,7 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
 
         _light.intensity = effectData.LightMaxPower;
         await UniTask.WaitForSeconds(effectData.MaxRemainTime);
+        await RemoveEffect();
     }
 
     private void SetLight(float light)
