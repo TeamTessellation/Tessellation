@@ -37,8 +37,6 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     {
         DeckSO = Instantiate(originDeckSO);
         
-        AddDeckData(TileOption.Gold, 5);
-        
         // LogEx.Log($"Instance id : {GetInstanceID()} - {gameObject.scene.name}, {gameObject.name}");
         Instance = this;
         _hand = new HandBox[0];
@@ -154,7 +152,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         return null;
     }
 
-    public void AddDeckData(TileOption tileOption, int amount)
+    public void AddOptionalDeck(TileOption tileOption, int amount)
     {
         OffsetTileData newOffSetTileData = new OffsetTileData();
         newOffSetTileData.TileData = new TileData(tileOption, 1);
@@ -170,6 +168,29 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         
         
         DeckSO.Deck.Add(newDeckData);
+    }
+
+    public void RemoveOptionalDeck(TileOption tileOption, int amount)
+    {
+        DeckData targetDeck = DeckSO.Deck.FirstOrDefault(deck => 
+            deck.TileSet.Data.Count == 1 && 
+            deck.TileSet.Data[0].TileData.Option == tileOption &&
+            deck.TileSet.Data[0].Coor == new Coordinate(0, 0));
+    
+        if (targetDeck == null)
+        {
+            Debug.LogWarning($"Remove failed: TileOption {tileOption} not found in deck");
+            return;
+        }
+    
+        targetDeck.Count -= amount;
+    
+        // 개수가 0 이하가 되면 덱에서 완전히 제거
+        if (targetDeck.Count <= 0)
+        {
+            DeckSO.Deck.Remove(targetDeck);
+            Debug.Log($"Removed TileOption {tileOption} from deck completely");
+        }
     }
     
     public void RemoveDeckData(DeckData data)

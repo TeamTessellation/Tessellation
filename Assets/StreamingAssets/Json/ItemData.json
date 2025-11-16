@@ -26,7 +26,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"ExtraTurn\""
+      "ExtraTurn"
     ]
   },
   {
@@ -42,7 +42,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"ExtraTurnII\""
+      "ExtraTurnII"
     ]
   },
   {
@@ -72,7 +72,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"ExtraActiveItemRemainingUses\""
+      "ExtraActiveItemRemainingUses"
     ]
   },
   {
@@ -88,7 +88,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"ExtraActiveItemRemainingUsesII\""
+      "ExtraActiveItemRemainingUsesII"
     ]
   },
   {
@@ -118,7 +118,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"AddBombTileset\""
+      "AddBombTileset"
     ]
   },
   {
@@ -134,7 +134,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"AddBombTilesetII\""
+      "AddBombTilesetII"
     ]
   },
   {
@@ -164,7 +164,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"IncreaseExplosionRange\""
+      "IncreaseExplosionRange"
     ]
   },
   {
@@ -180,7 +180,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"IncreaseExplosionRange\""
+      "IncreaseExplosionRange"
     ]
   },
   {
@@ -196,7 +196,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"IncreaseExplosionRange\""
+      "IncreaseExplosionRange"
     ]
   },
   {
@@ -226,7 +226,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"AddExtraScoreTileset\""
+      "AddExtraScoreTileset"
     ]
   },
   {
@@ -242,7 +242,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"AddExtraScoreTilesetII\""
+      "AddExtraScoreTilesetII"
     ]
   },
   {
@@ -272,7 +272,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"AddMultipleTileset\""
+      "AddMultipleTileset"
     ]
   },
   {
@@ -302,7 +302,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"AddGoldTileset\""
+      "AddGoldTileset"
     ]
   },
   {
@@ -318,7 +318,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"AddGoldTilesetII\""
+      "AddGoldTilesetII"
     ]
   },
   {
@@ -362,7 +362,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"AdditionalInterest\""
+      "AdditionalInterest"
     ]
   },
   {
@@ -378,7 +378,7 @@
     "ConflictingItems": [],
     "IsSynthesisItem": true,
     "SynthesisRequirements": [
-      "\"AdditionalInterestII\""
+      "AdditionalInterestII"
     ]
   },
   {
@@ -407,12 +407,12 @@
     ],
     "ItemPrice": 3,
     "ConflictingItems": [
-      "\"GetTilesetReroll\"",
-      "\"GetRevert\"",
-      "\"GetTilesetRotate\"",
-      "\"GetTilesetDelete\"",
-      "\"GetTilesetChangeOverwrite\"",
-      "\"GetTilesetCopy\""
+      "GetTilesetReroll",
+      "GetRevert",
+      "GetTilesetRotate",
+      "GetTilesetDelete",
+      "GetTilesetChangeOverwrite",
+      "GetTilesetCopy"
     ],
     "IsSynthesisItem": false,
     "SynthesisRequirements": []
@@ -428,12 +428,12 @@
     ],
     "ItemPrice": 3,
     "ConflictingItems": [
-      "\"GetTilesetReroll\"",
-      "\"GetRevert\"",
-      "\"GetTilesetRotate\"",
-      "\"GetTilesetDelete\"",
-      "\"GetTilesetChangeOverwrite\"",
-      "\"GetTilesetCopy\""
+      "GetTilesetReroll",
+      "GetRevert",
+      "GetTilesetRotate",
+      "GetTilesetDelete",
+      "GetTilesetChangeOverwrite",
+      "GetTilesetCopy"
     ],
     "IsSynthesisItem": false,
     "SynthesisRequirements": []
@@ -449,12 +449,12 @@
     ],
     "ItemPrice": 3,
     "ConflictingItems": [
-      "\"GetTilesetReroll\"",
-      "\"GetRevert\"",
-      "\"GetTilesetRotate\"",
-      "\"GetTilesetDelete\"",
-      "\"GetTilesetChangeOverwrite\"",
-      "\"GetTilesetCopy\""
+      "GetTilesetReroll",
+      "GetRevert",
+      "GetTilesetRotate",
+      "GetTilesetDelete",
+      "GetTilesetChangeOverwrite",
+      "GetTilesetCopy"
     ],
     "IsSynthesisItem": false,
     "SynthesisRequirements": []
@@ -470,12 +470,12 @@
     ],
     "ItemPrice": 3,
     "ConflictingItems": [
-      "\"GetTilesetReroll\"",
-      "\"GetRevert\"",
-      "\"GetTilesetRotate\"",
-      "\"GetTilesetDelete\"",
-      "\"GetTilesetChangeOverwrite\"",
-      "\"GetTilesetCopy\""
+      "GetTilesetReroll",
+      "GetRevert",
+      "GetTilesetRotate",
+      "GetTilesetDelete",
+      "GetTilesetChangeOverwrite",
+      "GetTilesetCopy"
     ],
     "IsSynthesisItem": false,
     "SynthesisRequirements": []
@@ -491,12 +491,12 @@
     ],
     "ItemPrice": 3,
     "ConflictingItems": [
-      "\"GetTilesetReroll\"",
-      "\"GetRevert\"",
-      "\"GetTilesetRotate\"",
-      "\"GetTilesetDelete\"",
-      "\"GetTilesetChangeOverwrite\"",
-      "\"GetTilesetCopy\""
+      "GetTilesetReroll",
+      "GetRevert",
+      "GetTilesetRotate",
+      "GetTilesetDelete",
+      "GetTilesetChangeOverwrite",
+      "GetTilesetCopy"
     ],
     "IsSynthesisItem": false,
     "SynthesisRequirements": []
@@ -512,12 +512,12 @@
     ],
     "ItemPrice": 3,
     "ConflictingItems": [
-      "\"GetTilesetReroll\"",
-      "\"GetRevert\"",
-      "\"GetTilesetRotate\"",
-      "\"GetTilesetDelete\"",
-      "\"GetTilesetChangeOverwrite\"",
-      "\"GetTilesetCopy\""
+      "GetTilesetReroll",
+      "GetRevert",
+      "GetTilesetRotate",
+      "GetTilesetDelete",
+      "GetTilesetChangeOverwrite",
+      "GetTilesetCopy"
     ],
     "IsSynthesisItem": false,
     "SynthesisRequirements": []
