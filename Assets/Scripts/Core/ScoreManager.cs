@@ -25,6 +25,7 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     public class TotalScoreChangedEventArgs : ExecEventArgs<TotalScoreChangedEventArgs>
     {
         public int NewTotalScore { get; set; }
+        public int PrevTotalScore { get; set; }
     }
     public class CurrentScoreChangedEventArgs : ExecEventArgs<CurrentScoreChangedEventArgs>
     {
@@ -141,12 +142,14 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     // CurrentScore에 곱계산을 추가하여 TotalScore에 더한다
     public async UniTask FinalizeScore()
     {
-        Debug.Log($"Current : {CurrentScore}, Mul : {Multiplier}");
-        CurrentScore = (int)(CurrentScore * Multiplier);
-        
-        TotalScore += CurrentScore;
         using var totalEvt = TotalScoreChangedEventArgs.Get();
+        totalEvt.PrevTotalScore = TotalScore;
+        
+        CurrentScore = (int)(CurrentScore * Multiplier);
+        TotalScore += CurrentScore;
+        
         totalEvt.NewTotalScore = TotalScore;
+        
         await ExecEventBus<TotalScoreChangedEventArgs>.InvokeMerged(totalEvt);
         
         CurrentScore = 0;
