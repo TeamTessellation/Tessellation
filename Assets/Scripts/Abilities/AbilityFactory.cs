@@ -9,8 +9,8 @@ namespace Abilities
     {
         private static Dictionary<eItemType, Func<AbilityBase>> abilityFuncs = new()
         {
-            { eItemType.ExtraTurn,                        () => new OnlyPlaceAbility() },
-            { eItemType.ExtraActiveItemRemainingUses,     () => new OnlyPlaceAbility() },
+            { eItemType.ExtraTurn,                        () => new ExtraTurnAbility() },
+            { eItemType.ExtraActiveItemRemainingUses,     () => new ExtraActiveItemAbility() },
             { eItemType.AddBombTileset,                   () => new OnlyPlaceAbility() },
             { eItemType.IncreaseExplosionRange,           () => new OnlyPlaceAbility() },
             { eItemType.BombImmediatelyExplosion,         () => new OnlyPlaceAbility() },

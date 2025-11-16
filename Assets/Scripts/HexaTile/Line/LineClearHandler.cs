@@ -121,9 +121,15 @@ public class LineClearHandler
         List<UniTask> allTask = new();
         
         allTask.Add(Field.Instance.SafeRemoveTile(line.Start, remainAction, sfxPitch));
+        Cell cell = Instance.GetCellByCoordinate(line.Start);
+        if (cell != null)
+        {
+            await cell.Tile.TileOptionBase.OnLineCleared(cell.Tile);
+        }
         sfxPitch *= 1.2f;
         
         await UniTask.WaitForSeconds(interval);
+        
         while (Field.Instance.CheckAbleCoor(upCorrect) || Field.Instance.CheckAbleCoor(downCorrect))
         {
             upCorrect += up;
@@ -131,6 +137,18 @@ public class LineClearHandler
             await UniTask.WaitForSeconds(interval);
             allTask.Add(Field.Instance.SafeRemoveTile(upCorrect, remainAction, sfxPitch));
             allTask.Add(Field.Instance.SafeRemoveTile(downCorrect, remainAction, sfxPitch));
+
+            Cell UpCell = Instance.GetCellByCoordinate(upCorrect);
+            Cell DownCell = Instance.GetCellByCoordinate(downCorrect);
+            if (UpCell != null)
+            {
+                await UpCell.Tile.TileOptionBase.OnLineCleared(UpCell.Tile);
+            }
+
+            if (DownCell != null)
+            {
+                await DownCell.Tile.TileOptionBase.OnLineCleared(DownCell.Tile);
+            }
         }
 
         await allTask;
@@ -140,13 +158,20 @@ public class LineClearHandler
     
     public async UniTask ClearLinesAsync(List<Line> line, float interval = 1f)
     {
-        //UniTask[] tasks = new UniTask[line.Count];
         List<Tile> remainTile = new();
         
         float sfxPitch = 1.0f;
         
         for (int i = 0; i < line.Count; i++)
         {
+            // ì½¤ë³´ì ìˆ˜ ì¶”ê°€
+            if (i != 0)
+            {
+                float baseLineClearMultiple =
+                    ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BaseLineClearMultiple];
+                ScoreManager.Instance.AddMultiplier(baseLineClearMultiple);
+            }
+            
             await ClearLineAsync(line[i], interval, (tile) => remainTile.Add(tile), sfxPitch);
             sfxPitch = Mathf.Min(5f, sfxPitch*1.5f);
             interval = Mathf.Max(0.05f, interval*0.8f);
@@ -161,7 +186,7 @@ public class LineClearHandler
         List<Tile> tiles = new List<Tile>();
         Direction up, down;
         
-        // Ãà¿¡ µû¸¥ ¹æÇâ ¼³Á¤
+        // ì¶•ì— ë”°ë¥¸ ë°©í–¥ ì„¤ì •
         switch (line.Axis)
         {
             case Axis.X:
@@ -177,15 +202,15 @@ public class LineClearHandler
                 down = Direction.LD;
                 break;
             default:
-                return tiles; // ºó ¸®½ºÆ® ¹İÈ¯
+                return tiles; // ë¹ˆ ë¦¬ìŠ¤íŠ¸ ë°˜í™˜
         }
         
-        // ½ÃÀÛÁ¡ Å¸ÀÏ Ãß°¡
+        // ì‹œì‘ì  íƒ€ì¼ ì¶”ê°€
         Tile startTile = Field.Instance.GetTile(line.Start);
         if (startTile != null)
             tiles.Add(startTile);
         
-        // À§ÂÊ ¹æÇâ Å¸ÀÏµé ¼öÁı
+        // ìœ„ìª½ ë°©í–¥ íƒ€ì¼ë“¤ ìˆ˜ì§‘
         Coordinate upCoord = line.Start + up;
         while (Field.Instance.CheckAbleCoor(upCoord))
         {
@@ -193,11 +218,11 @@ public class LineClearHandler
             if (tile != null)
                 tiles.Add(tile);
             else
-                break; // ºó °ø°£À» ¸¸³ª¸é Áß´Ü
+                break; // ë¹ˆ ê³µê°„ì„ ë§Œë‚˜ë©´ ì¤‘ë‹¨
             upCoord += up;
         }
         
-        // ¾Æ·¡ÂÊ ¹æÇâ Å¸ÀÏµé ¼öÁı
+        // ì•„ë˜ìª½ ë°©í–¥ íƒ€ì¼ë“¤ ìˆ˜ì§‘
         Coordinate downCoord = line.Start + down;
         while (Field.Instance.CheckAbleCoor(downCoord))
         {
@@ -205,7 +230,7 @@ public class LineClearHandler
             if (tile != null)
                 tiles.Add(tile);
             else
-                break; // ºó °ø°£À» ¸¸³ª¸é Áß´Ü
+                break; // ë¹ˆ ê³µê°„ì„ ë§Œë‚˜ë©´ ì¤‘ë‹¨
             downCoord += down;
         }
         
@@ -232,7 +257,7 @@ public class LineClearHandler
     {
         PlayerStatus status = GameManager.Instance.PlayerStatus;
         status.StageClearedLines += 1;
-        // status.TotalClearedLines += 1; // Áı°è´Â StageManager¿¡¼­ Ã³¸®
+        // status.TotalClearedLines += 1; // ì§‘ê³„ëŠ” StageManagerì—ì„œ ì²˜ë¦¬
     }
 
     private async UniTask EndAllLineClear(List<Line> line, float interval = 1, List<Tile> remainTile = null)

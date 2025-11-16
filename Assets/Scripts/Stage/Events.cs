@@ -59,6 +59,7 @@ namespace Stage
     public class StageStartEventArgs : ExecEventArgs<StageStartEventArgs>
     {
         public StageModel StageModel { get; set; }
+        
         public StageStartEventArgs()
         {
 
