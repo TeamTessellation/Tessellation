@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemID: FirstTurnMultiple
   Description: "\uCCAB\uBC88\uC9F8 \uD134 \uB3D9\uC548 \uBAA8\uB4E0 \uC810\uC218\uC5D0
     \uB300\uD574\uC11C 0.50\uBC30\uC758 \uCD94\uAC00 \uC810\uC218\uB97C \uC5BB\uC2B5\uB2C8\uB2E4."
-  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
+  ItemIcon: {fileID: 5197571774204218685, guid: 395691b8e62f4c449b8a18006ba7d6bf, type: 3}
   input:
   - 0.5
   ItemPrice: 10

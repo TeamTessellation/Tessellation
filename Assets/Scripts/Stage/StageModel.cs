@@ -69,7 +69,7 @@ namespace Stage
             StageModel stageModel = new StageModel();
             if (b == 4)
             {
-                stageModel.StageName = $"{a}-?";
+                stageModel.StageName = $"{a}-B";
                 stageModel.IsBoss = true;
             }
             else
