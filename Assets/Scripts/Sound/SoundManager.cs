@@ -500,6 +500,32 @@ namespace Sound
             soundEmitter.SimplePlayAudioSource(clip, isLoop);
             return soundEmitter;
         }
+
+        /// <summary>
+        /// 재생 중인 SFX 중 해당 경로의 모든 사운드를 멈춥니다.
+        /// </summary>
+        /// <param name="path"></param>
+        public void StopSfx(string path)
+        {
+            CleanupInactiveSfxEmitters(); // 재생 끝난 emitter 제거
+            var auddioResource = GetAudioSource(path);
+            foreach (var emitter in _activeSfxEmitters)
+            {
+                if (emitter != null)
+                {
+                    AudioSource audioSource = emitter.GetComponent<AudioSource>();
+                    if (audioSource != null && audioSource.isPlaying && audioSource.resource == auddioResource)
+                    {
+                        emitter.Stop();
+                        emitter.transform.SetParent(null);
+                        Pool<SoundEmitter>.Return(emitter);
+                    }
+                }
+            }
+            
+            // 정리
+            CleanupInactiveSfxEmitters();
+        }
         
         public void FadeOutBackgroundMusic(float fadeOutTime)
         {
