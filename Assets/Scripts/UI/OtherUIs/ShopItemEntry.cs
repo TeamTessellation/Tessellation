@@ -99,7 +99,6 @@ namespace UI.OtherUIs
             ItemPopupUI popupUI = UIManager.Instance.ItemPopupUI;
             if (popupUI != null)
             {
-                Debug.Log("Clicked");
                 popupUI.Initialize(_abilityData, true, DisableButton);
                 popupUI.ShowPopUp().Forget();
             }
