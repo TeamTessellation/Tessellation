@@ -189,6 +189,8 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
             HandManager.Instance.RemoveDeckData(deck);
 
         handBox.Use();
+        if (HandManager.Instance.HandCount <= 0)
+            HandManager.Instance.SetHand();
     }
 
     private void BoomItem(HandBox handBox)
