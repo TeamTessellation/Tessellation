@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Core;
 using Cysharp.Threading.Tasks;
-using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
