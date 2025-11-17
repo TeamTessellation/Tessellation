@@ -25,7 +25,7 @@ namespace UI.OtherUIs.Transitions
         
         private Image _image;
         [SerializeField,VisibleOnly(EditableIn.EditMode)]  float _tileSize = 1;
-        [SerializeField,Range(0,1f)] float _progress = 0f;
+        [SerializeField,Range(-1f,1f)] float _progress = 0f;
         [SerializeField] DirectionType _directionType = DirectionType.Down2Up;
         [SerializeField] FadeType _fadeType = FadeType.In;
         [SerializeField,Range(0,3.141592f)] float _angle = 0f;
