@@ -70,7 +70,13 @@ namespace Player
             }
         }
 
-        
+        public void RefreshPlaceEntry()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                OnInventorySlotChanged?.Invoke(i, _abilities[i]);
+            }
+        }
         
         public void SetActiveItem(InputManager.eActiveItemType activeItemType, int itemAmount)
         {
