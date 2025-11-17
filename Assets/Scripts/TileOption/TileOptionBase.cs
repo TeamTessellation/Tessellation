@@ -29,8 +29,9 @@ public abstract class TileOptionBase
 
     protected void ShowScoreEffect(int score, Tile tile)
     {
-        Vector2 worldPos = tile.transform.position;
-        Vector2 screenPos = Camera.main.WorldToScreenPoint(worldPos);
-        EffectManager.Instance.ShowScoreEffect(score, screenPos);
+        Vector3 pos = tile.transform.position;
+        
+        Debug.Log(pos.ToString());
+        EffectManager.Instance.ShowScoreEffect(score, pos);
     }
 }

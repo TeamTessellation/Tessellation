@@ -81,10 +81,8 @@ public class EffectManager : Singleton<EffectManager>
         releasePoolObject.SetActive(false);
     }
 
-    public void ShowScoreEffect(int score, Vector2 pos)
+    public void ShowScoreEffect(int score, Vector3 pos)
     {
-        Debug.Log("Kuxi");
-        
         GameObject effectObj = _effectPool[eEffectType.ScorePopup].Get();
         _activeEffects.Add(effectObj, eEffectType.ScorePopup);
 
