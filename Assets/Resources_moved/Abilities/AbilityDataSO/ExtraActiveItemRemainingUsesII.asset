@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExtraActiveItemRemainingUsesII
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 1
-  Rarity: 1
+  Rarity: 2
   ItemName: "\uC0AC\uC6A9 \uC544\uC774\uD15C \uCD94\uAC00 \uD69F\uC218 II"
   ItemID: ExtraActiveItemRemainingUsesII
   Description: "\uC0AC\uC6A9 \uC544\uC774\uD15C \uD69F\uC218\uB97C 2\uB9CC\uD07C
@@ -26,4 +26,4 @@ MonoBehaviour:
   ConflictingItems: []
   IsSynthesisItem: 1
   SynthesisRequirements:
-  - {fileID: 11400000, guid: ef4d53cbd0fe3a640a4dc8d0c6246239, type: 2}
+  - {fileID: 11400000, guid: 213bf382833cd9c46906bfceec9ef347, type: 2}

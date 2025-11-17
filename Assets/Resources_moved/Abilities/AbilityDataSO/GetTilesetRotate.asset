@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GetTilesetRotate
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 15
-  Rarity: 0
+  Rarity: 1
   ItemName: "\uD0C0\uC77C \uD68C\uC804 \uC544\uC774\uD15C \uD68D\uB4DD"
   ItemID: GetTilesetRotate
   Description: "\uD0C0\uC77C \uD68C\uC804 \uC0AC\uC6A9 \uC544\uC774\uD15C \uD68D\uB4DD"
@@ -23,11 +23,11 @@ MonoBehaviour:
   ItemPrice: 3
   CanAppearInShop: 1
   ConflictingItems:
-  - {fileID: 11400000, guid: 57a35405ecc75214f92f9f5c5561dff9, type: 2}
-  - {fileID: 11400000, guid: da09f913b1001104cbd061517cae133e, type: 2}
-  - {fileID: 11400000}
-  - {fileID: 11400000, guid: 74e0b63013fdd1f46a5f824c810e1997, type: 2}
-  - {fileID: 11400000, guid: 75b4c156903c6bf4891e0e99ff501dc1, type: 2}
-  - {fileID: 11400000, guid: 2930bb44a6154064eb09c8ff1455943c, type: 2}
+  - {fileID: 11400000, guid: ca8141645485f5a46b4fd8d013cecdca, type: 2}
+  - {fileID: 11400000, guid: 99a968a115859e9438ab9f86ab15fe2d, type: 2}
+  - {fileID: 11400000, guid: 3671d7a83cf17db4a82e45f16e558c6c, type: 2}
+  - {fileID: 11400000, guid: 78fbc3bcd0e7aef4d8597648a0b1b589, type: 2}
+  - {fileID: 11400000, guid: 4cd0fb7b05f71eb40b31feef3eca7bf6, type: 2}
+  - {fileID: 11400000, guid: 8e4c4062001afe54cac63c925e64a708, type: 2}
   IsSynthesisItem: 0
   SynthesisRequirements: []

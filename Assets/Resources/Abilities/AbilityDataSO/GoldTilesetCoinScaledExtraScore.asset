@@ -19,7 +19,7 @@ MonoBehaviour:
   Description: "\uACE8\uB4DC \uD0C0\uC77C\uC774 \uC9C0\uC6CC\uC9C8\uB54C \uD604\uC7AC
     \uBCF4\uC720\uD55C \uCF54\uC778 \uC218 \uB9CC\uD07C \uCD94\uAC00 \uC810\uC218\uB97C
     \uD68D\uB4DD\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
   input:
   - 1
   ItemPrice: 15

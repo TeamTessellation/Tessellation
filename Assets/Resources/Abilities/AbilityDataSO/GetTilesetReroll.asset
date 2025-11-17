@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemID: GetTilesetReroll
   Description: "\uD0C0\uC77C \uB2E4\uC2DC \uBF51\uAE30 \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744
     \uD68D\uB4DD\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: 8209298427382474380, guid: 099ca67c728b05045a762d95c1c38ff8, type: 3}
   input:
   - 3
   ItemPrice: 3

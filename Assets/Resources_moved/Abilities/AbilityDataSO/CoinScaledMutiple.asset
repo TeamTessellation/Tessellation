@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CoinScaledMutiple
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 11
-  Rarity: 1
+  Rarity: 2
   ItemName: "\uCF54\uC778 \uBE44\uB840 \uCD94\uAC00 \uC810\uC218"
   ItemID: CoinScaledMutiple
   Description: "\uBCF4\uC720\uD55C 0.10\uCF54\uC778\uB2F9 \uBAA8\uB4E0 \uC810\uC218\uC5D0

@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemID: AddGoldTilesetIII
   Description: "\uACE8\uB4DC \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774 \uC870\uAE08
     \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: -1338362430091448552, guid: 97aa594615bc96a4692b6aa26b96bb53, type: 3}
   input:
   - 9
   ItemPrice: 15
