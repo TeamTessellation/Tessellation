@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
 
 namespace UI.OtherUIs
@@ -13,9 +14,13 @@ namespace UI.OtherUIs
         [SerializeField] private int slotIndex;
         [SerializeField] private Image itemImage;
         
+        private Button _button;
+        
         private AbilityDataSO _abilityData;
         protected override void OnEnable()
         {
+            _button = GetComponent<Button>();
+            _button.onClick.AddListener(OnButtonClicked);
             base.OnEnable();
             if (GameManager.HasInstance)
             {
@@ -32,10 +37,6 @@ namespace UI.OtherUIs
                     ClearSlot();
                 }).Forget();
             }
-            
-            
-            
-            
         }
 
         protected override void OnDisable()
@@ -43,6 +44,18 @@ namespace UI.OtherUIs
             base.OnDisable();
             PlayerInventory inventory = GameManager.Instance.PlayerStatus.inventory;
             inventory.OnInventorySlotChanged -= OnInventorySlotChanged;
+        }
+
+        private void OnButtonClicked()
+        {
+            ItemPopupUI popupUI = UIManager.Instance.ItemPopupUI;
+            if (_abilityData == null) return;
+            
+            if (popupUI != null)
+            {
+                popupUI.Initialize(_abilityData, false, null);
+                popupUI.ShowPopUp().Forget();
+            }
         }
 
         private void OnInventorySlotChanged(int slotIdx, AbilityBase abilityBase)

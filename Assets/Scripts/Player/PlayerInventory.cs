@@ -112,9 +112,14 @@ namespace Player
             {
                 foreach (AbilityDataSO conflictItem in abilityData.ConflictingItems)
                 {
+                    if (_abilities == null)
+                    {
+                        Debug.Log("KExuxuxuxuxu");
+                        continue;
+                    }
                     foreach (var ownedAbility in _abilities)
                     {
-                        if (ownedAbility.DataSO.ItemID == conflictItem.ItemID)
+                        if (ownedAbility != null && ownedAbility.DataSO.ItemID == conflictItem.ItemID)
                         {
                             return (false, $"{conflictItem.ItemName}, {abilityData.ItemName} 이 둘은\n동시에 보유할 수 없습니다!");
                         }
