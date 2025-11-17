@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Converters;
 using System;
 using System.Text;
+using UnityEngine.Scripting;
 
 namespace Database
 {
@@ -71,6 +72,12 @@ namespace Database
     
     public class DataFrameConverter : CustomCreationConverter<DataFrame>
     {
+
+        [Preserve]
+        public DataFrameConverter()
+        {
+            
+        }
         public override DataFrame Create(Type objectType)
         {
             return new DataFrame("Unnamed");
