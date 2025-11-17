@@ -181,103 +181,46 @@ public class ScoreUI : UIBehaviour
     private async UniTask OnTotalScoreChanged(ScoreManager.TotalScoreChangedEventArgs args)
     {
         int totalScore = args.NewTotalScore;
-        int previousTotal = args.PrevTotalScore;
-        
+
+        // 이전 토큰/시퀀스 정리
         _totalScoreCts?.Cancel();
         _totalScoreCts?.Dispose();
         _totalScoreCts = new CancellationTokenSource();
-        
+
         var token = CancellationTokenSource.CreateLinkedTokenSource(_totalScoreCts.Token, _destroyToken).Token;
+
+        // Current / Multiplier 정리 (게임 룰에 따라 유지하고 싶으면 이 부분은 조정하셔도 됩니다)
+        _currentScoreSequence?.Kill();
+        _currentScoreSequence = null;
+        currentScoreText.gameObject.SetActive(false);
+        _cachedCurrentScore = 0;
+
+        multiplierText.gameObject.SetActive(false);
+        _cachedMultiplier = 1f;
+
+        // TotalScore 갱신 + 팝 애니메이션만
+        totalScoreText.gameObject.SetActive(true);
+        SetTotalScoreText(totalScore);
+
+        _totalScoreSequence?.Kill();
+        _totalScoreSequence = null;
+
+        // 한 번 커졌다가 줄어드는 연출 (CurrentScore와 동일한 스타일)
+        totalScoreText.transform.localScale = Vector3.one * currentScorePopUpSize;
+
+        _totalScoreSequence = DOTween.Sequence();
+        _totalScoreSequence.Append(
+            totalScoreText.transform.DOScale(Vector3.one, currentScorePopUpDuration)
+                .SetEase(currentScorePopUpEase)
+        );
 
         try
         {
-            // Multiplier가 활성화되어 있다면 제거
-            if (multiplierText.gameObject.activeSelf)
-            {
-                multiplierText.gameObject.SetActive(false);
-                _cachedMultiplier = 1f;
-                
-                // CurrentScore 점수 올리는 애니메이션
-                if (currentScoreText.gameObject.activeSelf && _cachedCurrentScore > 0)
-                {
-                    _currentScoreSequence?.Kill();
-                    _currentScoreSequence = DOTween.Sequence();
-
-                    int startScore = _cachedCurrentScore;
-                    _currentScoreSequence.Append(DOTween.To(
-                        () => startScore,
-                        x =>
-                        {
-                            startScore = x;
-                            SetCurrentScoreText(x);
-                        },
-                        totalScore - previousTotal,
-                        countUpDuration
-                    ).SetEase(countUpEase));
-
-                    await _currentScoreSequence.ToUniTask(cancellationToken: token);
-                }
-            }
-            
-            _cachedCurrentScore = totalScore - previousTotal;
-            
-            // 대기
-            await UniTask.Delay(confirmWaitMilliseconds, cancellationToken: token);
-
-            // TotalScore activate하고 CurrentScore와 같이 보여주기
-            totalScoreText.gameObject.SetActive(true);
-            SetTotalScoreText(previousTotal);
-            
-            // 대기
-            await UniTask.Delay(confirmWaitMilliseconds, cancellationToken: token);
-
-            // CurrentScore 사라지고 TotalScore 갱신
-            
-            _currentScoreSequence?.Kill();
-            _currentScoreSequence = DOTween.Sequence();
-            _totalScoreSequence?.Kill();
-            _totalScoreSequence = DOTween.Sequence();
-
-            int displayScore = previousTotal;
-            _totalScoreSequence.Append(DOTween.To(
-                () => displayScore,
-                x =>
-                {
-                    displayScore = x;
-                    SetTotalScoreText(x);
-                },
-                totalScore,
-                countUpDuration
-            ).SetEase(countUpEase));
-
-            _currentScoreSequence.Join(DOTween.To(
-                () => _cachedCurrentScore,
-                x =>
-                {
-                    _cachedCurrentScore = x;
-                    SetCurrentScoreText(x);
-                },
-                0,
-                countUpDuration
-            ).SetEase(countUpEase));
-
             await _totalScoreSequence.ToUniTask(cancellationToken: token);
-            
-            currentScoreText.gameObject.SetActive(false);
-            
-            // 최종 값 갱신
-            SetTotalScoreText(totalScore);
-            _cachedCurrentScore = 0;
         }
         catch (OperationCanceledException)
         {
-            // 취소되면 최종 상태로 즉시 설정
-            totalScoreText.gameObject.SetActive(true);
-            SetTotalScoreText(totalScore);
-            currentScoreText.gameObject.SetActive(false);
-            multiplierText.gameObject.SetActive(false);
-            _cachedCurrentScore = 0;
-            _cachedMultiplier = 1f;
+            totalScoreText.transform.localScale = Vector3.one;
         }
     }
 }
