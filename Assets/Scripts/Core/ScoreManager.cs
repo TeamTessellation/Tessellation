@@ -29,7 +29,14 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     }
     public class CurrentScoreChangedEventArgs : ExecEventArgs<CurrentScoreChangedEventArgs>
     {
+        public enum CurrentScoreChangeType
+        {
+            LineCleared,
+            Place,
+        }
+        
         public int NewCurrentScore { get; set; }
+        public CurrentScoreChangeType ScoreChangeType { get; set; }
     }
     public class ScoreResetEventArgs : ExecEventArgs<ScoreResetEventArgs>
     {
@@ -122,7 +129,8 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
     }
     
     // 더하기 연산을 CurrentStack에 적용
-    public void AddCurrentScore(int addScore)
+    public void AddCurrentScore(int addScore, 
+        CurrentScoreChangedEventArgs.CurrentScoreChangeType scoreChangeType = CurrentScoreChangedEventArgs.CurrentScoreChangeType.Place)
     {
         TempScore += addScore;
         using var currentEvt = CurrentScoreChangedEventArgs.Get();
