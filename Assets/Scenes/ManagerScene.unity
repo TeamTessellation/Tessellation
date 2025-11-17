@@ -224,7 +224,7 @@ MonoBehaviour:
         _maxAbilityCount: 5
         currentItemCount: 0
     SaveHistory:
-      _saves: []
+      rid: -2
     <Variables>k__BackingField:
       items:
         defaultKey: 
@@ -454,6 +454,7 @@ MonoBehaviour:
   <MainTitleUI>k__BackingField: {fileID: 0}
   <GameUI>k__BackingField: {fileID: 0}
   <InGameUI>k__BackingField: {fileID: 0}
+  <ItemPopupUI>k__BackingField: {fileID: 0}
   <SettingParentUI>k__BackingField: {fileID: 0}
   <StageInfoUI>k__BackingField: {fileID: 0}
   <FailResultUI>k__BackingField: {fileID: 0}
@@ -510,8 +511,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421e043786eb35641996ca67c067ba9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandManager
-  originDeckSO: {fileID: 11400000, guid: 6a65295eef7d2f24ea6140e04d67d1d4, type: 2}
+  originDeckSO: {fileID: 11400000, guid: 6204ca29b3f2a874a94602fdddddba86, type: 2}
   DeckSO: {fileID: 0}
+  StageDeckSO: {fileID: 0}
 --- !u!114 &2025349028
 MonoBehaviour:
   m_ObjectHideFlags: 0
