@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: PoolObj Group
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: PoolObj Group
+  m_GUID: 8255203933a94af4195338823ac2f0f6
+  m_SerializeEntries:
+  - m_GUID: 0af2b209c8467db418e80abf7ec84fc5
+    m_Address: PoolObj/SilhouetteTile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PoolObj
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 147bef348c78956458f6b8f1b1ccf86c
+    m_Address: PoolObj/Box
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PoolObj
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2f76ddf87cf5ec44f9bd081bf00b2aec
+    m_Address: PoolObj/ItemHold
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PoolObj
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3eb1e176760dc4147bfa67a0df78ff95
+    m_Address: PoolObj/LifeHold
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PoolObj
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 66cc6c3ce0c68c54fb795a1867f67103
+    m_Address: PoolObj/TIleSet
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PoolObj
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 78c78a6d425d0e0468686086174c7df2
+    m_Address: PoolObj/SoundEmitter
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PoolObj
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8078d5ae82354ce479ebd7b9ca849375
+    m_Address: PoolObj/HandBox
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PoolObj
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a642963c7a978f84383b5bcf1749a4df
+    m_Address: PoolObj/BGTile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PoolObj
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7a84ea3fe5eb1b468429c1b58aa6dbd
+    m_Address: PoolObj/Tile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PoolObj
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: fdba3c2e66d1285408434254f683bf26, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 0c0db2078220c2f4fba650294d56346e, type: 2}
+    - {fileID: 11400000, guid: ed3bfb15e9413cb459bcc7628a6d643c, type: 2}
