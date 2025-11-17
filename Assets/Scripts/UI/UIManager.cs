@@ -48,6 +48,7 @@ namespace UI
         [field:SerializeField] public MainTitleUI MainTitleUI{ get; private set; }
         [field:SerializeField] public GameUI GameUI{ get; private set; }
         [field:SerializeField] public InGameUI InGameUI{ get; private set; }
+        [field:SerializeField] public ItemPopupUI ItemPopupUI{ get; private set; }
         [field: FormerlySerializedAs("<SettingUI>k__BackingField")] [field:SerializeField] public SettingParentUI SettingParentUI{ get; private set; }
         [Header("GameUI Child UIs")]
         [field:SerializeField] public StageInfoUI StageInfoUI{ get; private set; }
@@ -145,6 +146,7 @@ namespace UI
             FailResultUI = FindUI<FailResultUI>();
             ClearResultUI = FindUI<ClearResultUI>();
             ShopUI = FindUI<ShopUI>();
+            ItemPopupUI = FindUI<ItemPopupUI>();
             
             HandCanvas = FindWorldUI<HandCanvas>();
         }
