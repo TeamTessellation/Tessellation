@@ -106,7 +106,9 @@ namespace UI.OtherUIs
             if (canPurchase)
             {
                 // 인벤토리에 아이템 추가를 시도해본다
-                bool canAdd = playerStatus.inventory.AddAbility(_abilityData);
+                bool canAdd;
+                string message;
+                (canAdd, message) = playerStatus.inventory.AddAbility(_abilityData);
                 if (canAdd)
                 {
                     // 성공 시 돈 깎기
@@ -114,6 +116,10 @@ namespace UI.OtherUIs
                     
                     // 버튼 비활성화
                     DisableButton();
+                }
+                else
+                {
+                    Debug.Log(message);
                 }
             }
         }
