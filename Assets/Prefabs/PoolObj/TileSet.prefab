@@ -50,14 +50,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 490774dbbc8430a4d9b15f9a9af3ff04, type: 3}
   - {fileID: 21300000, guid: 3c55599f2b4eb9f4ca417cdf362b6a59, type: 3}
   OptionTileSprite:
-  - {fileID: -1131048150029037164, guid: dc281020412bef1498116c591b9acbd5, type: 3}
-  - {fileID: -1131048150029037164, guid: dc281020412bef1498116c591b9acbd5, type: 3}
-  - {fileID: -6239562839837555557, guid: 6ece5ad0805be584ba397186132cc6bf, type: 3}
-  - {fileID: 1549315823908625540, guid: 33f67ced9b73adb4d84c245633688535, type: 3}
-  - {fileID: -7371008508752679366, guid: b1642a2ebfd34b04da3639be0d7f7049, type: 3}
-  - {fileID: 1549315823908625540, guid: 33f67ced9b73adb4d84c245633688535, type: 3}
-  - {fileID: -6239562839837555557, guid: 6ece5ad0805be584ba397186132cc6bf, type: 3}
-  - {fileID: -6239562839837555557, guid: 6ece5ad0805be584ba397186132cc6bf, type: 3}
+  - {fileID: -1131048150029037164, guid: 5d896894e5eaa9e4f893fc8a9a2dc63f, type: 3}
+  - {fileID: -1131048150029037164, guid: 5d896894e5eaa9e4f893fc8a9a2dc63f, type: 3}
+  - {fileID: 2804074918392749964, guid: 2cec88a1c34e757479a70eca2fc6af46, type: 3}
+  - {fileID: 6745624003978375915, guid: 754321d2cd28a034fa1f21ce041cfdbc, type: 3}
+  - {fileID: -3988769855312385993, guid: 501cac74587b23243a88d18b46668831, type: 3}
+  - {fileID: 6745624003978375915, guid: 754321d2cd28a034fa1f21ce041cfdbc, type: 3}
   Tiles: []
   Rotation: 0
 --- !u!1 &4698048771471433641
