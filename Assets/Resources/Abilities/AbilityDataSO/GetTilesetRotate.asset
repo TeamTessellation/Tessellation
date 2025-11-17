@@ -17,7 +17,7 @@ MonoBehaviour:
   ItemName: "\uD0C0\uC77C \uD68C\uC804 \uC544\uC774\uD15C \uD68D\uB4DD"
   ItemID: GetTilesetRotate
   Description: "\uD0C0\uC77C \uD68C\uC804 \uC0AC\uC6A9 \uC544\uC774\uD15C \uD68D\uB4DD"
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: 2243899160507551837, guid: 72d9ca02bd93dd648a2d01a8529ee953, type: 3}
   input:
   - 5
   ItemPrice: 3

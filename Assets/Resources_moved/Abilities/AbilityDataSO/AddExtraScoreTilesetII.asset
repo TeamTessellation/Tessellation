@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AddExtraScoreTilesetII
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 6
-  Rarity: 1
+  Rarity: 2
   ItemName: "\uCD94\uAC00 \uC810\uC218 \uD0C0\uC77C \uD68D\uB4DD II"
   ItemID: AddExtraScoreTilesetII
   Description: "\uCD94\uAC00 \uC810\uC218 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774
@@ -26,4 +26,4 @@ MonoBehaviour:
   ConflictingItems: []
   IsSynthesisItem: 1
   SynthesisRequirements:
-  - {fileID: 11400000, guid: f3130e97860ecd146be48cafb06f39d7, type: 2}
+  - {fileID: 11400000, guid: 65b65ffeabfd01846a94fbbfad0d2be5, type: 2}

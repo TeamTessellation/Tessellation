@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AddMultipleTilesetII
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 7
-  Rarity: 2
+  Rarity: 3
   ItemName: "\uBC30\uC218 \uD0C0\uC77C \uD68D\uB4DD II"
   ItemID: AddMultipleTilesetII
   Description: "\uBC30\uC218 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."
@@ -25,4 +25,4 @@ MonoBehaviour:
   ConflictingItems: []
   IsSynthesisItem: 1
   SynthesisRequirements:
-  - {fileID: 11400000, guid: 7d3080e989b02704bbbf474c73142da4, type: 2}
+  - {fileID: 11400000, guid: e1072ab892614304ba68ccac87ff7595, type: 2}

@@ -95,6 +95,10 @@ namespace Resource
         
         public List<T> GetAllResourcesByLabel<T>(string label) where T : Object
         {
+            if (_resourceListCache.TryGetValue(label, out List<Object> cachedList))
+            {
+                return cachedList.ConvertAll(obj => obj as T);
+            }
             var op = Addressables.LoadAssetsAsync<T>(label, null);
             op.WaitForCompletion();
             List<T> resources = op.Result as List<T>;
@@ -103,6 +107,7 @@ namespace Resource
                 Debug.LogWarning($"No resources found with label: {label}");
                 return new List<T>();
             }
+            _resourceListCache[label] = resources as List<Object>;
             return resources;
         }
 

@@ -358,7 +358,7 @@ namespace Database
         /// </summary>
         private void ExportAbilitiesToSO()
         {
-            string abilitySOFolder = "Assets/Resources/Abilities/AbilityDataSO";
+            string abilitySOFolder = "Assets/Resources_moved/Abilities/AbilityDataSO";
 
             int createdCount = 0;
             int updatedCount = 0;
@@ -425,7 +425,7 @@ namespace Database
 
         private Sprite GetItemSprite(eItemType itemType)
         {
-            string abilityIconFolder = "Assets/Resources/Abilities/AbilityIcons";
+            string abilityIconFolder = "Assets/Resources_moved/Abilities/AbilityIcons";
             string itemTypeName = itemType.ToString();
 
             string iconPath = Path.Combine(abilityIconFolder, $"{itemTypeName}.png");

@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemID: IncreaseExplosionRangeII
   Description: "\uD3ED\uD0C4\uC758 \uD3ED\uD314 \uBC94\uC704\uAC00 2\uB9CC\uD07C
     \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
   input:
   - 2
   ItemPrice: 12

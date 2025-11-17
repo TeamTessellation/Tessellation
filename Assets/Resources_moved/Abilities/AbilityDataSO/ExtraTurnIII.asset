@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExtraTurnIII
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 0
-  Rarity: 2
+  Rarity: 3
   ItemName: "\uCD94\uAC00 \uD134 III"
   ItemID: ExtraTurnIII
   Description: "\uD134\uC744 \uCD94\uAC00\uB85C 4\uB9CC\uD07C \uC5BB\uC2B5\uB2C8\uB2E4."
@@ -25,4 +25,4 @@ MonoBehaviour:
   ConflictingItems: []
   IsSynthesisItem: 1
   SynthesisRequirements:
-  - {fileID: 11400000, guid: 77f114c92b20abb4b96af67de7b3cbd9, type: 2}
+  - {fileID: 11400000, guid: 31f9dba7c1861ca40a51d4eca895487e, type: 2}
