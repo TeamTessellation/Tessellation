@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemID: AddMultipleTileset
   Description: "\uBC30\uC218 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774 \uC870\uAE08
     \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 1951776848650932060, guid: 59d16c6a705a91e48a53667bf81ca6a7, type: 3}
+  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
   input:
   - 3
   ItemPrice: 12
