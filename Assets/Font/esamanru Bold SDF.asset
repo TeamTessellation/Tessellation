@@ -132,8 +132,8 @@ Material:
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
-    - _TextureHeight: 1024
-    - _TextureWidth: 1024
+    - _TextureHeight: 256
+    - _TextureWidth: 256
     - _UnderlayDilate: 0
     - _UnderlayOffsetX: 0
     - _UnderlayOffsetY: 0
@@ -201,8 +201,8 @@ MonoBehaviour:
     padding: 9
     paddingMode: 2
     packingMode: 0
-    atlasWidth: 1024
-    atlasHeight: 1024
+    atlasWidth: 256
+    atlasHeight: 256
     characterSetSelectionMode: 7
     characterSequence: 
     referencedFontAssetGUID: 
@@ -223,16 +223,16 @@ MonoBehaviour:
   m_IsMultiAtlasTexturesEnabled: 0
   m_GetFontFeatures: 1
   m_ClearDynamicDataOnBuild: 1
-  m_AtlasWidth: 1024
-  m_AtlasHeight: 1024
+  m_AtlasWidth: 256
+  m_AtlasHeight: 256
   m_AtlasPadding: 9
   m_AtlasRenderMode: 4165
   m_UsedGlyphRects: []
   m_FreeGlyphRects:
   - m_X: 0
     m_Y: 0
-    m_Width: 1023
-    m_Height: 1023
+    m_Width: 255
+    m_Height: 255
   m_FontFeatureTable:
     m_MultipleSubstitutionRecords: []
     m_LigatureSubstitutionRecords: []
