@@ -174,6 +174,8 @@ namespace Player
                     break;
                 }
             }
+            
+            RefreshInventory();
         }
         
         public void RemoveAbilityByIndex(int slotIdx)
