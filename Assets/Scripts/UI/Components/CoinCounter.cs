@@ -63,10 +63,11 @@ namespace UI.Components
         {
             if (autoUpdate)
             {
-                if (playChangeSound)
+                if(CounterValue < evt.NewCurrentCoin && playChangeSound)
                 {
                     SoundManager.Instance.PlaySfx(SoundReference.GoldGet);
                 }
+
                 CounterValue = evt.NewCurrentCoin;
             }
             return UniTask.CompletedTask;
