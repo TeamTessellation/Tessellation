@@ -63,7 +63,7 @@
     ],
     [
       "AddBombTileset_name",
-      "폭탄 타일 획득"
+      "폭탄"
     ],
     [
       "AddBombTileset_description",
@@ -71,7 +71,7 @@
     ],
     [
       "AddBombTilesetII_name",
-      "폭탄 타일 획득 II"
+      "폭탄 II"
     ],
     [
       "AddBombTilesetII_description",
@@ -79,7 +79,7 @@
     ],
     [
       "AddBombTilesetIII_name",
-      "폭탄 타일 획득 III"
+      "폭탄 III"
     ],
     [
       "AddBombTilesetIII_description",
@@ -119,7 +119,7 @@
     ],
     [
       "AddExtraScoreTileset_name",
-      "추가 점수 타일 획득"
+      "추가 점수 타일"
     ],
     [
       "AddExtraScoreTileset_description",
@@ -127,7 +127,7 @@
     ],
     [
       "AddExtraScoreTilesetII_name",
-      "추가 점수 타일 획득 II"
+      "추가 점수 타일 II"
     ],
     [
       "AddExtraScoreTilesetII_description",
@@ -135,7 +135,7 @@
     ],
     [
       "AddExtraScoreTilesetIII_name",
-      "추가 점수 타일 획득 III"
+      "추가 점수 타일 III"
     ],
     [
       "AddExtraScoreTilesetIII_description",
@@ -143,7 +143,7 @@
     ],
     [
       "AddMultipleTileset_name",
-      "배수 타일 획득"
+      "배수 타일"
     ],
     [
       "AddMultipleTileset_description",
@@ -151,7 +151,7 @@
     ],
     [
       "AddMultipleTilesetII_name",
-      "배수 타일 획득 II"
+      "배수 타일 II"
     ],
     [
       "AddMultipleTilesetII_description",
@@ -159,7 +159,7 @@
     ],
     [
       "AddGoldTileset_name",
-      "골드 타일 획득"
+      "골드 타일"
     ],
     [
       "AddGoldTileset_description",
@@ -167,7 +167,7 @@
     ],
     [
       "AddGoldTilesetII_name",
-      "골드 타일 획득 II"
+      "골드 타일 II"
     ],
     [
       "AddGoldTilesetII_description",
@@ -175,7 +175,7 @@
     ],
     [
       "AddGoldTilesetIII_name",
-      "골드 타일 획득 III"
+      "골드 타일 III"
     ],
     [
       "AddGoldTilesetIII_description",
@@ -183,7 +183,7 @@
     ],
     [
       "GoldTilesetCoinScaledExtraScore_name",
-      "골드 타일 추가 점수"
+      "황금 점수"
     ],
     [
       "GoldTilesetCoinScaledExtraScore_description",
@@ -215,7 +215,7 @@
     ],
     [
       "CoinScaledMutiple_name",
-      "코인 비례 추가 점수"
+      "나는 코인이 좋아"
     ],
     [
       "CoinScaledMutiple_description",
@@ -223,7 +223,7 @@
     ],
     [
       "GetTilesetDelete_name",
-      "타일 삭제 아이템 획득"
+      "타일 삭제"
     ],
     [
       "GetTilesetDelete_description",
@@ -231,7 +231,7 @@
     ],
     [
       "GetTilesetReroll_name",
-      "타일 다시뽑기 획득"
+      "다시뽑기"
     ],
     [
       "GetTilesetReroll_description",
@@ -239,7 +239,7 @@
     ],
     [
       "GetRevert_name",
-      "되돌리기 획득"
+      "되돌리기"
     ],
     [
       "GetRevert_description",
@@ -247,7 +247,7 @@
     ],
     [
       "GetTilesetRotate_name",
-      "타일 회전 아이템 획득"
+      "회전"
     ],
     [
       "GetTilesetRotate_description",
@@ -255,7 +255,7 @@
     ],
     [
       "GetTilesetChangeOverwrite_name",
-      "유령 타일 변환 아이템 획득"
+      "유령 타일 변환"
     ],
     [
       "GetTilesetChangeOverwrite_description",
@@ -263,11 +263,51 @@
     ],
     [
       "GetTilesetCopy_name",
-      "타일 복사 아이템 획득"
+      "복사"
     ],
     [
       "GetTilesetCopy_description",
       "타일 복사 사용 아이템을 획득합니다."
+    ],
+    [
+      "DecreaseFieldSize_name",
+      "크기 감소"
+    ],
+    [
+      "DecreaseFieldSize_description",
+      "필드 크기가 {0}만큼 감소하고 모든 점수에 대해 {0}배의 추가 점수를 획득합니다."
+    ],
+    [
+      "DecreaseFieldSizeII_name",
+      "크기 감소 II"
+    ],
+    [
+      "DecreaseFieldSizeII_description",
+      "필드 크기가 {0}만큼 감소하고 모든 점수에 대해 {0}배의 추가 점수를 획득합니다."
+    ],
+    [
+      "FirstTurnMultiple_name",
+      "시작이 반"
+    ],
+    [
+      "FirstTurnMultiple_description",
+      "첫번째 턴 동안 모든 점수에 대해서 {0}배의 추가 점수를 얻습니다."
+    ],
+    [
+      "FirstTurnMultipleII_name",
+      "시작이 반II"
+    ],
+    [
+      "FirstTurnMultipleII_description",
+      "첫번째 턴 동안 모든 점수에 대해서 {0}배의 추가 점수를 얻습니다."
+    ],
+    [
+      "",
+      "타일 수집가"
+    ],
+    [
+      "",
+      "줄을 지우지 않고 타일을 배치할때마다 {0}만큼의 추가 점수를 얻습니다"
     ]
   ]
 }

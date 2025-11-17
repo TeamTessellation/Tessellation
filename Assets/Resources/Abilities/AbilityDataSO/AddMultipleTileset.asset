@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 7
   Rarity: 2
-  ItemName: "\uBC30\uC218 \uD0C0\uC77C \uD68D\uB4DD"
+  ItemName: "\uBC30\uC218 \uD0C0\uC77C"
   ItemID: AddMultipleTileset
   Description: "\uBC30\uC218 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774 \uC870\uAE08
     \uC99D\uAC00\uD569\uB2C8\uB2E4."

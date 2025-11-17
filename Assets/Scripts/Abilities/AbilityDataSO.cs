@@ -38,6 +38,8 @@ namespace Abilities
         GetTilesetRotate,
         GetTilesetChangeOverwrite,
         GetTilesetCopy,
+        DecreaseFieldSize,
+        FirstTurnMultiple,
     }
     
     [CreateAssetMenu(fileName = "AbilityData", menuName = "GameData/AbilityData")]

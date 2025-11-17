@@ -417,8 +417,9 @@ namespace Database
             dataSO.Description = GetItemDescription(itemData.DescriptionID, itemData.input);
             dataSO.ItemIcon = GetItemSprite(itemData.eItemType);
             dataSO.input = itemData.input;
+            dataSO.CanAppearInShop = itemData.CanAppearInShop;
             dataSO.ItemPrice = itemData.ItemPrice;
-            dataSO.CanAppearInShop = true;
+            dataSO.CanAppearInShop = itemData.CanAppearInShop;
             dataSO.IsSynthesisItem = itemData.IsSynthesisItem;
             
             

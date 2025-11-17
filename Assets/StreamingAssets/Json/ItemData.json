@@ -4,7 +4,8 @@
     "eItemType": 0,
     "itemNameID": "ExtraTurn_name",
     "DescriptionID": "ExtraTurn_description",
-    "Rarity": 0,
+    "CanAppearInShop": true,
+    "Rarity": 1,
     "input": [
       1.0
     ],
@@ -18,7 +19,8 @@
     "eItemType": 0,
     "itemNameID": "ExtraTurnII_name",
     "DescriptionID": "ExtraTurnII_description",
-    "Rarity": 1,
+    "CanAppearInShop": true,
+    "Rarity": 2,
     "input": [
       2.0
     ],
@@ -34,7 +36,8 @@
     "eItemType": 0,
     "itemNameID": "ExtraTurnIII_name",
     "DescriptionID": "ExtraTurnIII_description",
-    "Rarity": 2,
+    "CanAppearInShop": true,
+    "Rarity": 3,
     "input": [
       4.0
     ],
@@ -50,7 +53,8 @@
     "eItemType": 1,
     "itemNameID": "ExtraActiveItemRemainingUses_name",
     "DescriptionID": "ExtraActiveItemRemainingUses_description",
-    "Rarity": 0,
+    "CanAppearInShop": true,
+    "Rarity": 1,
     "input": [
       1.0
     ],
@@ -64,7 +68,8 @@
     "eItemType": 1,
     "itemNameID": "ExtraActiveItemRemainingUsesII_name",
     "DescriptionID": "ExtraActiveItemRemainingUsesII_description",
-    "Rarity": 1,
+    "CanAppearInShop": true,
+    "Rarity": 2,
     "input": [
       2.0
     ],
@@ -80,7 +85,8 @@
     "eItemType": 1,
     "itemNameID": "ExtraActiveItemRemainingUsesIII_name",
     "DescriptionID": "ExtraActiveItemRemainingUsesIII_description",
-    "Rarity": 2,
+    "CanAppearInShop": true,
+    "Rarity": 3,
     "input": [
       4.0
     ],
@@ -96,7 +102,8 @@
     "eItemType": 2,
     "itemNameID": "AddBombTileset_name",
     "DescriptionID": "AddBombTileset_description",
-    "Rarity": 0,
+    "CanAppearInShop": false,
+    "Rarity": 1,
     "input": [
       3.0
     ],
@@ -110,7 +117,8 @@
     "eItemType": 2,
     "itemNameID": "AddBombTilesetII_name",
     "DescriptionID": "AddBombTilesetII_description",
-    "Rarity": 1,
+    "CanAppearInShop": false,
+    "Rarity": 2,
     "input": [
       6.0
     ],
@@ -126,7 +134,8 @@
     "eItemType": 2,
     "itemNameID": "AddBombTilesetIII_name",
     "DescriptionID": "AddBombTilesetIII_description",
-    "Rarity": 2,
+    "CanAppearInShop": false,
+    "Rarity": 3,
     "input": [
       9.0
     ],
@@ -142,7 +151,8 @@
     "eItemType": 3,
     "itemNameID": "IncreaseExplosionRange_name",
     "DescriptionID": "IncreaseExplosionRange_description",
-    "Rarity": 1,
+    "CanAppearInShop": false,
+    "Rarity": 2,
     "input": [
       1.0
     ],
@@ -156,7 +166,8 @@
     "eItemType": 3,
     "itemNameID": "IncreaseExplosionRangeII_name",
     "DescriptionID": "IncreaseExplosionRangeII_description",
-    "Rarity": 2,
+    "CanAppearInShop": false,
+    "Rarity": 3,
     "input": [
       2.0
     ],
@@ -172,7 +183,8 @@
     "eItemType": 4,
     "itemNameID": "BombImmediatelyExplosion_name",
     "DescriptionID": "BombImmediatelyExplosion_description",
-    "Rarity": 1,
+    "CanAppearInShop": false,
+    "Rarity": 2,
     "input": [
       1.0
     ],
@@ -188,7 +200,8 @@
     "eItemType": 5,
     "itemNameID": "BombChainExplosion_name",
     "DescriptionID": "BombChainExplosion_description",
-    "Rarity": 2,
+    "CanAppearInShop": false,
+    "Rarity": 3,
     "input": [
       1.0
     ],
@@ -204,7 +217,8 @@
     "eItemType": 6,
     "itemNameID": "AddExtraScoreTileset_name",
     "DescriptionID": "AddExtraScoreTileset_description",
-    "Rarity": 0,
+    "CanAppearInShop": true,
+    "Rarity": 1,
     "input": [
       3.0
     ],
@@ -218,7 +232,8 @@
     "eItemType": 6,
     "itemNameID": "AddExtraScoreTilesetII_name",
     "DescriptionID": "AddExtraScoreTilesetII_description",
-    "Rarity": 1,
+    "CanAppearInShop": true,
+    "Rarity": 2,
     "input": [
       6.0
     ],
@@ -234,7 +249,8 @@
     "eItemType": 6,
     "itemNameID": "AddExtraScoreTilesetIII_name",
     "DescriptionID": "AddExtraScoreTilesetIII_description",
-    "Rarity": 2,
+    "CanAppearInShop": true,
+    "Rarity": 3,
     "input": [
       9.0
     ],
@@ -250,7 +266,8 @@
     "eItemType": 7,
     "itemNameID": "AddMultipleTileset_name",
     "DescriptionID": "AddMultipleTileset_description",
-    "Rarity": 1,
+    "CanAppearInShop": true,
+    "Rarity": 2,
     "input": [
       3.0
     ],
@@ -264,7 +281,8 @@
     "eItemType": 7,
     "itemNameID": "AddMultipleTilesetII_name",
     "DescriptionID": "AddMultipleTilesetII_description",
-    "Rarity": 2,
+    "CanAppearInShop": true,
+    "Rarity": 3,
     "input": [
       6.0
     ],
@@ -280,7 +298,8 @@
     "eItemType": 8,
     "itemNameID": "AddGoldTileset_name",
     "DescriptionID": "AddGoldTileset_description",
-    "Rarity": 0,
+    "CanAppearInShop": true,
+    "Rarity": 1,
     "input": [
       3.0
     ],
@@ -294,7 +313,8 @@
     "eItemType": 8,
     "itemNameID": "AddGoldTilesetII_name",
     "DescriptionID": "AddGoldTilesetII_description",
-    "Rarity": 1,
+    "CanAppearInShop": true,
+    "Rarity": 2,
     "input": [
       6.0
     ],
@@ -310,7 +330,8 @@
     "eItemType": 8,
     "itemNameID": "AddGoldTilesetIII_name",
     "DescriptionID": "AddGoldTilesetIII_description",
-    "Rarity": 2,
+    "CanAppearInShop": true,
+    "Rarity": 3,
     "input": [
       9.0
     ],
@@ -326,7 +347,8 @@
     "eItemType": 9,
     "itemNameID": "GoldTilesetCoinScaledExtraScore_name",
     "DescriptionID": "GoldTilesetCoinScaledExtraScore_description",
-    "Rarity": 2,
+    "CanAppearInShop": true,
+    "Rarity": 3,
     "input": [
       1.0
     ],
@@ -340,7 +362,8 @@
     "eItemType": 10,
     "itemNameID": "AdditionalInterest_name",
     "DescriptionID": "AdditionalInterest_description",
-    "Rarity": 0,
+    "CanAppearInShop": true,
+    "Rarity": 1,
     "input": [
       80.0
     ],
@@ -354,7 +377,8 @@
     "eItemType": 10,
     "itemNameID": "AdditionalInterestII_name",
     "DescriptionID": "AdditionalInterestII_description",
-    "Rarity": 1,
+    "CanAppearInShop": true,
+    "Rarity": 2,
     "input": [
       100.0
     ],
@@ -370,7 +394,8 @@
     "eItemType": 10,
     "itemNameID": "AdditionalInterestIII_name",
     "DescriptionID": "AdditionalInterestIII_description",
-    "Rarity": 2,
+    "CanAppearInShop": true,
+    "Rarity": 3,
     "input": [
       150.0
     ],
@@ -386,12 +411,13 @@
     "eItemType": 11,
     "itemNameID": "CoinScaledMutiple_name",
     "DescriptionID": "CoinScaledMutiple_description",
-    "Rarity": 1,
+    "CanAppearInShop": false,
+    "Rarity": 2,
     "input": [
       5.0,
       0.1
     ],
-    "ItemPrice": 8,
+    "ItemPrice": 12,
     "ConflictingItems": [],
     "IsSynthesisItem": false,
     "SynthesisRequirements": []
@@ -401,11 +427,12 @@
     "eItemType": 12,
     "itemNameID": "GetTilesetDelete_name",
     "DescriptionID": "GetTilesetDelete_description",
-    "Rarity": 0,
+    "CanAppearInShop": true,
+    "Rarity": 4,
     "input": [
       5.0
     ],
-    "ItemPrice": 3,
+    "ItemPrice": 4,
     "ConflictingItems": [
       "GetTilesetReroll",
       "GetRevert",
@@ -422,11 +449,12 @@
     "eItemType": 13,
     "itemNameID": "GetTilesetReroll_name",
     "DescriptionID": "GetTilesetReroll_description",
-    "Rarity": 0,
+    "CanAppearInShop": true,
+    "Rarity": 4,
     "input": [
       3.0
     ],
-    "ItemPrice": 3,
+    "ItemPrice": 4,
     "ConflictingItems": [
       "GetTilesetReroll",
       "GetRevert",
@@ -443,11 +471,12 @@
     "eItemType": 14,
     "itemNameID": "GetRevert_name",
     "DescriptionID": "GetRevert_description",
-    "Rarity": 0,
+    "CanAppearInShop": true,
+    "Rarity": 4,
     "input": [
       4.0
     ],
-    "ItemPrice": 3,
+    "ItemPrice": 4,
     "ConflictingItems": [
       "GetTilesetReroll",
       "GetRevert",
@@ -464,11 +493,12 @@
     "eItemType": 15,
     "itemNameID": "GetTilesetRotate_name",
     "DescriptionID": "GetTilesetRotate_description",
-    "Rarity": 0,
+    "CanAppearInShop": true,
+    "Rarity": 4,
     "input": [
       5.0
     ],
-    "ItemPrice": 3,
+    "ItemPrice": 4,
     "ConflictingItems": [
       "GetTilesetReroll",
       "GetRevert",
@@ -485,11 +515,12 @@
     "eItemType": 16,
     "itemNameID": "GetTilesetChangeOverwrite_name",
     "DescriptionID": "GetTilesetChangeOverwrite_description",
-    "Rarity": 0,
+    "CanAppearInShop": true,
+    "Rarity": 4,
     "input": [
       3.0
     ],
-    "ItemPrice": 3,
+    "ItemPrice": 4,
     "ConflictingItems": [
       "GetTilesetReroll",
       "GetRevert",
@@ -506,11 +537,12 @@
     "eItemType": 17,
     "itemNameID": "GetTilesetCopy_name",
     "DescriptionID": "GetTilesetCopy_description",
-    "Rarity": 0,
+    "CanAppearInShop": true,
+    "Rarity": 4,
     "input": [
       3.0
     ],
-    "ItemPrice": 3,
+    "ItemPrice": 4,
     "ConflictingItems": [
       "GetTilesetReroll",
       "GetRevert",
@@ -519,6 +551,85 @@
       "GetTilesetChangeOverwrite",
       "GetTilesetCopy"
     ],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "DecreaseFieldSize",
+    "eItemType": 18,
+    "itemNameID": "DecreaseFieldSize_name",
+    "DescriptionID": "DecreaseFieldSize_description",
+    "CanAppearInShop": true,
+    "Rarity": 2,
+    "input": [
+      1.0,
+      0.3
+    ],
+    "ItemPrice": 10,
+    "ConflictingItems": [],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "DecreaseFieldSizeII",
+    "eItemType": 18,
+    "itemNameID": "DecreaseFieldSizeII_name",
+    "DescriptionID": "DecreaseFieldSizeII_description",
+    "CanAppearInShop": true,
+    "Rarity": 3,
+    "input": [
+      1.0,
+      0.5
+    ],
+    "ItemPrice": 20,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "DecreaseFieldSize"
+    ]
+  },
+  {
+    "ItemID": "FirstTurnMultiple",
+    "eItemType": 19,
+    "itemNameID": "FirstTurnMultiple_name",
+    "DescriptionID": "FirstTurnMultiple_description",
+    "CanAppearInShop": true,
+    "Rarity": 2,
+    "input": [
+      0.5
+    ],
+    "ItemPrice": 10,
+    "ConflictingItems": [],
+    "IsSynthesisItem": false,
+    "SynthesisRequirements": []
+  },
+  {
+    "ItemID": "FirstTurnMultipleII",
+    "eItemType": 19,
+    "itemNameID": "FirstTurnMultipleII_name",
+    "DescriptionID": "FirstTurnMultipleII_description",
+    "CanAppearInShop": true,
+    "Rarity": 3,
+    "input": [
+      1.0
+    ],
+    "ItemPrice": 15,
+    "ConflictingItems": [],
+    "IsSynthesisItem": true,
+    "SynthesisRequirements": [
+      "FirstTurnMultiple"
+    ]
+  },
+  {
+    "ItemID": "",
+    "eItemType": 0,
+    "itemNameID": "",
+    "DescriptionID": "",
+    "CanAppearInShop": false,
+    "Rarity": 0,
+    "input": [],
+    "ItemPrice": 0,
+    "ConflictingItems": [],
     "IsSynthesisItem": false,
     "SynthesisRequirements": []
   }

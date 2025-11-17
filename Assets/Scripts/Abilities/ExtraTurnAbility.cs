@@ -18,7 +18,6 @@ public class ExtraTurnAbility : AbilityBase
         
         base.Initialize(tilePlaceHandler);
     }
-    
 
     protected override void OnAbilityApplied()
     {
