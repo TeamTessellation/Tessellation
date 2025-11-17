@@ -104,6 +104,10 @@ namespace Core
         private async UniTask StartLoadingScene()
         {
             /*
+             * 오브젝트 풀 로드
+             */
+            await PoolManager.PreloadAllFromLabel("PoolObj");
+            /*
              * 기초 씬 로드
              */
             int toLoadCount = scenesToLoad.Length;

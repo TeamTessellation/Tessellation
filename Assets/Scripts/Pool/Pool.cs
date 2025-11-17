@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 
 public static class PoolManager
@@ -9,6 +11,7 @@ public static class PoolManager
     public static Transform S_GlobalRoot;
     public static Transform S_OriObjRoot;
     public const string Obj_Root = "PoolObj/";
+    public static Dictionary<string, GameObject> CachePrefab;
 
     static PoolManager()
     {
@@ -16,6 +19,38 @@ public static class PoolManager
         S_OriObjRoot = (GameObject.Find("@OriObj") ?? new GameObject("@OriObj")).transform;
         S_OriObjRoot.SetParent(S_GlobalRoot);
         GameObject.DontDestroyOnLoad(S_GlobalRoot);
+    }
+
+    public static async UniTask Cache(string name)
+    {
+        CachePrefab ??= new();
+        var handle = Addressables.LoadAssetAsync<GameObject>($"{PoolManager.Obj_Root}{name}");
+        var prefab = await handle.Task;
+
+        if (prefab == null)
+        {
+            Debug.LogError($"[ObjPool] Failed to load prefab: {name}");
+            return;
+        }
+
+        CachePrefab[name] = prefab;
+    }
+
+    public static async UniTask PreloadAllFromLabel(string label)
+    {
+        CachePrefab ??= new();
+
+        var locations = await Addressables.LoadResourceLocationsAsync(label).Task;
+
+        foreach (var loc in locations)
+        {
+            var handle = Addressables.LoadAssetAsync<GameObject>(loc);
+            var prefab = await handle.Task;
+
+            string name = prefab.name;
+            Debug.Log($"{name} {prefab}");
+            CachePrefab[name] = prefab;
+        }
     }
 }
 
@@ -89,7 +124,8 @@ public static class Pool<T> where T : MonoBehaviour, IPoolAble
     {
         var attr = (PoolSizeAttribute?)Attribute.GetCustomAttribute(typeof(T), typeof(PoolSizeAttribute));
         _size = attr?.Size ?? _size;
-        _prefab = Resources.Load<GameObject>($"{PoolManager.Obj_Root}{typeof(T).Name}");
+        //_prefab = Resources.Load<GameObject>($"{PoolManager.Obj_Root}{typeof(T).Name}");
+        _prefab = PoolManager.CachePrefab[typeof(T).Name];
         _pool = new();
     }
 
@@ -135,7 +171,7 @@ public static class Pool<T> where T : MonoBehaviour, IPoolAble
     {
         if (_prefab == null)
         {
-            Debug.LogWarning($"{typeof(T).Name} class의 Pool Prefab이 Resources/PoolObj에 존재하지 않습니다.");
+            Debug.LogWarning($"{typeof(T).Name} class의 Pool Prefab이 PoolObj에 존재하지 않습니다.");
             return false;
         }
         if (_prefab.GetComponent<T>() == null)
@@ -212,7 +248,8 @@ public static class Pool
     private static void InitObjPool(string key = "", int size = 5)
     {
         ObjPool objPool = new();
-        objPool.Prefab = Resources.Load<GameObject>($"{PoolManager.Obj_Root}{key}");
+        //objPool.Prefab = Resources.Load<GameObject>($"{PoolManager.Obj_Root}{key}");
+        objPool.Prefab = PoolManager.CachePrefab[key];
         objPool.Key = key;
         objPool.Size = size;
         objPool.Pool = new();
