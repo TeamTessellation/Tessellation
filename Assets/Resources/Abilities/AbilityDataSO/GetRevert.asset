@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GetRevert
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 14
-  Rarity: 0
+  Rarity: 1
   ItemName: "\uB418\uB3CC\uB9AC\uAE30 \uD68D\uB4DD"
   ItemID: GetRevert
   Description: "\uB418\uB3CC\uB9AC\uAE30 \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."

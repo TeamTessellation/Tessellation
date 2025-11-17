@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GetTilesetReroll
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 13
-  Rarity: 0
+  Rarity: 1
   ItemName: "\uD0C0\uC77C \uB2E4\uC2DC\uBF51\uAE30 \uD68D\uB4DD"
   ItemID: GetTilesetReroll
   Description: "\uD0C0\uC77C \uB2E4\uC2DC \uBF51\uAE30 \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744

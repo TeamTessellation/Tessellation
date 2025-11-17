@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AdditionalInterestII
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 10
-  Rarity: 1
+  Rarity: 2
   ItemName: "\uCD94\uAC00 \uC774\uC790 II"
   ItemID: AdditionalInterestII
   Description: "\uCD5C\uB300 {input[0]}\uC6D0\uAE4C\uC9C0 \uC774\uC790\uB97C \uC5BB\uC2B5\uB2C8\uB2E4."
