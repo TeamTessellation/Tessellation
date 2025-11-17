@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 93c017bda2db3d6468caaa61e5dc2d60
+guid: fbee0db17ee65aa4792881b7579fa309
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2868598021183405447
-    second: AddMultipleTilesetII_0
+      213: -3722816623798456354
+    second: AddExtraScoreTileset_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -109,30 +109,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 1024
-    resizeAlgorithm: 0
-    textureFormat: 12
-    textureCompression: 1
-    compressionQuality: 80
-    crunchedCompression: 0
-    allowsAlphaSplitting: 1
-    overridden: 1
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AddMultipleTilesetII_0
+      name: AddExtraScoreTileset_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 85
-        height: 93
+        x: 4
+        y: 1
+        width: 79
+        height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 78d7608a3be4fc720800000000000000
-      internalID: 2868598021183405447
+      spriteID: edfe2964106e55cc0800000000000000
+      internalID: -3722816623798456354
       vertices: []
       indices: 
       edges: []
@@ -161,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AddMultipleTilesetII_0: 2868598021183405447
+      AddExtraScoreTileset_0: -3722816623798456354
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
