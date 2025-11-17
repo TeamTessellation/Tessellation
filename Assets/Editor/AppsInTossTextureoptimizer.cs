@@ -51,7 +51,7 @@ public class AppsInTossTextureOptimizer : EditorWindow
             generateMipMaps = false,
             filterMode = FilterMode.Bilinear,
             wrapMode = TextureWrapMode.Clamp,
-            compressionQuality = 30
+            compressionQuality = 50
         });
 
         // 환경 텍스처 규칙
