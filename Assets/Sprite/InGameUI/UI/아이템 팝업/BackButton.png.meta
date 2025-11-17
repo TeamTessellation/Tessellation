@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9e0e3b67439273949aa1e86e9db55c7e
+guid: fee9aec0792cc504f9457db91d6f106f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1305595853231260290
-    second: Frame 48_0
+      213: -2970073484504309273
+    second: BackButton_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,30 +109,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 1024
-    resizeAlgorithm: 0
-    textureFormat: 12
-    textureCompression: 1
-    compressionQuality: 80
-    crunchedCompression: 0
-    allowsAlphaSplitting: 1
-    overridden: 1
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Frame 48_0
+      name: BackButton_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1080
-        height: 2400
+        width: 184
+        height: 203
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 282821cd2886e1210800000000000000
-      internalID: 1305595853231260290
+      spriteID: 7e16057e6ed28c6d0800000000000000
+      internalID: -2970073484504309273
       vertices: []
       indices: 
       edges: []
@@ -161,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Frame 48_0: 1305595853231260290
+      BackButton_0: -2970073484504309273
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
