@@ -1,6 +1,5 @@
-using Player;
+
 using Stage;
-using Unity.Android.Gradle;
 using UnityEngine;
 
 public class LimitHandler : MonoBehaviour
