@@ -39,6 +39,8 @@ namespace UI.OtherUIs
         private CancellationTokenSource _tokenSource;
         private List<Tween> _currentTweens = new List<Tween>();
 
+        private Action _onPurchaseCompleted;
+        
         protected override void Awake()
         {
             base.Awake();
@@ -59,10 +61,38 @@ namespace UI.OtherUIs
             _tokenSource = null;
         }
 
-        public void Initialize(AbilityDataSO data, bool isForBuy)
+        public void Initialize(AbilityDataSO data, bool isForBuy, Action onPurchasCompleted)
         {
             _abilityData = data;
             _isForBuy = isForBuy;
+            _onPurchaseCompleted = onPurchasCompleted;
+            
+            if (_abilityData == null) return;
+    
+            if (itemImage != null && _abilityData.ItemIcon != null)
+            {
+                itemImage.sprite = _abilityData.ItemIcon;
+            }
+    
+            if (itemName != null)
+            {
+                itemName.text = _abilityData.ItemName;
+            }
+    
+            if (itemDescription != null)
+            {
+                itemDescription.text = _abilityData.Description;
+            }
+    
+            if (costText != null)
+            {
+                costText.text = _abilityData.ItemPrice.ToString();
+            }
+    
+            if (buySellText != null)
+            {
+                buySellText.text = isForBuy ? "구매" : "판매";
+            }
         }
 
         public async UniTask ShowPopUp()
@@ -125,7 +155,7 @@ namespace UI.OtherUIs
                 {
                     // 성공 시 돈 깎기
                     playerStatus.CurrentCoins -= _abilityData.ItemPrice;
-                    
+                    _onPurchaseCompleted?.Invoke();
                     // Hide 하기
                     HidePopup().Forget();
                 }

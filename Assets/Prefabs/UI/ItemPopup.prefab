@@ -460,7 +460,7 @@ MonoBehaviour:
   buySellText: {fileID: 7190271188262489867}
   buySellButton: {fileID: 2809611101801990666}
   backButton: {fileID: 4947114992695045447}
-  backGroundColor: {r: 0, g: 0, b: 0, a: 0.5529412}
+  backGroundColor: {r: 0, g: 0, b: 0, a: 0.78431374}
   popupDuration: 0.5
   popupEase: 27
 --- !u!1 &5222878970258039612

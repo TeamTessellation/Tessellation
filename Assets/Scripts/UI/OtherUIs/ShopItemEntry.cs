@@ -100,7 +100,7 @@ namespace UI.OtherUIs
             if (popupUI != null)
             {
                 Debug.Log("Clicked");
-                popupUI.Initialize(_abilityData, true);
+                popupUI.Initialize(_abilityData, true, DisableButton);
                 popupUI.ShowPopUp().Forget();
             }
         }
