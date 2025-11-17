@@ -25,7 +25,7 @@ public class ScoreEffect : MonoBehaviour
         ShowScoreAsync(score, pos).Forget();
     }
 
-    public async UniTask ShowScoreAsync(int score, Vector2 pos)
+    private async UniTask ShowScoreAsync(int score, Vector2 pos)
     {
         _numberText.text = $"+{score}";
 
@@ -50,7 +50,7 @@ public class ScoreEffect : MonoBehaviour
         _onComplete?.Invoke(this);
     }
 
-    private void ResetState()
+    public void ResetState()
     {
         transform.localScale = Vector3.one * 0.6f;
         _canvasGroup.alpha = 1f;
