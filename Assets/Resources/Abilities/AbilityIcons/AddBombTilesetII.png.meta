@@ -5,6 +5,24 @@ TextureImporter:
   - first:
       213: -5705622685975777435
     second: AddBombTilesetII_0
+  - first:
+      213: 821181537134267355
+    second: AddBombTilesetII_1
+  - first:
+      213: 5394717183746836505
+    second: AddBombTilesetII_2
+  - first:
+      213: -5039520538791475448
+    second: AddBombTilesetII_3
+  - first:
+      213: -1839734088128123554
+    second: AddBombTilesetII_4
+  - first:
+      213: -5357357204023917302
+    second: AddBombTilesetII_5
+  - first:
+      213: 7028754063460517404
+    second: AddBombTilesetII_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +90,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -109,19 +127,6 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 1024
-    resizeAlgorithm: 0
-    textureFormat: 12
-    textureCompression: 1
-    compressionQuality: 80
-    crunchedCompression: 0
-    allowsAlphaSplitting: 1
-    overridden: 1
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -129,10 +134,10 @@ TextureImporter:
       name: AddBombTilesetII_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 99
-        height: 95
+        x: 11
+        y: 5
+        width: 70
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,6 +148,138 @@ TextureImporter:
       bones: []
       spriteID: 56fe004956e81d0b0800000000000000
       internalID: -5705622685975777435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AddBombTilesetII_1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 70
+        width: 18
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdb4ff8d14c656b00800000000000000
+      internalID: 821181537134267355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AddBombTilesetII_2
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 70
+        width: 18
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9180de832b2edda40800000000000000
+      internalID: 5394717183746836505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AddBombTilesetII_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 34
+        width: 10
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8078c0f35c6001ab0800000000000000
+      internalID: -5039520538791475448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AddBombTilesetII_4
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 34
+        width: 10
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5d22fb1893f776e0800000000000000
+      internalID: -1839734088128123554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AddBombTilesetII_5
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 0
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a054647e108d6a5b0800000000000000
+      internalID: -5357357204023917302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AddBombTilesetII_6
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 0
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c16c52ea4962b8160800000000000000
+      internalID: 7028754063460517404
       vertices: []
       indices: 
       edges: []
@@ -162,6 +299,12 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       AddBombTilesetII_0: -5705622685975777435
+      AddBombTilesetII_1: 821181537134267355
+      AddBombTilesetII_2: 5394717183746836505
+      AddBombTilesetII_3: -5039520538791475448
+      AddBombTilesetII_4: -1839734088128123554
+      AddBombTilesetII_5: -5357357204023917302
+      AddBombTilesetII_6: 7028754063460517404
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

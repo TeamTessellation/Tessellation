@@ -25,12 +25,11 @@ public class ScoreEffect : MonoBehaviour
         ShowScoreAsync(score, pos).Forget();
     }
 
-    public async UniTask ShowScoreAsync(int score, Vector2 pos)
+    private async UniTask ShowScoreAsync(int score, Vector3 pos)
     {
         _numberText.text = $"+{score}";
 
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(pos);
-        _rectTransform.position = screenPos;
+        _rectTransform.position = pos;
 
         transform.localScale = Vector3.one * 0.6f;
         _canvasGroup.alpha = 1f;
@@ -39,18 +38,18 @@ public class ScoreEffect : MonoBehaviour
         DG.Tweening.Sequence sequence = DOTween.Sequence();
         
         // 0.2초동안 스케일 올리기
-        sequence.Append(transform.DOScale(1f, 0.2f)).SetEase(Ease.OutBack);
+        sequence.Append(transform.DOScale(1f, 0.3f)).SetEase(Ease.OutBack);
         
         // 0.3초동안 페이드아웃 및 위로 이동
-        sequence.Append(_canvasGroup.DOFade(0f, 0.3f)).SetEase(Ease.InQuad);
-        sequence.Join(transform.DOMoveY(transform.position.y + 3f, 0.3f)).SetEase(Ease.OutQuad);
+        sequence.Append(_canvasGroup.DOFade(0f, 0.6f)).SetEase(Ease.InQuad);
+        sequence.Join(transform.DOMoveY(transform.position.y + 1f, 0.6f)).SetEase(Ease.OutQuad);
 
         await sequence.AsyncWaitForCompletion();
         
         _onComplete?.Invoke(this);
     }
 
-    private void ResetState()
+    public void ResetState()
     {
         transform.localScale = Vector3.one * 0.6f;
         _canvasGroup.alpha = 1f;

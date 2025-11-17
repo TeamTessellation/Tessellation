@@ -303,6 +303,7 @@ namespace Core
              */
             
             CurrentGameState = GlobalGameState.MainMenu;
+            PlayerStatus.inventory.Reset();
             PlayerStatus.Reset();
             StageManager.ResetStage();
             UIManager.HidePauseUI();
