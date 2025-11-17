@@ -28,17 +28,17 @@ namespace UI.OtherUIs
             {
                 PlayerInventory inventory = GameManager.Instance.PlayerStatus.inventory;
                 inventory.OnInventorySlotChanged += OnInventorySlotChanged;
-                Debug.Log("늦어");
+                inventory.RefreshPlaceEntry();
                 ClearSlot();
             }
             else
             {
-                // UniTask.WaitUntil(() => GameManager.HasInstance).ContinueWith(() =>
-                // {
-                //     PlayerInventory inventory = GameManager.Instance.PlayerStatus.inventory;
-                //     inventory.OnInventorySlotChanged += OnInventorySlotChanged;
-                //     ClearSlot();
-                // }).Forget();
+                UniTask.WaitUntil(() => GameManager.HasInstance).ContinueWith(() =>
+                {
+                    PlayerInventory inventory = GameManager.Instance.PlayerStatus.inventory;
+                    inventory.OnInventorySlotChanged += OnInventorySlotChanged;
+                    ClearSlot();
+                }).Forget();
             }
         }
 
