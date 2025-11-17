@@ -64,6 +64,7 @@ namespace Database
 
         private void Start()
         {
+// #if UNITY_EDITOR
             if (isInitialized)
             {
                 Debug.LogWarning("[DatabaseManager] 이미 초기화되었습니다.");
@@ -71,6 +72,7 @@ namespace Database
             }
             s_isInstanced = true;
             StartCoroutine(InitializeRoutine());
+            // #endif
         }
 
         [ContextMenu("Clear Database")]
