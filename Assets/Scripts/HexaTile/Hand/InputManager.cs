@@ -85,13 +85,13 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
     public void LockItem()
     {
         IsLock = true;
-        _itemHold.LockItem();
+        _itemHold?.LockItem();
     }
 
     public void UnLockItem()
     {
         IsLock = false;
-        _itemHold.UnLockItem();
+        _itemHold?.UnLockItem();
     }
 
     private void UseItem(HandBox target)
