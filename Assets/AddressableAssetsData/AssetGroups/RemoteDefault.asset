@@ -1,0 +1,331 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: RemoteDefault
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: RemoteDefault
+  m_GUID: dacc0c37499b5b14da97cdb02c75308e
+  m_SerializeEntries:
+  - m_GUID: 05cf679e324689143bf0f71e67349192
+    m_Address: Abilities/AbilityIcons/GetTilesetDelete
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 099ca67c728b05045a762d95c1c38ff8
+    m_Address: Abilities/AbilityIcons/GetTilesetReroll
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0b2a336dd3c1a5145873815ffff742ec
+    m_Address: Abilities/AbilityDataSO/AdditionalInterestIII
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 213a3946b73ac714f91743469e1c9e97
+    m_Address: Abilities/AbilityDataSO/BombChainExplosion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 28a7c6c89771e0e4b8e2ffe73620107f
+    m_Address: Abilities/AbilityIcons/ExtraActiveItemRemainingUses
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2930bb44a6154064eb09c8ff1455943c
+    m_Address: Abilities/AbilityDataSO/GetTilesetCopy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2d27c3dd47c5153458515b38af820f1f
+    m_Address: Abilities/AbilityIcons/ExtraTurnII
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2db27691248f48840986f65a42c7246c
+    m_Address: Abilities/AbilityDataSO/GoldTilesetCoinScaledExtraScore
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30b8d5ee7517a5c4aa776ad7a5c4d07f
+    m_Address: Abilities/AbilityIcons/Default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d7dd75fef07bbe46ae603115f2c017b
+    m_Address: Abilities/AbilityDataSO/IncreaseExplosionRangeII
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 428d818518e4c8749ad8ba54d02fe141
+    m_Address: Abilities/AbilityDataSO/CoinScaledMutiple
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 497d95dab79f9ca498651b93ec77b0c3
+    m_Address: Abilities/AbilityDataSO/AddBombTilesetII
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 52a9ce0db982120408f9dea458f665b2
+    m_Address: Abilities/AbilityIcons/AdditionalInterestII
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 538cbad12b0f9604fa537f848f064b64
+    m_Address: Abilities/AbilityDataSO/AddBombTileset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53e5ec5b22366eb44989f92e5ff49232
+    m_Address: Abilities/AbilityDataSO/BombImmediatelyExplosion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 57a35405ecc75214f92f9f5c5561dff9
+    m_Address: Abilities/AbilityDataSO/GetTilesetReroll
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59d16c6a705a91e48a53667bf81ca6a7
+    m_Address: Abilities/AbilityIcons/AddMultipleTileset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 602f679ac2c3ee948a591098c8fed7ef
+    m_Address: Abilities/AbilityIcons/AddGoldTilesetII
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b2741e8fb650e7499f7b7335bcac9c7
+    m_Address: Abilities/AbilityDataSO/AddGoldTilesetII
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72d9ca02bd93dd648a2d01a8529ee953
+    m_Address: Abilities/AbilityIcons/GetTilesetRotate
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 74e0b63013fdd1f46a5f824c810e1997
+    m_Address: Abilities/AbilityDataSO/GetTilesetDelete
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 75b4c156903c6bf4891e0e99ff501dc1
+    m_Address: Abilities/AbilityDataSO/GetTilesetChangeOverwrite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77f114c92b20abb4b96af67de7b3cbd9
+    m_Address: Abilities/AbilityDataSO/ExtraTurnII
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d3080e989b02704bbbf474c73142da4
+    m_Address: Abilities/AbilityDataSO/AddMultipleTileset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85a3474aa76ee4d44b644d84ecb703ae
+    m_Address: Abilities/AbilityDataSO/IncreaseExplosionRange
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85aaaf3f11abd6648960a6bcec4f3599
+    m_Address: Abilities/AbilityIcons/AddBombTilesetIII
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9044daba120bb364caaf139d01e3edf0
+    m_Address: Abilities/AbilityIcons/ExtraTurn
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 93c017bda2db3d6468caaa61e5dc2d60
+    m_Address: Abilities/AbilityIcons/AddMultipleTilesetII
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95ae93ae0ef019e4fa1d834cc299d7fc
+    m_Address: Abilities/AbilityIcons/GetRevert
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 97aa594615bc96a4692b6aa26b96bb53
+    m_Address: Abilities/AbilityIcons/AddGoldTileset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 97bae345e2241b64389636735c770778
+    m_Address: Abilities/AbilityDataSO/ExtraTurnIII
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 97d01c6d9b7601a4a8ce77641873d38f
+    m_Address: Abilities/AbilityIcons/AddBombTilesetII
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9bdbe3737a214524c8143b0a7ac53681
+    m_Address: Abilities/AbilityDataSO/ExtraTurn
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9cbabab87c18d1343885fb6bd374426c
+    m_Address: Abilities/AbilityIcons/AddBombTileset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a2115560c786787439e2c2b3accfd4d5
+    m_Address: Abilities/AbilityDataSO/AddExtraScoreTilesetIII
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a43d50832c1a8dd43a767e8d45fde07b
+    m_Address: Abilities/AbilityIcons/AddGoldTilesetIII
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a718f592134d04e4680b386b1ca69e4a
+    m_Address: Abilities/AbilityDataSO/AddGoldTilesetIII
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad8b5e3075d33174bbe4bd3e6fc3c603
+    m_Address: Abilities/AbilityIcons/AdditionalInterestIII
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae65499a20eeae540b80bc2d3c6ed4af
+    m_Address: Abilities/AbilityDataSO/AddBombTilesetIII
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b24b5d2c2609448468c694c4bcc3377d
+    m_Address: "Abilities/AbilityIcons/ExtraTurn\u2162"
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c0e9c6ccc04581741b84cf7aff14bc9d
+    m_Address: Abilities/AbilityIcons/ExtraActiveItemRemainingUsesIII
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d5a064b5d1498614b967635b53299780
+    m_Address: Abilities/AbilityDataSO/AdditionalInterest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da09f913b1001104cbd061517cae133e
+    m_Address: Abilities/AbilityDataSO/GetRevert
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd4bc5646756b9f439217f8db6424d13
+    m_Address: Abilities/AbilityDataSO/AddExtraScoreTilesetII
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ddd4b72b40f32674b864e588317b063b
+    m_Address: Abilities/AbilityDataSO/ExtraActiveItemRemainingUsesII
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de976d9311c26dd45a34da49cf0ffda6
+    m_Address: Abilities/AbilityDataSO/AddGoldTileset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7e6c7de35028f74caca8f075dc7e791
+    m_Address: Abilities/AbilityIcons/AdditionalInterest
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e83c4fe8a91ef854c870b7b06d226bfb
+    m_Address: Abilities/AbilityDataSO/AddMultipleTilesetII
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e8eef6e17bc962b45822e07136b8216b
+    m_Address: Abilities/AbilityIcons/GetTilesetCopy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef4d53cbd0fe3a640a4dc8d0c6246239
+    m_Address: Abilities/AbilityDataSO/ExtraActiveItemRemainingUses
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f1aad19a86338de46a3783080355b270
+    m_Address: Abilities/AbilityIcons/ExtraActiveItemRemainingUsesII
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3130e97860ecd146be48cafb06f39d7
+    m_Address: Abilities/AbilityDataSO/AddExtraScoreTileset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa94783c5bfe5084da2e25903e47b766
+    m_Address: Abilities/AbilityDataSO/GetTilesetRotate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fbc3d7b6852cf43448f3b119bd34b06e
+    m_Address: Abilities/AbilityDataSO/AdditionalInterestII
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff6edc823abd18846a8427b60d023ca0
+    m_Address: Abilities/AbilityDataSO/ExtraActiveItemRemainingUsesIII
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AbilitySO
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: fdba3c2e66d1285408434254f683bf26, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 5676d30da2521314f8fe70ce68702f37, type: 2}
+    - {fileID: 11400000, guid: 7c66a22a54840234198be08053944f1f, type: 2}
+    - {fileID: 11400000, guid: 5b652d6b5a3479c42af0b1133aa2ee6a, type: 2}

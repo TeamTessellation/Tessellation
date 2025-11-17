@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemID: ExtraActiveItemRemainingUses
   Description: "\uC0AC\uC6A9 \uC544\uC774\uD15C \uD69F\uC218\uB97C 1\uB9CC\uD07C
     \uCD94\uAC00\uB85C \uC5BB\uC2B5\uB2C8\uB2E4."
-  ItemIcon: {fileID: 6599216199762700412, guid: 28a7c6c89771e0e4b8e2ffe73620107f, type: 3}
+  ItemIcon: {fileID: 0}
   input:
   - 1
   ItemPrice: 3

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9fc628945da38f43987756c6c3b7d49, type: 3}
+  m_Name: GetTilesetRotate
+  m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
+  ItemType: 15
+  Rarity: 0
+  ItemName: "\uD0C0\uC77C \uD68C\uC804 \uC544\uC774\uD15C \uD68D\uB4DD"
+  ItemID: GetTilesetRotate
+  Description: "\uD0C0\uC77C \uD68C\uC804 \uC0AC\uC6A9 \uC544\uC774\uD15C \uD68D\uB4DD"
+  ItemIcon: {fileID: 2243899160507551837, guid: 72d9ca02bd93dd648a2d01a8529ee953, type: 3}
+  input:
+  - 5
+  ItemPrice: 3
+  CanAppearInShop: 1
+  ConflictingItems:
+  - {fileID: 11400000, guid: 57a35405ecc75214f92f9f5c5561dff9, type: 2}
+  - {fileID: 11400000, guid: da09f913b1001104cbd061517cae133e, type: 2}
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: 74e0b63013fdd1f46a5f824c810e1997, type: 2}
+  - {fileID: 11400000, guid: 75b4c156903c6bf4891e0e99ff501dc1, type: 2}
+  - {fileID: 11400000, guid: 2930bb44a6154064eb09c8ff1455943c, type: 2}
+  IsSynthesisItem: 0
+  SynthesisRequirements: []

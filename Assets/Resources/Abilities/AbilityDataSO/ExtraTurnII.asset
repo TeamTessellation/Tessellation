@@ -17,7 +17,7 @@ MonoBehaviour:
   ItemName: "\uCD94\uAC00 \uD134 II"
   ItemID: ExtraTurnII
   Description: "\uD134\uC744 \uCD94\uAC00\uB85C 2\uB9CC\uD07C \uC5BB\uC2B5\uB2C8\uB2E4."
-  ItemIcon: {fileID: 7684270262183935596, guid: 9044daba120bb364caaf139d01e3edf0, type: 3}
+  ItemIcon: {fileID: 0}
   input:
   - 2
   ItemPrice: 5
@@ -25,4 +25,4 @@ MonoBehaviour:
   ConflictingItems: []
   IsSynthesisItem: 1
   SynthesisRequirements:
-  - {fileID: 11400000, guid: 9bdbe3737a214524c8143b0a7ac53681, type: 2}
+  - {fileID: 11400000, guid: 4b8233c0d20243d4b9a8a90815389ad6, type: 2}

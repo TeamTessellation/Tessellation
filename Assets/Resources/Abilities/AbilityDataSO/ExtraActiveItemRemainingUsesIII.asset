@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemID: ExtraActiveItemRemainingUsesIII
   Description: "\uC0AC\uC6A9 \uC544\uC774\uD15C \uD69F\uC218\uB97C 4\uB9CC\uD07C
     \uCD94\uAC00\uB85C \uC5BB\uC2B5\uB2C8\uB2E4."
-  ItemIcon: {fileID: 6599216199762700412, guid: 28a7c6c89771e0e4b8e2ffe73620107f, type: 3}
+  ItemIcon: {fileID: 0}
   input:
   - 4
   ItemPrice: 8
@@ -26,4 +26,4 @@ MonoBehaviour:
   ConflictingItems: []
   IsSynthesisItem: 1
   SynthesisRequirements:
-  - {fileID: 11400000, guid: ddd4b72b40f32674b864e588317b063b, type: 2}
+  - {fileID: 11400000, guid: b8a871a83f2bbea4ca623667bf59f7af, type: 2}

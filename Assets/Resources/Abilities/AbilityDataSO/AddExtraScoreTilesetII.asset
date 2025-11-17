@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemID: AddExtraScoreTilesetII
   Description: "\uCD94\uAC00 \uC810\uC218 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774
     \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
+  ItemIcon: {fileID: 0}
   input:
   - 6
   ItemPrice: 6
@@ -26,4 +26,4 @@ MonoBehaviour:
   ConflictingItems: []
   IsSynthesisItem: 1
   SynthesisRequirements:
-  - {fileID: 11400000, guid: f3130e97860ecd146be48cafb06f39d7, type: 2}
+  - {fileID: 11400000, guid: 65b65ffeabfd01846a94fbbfad0d2be5, type: 2}

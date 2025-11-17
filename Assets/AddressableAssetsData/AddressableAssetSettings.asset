@@ -15,9 +15,9 @@ MonoBehaviour:
   m_DefaultGroup: 8255203933a94af4195338823ac2f0f6
   m_currentHash:
     serializedVersion: 2
-    Hash: 2580aa239ce571571a535111303ee298
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
-  m_BuildRemoteCatalog: 0
+  m_BuildRemoteCatalog: 1
   m_CatalogRequestsTimeout: 0
   m_DisableCatalogUpdateOnStart: 0
   m_InternalIdNamingMode: 0
@@ -34,7 +34,7 @@ MonoBehaviour:
   m_EnableJsonCatalog: 0
   m_NonRecursiveBuilding: 1
   m_AllowNestedBundleFolders: 0
-  m_CCDEnabled: 0
+  m_CCDEnabled: 1
   m_maxConcurrentWebRequests: 3
   m_UseUWRForLocalBundles: 0
   m_BundleTimeout: 0
@@ -49,18 +49,20 @@ MonoBehaviour:
   mBuiltInBundleCustomNaming: 
   m_MonoScriptBundleNaming: 0
   m_CheckForContentUpdateRestrictionsOption: 0
+  m_BuildAndReleaseBinFileOption: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
-    m_Id: 
+    m_Id: c4da9aebc46cbf341811bb4e952d65fc
   m_RemoteCatalogLoadPath:
-    m_Id: 
-  m_ContentStateBuildPathProfileVariableName: 
+    m_Id: fbaf3228156e6bc4c8675083ec3ce94d
+  m_ContentStateBuildPathProfileVariableName: <default settings path>
   m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
   m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
   - {fileID: 11400000, guid: 173dd75d11c6a0c48aacb14c0cc69353, type: 2}
+  - {fileID: 11400000, guid: 89b73ae5d383b714482de49fd4a1109e, type: 2}
   m_BuildSettings:
     m_LogResourceManagerExceptions: 1
     m_BundleBuildPath: Temp/com.unity.addressables/AssetBundles
@@ -79,7 +81,7 @@ MonoBehaviour:
       - m_Id: c4da9aebc46cbf341811bb4e952d65fc
         m_Value: 'ServerData/[BuildTarget]'
       - m_Id: fbaf3228156e6bc4c8675083ec3ce94d
-        m_Value: <undefined>
+        m_Value: 'https://95adf838725cb19ca33abb2eae885ffd.r2.cloudflarestorage.com/honeycombo/[BuildTarget]'
     m_ProfileEntryNames:
     - m_Id: 03076361152a89646a16c194a6107b79
       m_Name: Local.LoadPath
@@ -100,10 +102,13 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - AbilitySO
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 31d0549fdf29e824586f9baf95a2fea6, type: 2}
-  m_InitializationObjects: []
+  - {fileID: 11400000, guid: 3d8e2e9034322c34ba057f5b8908cd3d, type: 2}
+  m_InitializationObjects:
+  - {fileID: 11400000, guid: ed8fd6eef8b181a49a69587695b81457, type: 2}
   m_CertificateHandlerType:
     m_AssemblyName: 
     m_ClassName: 
@@ -112,4 +117,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 776fe98d02cc4b544825eb68349c5acb, type: 2}
   - {fileID: 11400000, guid: 796fa55775a8ff646a40e16951f31ba4, type: 2}
   - {fileID: 11400000, guid: 93633de7f5e844f4fac5e4bc52f2e3b6, type: 2}
+  - {fileID: 11400000, guid: 83a343d3d4c6b204a9102b37ebe2acd3, type: 2}
   m_ActiveProfileId: 0eeb409de9b45a0428a34e84207d06f1
+  m_CcdManagedData:
+    EnvironmentId: 
+    EnvironmentName: 
+    BucketId: 
+    Badge: 
+    State: 0

@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemID: IncreaseExplosionRangeII
   Description: "\uD3ED\uD0C4\uC758 \uD3ED\uD314 \uBC94\uC704\uAC00 2\uB9CC\uD07C
     \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
+  ItemIcon: {fileID: 0}
   input:
   - 2
   ItemPrice: 12
@@ -26,4 +26,4 @@ MonoBehaviour:
   ConflictingItems: []
   IsSynthesisItem: 1
   SynthesisRequirements:
-  - {fileID: 11400000, guid: 85a3474aa76ee4d44b644d84ecb703ae, type: 2}
+  - {fileID: 11400000, guid: 234223e85cb1b2f4dbe9d1b2951274f9, type: 2}
