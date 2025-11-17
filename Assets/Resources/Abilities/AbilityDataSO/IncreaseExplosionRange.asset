@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: IncreaseExplosionRange
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 3
-  Rarity: 1
+  Rarity: 2
   ItemName: "\uD3ED\uBC1C \uBC94\uC704 \uC99D\uAC00"
   ItemID: IncreaseExplosionRange
   Description: "\uD3ED\uD0C4\uC758 \uD3ED\uBC1C \uBC94\uC704\uAC00 1\uB9CC\uD07C

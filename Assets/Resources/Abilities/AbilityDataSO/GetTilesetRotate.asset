@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GetTilesetRotate
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 15
-  Rarity: 0
+  Rarity: 1
   ItemName: "\uD0C0\uC77C \uD68C\uC804 \uC544\uC774\uD15C \uD68D\uB4DD"
   ItemID: GetTilesetRotate
   Description: "\uD0C0\uC77C \uD68C\uC804 \uC0AC\uC6A9 \uC544\uC774\uD15C \uD68D\uB4DD"
