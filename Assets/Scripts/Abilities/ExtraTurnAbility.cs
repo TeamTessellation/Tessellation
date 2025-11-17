@@ -24,14 +24,9 @@ public class ExtraTurnAbility : AbilityBase
     {
         base.OnAbilityApplied();
         
-
         PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
 
-        Debug.Log($"{_extraTurn}");
-        
-        playerStatus.CurrentExtraTurns = _extraTurn;
-        
-        Debug.Log($"{playerStatus.CurrentExtraTurns}");
+        playerStatus.CurrentExtraTurns += _extraTurn;
     }
 
     protected override void OnAbilityRemoved()
@@ -40,6 +35,6 @@ public class ExtraTurnAbility : AbilityBase
         
         PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
 
-        playerStatus.CurrentExtraTurns = 0;
+        playerStatus.CurrentExtraTurns -= _extraTurn;
     }
 }

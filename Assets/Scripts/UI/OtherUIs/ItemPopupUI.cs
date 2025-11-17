@@ -23,6 +23,7 @@ namespace UI.OtherUIs
         [SerializeField] private TextMeshProUGUI itemDescription;
         [SerializeField] private TextMeshProUGUI costText;
         [SerializeField] private TextMeshProUGUI buySellText;
+        [SerializeField] private TextMeshProUGUI disactiveText;
         [SerializeField] private Button buySellButton;
         [SerializeField] private Button backButton;
 
@@ -92,6 +93,17 @@ namespace UI.OtherUIs
             if (buySellText != null)
             {
                 buySellText.text = isForBuy ? "구매" : "판매";
+            }
+
+            if (!UIManager.Instance.ShopUI.gameObject.activeSelf)
+            {
+                buySellButton.interactable = false;
+                disactiveText.gameObject.SetActive(true);
+            }
+            else
+            {
+                buySellButton.interactable = true;
+                disactiveText.gameObject.SetActive(false);
             }
         }
 
@@ -170,6 +182,7 @@ namespace UI.OtherUIs
         {
             GameManager.Instance.PlayerStatus.inventory.RemoveAbilityByData(_abilityData);
             GameManager.Instance.PlayerStatus.CurrentCoins += _abilityData.ItemPrice;
+            HidePopup().Forget();
         }
 
         private void OnBackButtonClicked()
