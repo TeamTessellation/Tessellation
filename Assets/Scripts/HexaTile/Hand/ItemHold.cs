@@ -46,11 +46,11 @@ public class ItemHold : MonoBehaviour, IPoolAble
         Amount.text = amount.ToString();
     }
 
-    public void RegisterClickEvent(Action<InputManager.eActiveItemType> action, InputManager.eActiveItemType item)
+    public void RegisterClickEvent(Action action, InputManager.eActiveItemType item)
     {
         SetItemIcon(item);
         var entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
-        entry.callback.AddListener((data) => action?.Invoke(item));
+        entry.callback.AddListener((data) => action?.Invoke());
         _eventTrigger.triggers = null;
         _eventTrigger.triggers.Add(entry);
     }
