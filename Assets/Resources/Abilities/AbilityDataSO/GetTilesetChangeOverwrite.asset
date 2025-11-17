@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GetTilesetChangeOverwrite
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 16
-  Rarity: 0
+  Rarity: 1
   ItemName: "\uC720\uB839 \uD0C0\uC77C \uBCC0\uD658 \uC544\uC774\uD15C \uD68D\uB4DD"
   ItemID: GetTilesetChangeOverwrite
   Description: "\uC720\uB839 \uD0C0\uC77C \uBCC0\uD658 \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AddBombTilesetII
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 2
-  Rarity: 1
+  Rarity: 2
   ItemName: "\uD3ED\uD0C4 \uD0C0\uC77C \uD68D\uB4DD II"
   ItemID: AddBombTilesetII
   Description: "\uD3ED\uD0C4 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."

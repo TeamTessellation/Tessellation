@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AddGoldTilesetIII
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 8
-  Rarity: 2
+  Rarity: 3
   ItemName: "\uACE8\uB4DC \uD0C0\uC77C \uD68D\uB4DD III"
   ItemID: AddGoldTilesetIII
   Description: "\uACE8\uB4DC \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774 \uC870\uAE08
