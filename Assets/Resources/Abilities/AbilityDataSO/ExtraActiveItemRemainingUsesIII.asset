@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExtraActiveItemRemainingUsesIII
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 1
-  Rarity: 2
+  Rarity: 3
   ItemName: "\uC0AC\uC6A9 \uC544\uC774\uD15C \uCD94\uAC00 \uD69F\uC218 III"
   ItemID: ExtraActiveItemRemainingUsesIII
   Description: "\uC0AC\uC6A9 \uC544\uC774\uD15C \uD69F\uC218\uB97C 4\uB9CC\uD07C

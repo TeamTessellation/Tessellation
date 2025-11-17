@@ -1852,6 +1852,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9159907652760318456, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: _shopItemSelector._rarityWeights.Array.data[0].Rarity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159907652760318456, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: _shopItemSelector._rarityWeights.Array.data[1].Rarity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159907652760318456, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: _shopItemSelector._rarityWeights.Array.data[2].Rarity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159907652760318456, guid: 60ea09faebb3e924abd3f59ec3c81455, type: 3}
+      propertyPath: _shopItemSelector._rarityWeights.Array.data[3].Rarity
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

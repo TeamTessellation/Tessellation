@@ -24,6 +24,7 @@ namespace UI.OtherUIs
         
         [Header("Shop Settings")]
         [SerializeField] private int itemCount = 4;
+        [SerializeField] private TextMeshProUGUI rerollCostText;
 
         [Header("Visual Settings")] 
         public Color NormalRarityColor;
@@ -49,6 +50,9 @@ namespace UI.OtherUIs
         [Header("Buttons")] 
         [SerializeField] private Button _rerollButton;
         [SerializeField] private Button _skipButton;
+        [SerializeField] private float rerollCooldown = 1.2f;
+        private int _rerollCount = 0;
+        private bool _isRerollOnCooldown = false;
         
         [SerializeField] private ShopItemSelector _shopItemSelector = new ShopItemSelector();
         [SerializeField] private List<Vector2> entryOriginPosition = new List<Vector2>();
@@ -129,6 +133,7 @@ namespace UI.OtherUIs
 
         private void OnEnable()
         {
+            _rerollCount = 0;
             InteractionManager.Instance.ConfirmEvent += OnConfirmed;
         }
         private void OnDisable()
@@ -187,11 +192,32 @@ namespace UI.OtherUIs
         
         private void OnRerollButtonClicked()
         {
+            // 쿨다운 체크
+            if (_isRerollOnCooldown) return;
+            
+            // 재화 체크
+            int currentRerollCost = 3 + _rerollCount * 2;
+            if (GameManager.Instance.PlayerStatus.CurrentCoins >= currentRerollCost)
+            {
+                GameManager.Instance.PlayerStatus.CurrentCoins -= currentRerollCost;
+                _rerollCount++;
+                rerollCostText.text = (3 + _rerollCount * 2).ToString();
+            }
+            else return;
+            
             OnConfirmed();
             
             RefreshShopItems();
 
             PlayEntryAnimation(_tokenSource.Token).Forget();
+            StartRerollCooldown(_tokenSource.Token).Forget();
+        }
+
+        private async UniTask StartRerollCooldown(CancellationToken token)
+        {
+            _isRerollOnCooldown = true;
+            await UniTask.Delay(TimeSpan.FromSeconds(rerollCooldown), cancellationToken: token);
+            _isRerollOnCooldown = false;
         }
 
         private void OnSkipButtonClicked()

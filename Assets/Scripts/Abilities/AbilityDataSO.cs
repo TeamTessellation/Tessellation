@@ -10,6 +10,7 @@ namespace Abilities
     [Serializable]
     public enum eRarity
     {
+        None,
         Normal,
         Rare,
         Epic,

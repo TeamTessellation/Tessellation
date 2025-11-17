@@ -67,34 +67,43 @@ public class ShopItemSelector
         // 반복하며 확률계산 및 선택
         for(int i = 0; i < itemCount; i++)
         {
-            eRarity selectedRarity = SelectRarityByWeight();
-            
-            // 해당 등급 아이템 있는지 확인
-            if (abilitiesByRarity.TryGetValue(selectedRarity, out List<AbilityDataSO> abilities)
-                && abilities.Count > 0)
-            {
-                int randIdx = UnityEngine.Random.Range(0, abilities.Count);
-                AbilityDataSO selected = abilities[randIdx];
-                
-                selectedAbilities.Add(selected);
-                Debug.Log($"뽑힌 아이템 : {selected.ItemName}");
-                abilities.RemoveAt(randIdx);
-            }
-            // 없다면 다른 등급 아이템 찾는다
-            else
-            {
-                // TODO
-                // 다시 뽑는 로직 만들어야하는데 지금은 귀찮다.
-                Debug.Log($"{selectedRarity.ToString()}의 어떤 어빌리티를 뽑았다 치자.");
-                selectedAbilities.Add(null);
-            }
+            AbilityDataSO selectedAbility = SelectRandomAbility(abilitiesByRarity);
+
+            selectedAbilities.Add(selectedAbility);
         }
 
         return selectedAbilities;
     }
-    
-    
 
+    private AbilityDataSO SelectRandomAbility(Dictionary<eRarity, List<AbilityDataSO>> abilitiesByRarity)
+    {
+        HashSet<eRarity> excludedRarities = new HashSet<eRarity>();
+
+        while (true)
+        {
+            eRarity selectedRarity = SelectRarityByWeight(excludedRarities);
+            
+            // 모든 등급이 제외되었다면..
+            if (selectedRarity == eRarity.None)
+            {
+                return null;
+            }
+
+            if (abilitiesByRarity.TryGetValue(selectedRarity, out List<AbilityDataSO> abilities) && abilities.Count > 0)
+            {
+                int randIdx = UnityEngine.Random.Range(0, abilities.Count);
+                AbilityDataSO selected = abilities[randIdx];
+                abilities.RemoveAt(randIdx);
+                return selected;
+            }
+            
+            // 가져올 아이템이 없다면 제외 리스트에 추가, while문 다시 돈다
+            excludedRarities.Add(selectedRarity);
+        }
+    }
+
+    
+    
     /// <summary>
     /// 현재 상태에서 상점에 나타날 수 있는 어빌리티들을 거른다
     /// </summary>
@@ -166,13 +175,29 @@ public class ShopItemSelector
         return false;
     }
 
-    private eRarity SelectRarityByWeight()
+    private eRarity SelectRarityByWeight(HashSet<eRarity> excludedRarities)
     {
-        float totalWeight = _rarityWeights.Sum(w => w.Weight);
+        List<RarityWeight> validWeights = new List<RarityWeight>();
+
+        foreach (var weight in _rarityWeights)
+        {
+            if (!excludedRarities.Contains(weight.Rarity))
+            {
+                validWeights.Add(weight);
+            }
+        }
+
+        // 모든 등급이 제외되었다면 특수 아이템 표시
+        if (validWeights.Count == 0)
+        {
+            return eRarity.None;
+        }
+        
+        float totalWeight = validWeights.Sum(w => w.Weight);
         float randomValue = UnityEngine.Random.Range(0f, totalWeight);
         float cumulativeWeight = 0f;
 
-        foreach (RarityWeight weight in _rarityWeights)
+        foreach (RarityWeight weight in validWeights)
         {
             cumulativeWeight += weight.Weight;
             if (randomValue <= cumulativeWeight)
@@ -181,6 +206,6 @@ public class ShopItemSelector
             }
         }
 
-        return eRarity.Normal;
+        return validWeights[0].Rarity;
     }
 }

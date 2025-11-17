@@ -105,8 +105,23 @@ namespace Player
         /// </summary>
         /// <param name="abilityData"></param>
         /// <returns></returns>
-        public bool AddAbility(AbilityDataSO abilityData)
+        public (bool success, string message) AddAbility(AbilityDataSO abilityData)
         {
+            // 해당하는 아이템과 충돌하는 아이템이 있는지 확인한다
+            if (abilityData.ConflictingItems != null && abilityData.ConflictingItems.Length > 0)
+            {
+                foreach (AbilityDataSO conflictItem in abilityData.ConflictingItems)
+                {
+                    foreach (var ownedAbility in _abilities)
+                    {
+                        if (ownedAbility.DataSO.ItemID == conflictItem.ItemID)
+                        {
+                            return (false, $"{conflictItem.ItemName}, {abilityData.ItemName} 이 둘은\n동시에 보유할 수 없습니다!");
+                        }
+                    }
+                }
+            }
+            
             // abilityData SynthesisRequirements에 해당하는 어빌리티들을 제거하기
             if (abilityData.SynthesisRequirements != null)
             {
@@ -120,12 +135,12 @@ namespace Player
             if (_currentAbilityCount >= _maxAbilityCount)
             {
                 Debug.Log("인벤토리가 Max입니다");
-                return false;
+                return (false, "인벤토리가 가득 찼습니다!\n아이템을 판매해주세요");
             }
             
             // AbilityFactory 통해서 Ability 생성
             AbilityBase newAbility = AbilityFactory.Create(abilityData);
-            if (newAbility == null) return false;
+            if (newAbility == null) return (false, $"AbilityFactory에 해당하는 Ability가 등록되지 않았습니다!\nItemName : {abilityData.ItemName}}}");
             newAbility.Initialize(Handler);
             
             // 맨 앞 빈곳에 생성한 어빌리티 추가
@@ -142,7 +157,7 @@ namespace Player
             // 빈칸 없도록 어빌리티들을 앞으로 압축하기
             RefreshInventory();
 
-            return true;
+            return (true, "Success");
         }
 
         public void RemoveAbilityByData(AbilityDataSO abilityData)

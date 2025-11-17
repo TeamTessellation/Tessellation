@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AddExtraScoreTileset
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 6
-  Rarity: 0
+  Rarity: 1
   ItemName: "\uCD94\uAC00 \uC810\uC218 \uD0C0\uC77C \uD68D\uB4DD"
   ItemID: AddExtraScoreTileset
   Description: "\uCD94\uAC00 \uC810\uC218 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774

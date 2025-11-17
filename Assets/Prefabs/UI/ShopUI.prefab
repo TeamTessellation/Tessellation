@@ -88,6 +88,7 @@ MonoBehaviour:
   - {fileID: 4442276469042321375}
   - {fileID: 585437464073674443}
   itemCount: 4
+  rerollCostText: {fileID: 3209178429094651118}
   NormalRarityColor: {r: 0.42352942, g: 0.42352942, b: 0.42352942, a: 0}
   RareRarityColor: {r: 0.3529412, g: 0.8666667, b: 0.44705883, a: 0}
   EpicRarityColor: {r: 0.3529412, g: 0.27058825, b: 1, a: 0}
@@ -102,15 +103,16 @@ MonoBehaviour:
   buttonShrinkEase: 26
   _rerollButton: {fileID: 1945664825167105499}
   _skipButton: {fileID: 7141856066534161665}
+  rerollCooldown: 1.2
   _shopItemSelector:
     _rarityWeights:
-    - Rarity: 0
-      Weight: 68
     - Rarity: 1
-      Weight: 22
+      Weight: 68
     - Rarity: 2
-      Weight: 5
+      Weight: 22
     - Rarity: 3
+      Weight: 5
+    - Rarity: 4
       Weight: 5
   entryOriginPosition: []
 --- !u!225 &1877105503286013489
