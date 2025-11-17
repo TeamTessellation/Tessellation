@@ -36,6 +36,8 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     private ItemHold _itemHold;
 
+    public bool IsLock = false;
+
     public bool ReadyItem => (_readyItem != eActiveItemType.End);
     private eActiveItemType _readyItem;
 
@@ -43,6 +45,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
     {
         Instance = this;
         _dataReady = false;
+        IsLock = false;
         _readyItem = eActiveItemType.End;
     }
 
@@ -79,8 +82,23 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
         UseItem(target);
     }
 
+    public void LockItem()
+    {
+        IsLock = true;
+        _itemHold.LockItem();
+    }
+
+    public void UnLockItem()
+    {
+        IsLock = false;
+        _itemHold.UnLockItem();
+    }
+
     private void UseItem(HandBox target)
     {
+        if (IsLock)
+            return;
+
         if (PlayerStatus.Current.inventory.currentItemCount <= 0)
             return;
 
@@ -97,6 +115,9 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     public void SetItem(eActiveItemType item)
     {
+        if (IsLock)
+            return;
+
         if (PlayerStatus.Current.inventory.currentItemCount <= 0)
             return;
 

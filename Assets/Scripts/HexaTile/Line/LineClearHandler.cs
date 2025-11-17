@@ -69,7 +69,7 @@ public class LineClearHandler
         }
 
         Coordinate correctCoor = start;
-        while (Field.Instance.CheckAbleCoor(correctCoor) && Field.Instance.GetTile(correctCoor) != null)
+        while (Field.Instance.CheckAbleCoor(correctCoor) && Field.Instance.ClearAble(correctCoor))
         {
             correctCoor += up;
         }
@@ -80,7 +80,7 @@ public class LineClearHandler
             result = correctCoor - up;
 
         correctCoor = start;
-        while (Field.Instance.CheckAbleCoor(correctCoor) && Field.Instance.GetTile(correctCoor) != null)
+        while (Field.Instance.CheckAbleCoor(correctCoor) && Field.Instance.ClearAble(correctCoor))
         {
             correctCoor += down;
         }

@@ -19,6 +19,8 @@ namespace UI.MainUIs
 
         [field:SerializeField] public Transform IngameInventoryPosition { get; private set; }
         [field:SerializeField] public Transform ShopInventoryPosition { get; private set; }
+        [field: SerializeField] public TMP_Text LimitText { get; private set; }
+        [field: SerializeField] public GameObject LimitIcon { get; private set; }
 
         protected override void Awake()
         {
@@ -62,6 +64,18 @@ namespace UI.MainUIs
         {
             Show();
             currentStageText.text = args.StageModel.StageName;
+
+            if (args.StageModel.IsBoss)
+            {
+                LimitText.text = LimitHandler.Instance.GetLimitText();
+                LimitIcon.SetActive(true);
+            }
+            else
+            {
+                LimitText.text = "";
+                LimitIcon.SetActive(false);
+            }
+
             return UniTask.CompletedTask;
         }
 

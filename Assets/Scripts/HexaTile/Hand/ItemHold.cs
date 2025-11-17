@@ -14,12 +14,24 @@ public class ItemHold : MonoBehaviour, IPoolAble
     public TMP_Text Amount;
     private EventTrigger _eventTrigger;
     private Image _image;
+    public GameObject LockIcon;
 
     private void Awake()
     {
         _eventTrigger = transform.GetComponent<EventTrigger>();
         _image = transform.GetChild(0).GetComponent<Image>();
     }
+
+    public void LockItem()
+    {
+        LockIcon.SetActive(true);
+    }
+
+    public void UnLockItem()
+    {
+        LockIcon.SetActive(false);
+    }
+
     public void SetItemIcon(InputManager.eActiveItemType item)
     {
         _image.color = new Color(1, 1, 1, 1);
