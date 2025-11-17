@@ -492,6 +492,7 @@ GameObject:
   - component: {fileID: 2025349027}
   - component: {fileID: 2025349030}
   - component: {fileID: 2025349031}
+  - component: {fileID: 2025349032}
   m_Layer: 0
   m_Name: '@TurnManager'
   m_TagString: Untagged
@@ -511,7 +512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421e043786eb35641996ca67c067ba9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandManager
-  originDeckSO: {fileID: 11400000, guid: 6204ca29b3f2a874a94602fdddddba86, type: 2}
+  originDeckSO: {fileID: 11400000, guid: 6a65295eef7d2f24ea6140e04d67d1d4, type: 2}
   DeckSO: {fileID: 0}
   StageDeckSO: {fileID: 0}
 --- !u!114 &2025349028
@@ -554,6 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 962176484a4e12d4eb6683c99b1e6da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
+  IsLock: 0
 --- !u!114 &2025349031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,6 +569,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TilePlaceHandler
   tileRemoveInterval: 0.1
+--- !u!114 &2025349032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025349026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc5a50eb433f494c99c9ebd0dee8f06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LimitHandler
+  ScoreIncrease: 1.5
+  CurrentLimit: 0
 --- !u!1 &2094400910
 GameObject:
   m_ObjectHideFlags: 0

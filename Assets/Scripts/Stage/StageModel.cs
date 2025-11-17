@@ -18,6 +18,7 @@ namespace Stage
         [field:SerializeField] public int StageLevel {set; get; }
         [field:SerializeField] public int StageTargetScore {set; get; }
         [field:SerializeField] public int StageTurnLimit {set; get; } = 6;
+        [field: SerializeField] public bool IsBoss { set; get; } = false;
 
         public bool IsInfiniteTurn => StageTurnLimit <= 0;
         
@@ -69,10 +70,12 @@ namespace Stage
             if (b == 4)
             {
                 stageModel.StageName = $"{a}-?";
+                stageModel.IsBoss = true;
             }
             else
             {
                 stageModel.StageName = $"{a}-{b}";
+                stageModel.IsBoss = false;
             }
             stageModel.StageWorld = a;
             stageModel.StageLevel = b;

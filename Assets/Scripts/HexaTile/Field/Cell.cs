@@ -1,14 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class Cell
 {
     public GameObject BG { get; private set; }
+    public GameObject Lock { get; private set; }
     public Tile Tile { get; private set; }
     public bool IsEmpty => Tile == null;
+    public bool IsLock = false;
     public Coordinate Coor { get; private set; }
 
     private Transform _cellRoot;
+
+    [Header("Lock Effect")]
+    Ease Ease = Ease.Linear;
+    float Duration = 0.5f;
 
     // 최소 Cell 세팅
     public void Init(Coordinate coor, Transform bgRoot, Transform cellRoot)
@@ -18,6 +27,7 @@ public class Cell
         BG.transform.SetParent(bgRoot);
         BG.transform.localPosition = coor.ToWorld();
         Tile = null;
+        IsLock = false;
         _cellRoot = cellRoot;
     }
 
@@ -36,6 +46,36 @@ public class Cell
     {
         if (!IsEmpty) Pool<Tile>.Return(Tile);
         Tile = null;
+    }
+
+    public void LockCell(Transform lockRoot)
+    {
+        UnSet();
+        Lock = Pool.Get("LockTile");
+        Lock.transform.SetParent(lockRoot);
+        Lock.transform.localPosition = Coor.ToWorld();
+        IsLock = true;
+        LockEffect().Forget();
+    }
+
+    private async UniTask LockEffect()
+    {
+        Lock.transform.localScale = new(0, 0, 1);
+
+        float progress = 0;
+        await DOTween.To(() => progress, x => { Lock.transform.localScale = new(progress, progress, 1); progress = x; }, 1, Duration)
+            .SetEase(Ease)
+            .ToUniTask();
+
+        Lock.transform.localScale = Vector3.one;
+    }
+
+    public void UnLock()
+    {
+        if (!IsLock)
+            return;
+        IsLock = false;
+        Pool.Return(Lock);
     }
     
     public void SetSize(float size)

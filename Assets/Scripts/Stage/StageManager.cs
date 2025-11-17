@@ -65,6 +65,7 @@ namespace Stage
         /// </summary>
         public void EndStage(CancellationToken cancellationToken)
         {
+            LimitHandler.Instance.UnLimit();
             EndStageAsync(cancellationToken).Forget();
         }
 
@@ -145,7 +146,10 @@ namespace Stage
             // 제약 적용
             // # 스테이지 모델에 정의된 제약 조건들을 필드에 적용
             // # TODO : 현재 없음
-            
+            if (_currentStage.IsBoss) // 보스라면 제약 시작
+            {
+                LimitHandler.Instance.SetLimit(); // 일단은 내부에서 랜덤으로 선택해서 제약 진행
+            }
 
 
             

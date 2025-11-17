@@ -59,6 +59,7 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
 
     [HideInInspector] public Transform CellRoot;
     [HideInInspector] public Transform CellBGRoot;
+    [HideInInspector] public Transform LockRoot;
 
     private static Field _instance;
     private Dictionary<Coordinate, Cell> _allCell;
@@ -83,6 +84,30 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
         _instance = this;
         InitField();
         SaveLoadManager.RegisterPendingSavable(this);
+    }
+
+    public void LockCell(int count)
+    {
+        var cells = _allCell.Keys.ToArray();
+
+        HashSet<int> targets = new();
+
+        while (targets.Count < count)
+        {
+            int target = UnityEngine.Random.Range(0, cells.Length);
+            targets.Add(target);
+        }
+
+        foreach(var target in targets)
+        {
+            _allCell[cells[target]].LockCell(LockRoot);
+        }
+    }
+
+    public void UnLockAllCell()
+    {
+        foreach (var cell in _allCell.Values)
+            cell.UnLock();
     }
 
     public bool TryPlaceAllTileSet(List<HandBox> handBoxs, bool canRotate, int count)
@@ -156,6 +181,8 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
             { CellRoot = childs[i]; continue; }
             else if (childs[i].name == "@CellBGRoot")
             { CellBGRoot = childs[i]; continue; }
+            else if (childs[i].name == "@LockRoot")
+            { LockRoot = childs[i]; continue; }
         }
     }
 
@@ -238,7 +265,7 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
 
     public async UniTask SafeRemoveTile(Coordinate coor, Action<Tile> remainAction = null, float sfx_pitch = 1f)
     {
-        if (CheckAbleCoor(coor) && !_allCell[coor].IsEmpty)
+        if (CheckAbleCoor(coor) && !_allCell[coor].IsEmpty && !_allCell[coor].IsLock)
         {
             var cell = _allCell[coor];
             SoundManager.Instance.PlaySfx(SoundReference.TileClear, pitch:sfx_pitch);
@@ -403,6 +430,9 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
     {
         if (CheckAbleCoor(coor)) // 원형 범위 안에 있는지 체크
         {
+            if (_allCell[coor].IsLock)
+                return false;
+
             // 안에 있다면 타일 체크 해야겠지~
             if (!_allCell[coor].IsEmpty && tile.Data.Option != TileOption.Force)
                 return false;
@@ -441,6 +471,8 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
     /// <param name="coor">원하는 위치</param>
     /// <returns>배치 된 타일 (없으면 null)</returns>
     public Tile GetTile(Coordinate coor) => _allCell[coor].Tile;
+
+    public bool ClearAble(Coordinate coor) => (_allCell[coor].Tile != null || _allCell[coor].IsLock);
 
     /// <summary>
     /// 해당 coor이 맵 안에 위치한지 판별한다
