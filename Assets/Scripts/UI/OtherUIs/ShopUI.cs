@@ -230,6 +230,8 @@ namespace UI.OtherUIs
         /// </summary>
         private void OnConfirmed()
         {
+            if (_isSkipping == true) return;
+            
             foreach (var tween in currentTweenList)
             {
                 if(tween.IsActive() && tween.IsPlaying())

@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using Machamy.Utils;
 using NUnit.Framework;
 using Player;
+using SaveLoad;
 using Stage;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -13,7 +14,7 @@ using UnityEngine.Serialization;
 namespace Player
 {
     [Serializable]
-    public class PlayerInventory
+    public class PlayerInventory : ISaveTarget
     {
         
         /// <summary>
@@ -25,7 +26,7 @@ namespace Player
         [Tooltip("현재 적용중인 어빌리티")]
         [SerializeReference] private List<AbilityBase> _abilities = new List<AbilityBase>();
         
-        [SerializeField] private int _currentAbilityCount = 0;
+        [SerializeField] public int _currentAbilityCount = 0;
         [SerializeField] private int _maxAbilityCount = 5;
 
         public InputManager.eActiveItemType CurrentItem { get; private set; }
@@ -60,6 +61,17 @@ namespace Player
             }
         }
 
+        public void Reset()
+        {
+            // 아이템 전부 지워준다
+            for (int i = 0; i < _maxAbilityCount; i++)
+            {
+                RemoveAbilityByIndex(i);
+            }
+        }
+
+        
+        
         public void SetActiveItem(InputManager.eActiveItemType activeItemType, int itemAmount)
         {
             CurrentItem = activeItemType;
@@ -114,7 +126,6 @@ namespace Player
                 {
                     if (_abilities == null)
                     {
-                        Debug.Log("KExuxuxuxuxu");
                         continue;
                     }
                     foreach (var ownedAbility in _abilities)
@@ -251,6 +262,41 @@ namespace Player
                 }
             }
         }
+
+        public Guid Guid { get; init; }
         
+        public void LoadData(GameData data)
+        {
+            if (_abilities == null)
+            {
+                _abilities = new List<AbilityBase>();
+            }
+            
+            if (data.InventoryIds != null && data.InventoryIds.Count > 0)
+            {
+                for (int i = 0; i < data.InventoryIds.Count; i++)
+                {
+                    string itemId = data.InventoryIds[i];
+
+                    Debug.Log(itemId);
+                    AbilityDataSO dataSo = Resources.Load<AbilityDataSO>($"Abilities/AbilityDataSO/{itemId}");
+
+                    AddAbility(dataSo);
+                }
+            }
+            Debug.Log("빨라");
+            
+            RefreshInventory();
+        }
+
+        public void SaveData(ref GameData data)
+        {
+            data.InventoryIds = new List<string>();
+            for (int i = 0; i < _abilities.Count; i++)
+            {
+                if(_abilities[i] != null)
+                    data.InventoryIds.Add(_abilities[i].DataSO.ItemID);
+            }
+        }
     }
 }

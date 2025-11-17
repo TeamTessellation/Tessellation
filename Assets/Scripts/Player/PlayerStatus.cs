@@ -56,6 +56,7 @@ namespace Player
             {
                 Variables.SetInteger(key.ToString(), 0);
             }
+            CurrentCoins = 0;
         }
 
         public enum VariableKey
@@ -332,7 +333,6 @@ namespace Player
 
         public void LoadData(GameData data)
         {
-
             data.PlayerStatus.CopyTo(this);
             using var evt = ScoreManager.CurrentScoreChangedEventArgs.Get();
             evt.NewCurrentScore = this.StageTempScore;
@@ -340,10 +340,12 @@ namespace Player
             using var totalEvt = ScoreManager.TotalScoreChangedEventArgs.Get();
             totalEvt.NewTotalScore = this.StageScore;
             ExecEventBus<ScoreManager.TotalScoreChangedEventArgs>.InvokeMerged(totalEvt).Forget();
+            inventory.LoadData(data);
         }
 
         public void SaveData(ref GameData data)
         {
+            inventory.SaveData(ref data);
             data.PlayerStatus = new PlayerStatus();
             data.PlayerStatus.Reset();
             this.CopyTo(data.PlayerStatus);

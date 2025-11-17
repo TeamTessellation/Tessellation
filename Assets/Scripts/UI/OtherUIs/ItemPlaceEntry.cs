@@ -17,6 +17,8 @@ namespace UI.OtherUIs
         private Button _button;
         
         private AbilityDataSO _abilityData;
+
+
         protected override void OnEnable()
         {
             _button = GetComponent<Button>();
@@ -26,16 +28,17 @@ namespace UI.OtherUIs
             {
                 PlayerInventory inventory = GameManager.Instance.PlayerStatus.inventory;
                 inventory.OnInventorySlotChanged += OnInventorySlotChanged;
+                Debug.Log("늦어");
                 ClearSlot();
             }
             else
             {
-                UniTask.WaitUntil(() => GameManager.HasInstance).ContinueWith(() =>
-                {
-                    PlayerInventory inventory = GameManager.Instance.PlayerStatus.inventory;
-                    inventory.OnInventorySlotChanged += OnInventorySlotChanged;
-                    ClearSlot();
-                }).Forget();
+                // UniTask.WaitUntil(() => GameManager.HasInstance).ContinueWith(() =>
+                // {
+                //     PlayerInventory inventory = GameManager.Instance.PlayerStatus.inventory;
+                //     inventory.OnInventorySlotChanged += OnInventorySlotChanged;
+                //     ClearSlot();
+                // }).Forget();
             }
         }
 
