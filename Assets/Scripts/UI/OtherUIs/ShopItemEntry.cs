@@ -1,5 +1,6 @@
 using Abilities;
 using Core;
+using Cysharp.Threading.Tasks;
 using Player;
 using TMPro;
 using Unity.VisualScripting;
@@ -94,33 +95,13 @@ namespace UI.OtherUIs
             {
                 return;
             }
-            PurchaseItem();
-        }
-        
-        private void PurchaseItem()
-        {
-            PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
-
-            // 구매 가능한지 체크
-            bool canPurchase = playerStatus.CurrentCoins >= _abilityData.ItemPrice;
-            if (canPurchase)
+            
+            ItemPopupUI popupUI = UIManager.Instance.ItemPopupUI;
+            if (popupUI != null)
             {
-                // 인벤토리에 아이템 추가를 시도해본다
-                bool canAdd;
-                string message;
-                (canAdd, message) = playerStatus.inventory.AddAbility(_abilityData);
-                if (canAdd)
-                {
-                    // 성공 시 돈 깎기
-                    playerStatus.CurrentCoins -= _abilityData.ItemPrice;
-                    
-                    // 버튼 비활성화
-                    DisableButton();
-                }
-                else
-                {
-                    Debug.Log(message);
-                }
+                Debug.Log("Clicked");
+                popupUI.Initialize(_abilityData, true);
+                popupUI.ShowPopUp().Forget();
             }
         }
 
