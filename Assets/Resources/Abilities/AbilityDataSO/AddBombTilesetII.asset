@@ -17,7 +17,7 @@ MonoBehaviour:
   ItemName: "\uD3ED\uD0C4 \uD0C0\uC77C \uD68D\uB4DD II"
   ItemID: AddBombTilesetII
   Description: "\uD3ED\uD0C4 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 6254025404137740749, guid: 9cbabab87c18d1343885fb6bd374426c, type: 3}
+  ItemIcon: {fileID: 0}
   input:
   - 6
   ItemPrice: 6
@@ -25,4 +25,4 @@ MonoBehaviour:
   ConflictingItems: []
   IsSynthesisItem: 1
   SynthesisRequirements:
-  - {fileID: 11400000, guid: 538cbad12b0f9604fa537f848f064b64, type: 2}
+  - {fileID: 11400000, guid: d0b5dd34ea8b06947b435774a627c6bc, type: 2}

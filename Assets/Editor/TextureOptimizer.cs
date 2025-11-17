@@ -15,7 +15,7 @@ public class TextureOptimizer : AssetPostprocessor
             overridden = true,
             maxTextureSize = 1024, // 모바일 고려
             format = TextureImporterFormat.DXT5,
-            compressionQuality = 80, // 품질 vs 크기 균형
+            compressionQuality = 65, // 품질 vs 크기 균형
             allowsAlphaSplitting = true
         };
         

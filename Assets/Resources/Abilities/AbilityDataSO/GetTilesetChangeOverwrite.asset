@@ -18,17 +18,17 @@ MonoBehaviour:
   ItemID: GetTilesetChangeOverwrite
   Description: "\uC720\uB839 \uD0C0\uC77C \uBCC0\uD658 \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744
     \uD68D\uB4DD\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
+  ItemIcon: {fileID: 0}
   input:
   - 3
   ItemPrice: 3
   CanAppearInShop: 1
   ConflictingItems:
-  - {fileID: 11400000, guid: 57a35405ecc75214f92f9f5c5561dff9, type: 2}
-  - {fileID: 11400000, guid: da09f913b1001104cbd061517cae133e, type: 2}
-  - {fileID: 11400000, guid: fa94783c5bfe5084da2e25903e47b766, type: 2}
-  - {fileID: 11400000, guid: 74e0b63013fdd1f46a5f824c810e1997, type: 2}
+  - {fileID: 11400000, guid: ca8141645485f5a46b4fd8d013cecdca, type: 2}
+  - {fileID: 11400000, guid: 99a968a115859e9438ab9f86ab15fe2d, type: 2}
+  - {fileID: 11400000, guid: 3671d7a83cf17db4a82e45f16e558c6c, type: 2}
+  - {fileID: 11400000, guid: 78fbc3bcd0e7aef4d8597648a0b1b589, type: 2}
   - {fileID: 11400000}
-  - {fileID: 11400000, guid: 2930bb44a6154064eb09c8ff1455943c, type: 2}
+  - {fileID: 11400000, guid: 8e4c4062001afe54cac63c925e64a708, type: 2}
   IsSynthesisItem: 0
   SynthesisRequirements: []

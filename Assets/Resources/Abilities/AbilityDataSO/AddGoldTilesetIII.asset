@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemID: AddGoldTilesetIII
   Description: "\uACE8\uB4DC \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774 \uC870\uAE08
     \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: -1338362430091448552, guid: 97aa594615bc96a4692b6aa26b96bb53, type: 3}
+  ItemIcon: {fileID: 0}
   input:
   - 9
   ItemPrice: 15
@@ -26,4 +26,4 @@ MonoBehaviour:
   ConflictingItems: []
   IsSynthesisItem: 1
   SynthesisRequirements:
-  - {fileID: 11400000, guid: 6b2741e8fb650e7499f7b7335bcac9c7, type: 2}
+  - {fileID: 11400000, guid: 24f901371826aaf4dae06c20ce67d499, type: 2}

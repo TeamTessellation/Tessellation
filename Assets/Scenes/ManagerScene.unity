@@ -224,7 +224,7 @@ MonoBehaviour:
         _maxAbilityCount: 5
         currentItemCount: 0
     SaveHistory:
-      _saves: []
+      rid: -2
     <Variables>k__BackingField:
       items:
         defaultKey: 
@@ -335,6 +335,53 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 572.7423, y: 1217.0168, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1430404321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1430404323}
+  - component: {fileID: 1430404322}
+  m_Layer: 0
+  m_Name: '@ResourceManager'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1430404322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430404321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9f2ea9cdf1e4a2aabe12a4f3f14c41d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Resource.ResourceManager
+  destroyPreExisting: 0
+  preloaLabels:
+  - AbilitySO
+--- !u!4 &1430404323
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430404321}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.63758, y: 1.27248, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -512,6 +559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandManager
   originDeckSO: {fileID: 11400000, guid: 6a65295eef7d2f24ea6140e04d67d1d4, type: 2}
   DeckSO: {fileID: 0}
+  StageDeckSO: {fileID: 0}
 --- !u!114 &2025349028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -718,3 +766,4 @@ SceneRoots:
   - {fileID: 1231704939}
   - {fileID: 2025349029}
   - {fileID: 2094400912}
+  - {fileID: 1430404323}

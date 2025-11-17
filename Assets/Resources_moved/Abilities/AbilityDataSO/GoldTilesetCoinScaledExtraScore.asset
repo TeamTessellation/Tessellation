@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9fc628945da38f43987756c6c3b7d49, type: 3}
+  m_Name: GoldTilesetCoinScaledExtraScore
+  m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
+  ItemType: 9
+  Rarity: 2
+  ItemName: "\uACE8\uB4DC \uD0C0\uC77C \uCD94\uAC00 \uC810\uC218"
+  ItemID: GoldTilesetCoinScaledExtraScore
+  Description: "\uACE8\uB4DC \uD0C0\uC77C\uC774 \uC9C0\uC6CC\uC9C8\uB54C \uD604\uC7AC
+    \uBCF4\uC720\uD55C \uCF54\uC778 \uC218 \uB9CC\uD07C \uCD94\uAC00 \uC810\uC218\uB97C
+    \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
+  input:
+  - 1
+  ItemPrice: 15
+  CanAppearInShop: 1
+  ConflictingItems: []
+  IsSynthesisItem: 0
+  SynthesisRequirements: []

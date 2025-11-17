@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9fc628945da38f43987756c6c3b7d49, type: 3}
+  m_Name: ExtraActiveItemRemainingUses
+  m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
+  ItemType: 1
+  Rarity: 0
+  ItemName: "\uC0AC\uC6A9 \uC544\uC774\uD15C \uCD94\uAC00 \uD69F\uC218"
+  ItemID: ExtraActiveItemRemainingUses
+  Description: "\uC0AC\uC6A9 \uC544\uC774\uD15C \uD69F\uC218\uB97C 1\uB9CC\uD07C
+    \uCD94\uAC00\uB85C \uC5BB\uC2B5\uB2C8\uB2E4."
+  ItemIcon: {fileID: 6599216199762700412, guid: 28a7c6c89771e0e4b8e2ffe73620107f, type: 3}
+  input:
+  - 1
+  ItemPrice: 3
+  CanAppearInShop: 1
+  ConflictingItems: []
+  IsSynthesisItem: 0
+  SynthesisRequirements: []

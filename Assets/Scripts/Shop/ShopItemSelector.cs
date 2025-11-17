@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using Abilities;
 using Core;
 using Machamy.Utils;
@@ -9,6 +10,7 @@ using Player;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
+using ResourceManager = Resource.ResourceManager;
 
 [Serializable]
 public class ShopItemSelector
@@ -36,7 +38,11 @@ public class ShopItemSelector
         {
             if (_abilities == null)
             {
-                _abilities = Resources.LoadAll<AbilityDataSO>("Abilities/AbilityDataSO").ToList();
+                if (ResourceManager.HasInstance)
+                {
+                    _abilities = ResourceManager.Instance.GetAllResourcesByLabel<AbilityDataSO>("AbilitySO").ToList();
+                }
+               
             }
             return _abilities;
         }

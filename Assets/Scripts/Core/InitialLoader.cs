@@ -139,6 +139,17 @@ namespace Core
             }
             loadTasks.Add(LoadDatabaseAsync());
             
+            async UniTask LoadResourceManagerAsync()
+            {
+                await UniTask.WaitUntil(() => Resource.ResourceManager.HasInstance);
+                await UniTask.DelayFrame(1);
+                var resourceManager = Resource.ResourceManager.Instance;
+                await resourceManager.PreloadResources();
+                loadedCount++;
+                Progress = (float)loadedCount / toLoadCount;
+            }
+            loadTasks.Add(LoadResourceManagerAsync());
+            
             toLoadCount = loadTasks.Count;
             
             await UniTask.WhenAll(loadTasks);
