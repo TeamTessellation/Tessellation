@@ -214,11 +214,11 @@
       "최대 {input[0]}원까지 이자를 얻습니다."
     ],
     [
-      "CoinScaledMutiple_name",
+      "CoinScaledMultiple_name",
       "나는 코인이 좋아"
     ],
     [
-      "CoinScaledMutiple_description",
+      "CoinScaledMultiple_description",
       "보유한 {1}코인당 모든 점수에 대해 {0}배의 추가 점수를 획득합니다."
     ],
     [

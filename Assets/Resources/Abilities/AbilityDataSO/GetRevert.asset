@@ -21,7 +21,7 @@ MonoBehaviour:
   input:
   - 4
   ItemPrice: 4
-  CanAppearInShop: 1
+  CanAppearInShop: 0
   ConflictingItems:
   - {fileID: 11400000, guid: 57a35405ecc75214f92f9f5c5561dff9, type: 2}
   - {fileID: 11400000}

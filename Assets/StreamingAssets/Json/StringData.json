@@ -200,11 +200,11 @@
     "kr": "최대 {input[0]}원까지 이자를 얻습니다."
   },
   {
-    "ItemID": "CoinScaledMutiple_name",
+    "ItemID": "CoinScaledMultiple_name",
     "kr": "나는 코인이 좋아"
   },
   {
-    "ItemID": "CoinScaledMutiple_description",
+    "ItemID": "CoinScaledMultiple_description",
     "kr": "보유한 {1}코인당 모든 점수에 대해 {0}배의 추가 점수를 획득합니다."
   },
   {
