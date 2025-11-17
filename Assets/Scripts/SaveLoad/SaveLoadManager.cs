@@ -27,6 +27,7 @@ namespace SaveLoad
         public List<OffsetTileData> FieldTileData;
         public TileSetData[] HandData;
         public PlayerStatus PlayerStatus;
+        public List<string> InventoryIds;
         
         [SerializeReference] public SaveHistory SaveHistory; // 무한 재귀 방지를 위해 SerializeReference 사용
         
@@ -260,6 +261,7 @@ namespace SaveLoad
                 GameData data = JsonUtility.FromJson<GameData>(json);
                 LoadSaveData(data);
                 onComplete?.Invoke();
+                Debug.Log(GameManager.Instance.PlayerStatus.inventory._currentAbilityCount);
                 return true;
             }
             catch (Exception e)

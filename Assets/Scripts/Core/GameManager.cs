@@ -334,6 +334,7 @@ namespace Core
              * 4. 일시정지 UI 숨기기
              */
             CurrentGameState = GlobalGameState.MainMenu;
+            PlayerStatus.inventory.Reset();
             PlayerStatus.Reset();
             StageManager.ResetStage();
             UIManager.HidePauseUI();
