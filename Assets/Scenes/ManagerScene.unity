@@ -223,6 +223,7 @@ MonoBehaviour:
         _currentAbilityCount: 0
         _maxAbilityCount: 5
         currentItemCount: 0
+    InventoryIds: []
     SaveHistory:
       rid: -2
     <Variables>k__BackingField:

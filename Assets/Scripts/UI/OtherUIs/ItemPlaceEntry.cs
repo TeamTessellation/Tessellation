@@ -17,6 +17,8 @@ namespace UI.OtherUIs
         private Button _button;
         
         private AbilityDataSO _abilityData;
+
+
         protected override void OnEnable()
         {
             _button = GetComponent<Button>();
@@ -26,6 +28,7 @@ namespace UI.OtherUIs
             {
                 PlayerInventory inventory = GameManager.Instance.PlayerStatus.inventory;
                 inventory.OnInventorySlotChanged += OnInventorySlotChanged;
+                inventory.RefreshPlaceEntry();
                 ClearSlot();
             }
             else
