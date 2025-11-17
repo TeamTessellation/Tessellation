@@ -67,7 +67,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
         var itemHold = Pool<ItemHold>.Get();
         itemHold.transform.SetParent(itemRoot, false);
-        itemHold.RegisterClickEvent(SetItem, eActiveItemType.Rotate);
+        itemHold.RegisterClickEvent(SetItem, PlayerStatus.Current.inventory.CurrentItem);
         itemHold.transform.localScale = Vector3.one;
         itemHold.SetAmount(PlayerStatus.Current.inventory.currentItemCount);
         itemHold.SetItemIcon(PlayerStatus.Current.inventory.CurrentItem);
@@ -102,10 +102,8 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
         if (PlayerStatus.Current.inventory.currentItemCount <= 0)
             return;
 
-        Debug.Log("아이템 사용");
         UseItemAction?.Invoke(target);
         PlayerStatus.Current.inventory.SetActiveItemCount(PlayerStatus.Current.inventory.currentItemCount - 1);
-        Debug.Log(PlayerStatus.Current.inventory.currentItemCount);
         _itemHold.SetAmount(PlayerStatus.Current.inventory.currentItemCount);
         _readyItem = eActiveItemType.End;
         HandManager.Instance.RemoveItemIcon();
@@ -113,7 +111,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
         playerStatus.StageAbilityUseCount += 1;
     }
 
-    public void SetItem(eActiveItemType item)
+    public void SetItem()
     {
         if (IsLock)
             return;
@@ -124,16 +122,16 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
         if (!IsPlayerInputEnabled)
             return;
 
-        if (_readyItem == item)
+        if (_readyItem == PlayerStatus.Current.inventory.CurrentItem)
         {
             _readyItem = eActiveItemType.End;
             HandManager.Instance.RemoveItemIcon();
             UseItemAction = null;
         }
 
-        _readyItem = item;
+        _readyItem = PlayerStatus.Current.inventory.CurrentItem;
 
-        switch (item)
+        switch (PlayerStatus.Current.inventory.CurrentItem)
         {
             case eActiveItemType.Add:
                 UseItemAction = AddTileSetItem;
@@ -152,7 +150,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
             case eActiveItemType.Revert:
                 break;
         }
-        HandManager.Instance.SetItemIcon(item);
+        HandManager.Instance.SetItemIcon(PlayerStatus.Current.inventory.CurrentItem);
     }
 
     public void UnSetItem()
