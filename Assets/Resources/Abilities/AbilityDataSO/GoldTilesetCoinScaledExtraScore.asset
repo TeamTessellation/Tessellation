@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 9
   Rarity: 3
-  ItemName: "\uACE8\uB4DC \uD0C0\uC77C \uCD94\uAC00 \uC810\uC218"
+  ItemName: "\uD669\uAE08 \uC810\uC218"
   ItemID: GoldTilesetCoinScaledExtraScore
   Description: "\uACE8\uB4DC \uD0C0\uC77C\uC774 \uC9C0\uC6CC\uC9C8\uB54C \uD604\uC7AC
     \uBCF4\uC720\uD55C \uCF54\uC778 \uC218 \uB9CC\uD07C \uCD94\uAC00 \uC810\uC218\uB97C

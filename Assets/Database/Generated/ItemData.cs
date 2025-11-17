@@ -17,6 +17,8 @@ namespace Database.Generated
         public string itemNameID;
         /// <summary> 아이템 설명 key </summary>
         public string DescriptionID;
+        /// <summary> 아이템 등장 여부 </summary>
+        public bool CanAppearInShop;
         /// <summary> 아이템 등급 </summary>
         public Abilities.eRarity Rarity;
         /// <summary> 아이템 효과 숫자 </summary>

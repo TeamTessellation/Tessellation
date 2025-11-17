@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: GetRevert
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 14
-  Rarity: 1
-  ItemName: "\uB418\uB3CC\uB9AC\uAE30 \uD68D\uB4DD"
+  Rarity: 4
+  ItemName: "\uB418\uB3CC\uB9AC\uAE30"
   ItemID: GetRevert
   Description: "\uB418\uB3CC\uB9AC\uAE30 \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   ItemIcon: {fileID: -8627142108527465499, guid: 95ae93ae0ef019e4fa1d834cc299d7fc, type: 3}
   input:
   - 4
-  ItemPrice: 3
+  ItemPrice: 4
   CanAppearInShop: 1
   ConflictingItems:
   - {fileID: 11400000, guid: 57a35405ecc75214f92f9f5c5561dff9, type: 2}

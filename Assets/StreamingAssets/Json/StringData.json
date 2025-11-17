@@ -49,7 +49,7 @@
   },
   {
     "ItemID": "AddBombTileset_name",
-    "kr": "폭탄 타일 획득"
+    "kr": "폭탄"
   },
   {
     "ItemID": "AddBombTileset_description",
@@ -57,7 +57,7 @@
   },
   {
     "ItemID": "AddBombTilesetII_name",
-    "kr": "폭탄 타일 획득 II"
+    "kr": "폭탄 II"
   },
   {
     "ItemID": "AddBombTilesetII_description",
@@ -65,7 +65,7 @@
   },
   {
     "ItemID": "AddBombTilesetIII_name",
-    "kr": "폭탄 타일 획득 III"
+    "kr": "폭탄 III"
   },
   {
     "ItemID": "AddBombTilesetIII_description",
@@ -105,7 +105,7 @@
   },
   {
     "ItemID": "AddExtraScoreTileset_name",
-    "kr": "추가 점수 타일 획득"
+    "kr": "추가 점수 타일"
   },
   {
     "ItemID": "AddExtraScoreTileset_description",
@@ -113,7 +113,7 @@
   },
   {
     "ItemID": "AddExtraScoreTilesetII_name",
-    "kr": "추가 점수 타일 획득 II"
+    "kr": "추가 점수 타일 II"
   },
   {
     "ItemID": "AddExtraScoreTilesetII_description",
@@ -121,7 +121,7 @@
   },
   {
     "ItemID": "AddExtraScoreTilesetIII_name",
-    "kr": "추가 점수 타일 획득 III"
+    "kr": "추가 점수 타일 III"
   },
   {
     "ItemID": "AddExtraScoreTilesetIII_description",
@@ -129,7 +129,7 @@
   },
   {
     "ItemID": "AddMultipleTileset_name",
-    "kr": "배수 타일 획득"
+    "kr": "배수 타일"
   },
   {
     "ItemID": "AddMultipleTileset_description",
@@ -137,7 +137,7 @@
   },
   {
     "ItemID": "AddMultipleTilesetII_name",
-    "kr": "배수 타일 획득 II"
+    "kr": "배수 타일 II"
   },
   {
     "ItemID": "AddMultipleTilesetII_description",
@@ -145,7 +145,7 @@
   },
   {
     "ItemID": "AddGoldTileset_name",
-    "kr": "골드 타일 획득"
+    "kr": "골드 타일"
   },
   {
     "ItemID": "AddGoldTileset_description",
@@ -153,7 +153,7 @@
   },
   {
     "ItemID": "AddGoldTilesetII_name",
-    "kr": "골드 타일 획득 II"
+    "kr": "골드 타일 II"
   },
   {
     "ItemID": "AddGoldTilesetII_description",
@@ -161,7 +161,7 @@
   },
   {
     "ItemID": "AddGoldTilesetIII_name",
-    "kr": "골드 타일 획득 III"
+    "kr": "골드 타일 III"
   },
   {
     "ItemID": "AddGoldTilesetIII_description",
@@ -169,7 +169,7 @@
   },
   {
     "ItemID": "GoldTilesetCoinScaledExtraScore_name",
-    "kr": "골드 타일 추가 점수"
+    "kr": "황금 점수"
   },
   {
     "ItemID": "GoldTilesetCoinScaledExtraScore_description",
@@ -201,7 +201,7 @@
   },
   {
     "ItemID": "CoinScaledMutiple_name",
-    "kr": "코인 비례 추가 점수"
+    "kr": "나는 코인이 좋아"
   },
   {
     "ItemID": "CoinScaledMutiple_description",
@@ -209,7 +209,7 @@
   },
   {
     "ItemID": "GetTilesetDelete_name",
-    "kr": "타일 삭제 아이템 획득"
+    "kr": "타일 삭제"
   },
   {
     "ItemID": "GetTilesetDelete_description",
@@ -217,7 +217,7 @@
   },
   {
     "ItemID": "GetTilesetReroll_name",
-    "kr": "타일 다시뽑기 획득"
+    "kr": "다시뽑기"
   },
   {
     "ItemID": "GetTilesetReroll_description",
@@ -225,7 +225,7 @@
   },
   {
     "ItemID": "GetRevert_name",
-    "kr": "되돌리기 획득"
+    "kr": "되돌리기"
   },
   {
     "ItemID": "GetRevert_description",
@@ -233,7 +233,7 @@
   },
   {
     "ItemID": "GetTilesetRotate_name",
-    "kr": "타일 회전 아이템 획득"
+    "kr": "회전"
   },
   {
     "ItemID": "GetTilesetRotate_description",
@@ -241,7 +241,7 @@
   },
   {
     "ItemID": "GetTilesetChangeOverwrite_name",
-    "kr": "유령 타일 변환 아이템 획득"
+    "kr": "유령 타일 변환"
   },
   {
     "ItemID": "GetTilesetChangeOverwrite_description",
@@ -249,10 +249,50 @@
   },
   {
     "ItemID": "GetTilesetCopy_name",
-    "kr": "타일 복사 아이템 획득"
+    "kr": "복사"
   },
   {
     "ItemID": "GetTilesetCopy_description",
     "kr": "타일 복사 사용 아이템을 획득합니다."
+  },
+  {
+    "ItemID": "DecreaseFieldSize_name",
+    "kr": "크기 감소"
+  },
+  {
+    "ItemID": "DecreaseFieldSize_description",
+    "kr": "필드 크기가 {0}만큼 감소하고 모든 점수에 대해 {0}배의 추가 점수를 획득합니다."
+  },
+  {
+    "ItemID": "DecreaseFieldSizeII_name",
+    "kr": "크기 감소 II"
+  },
+  {
+    "ItemID": "DecreaseFieldSizeII_description",
+    "kr": "필드 크기가 {0}만큼 감소하고 모든 점수에 대해 {0}배의 추가 점수를 획득합니다."
+  },
+  {
+    "ItemID": "FirstTurnMultiple_name",
+    "kr": "시작이 반"
+  },
+  {
+    "ItemID": "FirstTurnMultiple_description",
+    "kr": "첫번째 턴 동안 모든 점수에 대해서 {0}배의 추가 점수를 얻습니다."
+  },
+  {
+    "ItemID": "FirstTurnMultipleII_name",
+    "kr": "시작이 반II"
+  },
+  {
+    "ItemID": "FirstTurnMultipleII_description",
+    "kr": "첫번째 턴 동안 모든 점수에 대해서 {0}배의 추가 점수를 얻습니다."
+  },
+  {
+    "ItemID": "",
+    "kr": "타일 수집가"
+  },
+  {
+    "ItemID": "",
+    "kr": "줄을 지우지 않고 타일을 배치할때마다 {0}만큼의 추가 점수를 얻습니다"
   }
 ]

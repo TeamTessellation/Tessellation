@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 6
   Rarity: 2
-  ItemName: "\uCD94\uAC00 \uC810\uC218 \uD0C0\uC77C \uD68D\uB4DD II"
+  ItemName: "\uCD94\uAC00 \uC810\uC218 \uD0C0\uC77C II"
   ItemID: AddExtraScoreTilesetII
   Description: "\uCD94\uAC00 \uC810\uC218 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774
     \uC99D\uAC00\uD569\uB2C8\uB2E4."

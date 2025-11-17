@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 11
   Rarity: 2
-  ItemName: "\uCF54\uC778 \uBE44\uB840 \uCD94\uAC00 \uC810\uC218"
+  ItemName: "\uB098\uB294 \uCF54\uC778\uC774 \uC88B\uC544"
   ItemID: CoinScaledMutiple
   Description: "\uBCF4\uC720\uD55C 0.10\uCF54\uC778\uB2F9 \uBAA8\uB4E0 \uC810\uC218\uC5D0
     \uB300\uD574 5\uBC30\uC758 \uCD94\uAC00 \uC810\uC218\uB97C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
@@ -22,7 +22,7 @@ MonoBehaviour:
   input:
   - 5
   - 0.1
-  ItemPrice: 8
+  ItemPrice: 12
   CanAppearInShop: 1
   ConflictingItems: []
   IsSynthesisItem: 0

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9fc628945da38f43987756c6c3b7d49, type: 3}
-  m_Name: AddBombTileset
+  m_Name: FirstTurnMultiple
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
-  ItemType: 2
-  Rarity: 1
-  ItemName: "\uD3ED\uD0C4"
-  ItemID: AddBombTileset
-  Description: "\uD3ED\uD0C4 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774 \uC870\uAE08
-    \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 6254025404137740749, guid: 9cbabab87c18d1343885fb6bd374426c, type: 3}
+  ItemType: 19
+  Rarity: 2
+  ItemName: "\uC2DC\uC791\uC774 \uBC18"
+  ItemID: FirstTurnMultiple
+  Description: "\uCCAB\uBC88\uC9F8 \uD134 \uB3D9\uC548 \uBAA8\uB4E0 \uC810\uC218\uC5D0
+    \uB300\uD574\uC11C 0.50\uBC30\uC758 \uCD94\uAC00 \uC810\uC218\uB97C \uC5BB\uC2B5\uB2C8\uB2E4."
+  ItemIcon: {fileID: 21300000, guid: 30b8d5ee7517a5c4aa776ad7a5c4d07f, type: 3}
   input:
-  - 3
-  ItemPrice: 4
+  - 0.5
+  ItemPrice: 10
   CanAppearInShop: 1
   ConflictingItems: []
   IsSynthesisItem: 0

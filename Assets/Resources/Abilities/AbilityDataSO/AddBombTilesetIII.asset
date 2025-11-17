@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 2
   Rarity: 3
-  ItemName: "\uD3ED\uD0C4 \uD0C0\uC77C \uD68D\uB4DD III"
+  ItemName: "\uD3ED\uD0C4 III"
   ItemID: AddBombTilesetIII
   Description: "\uD3ED\uD0C4 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774 \uB9CE\uC774
     \uC99D\uAC00\uD569\uB2C8\uB2E4."

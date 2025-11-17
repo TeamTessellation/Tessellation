@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: GetTilesetCopy
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 17
-  Rarity: 1
-  ItemName: "\uD0C0\uC77C \uBCF5\uC0AC \uC544\uC774\uD15C \uD68D\uB4DD"
+  Rarity: 4
+  ItemName: "\uBCF5\uC0AC"
   ItemID: GetTilesetCopy
   Description: "\uD0C0\uC77C \uBCF5\uC0AC \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   ItemIcon: {fileID: -8993060100077178789, guid: e8eef6e17bc962b45822e07136b8216b, type: 3}
   input:
   - 3
-  ItemPrice: 3
+  ItemPrice: 4
   CanAppearInShop: 1
   ConflictingItems:
   - {fileID: 11400000, guid: 57a35405ecc75214f92f9f5c5561dff9, type: 2}
