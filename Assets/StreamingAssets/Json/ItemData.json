@@ -407,10 +407,10 @@
     ]
   },
   {
-    "ItemID": "CoinScaledMutiple",
+    "ItemID": "CoinScaledMultiple",
     "eItemType": 11,
-    "itemNameID": "CoinScaledMutiple_name",
-    "DescriptionID": "CoinScaledMutiple_description",
+    "itemNameID": "CoinScaledMultiple_name",
+    "DescriptionID": "CoinScaledMultiple_description",
     "CanAppearInShop": false,
     "Rarity": 2,
     "input": [
@@ -471,7 +471,7 @@
     "eItemType": 14,
     "itemNameID": "GetRevert_name",
     "DescriptionID": "GetRevert_description",
-    "CanAppearInShop": true,
+    "CanAppearInShop": false,
     "Rarity": 4,
     "input": [
       4.0
@@ -515,7 +515,7 @@
     "eItemType": 16,
     "itemNameID": "GetTilesetChangeOverwrite_name",
     "DescriptionID": "GetTilesetChangeOverwrite_description",
-    "CanAppearInShop": true,
+    "CanAppearInShop": false,
     "Rarity": 4,
     "input": [
       3.0
