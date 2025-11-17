@@ -1,16 +1,12 @@
 using Cysharp.Threading.Tasks;
 using System.Drawing;
+using Sound;
 using UnityEngine;
 
 public abstract class TileOptionBase
 {
     public virtual async UniTask OnTilePlaced(Tile tile)
     {
-        int baseScore = (int)ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BasePlaceScore];
-        int finalScore = ScoreManager.Instance.CalculateTileScore(eTileEventType.Place, tile, baseScore);
-        ScoreManager.Instance.AddCurrentScore(finalScore);
-        
-        ShowScoreEffect(finalScore, tile);
     }
 
     public virtual async UniTask OnLineCleared(Tile tile)

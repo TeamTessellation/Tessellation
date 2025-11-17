@@ -132,6 +132,8 @@ namespace Stage
             HandCanvas handCanvas = HandCanvas.Instance;
             handCanvas.Show();
             HandManager.Instance.ResetHand(playerStatus.HandSize);
+            // 아이템 초기화
+            GameManager.Instance.PlayerStatus.inventory.ResetActiveItemCount();
             // 점수 초기화
             ScoreManager.Instance.Reset();
             
