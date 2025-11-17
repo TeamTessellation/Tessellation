@@ -29,7 +29,7 @@ public class EffectManager : Singleton<EffectManager>
     private void InitializeDatabase()
     {
         // a. SO 담기
-        EffectDataSO[] effects = Resources.LoadAll<EffectDataSO>("ScriptableObjects/Effect");
+        EffectDataSO[] effects = Resources.LoadAll<EffectDataSO>("Effects");
         
         // b. Dictionary에 추가
         _effectDatabase = new Dictionary<eEffectType, EffectDataSO>();
@@ -42,6 +42,8 @@ public class EffectManager : Singleton<EffectManager>
 
     private void InitializePool()
     {
+        _effectPool = new Dictionary<eEffectType, IObjectPool<GameObject>>();
+        
         // a. 기본 개수만큼 풀 초기화
         foreach (var effectDataPair in _effectDatabase)
         {
@@ -81,7 +83,26 @@ public class EffectManager : Singleton<EffectManager>
 
     public void ShowScoreEffect(int score, Vector2 pos)
     {
-        // TODO
-        //....
+        Debug.Log("Kuxi");
+        
+        GameObject effectObj = _effectPool[eEffectType.ScorePopup].Get();
+        _activeEffects.Add(effectObj, eEffectType.ScorePopup);
+
+        ScoreEffect scoreEffect = effectObj.GetComponent<ScoreEffect>();
+        scoreEffect.Initialize(score, pos, OnScoreEffectComplete);
+    }
+
+    private void OnScoreEffectComplete(ScoreEffect effect)
+    {
+        GameObject effectObj = effect.gameObject;
+
+        if (_activeEffects.ContainsKey(effectObj))
+        {
+            eEffectType effectType = _activeEffects[effectObj];
+            _activeEffects.Remove(effectObj);
+            
+            effect.ResetState();
+            _effectPool[effectType].Release(effectObj);
+        }
     }
 }
