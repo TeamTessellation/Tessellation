@@ -84,6 +84,7 @@ namespace Core
         /// </remarks>
         public static void NotifySceneInitialized()
         {
+            Debug.Log("InitialLoader: Scene initialization notified.");
             _initialized = true;
             _initializationCallback?.Invoke();
         }
