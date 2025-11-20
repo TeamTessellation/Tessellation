@@ -131,8 +131,44 @@ namespace Sound
             _cachedAudioClips.Clear();
             PlayerPrefs.Save();
         }
-        
-        
+
+        /// <summary>
+        /// 애플리케이션이 포커스를 잃을 때
+        /// 1. PlayerPrefs 저장
+        /// 2. 모든 오디오 일시 정지 및 볼륨 0으로 설정
+        /// 포커스 되돌아올 때
+        /// 1. 모든 오디오 재개 및 볼륨 복원
+        /// </summary>
+        /// <param name="hasFocus"></param>
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            if (!hasFocus)
+            {
+                PlayerPrefs.Save();
+            }
+            
+            // 모든 오디오 일시 정지 또는 재개
+            foreach (var kvp in _cachedBackgroundSoundEmitters)
+            {
+                if (kvp.Value != null)
+                {
+                    AudioSource audioSource = kvp.Value.GetComponent<AudioSource>();
+                    if (audioSource != null)
+                    {
+                        if (!hasFocus)
+                        {
+                            audioSource.Pause();
+                        }
+                        else
+                        {
+                            audioSource.UnPause();
+                        }
+                    }
+                }
+            }
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
