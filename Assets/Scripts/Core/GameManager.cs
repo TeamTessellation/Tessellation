@@ -88,7 +88,7 @@ namespace Core
         public event Action OnGameResumed;
         
         
-        public bool AutoPauseInBackground = false;
+        public bool AutoPauseInBackground => true;
         
 
         protected override void AfterAwake()
