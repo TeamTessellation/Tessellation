@@ -168,6 +168,34 @@ namespace Sound
             }
         }
 
+        public void SetFocus(bool hasFocus)
+        {
+            if (!hasFocus)
+            {
+                PlayerPrefs.Save();
+            }
+
+            // 모든 오디오 일시 정지 또는 재개
+            foreach (var kvp in _cachedBackgroundSoundEmitters)
+            {
+                if (kvp.Value != null)
+                {
+                    AudioSource audioSource = kvp.Value.GetComponent<AudioSource>();
+                    if (audioSource != null)
+                    {
+                        if (!hasFocus)
+                        {
+                            audioSource.Pause();
+                        }
+                        else
+                        {
+                            audioSource.UnPause();
+                        }
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// 
