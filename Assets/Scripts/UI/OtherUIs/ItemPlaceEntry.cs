@@ -21,25 +21,15 @@ namespace UI.OtherUIs
 
         protected override void OnEnable()
         {
+            ClearSlot();
             _button = GetComponent<Button>();
             _button.onClick.AddListener(OnButtonClicked);
             base.OnEnable();
-            if (GameManager.HasInstance)
-            {
-                PlayerInventory inventory = GameManager.Instance.PlayerStatus.inventory;
-                inventory.OnInventorySlotChanged += OnInventorySlotChanged;
-                inventory.RefreshPlaceEntry();
-                ClearSlot();
-            }
-            else
-            {
-                UniTask.WaitUntil(() => GameManager.HasInstance).ContinueWith(() =>
-                {
-                    PlayerInventory inventory = GameManager.Instance.PlayerStatus.inventory;
-                    inventory.OnInventorySlotChanged += OnInventorySlotChanged;
-                    ClearSlot();
-                }).Forget();
-            }
+            
+            // 인벤토리 콜백함수 등록
+            PlayerInventory inventory = GameManager.Instance.PlayerStatus.inventory;
+            inventory.OnInventorySlotChanged += OnInventorySlotChanged;
+            inventory.RefreshPlaceEntry();
         }
 
         protected override void OnDisable()
@@ -64,11 +54,14 @@ namespace UI.OtherUIs
         private void OnInventorySlotChanged(int slotIdx, AbilityBase abilityBase)
         {
             if (slotIndex != slotIdx) return;
+            
             if (abilityBase == null)
             {
                 ClearSlot();
                 return;
             }
+            
+            // Debug.Log($"{slotIdx}번째 인덱스 수정, 이름 : {abilityBase.DataSO.ItemName}");
 
             _abilityData = abilityBase.DataSO;
             RefreshSlot();
@@ -81,6 +74,7 @@ namespace UI.OtherUIs
             if (itemImage != null)
             {
                 itemImage.sprite = _abilityData.ItemIcon;
+                // Debug.Log($"Item Sprite Update");
             }
         }
 

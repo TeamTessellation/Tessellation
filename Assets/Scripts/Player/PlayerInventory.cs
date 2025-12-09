@@ -61,9 +61,11 @@ namespace Player
             }
         }
 
+        /// <summary>
+        /// 현재 인벤토리에 할당된 아이템을 전부 삭제한다
+        /// </summary>
         public void Reset()
         {
-            // 아이템 전부 지워준다
             for (int i = 0; i < _maxAbilityCount; i++)
             {
                 RemoveAbilityByIndex(i);
@@ -89,7 +91,10 @@ namespace Player
         {
             currentItemCount = MaxItemCount;
         }
-
+        
+        /// <summary>
+        /// 최대 아이템 사용 가능 횟수를 갱신한다 
+        /// </summary>
         public void SetActiveItemCount(int newMaxItemCount)
         {
             MaxItemCount = newMaxItemCount;
@@ -105,6 +110,9 @@ namespace Player
             }
         }
         
+        /// <summary>
+        /// 현재 플레이어가 가지고 있는 Ability를 AbilityDataSO 배열 형식으로 리턴한다
+        /// </summary>
         public List<AbilityDataSO> GetOwnedAbilities()
         {
             List<AbilityDataSO> ownedAbilities = new List<AbilityDataSO>();
@@ -121,8 +129,6 @@ namespace Player
         /// abilityData를 인자로 받아 인벤토리에 아이템을 추가합니다
         /// 성공할 시 true, 실패했을 시 false를 반환합니다.
         /// </summary>
-        /// <param name="abilityData"></param>
-        /// <returns></returns>
         public (bool success, string message) AddAbility(AbilityDataSO abilityData)
         {
             // 해당하는 아이템과 충돌하는 아이템이 있는지 확인한다
@@ -275,7 +281,12 @@ namespace Player
         {
             if (_abilities == null)
             {
-                _abilities = new List<AbilityBase>();
+                _abilities = new List<AbilityBase>(_maxAbilityCount);
+            }
+
+            for (int i = 0; i < _maxAbilityCount; i++)
+            {
+                _abilities[i] = null;
             }
             
             if (data.InventoryIds != null && data.InventoryIds.Count > 0)
@@ -290,7 +301,6 @@ namespace Player
                     AddAbility(dataSo);
                 }
             }
-            Debug.Log("빨라");
             
             RefreshInventory();
         }

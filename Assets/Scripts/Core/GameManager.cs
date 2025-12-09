@@ -337,6 +337,7 @@ namespace Core
             CurrentGameState = GlobalGameState.MainMenu;
             PlayerStatus.inventory.Reset();
             PlayerStatus.Reset();
+            PlayerStatus.inventory.Reset();
             StageManager.ResetStage();
             UIManager.HidePauseUI();
             TurnManager.StopTurnLoop();
