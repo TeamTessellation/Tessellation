@@ -134,6 +134,7 @@ namespace UI.OtherUIs
         private void OnEnable()
         {
             _rerollCount = 0;
+            rerollCostText.text = (3 + _rerollCount * 2).ToString();
             InteractionManager.Instance.ConfirmEvent += OnConfirmed;
         }
         private void OnDisable()
@@ -199,6 +200,7 @@ namespace UI.OtherUIs
             int currentRerollCost = 3 + _rerollCount * 2;
             if (GameManager.Instance.PlayerStatus.CurrentCoins >= currentRerollCost)
             {
+                // 재화 소모 (CurrentCoins)
                 GameManager.Instance.PlayerStatus.CurrentCoins -= currentRerollCost;
                 _rerollCount++;
                 rerollCostText.text = (3 + _rerollCount * 2).ToString();
