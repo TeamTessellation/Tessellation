@@ -24,7 +24,8 @@ MonoBehaviour:
   - 1
   - 0.5
   ItemPrice: 20
-  CanAppearInShop: 1
+  CanAppearInShop: 0
   ConflictingItems: []
   IsSynthesisItem: 1
-  SynthesisRequirements: []
+  SynthesisRequirements:
+  - {fileID: 11400000, guid: 92f5784fb2291594d80f69ffa78fed1e, type: 2}

@@ -16,7 +16,7 @@ MonoBehaviour:
   Rarity: 1
   ItemName: "\uCD94\uAC00 \uC774\uC790"
   ItemID: AdditionalInterest
-  Description: "\uCD5C\uB300 {input[0]}\uC6D0\uAE4C\uC9C0 \uC774\uC790\uB97C \uC5BB\uC2B5\uB2C8\uB2E4."
+  Description: "\uCD5C\uB300 \uC774\uC790\uAC00 {input[0]}\uC6D0\uC774 \uB429\uB2C8\uB2E4."
   ItemIcon: {fileID: -5309637479082286120, guid: e7e6c7de35028f74caca8f075dc7e791, type: 3}
   input:
   - 80

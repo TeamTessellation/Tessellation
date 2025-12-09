@@ -181,7 +181,7 @@
   },
   {
     "ItemID": "AdditionalInterest_description",
-    "kr": "최대 {input[0]}원까지 이자를 얻습니다."
+    "kr": "최대 이자가 {input[0]}원이 됩니다."
   },
   {
     "ItemID": "AdditionalInterestII_name",
@@ -189,7 +189,7 @@
   },
   {
     "ItemID": "AdditionalInterestII_description",
-    "kr": "최대 {input[0]}원까지 이자를 얻습니다."
+    "kr": "최대 이자가 {input[0]}원이 됩니다."
   },
   {
     "ItemID": "AdditionalInterestIII_name",
@@ -197,7 +197,7 @@
   },
   {
     "ItemID": "AdditionalInterestIII_description",
-    "kr": "최대 {input[0]}원까지 이자를 얻습니다."
+    "kr": "최대 이자가 {input[0]}원이 됩니다."
   },
   {
     "ItemID": "CoinScaledMultiple_name",

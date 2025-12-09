@@ -369,6 +369,11 @@ namespace Database
             {
                 // 현재 SO가 있는지 판단
                 string assetPath = Path.Combine(abilitySOFolder, $"{itemData.ItemID}.asset");
+                if (!File.Exists(assetPath))
+                {
+                    Debug.LogWarning($"Asset file not found: {assetPath}");
+                    continue; 
+                }
                 AbilityDataSO dataSO = AssetDatabase.LoadAssetAtPath<AbilityDataSO>(assetPath);
 
                 // 없다면 새로운 SO 생성

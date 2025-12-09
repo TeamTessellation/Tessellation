@@ -195,7 +195,7 @@
     ],
     [
       "AdditionalInterest_description",
-      "최대 {input[0]}원까지 이자를 얻습니다."
+      "최대 이자가 {input[0]}원이 됩니다."
     ],
     [
       "AdditionalInterestII_name",
@@ -203,7 +203,7 @@
     ],
     [
       "AdditionalInterestII_description",
-      "최대 {input[0]}원까지 이자를 얻습니다."
+      "최대 이자가 {input[0]}원이 됩니다."
     ],
     [
       "AdditionalInterestIII_name",
@@ -211,7 +211,7 @@
     ],
     [
       "AdditionalInterestIII_description",
-      "최대 {input[0]}원까지 이자를 얻습니다."
+      "최대 이자가 {input[0]}원이 됩니다."
     ],
     [
       "CoinScaledMultiple_name",
