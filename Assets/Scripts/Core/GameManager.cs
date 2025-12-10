@@ -288,6 +288,27 @@ namespace Core
         public void ResetGameAndReturnToMainMenu()
         {
             LogEx.Log("게임 중지 및 메인 메뉴로 복귀");
+            ResetGame_Internal();
+            UIManager.SwitchToMainMenu();
+            
+            _gameCancellationTokenSource = new CancellationTokenSource();
+        }
+        
+        
+        /// <summary>
+        /// 게임을 중지하고 초기화합니다.
+        /// </summary>
+        public void ResetGame()
+        {
+            // 일단 내용 복사 해둠
+            LogEx.Log("게임 중지 및 초기화");
+            ResetGame_Internal();
+            
+            _gameCancellationTokenSource = new CancellationTokenSource();
+        }
+        
+        private void ResetGame_Internal()
+        {
             _gameCancellationTokenSource.Cancel();
             if (CurrentGameState == GlobalGameState.PausedInGame)
             {
@@ -307,43 +328,8 @@ namespace Core
             PlayerStatus.Reset();
             StageManager.ResetStage();
             UIManager.HidePauseUI();
-            UIManager.SwitchToMainMenu();
             TurnManager.StopTurnLoop();
             
-            
-            _gameCancellationTokenSource = new CancellationTokenSource();
-        }
-        
-        
-        /// <summary>
-        /// 게임을 중지하고 초기화합니다.
-        /// </summary>
-        public void ResetGame()
-        {
-            // 일단 내용 복사 해둠
-            LogEx.Log("게임 중지 및 초기화");
-            _gameCancellationTokenSource.Cancel();
-            if (CurrentGameState == GlobalGameState.PausedInGame)
-            {
-                Time.timeScale = 1f; // 일시정지 상태라면 시간 흐름을 복원
-            }
-            /*
-             * 1. 상태 메인메뉴로 변경
-             * 2. 플레이어 상태 초기화
-             * 3. 스테이지 매니저 초기화(플레이어에 종속적)
-             * 3-n. 스테이지 매니저가 스테이지 초기화시 필요한 로직 수행
-             * 4. 일시정지 UI 숨기기
-             */
-            CurrentGameState = GlobalGameState.MainMenu;
-            PlayerStatus.inventory.Reset();
-            PlayerStatus.Reset();
-            PlayerStatus.inventory.Reset();
-            StageManager.ResetStage();
-            UIManager.HidePauseUI();
-            TurnManager.StopTurnLoop();
-
-            
-            _gameCancellationTokenSource = new CancellationTokenSource();
         }
         
         public void OnInputCancel()
