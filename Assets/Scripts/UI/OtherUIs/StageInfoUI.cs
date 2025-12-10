@@ -68,6 +68,7 @@ namespace UI.OtherUIs
             _canvasGroup = GetComponent<CanvasGroup>();
             hexTransition = GetComponentInChildren<HexTransition>(true);
             
+            GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
         }
         private void OnDestroy()
         {
