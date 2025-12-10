@@ -137,6 +137,7 @@ namespace UI.OtherUIs.Transitions
             _image = GetComponent<Image>();
             _image.material = new Material(_image.material); // 인스턴스 복사
             InitEffect();
+            
         }
 
         private async UniTaskVoid Start()

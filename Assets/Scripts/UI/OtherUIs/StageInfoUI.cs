@@ -64,12 +64,19 @@ namespace UI.OtherUIs
         protected override void Awake()
         {
             // _allTMPTexts = GetComponentsInChildren<TMP_Text>(true); 
+            base.Awake();
             gameObject.SetActive(false);
             _canvasGroup = GetComponent<CanvasGroup>();
             hexTransition = GetComponentInChildren<HexTransition>(true);
             
-            GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+            
         }
+        protected void Start()
+        {
+            GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+            hexTransition.InitEffect();
+        }
+        
         private void OnDestroy()
         {
             GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
