@@ -116,10 +116,10 @@ TextureImporter:
       name: FirstTurnMultiple_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 5
-        width: 84
-        height: 73
+        x: 31
+        y: 54
+        width: 168
+        height: 145
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -116,10 +116,10 @@ TextureImporter:
       name: AddGoldTileset_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 0
-        width: 74
-        height: 80
+        x: 47
+        y: 42
+        width: 145
+        height: 157
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

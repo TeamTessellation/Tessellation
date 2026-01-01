@@ -116,10 +116,10 @@ TextureImporter:
       name: AddMultipleTileset_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 75
-        height: 82
+        x: 45
+        y: 37
+        width: 151
+        height: 166
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

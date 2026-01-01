@@ -5,6 +5,60 @@ TextureImporter:
   - first:
       213: 3549275492386049264
     second: DecreaseFieldSize_0
+  - first:
+      213: 3877364946793910732
+    second: DecreaseFieldSize_1
+  - first:
+      213: -1197517024203487157
+    second: DecreaseFieldSize_2
+  - first:
+      213: -5895029392880242946
+    second: DecreaseFieldSize_3
+  - first:
+      213: 8256605676450774295
+    second: DecreaseFieldSize_4
+  - first:
+      213: -6001060358666759263
+    second: DecreaseFieldSize_5
+  - first:
+      213: 8657302503116808351
+    second: DecreaseFieldSize_6
+  - first:
+      213: 1428802510548517770
+    second: DecreaseFieldSize_7
+  - first:
+      213: 4444974732199977947
+    second: DecreaseFieldSize_8
+  - first:
+      213: -594793651667873720
+    second: DecreaseFieldSize_9
+  - first:
+      213: 2951893617942483738
+    second: DecreaseFieldSize_10
+  - first:
+      213: 8855076672258022926
+    second: DecreaseFieldSize_11
+  - first:
+      213: -953504444268130176
+    second: DecreaseFieldSize_12
+  - first:
+      213: -7698752489883060798
+    second: DecreaseFieldSize_13
+  - first:
+      213: -474992786231465003
+    second: DecreaseFieldSize_14
+  - first:
+      213: -2622811103288153889
+    second: DecreaseFieldSize_15
+  - first:
+      213: 1710950732414124186
+    second: DecreaseFieldSize_16
+  - first:
+      213: -1978016636119310287
+    second: DecreaseFieldSize_17
+  - first:
+      213: 3569773190597927768
+    second: DecreaseFieldSize_18
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -116,10 +170,10 @@ TextureImporter:
       name: DecreaseFieldSize_0
       rect:
         serializedVersion: 2
-        x: 22
-        y: 19
-        width: 87
-        height: 95
+        x: 34
+        y: 140
+        width: 40
+        height: 37
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,6 +184,402 @@ TextureImporter:
       bones: []
       spriteID: 0fc8ba5614f814130800000000000000
       internalID: 3549275492386049264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_1
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 158
+        width: 41
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc1d33e30ea2fc530800000000000000
+      internalID: 3877364946793910732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_2
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 177
+        width: 41
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b484ed77c90916fe0800000000000000
+      internalID: -1197517024203487157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_3
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 140
+        width: 40
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efee2e81006a03ea0800000000000000
+      internalID: -5895029392880242946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_4
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 158
+        width: 41
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71d725b0e1b559270800000000000000
+      internalID: 8256605676450774295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_5
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 140
+        width: 41
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a35df51663f7bca0800000000000000
+      internalID: -6001060358666759263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_6
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 102
+        width: 41
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f90a06b12cae42870800000000000000
+      internalID: 8657302503116808351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_7
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 121
+        width: 41
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a834e6f205024d310800000000000000
+      internalID: 1428802510548517770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_8
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 84
+        width: 41
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd3ed5ce7f8bfad30800000000000000
+      internalID: 4444974732199977947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_9
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 103
+        width: 39
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 840ddad335edeb7f0800000000000000
+      internalID: -594793651667873720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_10
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 121
+        width: 41
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1354301b9b37f820800000000000000
+      internalID: 2951893617942483738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_11
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 84
+        width: 41
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0e99c4315d83ea70800000000000000
+      internalID: 8855076672258022926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_12
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 102
+        width: 41
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08054a382c874c2f0800000000000000
+      internalID: -953504444268130176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_13
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 64
+        width: 40
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c5bdd27669882590800000000000000
+      internalID: -7698752489883060798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_14
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 46
+        width: 41
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5dbecc9d39c7869f0800000000000000
+      internalID: -474992786231465003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_15
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 65
+        width: 40
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd82f83a237e99bd0800000000000000
+      internalID: -2622811103288153889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_16
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 46
+        width: 41
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a900db940a48eb710800000000000000
+      internalID: 1710950732414124186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_17
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 64
+        width: 41
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 130ab44795cac84e0800000000000000
+      internalID: -1978016636119310287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecreaseFieldSize_18
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 27
+        width: 41
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8536d4aadc16a8130800000000000000
+      internalID: 3569773190597927768
       vertices: []
       indices: 
       edges: []
@@ -149,6 +599,24 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       DecreaseFieldSize_0: 3549275492386049264
+      DecreaseFieldSize_1: 3877364946793910732
+      DecreaseFieldSize_10: 2951893617942483738
+      DecreaseFieldSize_11: 8855076672258022926
+      DecreaseFieldSize_12: -953504444268130176
+      DecreaseFieldSize_13: -7698752489883060798
+      DecreaseFieldSize_14: -474992786231465003
+      DecreaseFieldSize_15: -2622811103288153889
+      DecreaseFieldSize_16: 1710950732414124186
+      DecreaseFieldSize_17: -1978016636119310287
+      DecreaseFieldSize_18: 3569773190597927768
+      DecreaseFieldSize_2: -1197517024203487157
+      DecreaseFieldSize_3: -5895029392880242946
+      DecreaseFieldSize_4: 8256605676450774295
+      DecreaseFieldSize_5: -6001060358666759263
+      DecreaseFieldSize_6: 8657302503116808351
+      DecreaseFieldSize_7: 1428802510548517770
+      DecreaseFieldSize_8: 4444974732199977947
+      DecreaseFieldSize_9: -594793651667873720
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

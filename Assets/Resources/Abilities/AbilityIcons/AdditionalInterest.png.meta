@@ -5,6 +5,21 @@ TextureImporter:
   - first:
       213: -5309637479082286120
     second: AdditionalInterest_0
+  - first:
+      213: -380754951808569385
+    second: AdditionalInterest_1
+  - first:
+      213: 2685825385018064921
+    second: AdditionalInterest_2
+  - first:
+      213: -1722232816434825950
+    second: AdditionalInterest_3
+  - first:
+      213: -3967574164063782060
+    second: AdditionalInterest_4
+  - first:
+      213: 8995049526673300437
+    second: AdditionalInterest_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +61,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -116,10 +131,10 @@ TextureImporter:
       name: AdditionalInterest_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 67
-        height: 84
+        x: 49
+        y: 109
+        width: 136
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,11 +149,121 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: AdditionalInterest_1
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 85
+        width: 44
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dfaafe736947baf0800000000000000
+      internalID: -380754951808569385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AdditionalInterest_2
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 97
+        width: 83
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9108ab225f7f54520800000000000000
+      internalID: 2685825385018064921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AdditionalInterest_3
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 63
+        width: 44
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 225b1e3d0666918e0800000000000000
+      internalID: -1722232816434825950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AdditionalInterest_4
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 67
+        width: 83
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45bf5f2a15850f8c0800000000000000
+      internalID: -3967574164063782060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AdditionalInterest_5
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 37
+        width: 83
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5db586ef2e5d4dc70800000000000000
+      internalID: 8995049526673300437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -149,6 +274,11 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       AdditionalInterest_0: -5309637479082286120
+      AdditionalInterest_1: -380754951808569385
+      AdditionalInterest_2: 2685825385018064921
+      AdditionalInterest_3: -1722232816434825950
+      AdditionalInterest_4: -3967574164063782060
+      AdditionalInterest_5: 8995049526673300437
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

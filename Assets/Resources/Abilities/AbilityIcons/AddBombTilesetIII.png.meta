@@ -134,10 +134,10 @@ TextureImporter:
       name: AddBombTilesetIII_0
       rect:
         serializedVersion: 2
-        x: 11
-        y: 5
-        width: 70
-        height: 76
+        x: 51
+        y: 45
+        width: 138
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,10 +156,10 @@ TextureImporter:
       name: AddBombTilesetIII_1
       rect:
         serializedVersion: 2
-        x: 17
-        y: 70
-        width: 18
-        height: 15
+        x: 63
+        y: 175
+        width: 34
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,10 +178,10 @@ TextureImporter:
       name: AddBombTilesetIII_2
       rect:
         serializedVersion: 2
-        x: 57
-        y: 70
-        width: 18
-        height: 15
+        x: 143
+        y: 175
+        width: 34
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,10 +200,10 @@ TextureImporter:
       name: AddBombTilesetIII_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 34
-        width: 10
-        height: 17
+        x: 27
+        y: 104
+        width: 20
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -222,10 +222,10 @@ TextureImporter:
       name: AddBombTilesetIII_4
       rect:
         serializedVersion: 2
-        x: 82
-        y: 34
-        width: 10
-        height: 17
+        x: 193
+        y: 104
+        width: 20
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -244,10 +244,10 @@ TextureImporter:
       name: AddBombTilesetIII_5
       rect:
         serializedVersion: 2
-        x: 17
-        y: 0
-        width: 18
-        height: 16
+        x: 63
+        y: 34
+        width: 34
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -266,10 +266,10 @@ TextureImporter:
       name: AddBombTilesetIII_6
       rect:
         serializedVersion: 2
-        x: 57
-        y: 0
-        width: 18
-        height: 16
+        x: 143
+        y: 34
+        width: 34
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
