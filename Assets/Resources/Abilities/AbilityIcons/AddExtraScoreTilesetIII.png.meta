@@ -116,10 +116,10 @@ TextureImporter:
       name: AddExtraScoreTilesetIII_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 1
-        width: 79
-        height: 85
+        x: 42
+        y: 36
+        width: 155
+        height: 169
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

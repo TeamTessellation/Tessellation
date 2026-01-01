@@ -1598,7 +1598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.OtherUIs.Transitions.HexTransition
   _tileSize: 2.5
-  _progress: 0
+  _progress: -1
   _directionType: 0
   _fadeType: 0
   _angle: 0
@@ -3272,6 +3272,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5313661648544684870, guid: 7bc1e89a24f460a499fe2e2700cb275f, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928292970429294692, guid: 7bc1e89a24f460a499fe2e2700cb275f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 145
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928292970429294692, guid: 7bc1e89a24f460a499fe2e2700cb275f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 157
+      objectReference: {fileID: 0}
     - target: {fileID: 8276038859455552154, guid: 7bc1e89a24f460a499fe2e2700cb275f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3806,6 +3818,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -9.999985
       objectReference: {fileID: 0}
+    - target: {fileID: 1786635490913251794, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1786635490913251794, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1786635490913251794, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1786635490913251794, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2142843662617960342, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
       propertyPath: itemCount
       value: 3
@@ -3954,6 +3982,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6025060424512197329, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025060424512197329, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025060424512197329, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025060424512197329, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6029755662753052561, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
       propertyPath: m_fontSize
       value: 30
@@ -3969,6 +4013,22 @@ PrefabInstance:
     - target: {fileID: 7006196042654119027, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -9.999985
+      objectReference: {fileID: 0}
+    - target: {fileID: 7836372655330048405, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7836372655330048405, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7836372655330048405, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7836372655330048405, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7849999782202563797, guid: 38946997b177b62409e77e8648bd0ec8, type: 3}
       propertyPath: m_fontSize
@@ -4096,6 +4156,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 5353815921073435862, guid: 602f679ac2c3ee948a591098c8fed7ef, type: 3}
+    - target: {fileID: 1672768849763133370, guid: efee451262678fe4a8de6368388f28ca, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1942749017625772842, guid: efee451262678fe4a8de6368388f28ca, type: 3}
       propertyPath: m_LocalPosition.y
       value: -885
@@ -4112,6 +4176,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 5353815921073435862, guid: 602f679ac2c3ee948a591098c8fed7ef, type: 3}
+    - target: {fileID: 2083689490697738072, guid: efee451262678fe4a8de6368388f28ca, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2499813039763679013, guid: efee451262678fe4a8de6368388f28ca, type: 3}
       propertyPath: m_SizeDelta.x
       value: 151
@@ -4272,6 +4340,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 5353815921073435862, guid: 602f679ac2c3ee948a591098c8fed7ef, type: 3}
+    - target: {fileID: 3518941325185709055, guid: efee451262678fe4a8de6368388f28ca, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3579400638897451161, guid: efee451262678fe4a8de6368388f28ca, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -513.2998
@@ -4384,10 +4456,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 5353815921073435862, guid: 602f679ac2c3ee948a591098c8fed7ef, type: 3}
+    - target: {fileID: 5394928250313137527, guid: efee451262678fe4a8de6368388f28ca, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5504720735565700678, guid: efee451262678fe4a8de6368388f28ca, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 5353815921073435862, guid: 602f679ac2c3ee948a591098c8fed7ef, type: 3}
+    - target: {fileID: 5504720735565700678, guid: efee451262678fe4a8de6368388f28ca, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5533975835745242736, guid: efee451262678fe4a8de6368388f28ca, type: 3}
       propertyPath: m_SizeDelta.x
       value: 151

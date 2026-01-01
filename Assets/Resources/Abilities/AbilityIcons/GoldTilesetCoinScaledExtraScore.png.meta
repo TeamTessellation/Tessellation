@@ -116,10 +116,10 @@ TextureImporter:
       name: GoldTilesetCoinScaledExtraScore_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 0
-        width: 83
-        height: 88
+        x: 55
+        y: 32
+        width: 166
+        height: 176
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
