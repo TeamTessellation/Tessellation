@@ -17,7 +17,7 @@ MonoBehaviour:
   ItemName: "\uD3ED\uD0C4 II"
   ItemID: AddBombTilesetII
   Description: "\uD3ED\uD0C4 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: -5705622685975777435, guid: 97d01c6d9b7601a4a8ce77641873d38f, type: 3}
   input:
   - 6
   ItemPrice: 6

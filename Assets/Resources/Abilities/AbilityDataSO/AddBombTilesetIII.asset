@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemID: AddBombTilesetIII
   Description: "\uD3ED\uD0C4 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774 \uB9CE\uC774
     \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: -7703139537377251551, guid: 85aaaf3f11abd6648960a6bcec4f3599, type: 3}
   input:
   - 9
   ItemPrice: 9

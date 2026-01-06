@@ -420,7 +420,7 @@ namespace Database
             dataSO.ItemName = GetItemName(itemData.itemNameID);
             dataSO.ItemID = itemData.ItemID;
             dataSO.Description = GetItemDescription(itemData.DescriptionID, itemData.input);
-            dataSO.ItemIcon = GetItemSprite(itemData.eItemType);
+            dataSO.ItemIcon = GetItemSprite(itemData.eItemType, itemData.Rarity);
             dataSO.input = itemData.input;
             dataSO.CanAppearInShop = itemData.CanAppearInShop;
             dataSO.ItemPrice = itemData.ItemPrice;
@@ -431,12 +431,21 @@ namespace Database
             // conflictingItems와 isSynthesisItem은 AssetDatabase.SaveAssets 다 끝나고 해야할듯
         }
 
-        private Sprite GetItemSprite(eItemType itemType)
+        private Sprite GetItemSprite(eItemType itemType, eRarity itemRarity)
         {
             string abilityIconFolder = "Assets/Resources/Abilities/AbilityIcons";
             string itemTypeName = itemType.ToString();
+            string rarity = "";
+            if (itemRarity == eRarity.Rare)
+            {
+                rarity = "II";
+            }
+            else if (itemRarity == eRarity.Epic)
+            {
+                rarity = "III";
+            }
 
-            string iconPath = Path.Combine(abilityIconFolder, $"{itemTypeName}.png");
+            string iconPath = Path.Combine(abilityIconFolder, $"{itemTypeName+rarity}.png");
             Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(iconPath);
 
             if (sprite == null)
@@ -445,6 +454,10 @@ namespace Database
                 sprite = AssetDatabase.LoadAssetAtPath<Sprite>(iconPath);
                 
                 LogEx.LogError($"{itemTypeName}에 대한 Sprite 필요!");
+            }
+            else
+            {
+                LogEx.Log($"{iconPath} 존재!");
             }
 
             return sprite;
@@ -513,11 +526,11 @@ namespace Database
             // SynthesisRequirements 설정
             if (itemData.SynthesisRequirements != null && itemData.SynthesisRequirements.Count > 0)
             {
-                Debug.Log(itemData.SynthesisRequirements[0]);
+                //Debug.Log(itemData.SynthesisRequirements[0]);
                 dataSO.SynthesisRequirements = new AbilityDataSO[itemData.SynthesisRequirements.Count];
                 for (int i = 0; i < itemData.SynthesisRequirements.Count; i++)
                 {
-                    Debug.Log(itemData.SynthesisRequirements[0]);
+                    //Debug.Log(itemData.SynthesisRequirements[0]);
                     string assetPath = Path.Combine(abilitySOFolder, $"{itemData.SynthesisRequirements[i]}.asset");
                     AbilityDataSO synthesisDataSO = AssetDatabase.LoadAssetAtPath<AbilityDataSO>(assetPath);
                     dataSO.SynthesisRequirements[i] = synthesisDataSO;

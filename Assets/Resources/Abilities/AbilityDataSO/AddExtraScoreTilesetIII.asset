@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemID: AddExtraScoreTilesetIII
   Description: "\uCD94\uAC00 \uC810\uC218 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774
     \uB9CE\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: -3722816623798456354, guid: fbee0db17ee65aa4792881b7579fa309, type: 3}
+  ItemIcon: {fileID: 21300000, guid: e0a1489dfea39dc4cabd82983d9d7dbc, type: 3}
   input:
   - 9
   ItemPrice: 9
