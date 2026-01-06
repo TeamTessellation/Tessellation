@@ -19,7 +19,7 @@ MonoBehaviour:
   Description: "\uD544\uB4DC \uD06C\uAE30\uAC00 1\uB9CC\uD07C \uAC10\uC18C\uD558\uACE0
     \uBAA8\uB4E0 \uC810\uC218\uC5D0 \uB300\uD574 1\uBC30\uC758 \uCD94\uAC00 \uC810\uC218\uB97C
     \uD68D\uB4DD\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: 7849869913318323710, guid: 6a4aa1f999ede664e9df127269343c29, type: 3}
+  ItemIcon: {fileID: 3549275492386049264, guid: 69b990112b6868f428a1c349fe9daf47, type: 3}
   input:
   - 1
   - 0.3
