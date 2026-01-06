@@ -420,7 +420,7 @@ namespace Database
             dataSO.ItemName = GetItemName(itemData.itemNameID);
             dataSO.ItemID = itemData.ItemID;
             dataSO.Description = GetItemDescription(itemData.DescriptionID, itemData.input);
-            dataSO.ItemIcon = GetItemSprite(itemData.eItemType, itemData.Rarity);
+            dataSO.ItemIcon = GetItemSprite(itemData.ItemID);
             dataSO.input = itemData.input;
             dataSO.CanAppearInShop = itemData.CanAppearInShop;
             dataSO.ItemPrice = itemData.ItemPrice;
@@ -431,21 +431,11 @@ namespace Database
             // conflictingItems와 isSynthesisItem은 AssetDatabase.SaveAssets 다 끝나고 해야할듯
         }
 
-        private Sprite GetItemSprite(eItemType itemType, eRarity itemRarity)
+        private Sprite GetItemSprite(string itemName)
         {
             string abilityIconFolder = "Assets/Resources/Abilities/AbilityIcons";
-            string itemTypeName = itemType.ToString();
-            string rarity = "";
-            if (itemRarity == eRarity.Rare)
-            {
-                rarity = "II";
-            }
-            else if (itemRarity == eRarity.Epic)
-            {
-                rarity = "III";
-            }
 
-            string iconPath = Path.Combine(abilityIconFolder, $"{itemTypeName+rarity}.png");
+            string iconPath = Path.Combine(abilityIconFolder, $"{itemName}.png");
             Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(iconPath);
 
             if (sprite == null)
@@ -453,7 +443,7 @@ namespace Database
                 iconPath = Path.Combine(abilityIconFolder, "Default.png");
                 sprite = AssetDatabase.LoadAssetAtPath<Sprite>(iconPath);
                 
-                LogEx.LogError($"{itemTypeName}에 대한 Sprite 필요!");
+                LogEx.LogError($"{itemName}에 대한 Sprite 필요!");
             }
             else
             {
