@@ -17,7 +17,7 @@ MonoBehaviour:
   ItemName: "\uBCF5\uC0AC"
   ItemID: GetTilesetCopy
   Description: "\uD0C0\uC77C \uBCF5\uC0AC \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
-  ItemIcon: {fileID: -8993060100077178789, guid: e8eef6e17bc962b45822e07136b8216b, type: 3}
+  ItemIcon: {fileID: 0}
   input:
   - 3
   ItemPrice: 4
