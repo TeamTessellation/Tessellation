@@ -81,9 +81,9 @@ namespace DataAnalysis.Events
         }
         
         /// <summary>현재 스테이지 (예: "1-1")</summary>
-        public string CurrentStage
+        public string CurrentStageName
         {
-            set => SetParameter("currentStage", value);
+            set => SetParameter("currentStageName", value);
         }
         
         /// <summary>게임 시작 시 랜덤 시드 값</summary>
