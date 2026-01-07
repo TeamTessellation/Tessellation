@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using Ads;
 using Core;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -42,7 +43,7 @@ namespace UI.OtherUIs
         [Space]
         [Header("Buttons")]
         [SerializeField] private CanvasGroup buttonCanvasGroup;
-        [SerializeField] private Button _skipButton;
+        [SerializeField] private AdsRewardButton _skipButton;
         [SerializeField] private Button _retryButton;
         [SerializeField] private Button _homeButton;
         
@@ -54,7 +55,7 @@ namespace UI.OtherUIs
         {
             await GameManager.WaitForInit();
             
-            _skipButton.onClick.AddListener(OnSkipButtonClicked);
+            _skipButton.Button.onClick.AddListener(OnSkipButtonClicked);
             _retryButton.onClick.AddListener(OnRetryButtonClicked);
             _homeButton.onClick.AddListener(OnHomeButtonClicked);
             gameObject.SetActive(false);
@@ -235,9 +236,23 @@ namespace UI.OtherUIs
         
         private void OnSkipButtonClicked()
         {
-            // 스킵 버튼 클릭 시 로직
-            Debug.Log("Skip button clicked. Skipping level...");
-            // TODO : 스킵 로직 구현
+            Debug.Log("Skip button clicked. Attempting to show rewarded ad...");
+            _skipButton.Button.interactable = false;
+            SoundManager.Instance.PlaySfx(SoundReference.UIClick);
+            _skipButton.OnAdCompleted_Once += () =>
+            {
+                Debug.Log("Ad completed successfully. Skipping fail result...");
+                StageManager.Instance.SkipFail();
+            };
+            _skipButton.OnAdSkipped_Once += () =>
+            {
+                Debug.Log("Ad was skipped. Not skipping fail result.");
+            };
+            _skipButton.OnAdFailed_Once += () =>
+            {
+                Debug.Log("Ad failed to show. Not skipping fail result.");
+            };
+            _skipButton.ShowAd();
         }
         private void OnRetryButtonClicked()
         {
@@ -255,6 +270,8 @@ namespace UI.OtherUIs
             Debug.Log("Home button clicked. Returning to main menu...");
             SaveLoadManager.Instance.RemoveSimpleSave();
             GameManager.Instance.ResetGameAndReturnToMainMenu();
+            SoundManager.Instance.PlaySfx(SoundReference.UIClick);
+            
         }
         
         
