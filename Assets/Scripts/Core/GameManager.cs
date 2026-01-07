@@ -48,6 +48,17 @@ namespace Core
         [field:SerializeField] public bool DisableContinueInMainMenu { get; private set; } = false;
         public CancellationToken GameCancellationToken => _gameCancellationTokenSource.Token;
         [SerializeField] private PlayerStatus _playerStatus = new PlayerStatus();
+        
+        /// <summary>
+        /// 게임 시작 시 랜덤 시드 값
+        /// </summary>
+        public uint GameRandomSeed { get; private set; }
+        
+        /// <summary>
+        /// 스테이지 시작 시 랜덤 시드 값
+        /// </summary>
+        public uint StageRandomSeed { get; set; }
+        
         public GlobalGameState CurrentGameState
         {
             get => _currentGameState;
@@ -161,6 +172,10 @@ namespace Core
         {
             ResetGame();
             _gameCancellationTokenSource = new CancellationTokenSource();
+            
+            // 게임 시작 시 랜덤 시드 초기화
+            GameRandomSeed = (uint)UnityEngine.Random.Range(0, int.MaxValue);
+            
             CurrentGameState = GlobalGameState.InGame;
             StageManager.CurrentStage = StageModel.FirstStageModel;
             StageManager.StartStage(_gameCancellationTokenSource.Token);
