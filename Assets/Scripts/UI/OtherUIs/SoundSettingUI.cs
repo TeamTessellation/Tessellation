@@ -146,6 +146,7 @@ namespace UI.OtherUIs
         public async UniTask ShowDefaultAsync()
         {
             gameObject.SetActive(true);
+            
             returnType = ReturnType.ToMainUI;
             var leftSequence = DOTween.Sequence();
             
@@ -246,6 +247,7 @@ namespace UI.OtherUIs
         /// </summary>
         public async UniTask ShowInPauseAsync(RectTransform prevSoundButtonRect, CancellationToken cancellationToken = default)
         {
+            
             returnType = ReturnType.ToPauseUI;
             gameObject.SetActive(true);
             
@@ -286,7 +288,7 @@ namespace UI.OtherUIs
         public async UniTask HideInPauseAsync(CancellationToken cancellationToken = default)
         {
             var leftSequence = DOTween.Sequence();
-            
+            SoundManager.Instance.PlaySfx(SoundReference.MenuIngameVolumeOut);
             // 왼쪽 UI들 애니메이션(돌아가기가 사운드 버튼 밑으로 사라짐)
             // 이후 이동은 PauseUI에서 처리
             leftSequence.Append(backButtonRectTransform.DOAnchorPos(
