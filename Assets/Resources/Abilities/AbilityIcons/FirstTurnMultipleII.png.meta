@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1839d983dcdc3924d8a1409ae568a08b
+guid: 47e9f47a0c5dbcc478c03d12aefa0beb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7922436767568709799
-    second: GetTilesetCopy 1_0
+      213: 8979252442821267968
+    second: FirstTurnMultipleII_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GetTilesetCopy 1_0
+      name: FirstTurnMultipleII_0
       rect:
         serializedVersion: 2
-        x: 32
-        y: 51
-        width: 174
-        height: 136
+        x: 31
+        y: 54
+        width: 168
+        height: 145
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 957b2991cb9dd0290800000000000000
-      internalID: -7922436767568709799
+      spriteID: 0029beac586bc9c70800000000000000
+      internalID: 8979252442821267968
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      GetTilesetCopy 1_0: -7922436767568709799
+      FirstTurnMultipleII_0: 8979252442821267968
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
