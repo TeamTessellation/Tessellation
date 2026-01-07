@@ -124,6 +124,28 @@ namespace Player
 
             return ownedAbilities;
         }
+        
+        /// <summary>
+        /// 현재 보유 아이템 정보를 JSON 문자열로 반환합니다.
+        /// </summary>
+        public string GetItemsAsJson()
+        {
+            List<string> itemIds = new List<string>();
+            for (int i = 0; i < _maxAbilityCount; i++)
+            {
+                if (_abilities[i] != null)
+                {
+                    itemIds.Add(_abilities[i].DataSO.ItemID);
+                }
+            }
+            return JsonUtility.ToJson(new ItemListWrapper { items = itemIds });
+        }
+        
+        [Serializable]
+        private class ItemListWrapper
+        {
+            public List<string> items;
+        }
 
         /// <summary>
         /// abilityData를 인자로 받아 인벤토리에 아이템을 추가합니다

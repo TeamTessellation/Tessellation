@@ -242,6 +242,8 @@ namespace UI.OtherUIs
             _skipButton.OnAdCompleted_Once += () =>
             {
                 Debug.Log("Ad completed successfully. Skipping fail result...");
+                // 광고 시청 성공 시 이어하기 횟수 증가
+                GameManager.Instance.PlayerStatus.TotalReviveCount++;
                 StageManager.Instance.SkipFail();
             };
             _skipButton.OnAdSkipped_Once += () =>
