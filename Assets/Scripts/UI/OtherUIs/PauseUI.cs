@@ -288,6 +288,7 @@ namespace UI.OtherUIs
         /// <param name="cancellationToken"></param>
         public async UniTask PlayOnEnableTransitionsAsync(CancellationToken cancellationToken)
         {
+            SoundManager.Instance.PlaySfx(SoundReference.MenuIngameIn);
             using var handle = ListPool<UniTask>.Get(out var transitionTasks);
             foreach (var tile in GetAllTiles())
             {
@@ -355,6 +356,7 @@ namespace UI.OtherUIs
         
         public async UniTask PlayOnDisableTransitionsAsync(CancellationToken cancellationToken)
         {
+            SoundManager.Instance.PlaySfx(SoundReference.MenuIngameOut);
             using var handle = ListPool<UniTask>.Get(out var transitionTasks);
     
             foreach (var tile in GetAllTiles())
@@ -421,6 +423,7 @@ namespace UI.OtherUIs
         /// <param name="cancellationToken"></param>
         public async UniTask SwitchToSoundSettingsAsync(CancellationToken cancellationToken)
         {
+            SoundManager.Instance.PlaySfx(SoundReference.MenuIngameVolumeIn);
             LogEx.Log("SwitchToSoundSettingsAsync 시작");
             using var handle = ListPool<UniTask>.Get(out var transitionTasks); // Correctly initialize transitionTasks here
 
