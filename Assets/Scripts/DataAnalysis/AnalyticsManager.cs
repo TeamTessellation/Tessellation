@@ -26,8 +26,13 @@ namespace DataAnalysis
             try
             {
                 await UnityServices.InitializeAsync();
-                var userConsent = EndUserConsent.GetConsentState();
-                userConsent.AnalyticsIntent = ConsentStatus.Granted;
+                var consent = new ConsentState()
+                {
+                    AnalyticsIntent = ConsentStatus.Granted,
+                    AdsIntent = ConsentStatus.Granted
+                };
+                EndUserConsent.SetConsentState(consent);
+                LogEx.Log("Analytics initialized successfully.");
             }
             catch (Exception e)
             {
@@ -35,7 +40,15 @@ namespace DataAnalysis
             }
             
         }
-         
+
+        private void OnDisable()
+        {
+            if (UnityServices.State == ServicesInitializationState.Initialized)
+            {
+                AnalyticsService.Instance.Flush();
+            }
+        }
+
         /// <summary>
         /// 커스텀 이벤트를 전송합니다.
         /// </summary>
@@ -102,6 +115,92 @@ namespace DataAnalysis
             {
                 LevelNumber = levelNumber,
                 EarnedScore = earnedScore
+            };
+            Service.RecordEvent(evt);
+        }
+        
+        /// <summary>
+        /// 스테이지 클리어 시 분석 데이터를 전송합니다.
+        /// </summary>
+        public void TrackStageClear(
+            string currentStageName,
+            uint gameRandomSeed,
+            uint stageRandomSeed,
+            int stageBestPlacement,
+            int stageScore,
+            int stageClearedLines,
+            int remainingTurns,
+            int stageAbilityUseCount,
+            int stageCoinsObtained,
+            string currentItems,
+            int currentCoins,
+            int remainingActiveItemCount)
+        {
+            var evt = new StageClearEvent
+            {
+                CurrentStageName = currentStageName,
+                GameRandomSeed = gameRandomSeed,
+                StageRandomSeed = stageRandomSeed,
+                StageBestPlacement = stageBestPlacement,
+                StageScore = stageScore,
+                StageClearedLines = stageClearedLines,
+                RemainingTurns = remainingTurns,
+                StageAbilityUseCount = stageAbilityUseCount,
+                StageCoinsObtained = stageCoinsObtained,
+                CurrentItems = currentItems,
+                CurrentCoins = currentCoins,
+                RemainingActiveItemCount = remainingActiveItemCount
+            };
+            Service.RecordEvent(evt);
+        }
+        
+        /// <summary>
+        /// 게임 종료 시 분석 데이터를 전송합니다.
+        /// </summary>
+        public void TrackGameEnd(
+            string endedStage,
+            uint gameRandomSeed,
+            uint stageRandomSeed,
+            int lastStageBestPlacement,
+            int lastStageScore,
+            int lastStageClearedLines,
+            int lastStageRemainingTurns,
+            int lastStageAbilityUseCount,
+            int lastStageCoinsObtained,
+            string currentItems,
+            int currentCoins,
+            int remainingActiveItemCount,
+            int bestScorePlacement,
+            int bestStageScore,
+            int totalScore,
+            int totalClearedLines,
+            int totalAbilityUseCount,
+            int bestStageCoinsObtained,
+            int totalObtainedCoins,
+            int totalReviveCount)
+        {
+            var evt = new GameEndEvent
+            {
+                EndedStage = endedStage,
+                GameRandomSeed = gameRandomSeed,
+                StageRandomSeed = stageRandomSeed,
+                LastStageBestPlacement = lastStageBestPlacement,
+                LastStageScore = lastStageScore,
+                LastStageClearedLines = lastStageClearedLines,
+                LastStageRemainingTurns = lastStageRemainingTurns,
+                LastStageAbilityUseCount = lastStageAbilityUseCount,
+                LastStageCoinsObtained = lastStageCoinsObtained,
+                CurrentItems = currentItems,
+                CurrentCoins = currentCoins,
+                RemainingActiveItemCount = remainingActiveItemCount,
+                BestScorePlacement = bestScorePlacement,
+                BestStageScore = bestStageScore,
+                TotalScore = totalScore,
+                TotalClearedLines = totalClearedLines,
+                TotalAbilityUseCount = totalAbilityUseCount,
+                BestStageCoinsObtained = bestStageCoinsObtained,
+                TotalObtainedCoins = totalObtainedCoins,
+                TotalReviveCount = totalReviveCount
             };
             Service.RecordEvent(evt);
         }

@@ -73,6 +73,7 @@ namespace Player
             TotalAbilityUseCount, // 능력 사용 횟수
             TotalObtainedCoins, // 지금까지 얻었던 코인
             TotalInterestEarnedCoins, // 총 얻었던 이자 코인
+            TotalReviveCount, // 광고 보고 이어하기 사용 횟수
 
             StageBestPlacement, // 해당 스테이지 최고 배치
             StageScore, // 해당 스테이지 점수
@@ -95,7 +96,7 @@ namespace Player
         public static readonly VariableKey BestStart = VariableKey.BestScorePlacement;
         public static readonly VariableKey BestEnd = VariableKey.BestStageInterestEarnedCoins;
         public static readonly VariableKey TotalStart = VariableKey.TotalScore;
-        public static readonly VariableKey TotalEnd = VariableKey.TotalInterestEarnedCoins;
+        public static readonly VariableKey TotalEnd = VariableKey.TotalReviveCount;
         public static readonly VariableKey StageStart = VariableKey.StageBestPlacement;
         public static readonly VariableKey StageEnd = VariableKey.StageTempScore;
         public static readonly VariableKey CurrentStart = VariableKey.CurrentTurn;
@@ -221,6 +222,15 @@ namespace Player
         {
             get { return Variables.GetVariable(nameof(VariableKey.TotalInterestEarnedCoins)).IntValue; }
             set { Variables.SetInteger(nameof(VariableKey.TotalInterestEarnedCoins), value); }
+        }
+        
+        /// <summary>
+        /// 광고를 보고 이어하기를 사용한 총 횟수입니다. (Prefix: Total)
+        /// </summary>
+        public int TotalReviveCount
+        {
+            get { return Variables.GetVariable(nameof(VariableKey.TotalReviveCount)).IntValue; }
+            set { Variables.SetInteger(nameof(VariableKey.TotalReviveCount), value); }
         }
 
         // --- BestStage / Best prefix (최고값 관련) ---

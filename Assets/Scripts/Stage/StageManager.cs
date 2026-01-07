@@ -79,6 +79,17 @@ namespace Stage
         }
         
         /// <summary>
+        /// 실패했는데, 스킵하고 다음 스테이지로 진행합니다.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        public void SkipFail()
+        {
+            LogEx.Log("Skipping Fail and proceeding to next stage.");
+            GoToNextStage();
+            StartStage(token);
+        }
+        
+        /// <summary>
         /// 다음 스테이지로 진행합니다.
         /// </summary>
         private void GoToNextStage()
@@ -95,6 +106,10 @@ namespace Stage
                 LogEx.LogError("CancellationToken is not set. Cannot start stage.");
                 return;
             }
+            
+            // 스테이지 시작 시 랜덤 시드 초기화
+            GameManager.Instance.StageRandomSeed = (uint)UnityEngine.Random.Range(0, int.MaxValue);
+            
             var UM = UIManager.Instance;
             _isStageCleared = false;
             LogEx.Log("Stage Starting...");
@@ -232,6 +247,25 @@ namespace Stage
             playerStatus.TotalInterestEarnedCoins += playerStatus.StageInterestEarnedCoins;
             playerStatus.TotalScore += playerStatus.StageScore;
             
+            // 스테이지 클리어 분석 데이터 전송
+            if (DataAnalysis.AnalyticsManager.HasInstance)
+            {
+                DataAnalysis.AnalyticsManager.Instance.TrackStageClear(
+                    currentStageName: _currentStage.StageName,
+                    gameRandomSeed: GameManager.Instance.GameRandomSeed,
+                    stageRandomSeed: GameManager.Instance.StageRandomSeed,
+                    stageBestPlacement: playerStatus.StageBestPlacement,
+                    stageScore: playerStatus.StageScore,
+                    stageClearedLines: playerStatus.StageClearedLines,
+                    remainingTurns: playerStatus.RemainingTurns,
+                    stageAbilityUseCount: playerStatus.StageAbilityUseCount,
+                    stageCoinsObtained: playerStatus.StageCoinsObtained,
+                    currentItems: playerStatus.inventory.GetItemsAsJson(),
+                    currentCoins: playerStatus.CurrentCoins,
+                    remainingActiveItemCount: playerStatus.inventory.currentItemCount
+                );
+            }
+            
             
             // await UniTask.Delay(1000);
             // 결과 팝업
@@ -303,6 +337,32 @@ namespace Stage
             
             playerStatus.BestScorePlacement = Math.Max(playerStatus.BestScorePlacement, playerStatus.StageBestPlacement);
             
+            // 게임 종료 분석 데이터 전송
+            if (DataAnalysis.AnalyticsManager.HasInstance)
+            {
+                DataAnalysis.AnalyticsManager.Instance.TrackGameEnd(
+                    endedStage: _currentStage.StageName,
+                    gameRandomSeed: GameManager.Instance.GameRandomSeed,
+                    stageRandomSeed: GameManager.Instance.StageRandomSeed,
+                    lastStageBestPlacement: playerStatus.StageBestPlacement,
+                    lastStageScore: playerStatus.StageScore,
+                    lastStageClearedLines: playerStatus.StageClearedLines,
+                    lastStageRemainingTurns: playerStatus.RemainingTurns,
+                    lastStageAbilityUseCount: playerStatus.StageAbilityUseCount,
+                    lastStageCoinsObtained: playerStatus.StageCoinsObtained,
+                    currentItems: playerStatus.inventory.GetItemsAsJson(),
+                    currentCoins: playerStatus.CurrentCoins,
+                    remainingActiveItemCount: playerStatus.inventory.currentItemCount,
+                    bestScorePlacement: playerStatus.BestScorePlacement,
+                    bestStageScore: playerStatus.BestStageScore,
+                    totalScore: playerStatus.TotalScore,
+                    totalClearedLines: playerStatus.TotalClearedLines,
+                    totalAbilityUseCount: playerStatus.TotalAbilityUseCount,
+                    bestStageCoinsObtained: playerStatus.BestStageCoinsObtained,
+                    totalObtainedCoins: playerStatus.TotalObtainedCoins,
+                    totalReviveCount: playerStatus.TotalReviveCount
+                );
+            }
             
             
             await UM.FailResultUI.ShowFailResult();
