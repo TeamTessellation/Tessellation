@@ -15,6 +15,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 {
     public static HandManager Instance { get; private set; }
 
+    public Vector2 TilesetCorrect = Vector3.zero;
     [SerializeField] private DeckSO originDeckSO;
     [HideInInspector] public DeckSO DeckSO;
     public DeckSO StageDeckSO;
@@ -122,7 +123,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
                 Field.Instance.ShowSilhouette(_targetHandBox.HoldTileSet, dragCoor);
             }
 
-            _targetHandBox.HoldTileSet.transform.position = worldPos;
+            _targetHandBox.HoldTileSet.transform.position = worldPos + TilesetCorrect;
 
             if (Mouse.current != null && Mouse.current.leftButton.wasReleasedThisFrame)
             {
