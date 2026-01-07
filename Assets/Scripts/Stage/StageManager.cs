@@ -79,6 +79,17 @@ namespace Stage
         }
         
         /// <summary>
+        /// 실패했는데, 스킵하고 다음 스테이지로 진행합니다.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        public void SkipFail()
+        {
+            LogEx.Log("Skipping Fail and proceeding to next stage.");
+            GoToNextStage();
+            StartStage(token);
+        }
+        
+        /// <summary>
         /// 다음 스테이지로 진행합니다.
         /// </summary>
         private void GoToNextStage()
