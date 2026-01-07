@@ -251,7 +251,7 @@ namespace Stage
             if (DataAnalysis.AnalyticsManager.HasInstance)
             {
                 DataAnalysis.AnalyticsManager.Instance.TrackStageClear(
-                    currentStage: _currentStage.StageName,
+                    currentStageName: _currentStage.StageName,
                     gameRandomSeed: GameManager.Instance.GameRandomSeed,
                     stageRandomSeed: GameManager.Instance.StageRandomSeed,
                     stageBestPlacement: playerStatus.StageBestPlacement,

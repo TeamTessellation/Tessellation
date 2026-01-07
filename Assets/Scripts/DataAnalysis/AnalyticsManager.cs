@@ -123,7 +123,7 @@ namespace DataAnalysis
         /// 스테이지 클리어 시 분석 데이터를 전송합니다.
         /// </summary>
         public void TrackStageClear(
-            string currentStage,
+            string currentStageName,
             uint gameRandomSeed,
             uint stageRandomSeed,
             int stageBestPlacement,
@@ -138,7 +138,7 @@ namespace DataAnalysis
         {
             var evt = new StageClearEvent
             {
-                CurrentStage = currentStage,
+                CurrentStageName = currentStageName,
                 GameRandomSeed = gameRandomSeed,
                 StageRandomSeed = stageRandomSeed,
                 StageBestPlacement = stageBestPlacement,
