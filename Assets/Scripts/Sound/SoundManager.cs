@@ -537,6 +537,12 @@ namespace Sound
             soundEmitter.transform.position = Vector3.zero;
             AudioSource audioSource = soundEmitter.GetComponent<AudioSource>();
             
+            float defaultVolume = 1f;
+            if(SoundReference.NumberIncrease == path)
+            {
+                defaultVolume = 1.5f;
+            }
+            
             if (useMixerVolume)
             {
                 if (sfxGroup != null)
@@ -547,12 +553,12 @@ namespace Sound
                 {
                     Debug.LogWarning("[SoundManager] sfxGroup is null! Audio may not play correctly.");
                 }
-                audioSource.volume = 1f;
+                audioSource.volume = defaultVolume;
             }
             else
             {
                 audioSource.outputAudioMixerGroup = null;
-                audioSource.volume = _directMasterVolume * _directSfxVolume;
+                audioSource.volume = _directMasterVolume * _directSfxVolume * defaultVolume;
             }
             
             // List에 추가
@@ -711,9 +717,17 @@ namespace Sound
             _increaseSoundOverrideEmitter = PlaySfx(SoundReference.NumberIncrease);
         }
         
-        public void PlayIncreaseSound()
+        public void PlayIncreaseSoundIfNotPlaying()
         {
-            PlaySfx(SoundReference.NumberIncrease);
+            if (_increaseSoundOverrideEmitter == null || !_increaseSoundOverrideEmitter.GetComponent<AudioSource>().isPlaying)
+            {
+                _increaseSoundOverrideEmitter?.Stop();
+                _increaseSoundOverrideEmitter = PlaySfx(SoundReference.NumberIncrease);
+            }
+            else
+            {
+                // 이미 재생 중이면 아무것도 안함
+            }
         }
         
         public void StopIncreaseSoundOverride()
