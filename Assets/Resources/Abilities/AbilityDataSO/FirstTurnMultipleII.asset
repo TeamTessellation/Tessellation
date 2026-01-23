@@ -22,7 +22,7 @@ MonoBehaviour:
   input:
   - 1
   ItemPrice: 15
-  CanAppearInShop: 0
+  CanAppearInShop: 1
   ConflictingItems: []
   IsSynthesisItem: 1
   SynthesisRequirements:

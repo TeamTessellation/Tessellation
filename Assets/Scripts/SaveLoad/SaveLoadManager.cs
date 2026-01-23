@@ -23,6 +23,7 @@ namespace SaveLoad
         // public int CurrentScore = 0; // 현재 턴에 대해 누적되는 점수
         public int Score;
         public int HandCount;
+        public int RemainCount;
         public int FieldSize;
         public List<OffsetTileData> FieldTileData;
         public TileSetData[] HandData;

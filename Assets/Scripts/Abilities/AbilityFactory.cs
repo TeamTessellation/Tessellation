@@ -27,6 +27,7 @@ namespace Abilities
             { eItemType.GetTilesetRotate,                 () => new ActiveUpAbility() },
             { eItemType.GetTilesetChangeOverwrite,        () => new ActiveUpAbility() },
             { eItemType.GetTilesetCopy,                   () => new ActiveUpAbility() },
+            { eItemType.DecreaseFieldSize,                () => new FieldSizeAbility() },
         };
         
         public static AbilityBase Create(AbilityDataSO abilitydata)

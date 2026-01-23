@@ -3,17 +3,18 @@ using Core;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class CoinScaledMultipleAbility : AbilityBase
+public class FieldSizeAbility : AbilityBase
 {
 
-    private int _scaledCoin;
+    private int _size;
     private float _scale;
 
     public override void Initialize(TilePlaceHandler tilePlaceHandler)
     {
-        _scaledCoin = (int)DataSO.input[0];
+        _size = (int)DataSO.input[0];
         _scale = DataSO.input[1];
-        
+        Field.Instance.SetField(Field.Instance.Size - _size);
+
         base.Initialize(tilePlaceHandler);
     }
 
@@ -29,7 +30,7 @@ public class CoinScaledMultipleAbility : AbilityBase
             await Activate(info);
         }
     }
-    
+
     protected override async UniTask HandleLineClearedAsync(TurnResultInfo info)
     {
         if (CheckCanActivate(info))
@@ -37,7 +38,7 @@ public class CoinScaledMultipleAbility : AbilityBase
             await Activate(info);
         }
     }
-    
+
     protected override async UniTask HandleTileRemovedAsync(TurnResultInfo info)
     {
         if (CheckCanActivate(info))
@@ -45,7 +46,7 @@ public class CoinScaledMultipleAbility : AbilityBase
             await Activate(info);
         }
     }
-    
+
     protected override async UniTask HandleTileBurstAsync(TurnResultInfo info)
     {
         if (CheckCanActivate(info))
@@ -56,10 +57,6 @@ public class CoinScaledMultipleAbility : AbilityBase
 
     protected override async UniTask Activate(TurnResultInfo info)
     {
-        int currentCoin = GameManager.Instance.PlayerStatus.CurrentCoins;
-
-        int factor = currentCoin / _scaledCoin;
-        
-        ScoreManager.Instance.AddMultiplier(factor * _scale);
+        ScoreManager.Instance.MultiplyMultiplier(_scale);
     }
 }

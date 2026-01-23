@@ -133,4 +133,13 @@ public class HandBox : MonoBehaviour, IPoolAble<TileSetData>
         entry.callback.AddListener((data) => _downEvent(this));
         _eventTrigger.triggers.Add(entry);
     }
+
+    public void SetOverwriteMode()
+    {
+        if (HoldTileSet == null) return;
+        var tiles = HoldTileSet.Tiles;
+
+        foreach (var tile in tiles)
+            tile.SetOverwrite();
+    }
 }

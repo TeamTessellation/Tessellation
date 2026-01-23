@@ -102,6 +102,8 @@ public class Cell
     /// <param name="tile">배치할 Tile</param>
     public void Set(Tile tile)
     {
+        UnSet();
+
         Tile = tile;
         tile.Coor = Coor;
         tile.transform.SetParent(_cellRoot, true);

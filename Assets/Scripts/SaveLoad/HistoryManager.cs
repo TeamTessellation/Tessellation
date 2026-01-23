@@ -33,6 +33,11 @@ namespace SaveLoad
             SaveLoadManager.Instance.LoadSaveData(lastSave);
         }
         
+        public void PopLastSave()
+        {
+            _saveHistory.PopLastSave();
+        }
+
         /// <summary>
         /// 마지막 저장 기록을 불러오고 기록에서 제거합니다.
         /// 사이즈가 1인경우 불러오기만 합니다.
