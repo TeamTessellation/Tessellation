@@ -10,7 +10,7 @@ using Machamy.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Player;
-using Unity.VisualScripting;
+using Sound;
 
 public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 {
@@ -86,6 +86,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
             {
                 if (!InputManager.Instance.ReadyItem)
                 {
+                    SoundManager.Instance.PlaySfx(SoundReference.TilePickup);
                     _onMouseDown = false;
                     _dragTileSet = true;
                     _targetHandBox.HoldTileSet.transform.localScale = Vector3.one;
@@ -239,6 +240,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 
         if (Field.Instance.TryPlace(_targetHandBox.HoldTileSet, worldPos.ToCoor(Field.Instance.TileOffset), out var placeTiles))
         {
+            SoundManager.Instance.PlaySfx(SoundReference.TileRelease);
             _remainHand--;
             InputManager.Instance.PlaceTileSet(worldPos, _targetHandBox, placeTiles);
             if (_remainHand <= 0)

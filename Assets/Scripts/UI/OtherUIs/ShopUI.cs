@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Interaction;
 using NUnit.Framework;
+using Sound;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -37,6 +38,7 @@ namespace UI.OtherUIs
         [SerializeField] private float shopEntryMoveDuration = 0.5f;
         [SerializeField] private float shopEntryMoveDistance = 40f;
         [SerializeField] private float shopEntryMoveInterval = 0.2f;
+        [SerializeField] private float shopEntrySoundDelayRatio = 0.6f;
         [SerializeField] private Ease shopEntryMoveEase = Ease.OutBack;
          
         [Header("Hide")]
@@ -159,6 +161,42 @@ namespace UI.OtherUIs
             if (_shopItemSelector != null)
             {
                 List<AbilityDataSO> selectedItems = _shopItemSelector.SelectShopItems(itemCount);
+                // 각 아이템이 서로 불가 아이템인지 확인
+
+                bool IsPossible(List<AbilityDataSO> candidates)
+                {
+                    for (int i = 0; i < candidates.Count; i++)
+                    {
+                        var itemA = candidates[i];
+                        for (int j = i + 1; j < candidates.Count; j++)
+                        {
+                            var itemB = candidates[j];
+                            // itemA의 ConflictingItems에 itemB가 있는지 확인
+                            foreach (var conflictingItem in itemA.ConflictingItems)
+                            {
+                                if (conflictingItem == itemB)
+                                {
+                                    return false;
+                                }
+                            }
+                            // itemB의 ConflictingItems에 itemA가 있는지 확인
+                            foreach (var conflictingItem in itemB.ConflictingItems)
+                            {
+                                if (conflictingItem == itemA)
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                    return true;
+                }
+                
+                while (!IsPossible(selectedItems))
+                {
+                    selectedItems = _shopItemSelector.SelectShopItems(itemCount);
+                }
+                
                 for (int i = 0; i < selectedItems.Count; i++)
                 {
                     entries[i].InitializeData(selectedItems[i]);
@@ -172,18 +210,69 @@ namespace UI.OtherUIs
             currentTweenList.Clear();
     
             // Entries들을 보이지 않는 왼쪽으로 이동
+            eRarity mostRareRarity = eRarity.None;
             for (int i = 0; i < entries.Count; i++)
             {
-                entries[i].GetComponent<RectTransform>().anchoredPosition = entryOriginPosition[i] + Vector2.left * shopEntryMoveDistance;
+                var e = entries[i];
+                if (e.AbilityData != null && e.AbilityData.Rarity > mostRareRarity)
+                {
+                    mostRareRarity = e.AbilityData.Rarity;
+                }
+                e.GetComponent<RectTransform>().anchoredPosition = entryOriginPosition[i] + Vector2.left * shopEntryMoveDistance;
             }
 
             // 이동 애니메이션
             List<Tween> moveTweens = new List<Tween>();
+            
+            bool hasPlayedRaritySound = false;
+            void PlayRaritySound(eRarity rarity)
+            {
+                if (hasPlayedRaritySound) return;
+                hasPlayedRaritySound = true;
+                switch (rarity)
+                {
+                    case eRarity.Rare:
+                        SoundManager.Instance.PlaySfx(SoundReference.AppearRare);
+                        
+                        break;
+                    case eRarity.Epic:
+                        SoundManager.Instance.PlaySfx(SoundReference.AppearEpic);
+                        break;
+                    case eRarity.Special:
+                        SoundManager.Instance.PlaySfx(SoundReference.AppearSpecial);
+                        break;
+                    case eRarity.None:
+                    case eRarity.Normal:
+                        break;
+                            
+                }
+            }
+            
             for (int i = 0; i < entries.Count; i++)
             {
-                moveTweens.Add(entries[i].GetComponent<RectTransform>().DOAnchorPosX(entryOriginPosition[i].x, shopEntryMoveDuration)
+                var e = entries[i];
+                // 해당 트윈이 가장 높은 등급이고, 아직 소리가 재생되지 않았다면, 적당한 지점에서 소리 재생
+
+                Tween moveTween = e.GetComponent<RectTransform>()
+                    .DOAnchorPosX(entryOriginPosition[i].x, shopEntryMoveDuration)
                     .SetEase(shopEntryMoveEase)
-                    .SetDelay(shopEntryMoveInterval * i));
+                    .SetDelay(shopEntryMoveInterval * i);
+                moveTween.OnUpdate(() =>
+                {
+                    float progress = moveTween.ElapsedPercentage();
+                    if (progress >= shopEntrySoundDelayRatio)
+                    {
+                        if (e.AbilityData != null && e.AbilityData.Rarity == mostRareRarity)
+                        {
+                            PlayRaritySound(e.AbilityData.Rarity);
+                        }
+                    }
+                });
+                moveTweens.Add(moveTween);
+                
+                
+                
+                
             }
             
             currentTweenList.AddRange(moveTweens);
@@ -202,6 +291,7 @@ namespace UI.OtherUIs
             {
                 // 재화 소모 (CurrentCoins)
                 GameManager.Instance.PlayerStatus.CurrentCoins -= currentRerollCost;
+                SoundManager.Instance.PlaySfx(SoundReference.Reroll);
                 _rerollCount++;
                 rerollCostText.text = (3 + _rerollCount * 2).ToString();
             }
