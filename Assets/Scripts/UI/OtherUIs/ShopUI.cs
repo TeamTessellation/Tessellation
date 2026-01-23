@@ -161,6 +161,42 @@ namespace UI.OtherUIs
             if (_shopItemSelector != null)
             {
                 List<AbilityDataSO> selectedItems = _shopItemSelector.SelectShopItems(itemCount);
+                // 각 아이템이 서로 불가 아이템인지 확인
+
+                bool IsPossible(List<AbilityDataSO> candidates)
+                {
+                    for (int i = 0; i < candidates.Count; i++)
+                    {
+                        var itemA = candidates[i];
+                        for (int j = i + 1; j < candidates.Count; j++)
+                        {
+                            var itemB = candidates[j];
+                            // itemA의 ConflictingItems에 itemB가 있는지 확인
+                            foreach (var conflictingItem in itemA.ConflictingItems)
+                            {
+                                if (conflictingItem == itemB)
+                                {
+                                    return false;
+                                }
+                            }
+                            // itemB의 ConflictingItems에 itemA가 있는지 확인
+                            foreach (var conflictingItem in itemB.ConflictingItems)
+                            {
+                                if (conflictingItem == itemA)
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                    return true;
+                }
+                
+                while (!IsPossible(selectedItems))
+                {
+                    selectedItems = _shopItemSelector.SelectShopItems(itemCount);
+                }
+                
                 for (int i = 0; i < selectedItems.Count; i++)
                 {
                     entries[i].InitializeData(selectedItems[i]);
