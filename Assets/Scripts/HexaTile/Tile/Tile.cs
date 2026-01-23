@@ -28,6 +28,7 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
     public Direction Direction;
     private Sprite _defaultSprite;
     private Light2D _light;
+    public bool IsOverwrite = false;
     [NonSerialized] public TileOptionBase TileOptionBase;
 
     /// <summary>
@@ -55,6 +56,11 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
             else
                 TileEffectSO[(TileOption)i] = TileEffectSOList[0];
         }
+    }
+
+    public void SetOverwrite()
+    {
+        IsOverwrite = true;
     }
 
     public void Set(TileData data)
@@ -91,6 +97,7 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
     public void Reset()
     {
         _sr.sprite = _defaultSprite;
+        IsOverwrite = false;
     }
 
     public async UniTask ActiveEffect(Action endAction, Action<Tile> remainAction)

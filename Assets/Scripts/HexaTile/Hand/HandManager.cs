@@ -10,6 +10,7 @@ using Machamy.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Player;
+using Unity.VisualScripting;
 
 public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 {
@@ -27,11 +28,14 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     private Camera _cam => Camera.main;
     private bool _onMouseDown;
     private bool _dragTileSet;
+    public bool IsDrag { get { return _dragTileSet; } }
 
     private int _remainHand = 0;
-    public int HandCount { get { return _remainHand; } }
+    public int HandCount { get { return _remainHand; } set { _remainHand = value; } }
     private int _handSize = 3;
     private Coordinate _lastDragCoor;
+
+    public bool HandEmpty { get { return _handSize > _remainHand; } }
 
     public Guid Guid { get; init; }
     
@@ -331,6 +335,26 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         RefreshGameObject().Forget();
     }
 
+    public void AddHand(TileSetData data)
+    {
+        _remainHand++;
+
+        for(int i = 0; i < _hand.Length; i++)
+        {
+            if (_hand[i].HoldTileSet == null)
+            {
+                Pool<HandBox>.Return(_hand[i]);
+                var handBox = Pool<HandBox, TileSetData>.Get(data);
+                handBox.transform.SetParent(_handRoot, false);
+                handBox.RegisterDownEvent(HandBoxMouseDown);
+                _hand[i] = handBox;
+                break;
+            }
+        }
+
+        RefreshGameObject().Forget();
+    }
+
     private async UniTask RefreshGameObject()
     {
         await UniTask.NextFrame();
@@ -392,6 +416,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     {
         ResetHand(data.HandCount);
 
+        _remainHand = data.RemainCount;
         _hand = new HandBox[data.HandCount];
         for (int i = 0; i < data.HandCount; i++)
         {
@@ -413,6 +438,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
     {
         data.HandData = new TileSetData[_handSize];
         data.HandCount = _handSize;
+        data.RemainCount = _remainHand;
 
         for (int i = 0; i < _hand.Length; i++)
         {

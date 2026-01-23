@@ -1,13 +1,14 @@
+using Core;
 using Cysharp.Threading.Tasks;
-using System.Collections.Generic;
 using Player;
+using SaveLoad;
 using Stage;
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
-using System;
-using Core;
-using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 {
@@ -17,7 +18,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
         None,
         Add, // 구현
         Delete, // 구현
-        Overwrite,
+        Overwrite, 
         Rotate, // 구현
         Reroll, // 구현
         Revert, // 제외
@@ -103,7 +104,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
             return;
 
         UseItemAction?.Invoke(target);
-        PlayerStatus.Current.inventory.SetActiveItemCount(PlayerStatus.Current.inventory.currentItemCount - 1);
+        PlayerStatus.Current.inventory.currentItemCount--;
         _itemHold.SetAmount(PlayerStatus.Current.inventory.currentItemCount);
         _readyItem = eActiveItemType.End;
         HandManager.Instance.RemoveItemIcon();
@@ -113,6 +114,9 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     public void SetItem()
     {
+        if (HandManager.Instance.IsDrag)
+            return;
+
         if (IsLock)
             return;
 
@@ -121,6 +125,12 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
         if (!IsPlayerInputEnabled)
             return;
+
+        if (PlayerStatus.Current.inventory.CurrentItem == eActiveItemType.Add)
+        {
+            if (!HandManager.Instance.HandEmpty)
+                return;
+        }
 
         if (_readyItem == PlayerStatus.Current.inventory.CurrentItem)
         {
@@ -133,22 +143,34 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
         switch (PlayerStatus.Current.inventory.CurrentItem)
         {
-            case eActiveItemType.Add:
+            case eActiveItemType.Add: // 테스트 끝
                 UseItemAction = AddTileSetItem;
                 break;
-            case eActiveItemType.Delete:
+            case eActiveItemType.Delete: // 테스트 끝
                 UseItemAction = DeleteTileSetItem;
                 break;
-            case eActiveItemType.Rotate:
+            case eActiveItemType.Rotate: // 테스트 끝
                 UseItemAction = RotateTileSetItem;
                 break;
-            case eActiveItemType.Overwrite:
+            case eActiveItemType.Overwrite: // 테스트 끝
+                UseItemAction = OverwriteSetItem;
                 break;
-            case eActiveItemType.Reroll:
-                UseItemAction = RerollTileSetItem;
-                break;
+            case eActiveItemType.Reroll: // 테스트 끝
+                RerollTileSetItem(null);
+                _readyItem = eActiveItemType.End;
+                HandManager.Instance.RemoveItemIcon();
+                UseItemAction = null;
+                PlayerStatus.Current.inventory.currentItemCount--;
+                _itemHold.SetAmount(PlayerStatus.Current.inventory.currentItemCount);
+                return;
             case eActiveItemType.Revert:
-                break;
+                HistoryManager.Instance.LoadAndPopLastSave();
+                _readyItem = eActiveItemType.End;
+                HandManager.Instance.RemoveItemIcon();
+                UseItemAction = null;
+                PlayerStatus.Current.inventory.currentItemCount--;
+                _itemHold.SetAmount(PlayerStatus.Current.inventory.currentItemCount);
+                return;
         }
         HandManager.Instance.SetItemIcon(PlayerStatus.Current.inventory.CurrentItem);
     }
@@ -168,10 +190,14 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
         handBox.SetOnHand();
     }
 
+    private void OverwriteSetItem(HandBox handBox)
+    {
+        handBox.SetOverwriteMode();
+    }
+
     private void AddTileSetItem(HandBox handBox)
     {
-        var deck = HandManager.Instance.GetStageDeckData(handBox.HoldTileSet.Data);
-        deck.Count++;
+        HandManager.Instance.AddHand(handBox.HoldTileSet.Data);
     }
 
     private void RerollTileSetItem(HandBox handBox)
@@ -182,12 +208,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     private void DeleteTileSetItem(HandBox handBox)
     {
-        var deck = HandManager.Instance.GetStageDeckData(handBox.HoldTileSet.Data);
-        deck.Count--;
-
-        if (deck.Count <= 0)
-            HandManager.Instance.RemoveDeckData(deck);
-
+        HandManager.Instance.HandCount--;
         handBox.Use();
         if (HandManager.Instance.HandCount <= 0)
             HandManager.Instance.SetHand();

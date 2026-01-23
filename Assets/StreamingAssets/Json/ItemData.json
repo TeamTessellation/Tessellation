@@ -419,7 +419,7 @@
     ],
     "ItemPrice": 12,
     "ConflictingItems": [],
-    "IsSynthesisItem": false,
+    "IsSynthesisItem": true,
     "SynthesisRequirements": []
   },
   {
@@ -471,7 +471,7 @@
     "eItemType": 14,
     "itemNameID": "GetRevert_name",
     "DescriptionID": "GetRevert_description",
-    "CanAppearInShop": false,
+    "CanAppearInShop": true,
     "Rarity": 4,
     "input": [
       4.0
@@ -515,7 +515,7 @@
     "eItemType": 16,
     "itemNameID": "GetTilesetChangeOverwrite_name",
     "DescriptionID": "GetTilesetChangeOverwrite_description",
-    "CanAppearInShop": false,
+    "CanAppearInShop": true,
     "Rarity": 4,
     "input": [
       3.0
@@ -559,7 +559,7 @@
     "eItemType": 18,
     "itemNameID": "DecreaseFieldSize_name",
     "DescriptionID": "DecreaseFieldSize_description",
-    "CanAppearInShop": false,
+    "CanAppearInShop": true,
     "Rarity": 2,
     "input": [
       1.0,
@@ -575,7 +575,7 @@
     "eItemType": 18,
     "itemNameID": "DecreaseFieldSizeII_name",
     "DescriptionID": "DecreaseFieldSizeII_description",
-    "CanAppearInShop": false,
+    "CanAppearInShop": true,
     "Rarity": 3,
     "input": [
       1.0,
@@ -593,7 +593,7 @@
     "eItemType": 19,
     "itemNameID": "FirstTurnMultiple_name",
     "DescriptionID": "FirstTurnMultiple_description",
-    "CanAppearInShop": false,
+    "CanAppearInShop": true,
     "Rarity": 2,
     "input": [
       0.5
@@ -608,7 +608,7 @@
     "eItemType": 19,
     "itemNameID": "FirstTurnMultipleII_name",
     "DescriptionID": "FirstTurnMultipleII_description",
-    "CanAppearInShop": false,
+    "CanAppearInShop": true,
     "Rarity": 3,
     "input": [
       1.0

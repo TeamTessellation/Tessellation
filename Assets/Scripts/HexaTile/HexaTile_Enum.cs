@@ -15,7 +15,6 @@ public enum TileOption
     Bonus, // 점수 추가
     Double, // 점수 두배
     Gold, // 돈 추가
-    Force, // 강제 배치
     End,
 }
 

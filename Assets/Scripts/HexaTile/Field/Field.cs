@@ -306,6 +306,11 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
         }
     }
 
+    public void SetField(int size)
+    {
+        SetFieldBySize((int)size);
+    }
+
     private void SetFieldBySize(int size)
     {
         // 범위에 벗어나는 타일은 제거 - size가 작아지는 경우
@@ -434,7 +439,7 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
                 return false;
 
             // 안에 있다면 타일 체크 해야겠지~
-            if (!_allCell[coor].IsEmpty && tile.Data.Option != TileOption.Force)
+            if (!_allCell[coor].IsEmpty && !tile.IsOverwrite)
                 return false;
         }
         else
