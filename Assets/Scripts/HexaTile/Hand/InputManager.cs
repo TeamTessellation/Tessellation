@@ -6,6 +6,7 @@ using System.Threading;
 using UnityEngine;
 using System;
 using Core;
+using Sound;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
@@ -140,6 +141,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
                 UseItemAction = DeleteTileSetItem;
                 break;
             case eActiveItemType.Rotate:
+                SoundManager.Instance.PlaySfx(SoundReference.ActiveRotate);
                 UseItemAction = RotateTileSetItem;
                 break;
             case eActiveItemType.Overwrite:
@@ -164,6 +166,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     private void RotateTileSetItem(HandBox handBox)
     {
+        SoundManager.Instance.PlaySfx(SoundReference.ActiveRotateSelect);
         handBox.HoldTileSet.Rotate();
         handBox.SetOnHand();
     }
