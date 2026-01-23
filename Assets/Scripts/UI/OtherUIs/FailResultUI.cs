@@ -148,9 +148,7 @@ namespace UI.OtherUIs
 
         public async UniTask ShowFailResult()
         {
-            gameObject.SetActive(true);
-            buttonCanvasGroup.alpha = 0f;
-            buttonCanvasGroup.gameObject.SetActive(false);
+
             LogEx.Log("Showing Fail Result UI");
             stageNameText.text = $"stage {StageManager.Instance.CurrentStage.StageName}";
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
@@ -158,11 +156,7 @@ namespace UI.OtherUIs
             _tokenSource.Cancel();
             _tokenSource = new CancellationTokenSource();
             
-            Field.Instance.gameObject.SetActive(false);
-            HandCanvas.Instance.gameObject.SetActive(false);
-            
             CancellationToken token = _tokenSource.Token;
-            
             /*
              * 0. 이전 UI 없애기, 이건 confirm 으로 스킵 불가
              */
@@ -180,12 +174,19 @@ namespace UI.OtherUIs
             shrinkTweens.Add(HandCanvas.Instance.transform.DOScaleX(0f, handShrinkDuration)
                 .SetEase(handShrinkEase));
 
+            
+            
             var inventoryTween = UM.InGameUI.MoveInventoryYToShopPosition(inventoryMoveDuration, inventoryMoveEase);
             tweenList.AddRange(shrinkTweens);
             tweenList.Add(inventoryTween);
             SoundManager.Instance.PlaySfx(SoundReference.GameOver);
             await UniTask.WhenAll(shrinkTweens.ConvertAll(t => t.ToUniTask(cancellationToken: token)));
             
+            Field.Instance.gameObject.SetActive(false);
+            HandCanvas.Instance.gameObject.SetActive(false);
+            gameObject.SetActive(true);
+            buttonCanvasGroup.alpha = 0f;
+            buttonCanvasGroup.gameObject.SetActive(false);
             
             
             

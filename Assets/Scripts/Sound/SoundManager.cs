@@ -702,5 +702,24 @@ namespace Sound
                 CleanupInactiveSfxEmitters();
             }
         }
+        
+        
+        private SoundEmitter _increaseSoundOverrideEmitter;
+        public void PlayIncreaseSoundOverride()
+        {
+            _increaseSoundOverrideEmitter?.Stop();
+            _increaseSoundOverrideEmitter = PlaySfx(SoundReference.NumberIncrease);
+        }
+        
+        public void PlayIncreaseSound()
+        {
+            PlaySfx(SoundReference.NumberIncrease);
+        }
+        
+        public void StopIncreaseSoundOverride()
+        {
+            _increaseSoundOverrideEmitter?.Stop();
+            _increaseSoundOverrideEmitter = null;
+        }
     }
 }
