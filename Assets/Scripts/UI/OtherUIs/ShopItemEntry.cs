@@ -21,6 +21,8 @@ namespace UI.OtherUIs
         
         private AbilityDataSO _abilityData;
         private ShopUI _shopUI;
+        
+        public AbilityDataSO AbilityData => _abilityData;
 
         protected override void Start()
         {

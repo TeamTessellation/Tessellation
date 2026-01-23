@@ -149,7 +149,8 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
             case eActiveItemType.Delete: // 테스트 끝
                 UseItemAction = DeleteTileSetItem;
                 break;
-            case eActiveItemType.Rotate: // 테스트 끝
+            case eActiveItemType.Rotate:
+                SoundManager.Instance.PlaySfx(SoundReference.ActiveRotate);
                 UseItemAction = RotateTileSetItem;
                 break;
             case eActiveItemType.Overwrite: // 테스트 끝
@@ -186,6 +187,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     private void RotateTileSetItem(HandBox handBox)
     {
+        SoundManager.Instance.PlaySfx(SoundReference.ActiveRotateSelect);
         handBox.HoldTileSet.Rotate();
         handBox.SetOnHand();
     }

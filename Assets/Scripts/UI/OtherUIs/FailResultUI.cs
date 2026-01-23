@@ -25,7 +25,16 @@ namespace UI.OtherUIs
         
         [SerializeField] private List<FailResultEntry> failResultEntries = new List<FailResultEntry>();
         
-        [Header("Settings")] 
+        [Header("Animation Settings")] 
+        [Header("이전 UI 없애기")]
+        [SerializeField] private float fieldShrinkDuration = 0.5f;
+        [SerializeField] private Ease fieldShrinkEase = Ease.InBack;
+        [SerializeField] private float handShrinkDuration = 0.5f;
+        [SerializeField] private Ease handShrinkEase = Ease.InBack;
+        [SerializeField] private float inventoryMoveDuration = 0.4f;
+        [SerializeField] private Ease inventoryMoveEase = Ease.InBack;
+        [SerializeField] private float itemMoveUpDuration = 0.3f;
+        [SerializeField] private Ease itemMoveUpEase = Ease.OutCubic;
         [Header("이동")]
         [SerializeField] private float moveOffsetX = 1.5f;
         [SerializeField] private float moveDuration = 0.5f;
@@ -37,6 +46,7 @@ namespace UI.OtherUIs
         [SerializeField] private float countAfetrMoveDelay = 0.2f;
         [SerializeField] private float countDuration = 1.0f;
         [SerializeField] private Ease countEase = Ease.OutBack;
+        
         
         
         
@@ -138,32 +148,55 @@ namespace UI.OtherUIs
 
         public async UniTask ShowFailResult()
         {
-            gameObject.SetActive(true);
-            buttonCanvasGroup.alpha = 0f;
-            buttonCanvasGroup.gameObject.SetActive(false);
+
             LogEx.Log("Showing Fail Result UI");
             stageNameText.text = $"stage {StageManager.Instance.CurrentStage.StageName}";
             PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
-
-            
-            SoundManager.Instance.PlaySfx(SoundReference.GameOver);
-
-
-            
             
             _tokenSource.Cancel();
             _tokenSource = new CancellationTokenSource();
             
+            CancellationToken token = _tokenSource.Token;
+            /*
+             * 0. 이전 UI 없애기, 이건 confirm 으로 스킵 불가
+             */
+            var UM = UIManager.Instance;
+            Field field = Field.Instance;
+
+            // 필드 축소
+            List<Tween> shrinkTweens = new List<Tween>();
+            foreach (var cell in field)
+            {
+                shrinkTweens.Add(DOTween.To(() => 1, x => cell.SetSize(x), 0f, fieldShrinkDuration).SetEase(fieldShrinkEase));
+            }
+
+            // 핸드 축소
+            shrinkTweens.Add(HandCanvas.Instance.transform.DOScaleX(0f, handShrinkDuration)
+                .SetEase(handShrinkEase));
+
+            
+            
+            var inventoryTween = UM.InGameUI.MoveInventoryYToShopPosition(inventoryMoveDuration, inventoryMoveEase);
+            tweenList.AddRange(shrinkTweens);
+            tweenList.Add(inventoryTween);
+            SoundManager.Instance.PlaySfx(SoundReference.GameOver);
+            await UniTask.WhenAll(shrinkTweens.ConvertAll(t => t.ToUniTask(cancellationToken: token)));
+            
             Field.Instance.gameObject.SetActive(false);
             HandCanvas.Instance.gameObject.SetActive(false);
+            gameObject.SetActive(true);
+            buttonCanvasGroup.alpha = 0f;
+            buttonCanvasGroup.gameObject.SetActive(false);
             
-            CancellationToken token = _tokenSource.Token;
+            
+            
             var counterTweens = new List<Tweener>();
             
             for(int i = 0; i < failResultEntries.Count; i++)
             {
                 failResultEntries[i].gameObject.SetActive(false);
             }
+            
             // 인벤토리 올리고 버튼들 페이드인
             {
                 buttonCanvasGroup.alpha = 0f;

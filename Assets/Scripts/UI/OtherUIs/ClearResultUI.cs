@@ -34,9 +34,9 @@ namespace UI.OtherUIs
 
         [Header("Animation Settings")] 
         [Header("이전 UI 없애기")]
-        [SerializeField] private float fieldShrinkDuration = 0.2f;
+        [SerializeField] private float fieldShrinkDuration = 0.5f;
         [SerializeField] private Ease fieldShrinkEase = Ease.InBack;
-        [SerializeField] private float handShrinkDuration = 0.2f;
+        [SerializeField] private float handShrinkDuration = 0.5f;
         [SerializeField] private Ease handShrinkEase = Ease.InBack;
         [SerializeField] private float inventoryMoveDuration = 0.4f;
         [SerializeField] private Ease inventoryMoveEase = Ease.InBack;
