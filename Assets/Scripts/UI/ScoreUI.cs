@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using ExecEvents;
+using Stage;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -47,6 +48,7 @@ public class ScoreUI : UIBehaviour
         ExecEventBus<ScoreManager.TotalScoreChangedEventArgs>.RegisterStatic((int)ExecPriority.UIDefault, OnTotalScoreChanged);
         ExecEventBus<ScoreManager.CurrentScoreChangedEventArgs>.RegisterStatic((int)ExecPriority.UIDefault, OnCurrentScoreChanged);
         ExecEventBus<ScoreManager.MultiplierAddedEventArgs>.RegisterStatic((int)ExecPriority.UIDefault, OnMultiplierAdded);
+        ExecEventBus<StageStartEventArgs>.RegisterStatic((int)ExecPriority.UIDefault, OnStageStart);
         
         SetTotalScoreText(0);
         totalScoreText.gameObject.SetActive(true);
@@ -79,6 +81,7 @@ public class ScoreUI : UIBehaviour
         ExecEventBus<ScoreManager.CurrentScoreChangedEventArgs>.UnregisterStatic(OnCurrentScoreChanged);
         ExecEventBus<ScoreManager.TotalScoreChangedEventArgs>.UnregisterStatic(OnTotalScoreChanged);
         ExecEventBus<ScoreManager.MultiplierAddedEventArgs>.UnregisterStatic(OnMultiplierAdded);
+        ExecEventBus<StageStartEventArgs>.UnregisterStatic(OnStageStart);
     }
     private void SetCurrentScoreText(int value)
     {
@@ -98,6 +101,18 @@ public class ScoreUI : UIBehaviour
             multiplierText.text = $"x{value:N0}";
     }
 
+    private async UniTask OnStageStart(StageStartEventArgs args)
+    {
+        // 스테이지 시작 시점에 점수 초기화
+        SetTotalScoreText(0);
+        totalScoreText.gameObject.SetActive(true);
+        currentScoreText.gameObject.SetActive(false);
+        multiplierText.gameObject.SetActive(false);
+        
+        _cachedCurrentScore = 0;
+        _cachedMultiplier = 1f;
+    }
+    
     /// <summary>
     /// 점수가 갱신될 때 호출되는 핸들러.
     /// </summary>

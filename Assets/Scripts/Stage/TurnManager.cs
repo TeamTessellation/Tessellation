@@ -275,6 +275,11 @@ namespace Stage
                     using var afterPlayerActionArgs = AfterPlayerActionEventArgs.Get();
                     await ExecEventBus<AfterPlayerActionEventArgs>.InvokeMerged(afterPlayerActionArgs);
                     
+                    if (token.IsCancellationRequested)
+                    {
+                        LogEx.Log("Turn loop cancelled.");
+                        return;
+                    }
                     // 클리어 체크
                     if(StageManager.CheckStageClear())
                     {
@@ -295,6 +300,11 @@ namespace Stage
                     using var playerActionLoopEndArgs = PlayerActionLoopEndEventArgs.Get();
                     await ExecEventBus<PlayerActionLoopEndEventArgs>.InvokeMerged(playerActionLoopEndArgs);
                     
+                }
+                if (token.IsCancellationRequested)
+                {
+                    LogEx.Log("Turn loop cancelled.");
+                    return;
                 }
                 
                 if(StageManager.CheckStageFail(true))

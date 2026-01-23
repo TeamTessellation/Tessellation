@@ -144,6 +144,7 @@ namespace UI.OtherUIs
                 UniTask.Delay(500, cancellationToken: cancellationToken),
                 UniTask.WaitUntil(() => isConfirmed, cancellationToken: cancellationToken)
             );
+            
             // StageTargetScoreCounterText.PaddingChar = ' ';
             var sequence = DOTween.Sequence();
             sequence.Append(
@@ -152,7 +153,9 @@ namespace UI.OtherUIs
                     .SetEase(stageInfoUISettingSO.targetScoreCountUpEase)
             );
             currentSequence = sequence;
+            SoundManager.Instance.PlayIncreaseSoundOverride();
             await sequence.ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, cancellationToken: cancellationToken);
+            SoundManager.Instance.StopIncreaseSoundOverride();
             
             await UniTask.WhenAny(
                 UniTask.Delay(500, cancellationToken: cancellationToken),
