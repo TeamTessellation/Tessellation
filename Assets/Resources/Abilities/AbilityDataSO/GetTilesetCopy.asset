@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 17
   Rarity: 4
-  ItemName: "\uBCF5\uC0AC"
+  ItemName: "\uD68C\uC804"
   ItemID: GetTilesetCopy
-  Description: "\uD0C0\uC77C \uBCF5\uC0AC \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  Description: "\uD0C0\uC77C \uD68C\uC804 \uC0AC\uC6A9 \uC544\uC774\uD15C \uD68D\uB4DD"
   ItemIcon: {fileID: -7922436767568709799, guid: 1839d983dcdc3924d8a1409ae568a08b, type: 3}
   input:
   - 3

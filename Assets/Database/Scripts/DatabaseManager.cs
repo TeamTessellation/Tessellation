@@ -440,9 +440,10 @@ namespace Database
 
             if (sprite == null)
             {
+                LogEx.Log($"{iconPath}");
+                
                 iconPath = Path.Combine(abilityIconFolder, "Default.png");
                 sprite = AssetDatabase.LoadAssetAtPath<Sprite>(iconPath);
-                
                 LogEx.LogError($"{itemName}에 대한 Sprite 필요!");
             }
             else

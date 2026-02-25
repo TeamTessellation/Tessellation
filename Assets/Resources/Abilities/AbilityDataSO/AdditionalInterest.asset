@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 10
   Rarity: 1
-  ItemName: "\uCD94\uAC00 \uC774\uC790"
+  ItemName: "\uACE8\uB4DC \uD0C0\uC77C III"
   ItemID: AdditionalInterest
-  Description: "\uCD5C\uB300 \uC774\uC790\uAC00 {input[0]}\uC6D0\uC774 \uB429\uB2C8\uB2E4."
+  Description: "\uACE8\uB4DC \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774 \uC870\uAE08
+    \uC99D\uAC00\uD569\uB2C8\uB2E4."
   ItemIcon: {fileID: 21300000, guid: e7e6c7de35028f74caca8f075dc7e791, type: 3}
   input:
   - 80

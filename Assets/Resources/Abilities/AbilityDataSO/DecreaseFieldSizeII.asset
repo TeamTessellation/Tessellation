@@ -14,11 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 18
   Rarity: 3
-  ItemName: "\uD06C\uAE30 \uAC10\uC18C II"
+  ItemName: "\uBCF5\uC0AC"
   ItemID: DecreaseFieldSizeII
-  Description: "\uD544\uB4DC \uD06C\uAE30\uAC00 1\uB9CC\uD07C \uAC10\uC18C\uD558\uACE0
-    \uBAA8\uB4E0 \uC810\uC218\uC5D0 \uB300\uD574 1\uBC30\uC758 \uCD94\uAC00 \uC810\uC218\uB97C
-    \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  Description: "\uD0C0\uC77C \uBCF5\uC0AC \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   ItemIcon: {fileID: 7849869913318323710, guid: 6a4aa1f999ede664e9df127269343c29, type: 3}
   input:
   - 1

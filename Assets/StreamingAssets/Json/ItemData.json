@@ -102,7 +102,7 @@
     "eItemType": 2,
     "itemNameID": "AddBombTileset_name",
     "DescriptionID": "AddBombTileset_description",
-    "CanAppearInShop": false,
+    "CanAppearInShop": true,
     "Rarity": 1,
     "input": [
       3.0
@@ -117,7 +117,7 @@
     "eItemType": 2,
     "itemNameID": "AddBombTilesetII_name",
     "DescriptionID": "AddBombTilesetII_description",
-    "CanAppearInShop": false,
+    "CanAppearInShop": true,
     "Rarity": 2,
     "input": [
       6.0
@@ -134,7 +134,7 @@
     "eItemType": 2,
     "itemNameID": "AddBombTilesetIII_name",
     "DescriptionID": "AddBombTilesetIII_description",
-    "CanAppearInShop": false,
+    "CanAppearInShop": true,
     "Rarity": 3,
     "input": [
       9.0
@@ -151,7 +151,7 @@
     "eItemType": 3,
     "itemNameID": "IncreaseExplosionRange_name",
     "DescriptionID": "IncreaseExplosionRange_description",
-    "CanAppearInShop": false,
+    "CanAppearInShop": true,
     "Rarity": 2,
     "input": [
       1.0
@@ -166,44 +166,10 @@
     "eItemType": 3,
     "itemNameID": "IncreaseExplosionRangeII_name",
     "DescriptionID": "IncreaseExplosionRangeII_description",
-    "CanAppearInShop": false,
+    "CanAppearInShop": true,
     "Rarity": 3,
     "input": [
       2.0
-    ],
-    "ItemPrice": 12,
-    "ConflictingItems": [],
-    "IsSynthesisItem": true,
-    "SynthesisRequirements": [
-      "IncreaseExplosionRange"
-    ]
-  },
-  {
-    "ItemID": "BombImmediatelyExplosion",
-    "eItemType": 4,
-    "itemNameID": "BombImmediatelyExplosion_name",
-    "DescriptionID": "BombImmediatelyExplosion_description",
-    "CanAppearInShop": false,
-    "Rarity": 2,
-    "input": [
-      1.0
-    ],
-    "ItemPrice": 12,
-    "ConflictingItems": [],
-    "IsSynthesisItem": true,
-    "SynthesisRequirements": [
-      "IncreaseExplosionRange"
-    ]
-  },
-  {
-    "ItemID": "BombChainExplosion",
-    "eItemType": 5,
-    "itemNameID": "BombChainExplosion_name",
-    "DescriptionID": "BombChainExplosion_description",
-    "CanAppearInShop": false,
-    "Rarity": 3,
-    "input": [
-      1.0
     ],
     "ItemPrice": 12,
     "ConflictingItems": [],
@@ -471,7 +437,7 @@
     "eItemType": 14,
     "itemNameID": "GetRevert_name",
     "DescriptionID": "GetRevert_description",
-    "CanAppearInShop": true,
+    "CanAppearInShop": false,
     "Rarity": 4,
     "input": [
       4.0

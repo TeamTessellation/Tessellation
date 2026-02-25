@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 10
   Rarity: 3
-  ItemName: "\uCD94\uAC00 \uC774\uC790 III"
+  ItemName: "\uCD94\uAC00 \uC774\uC790"
   ItemID: AdditionalInterestIII
   Description: "\uCD5C\uB300 \uC774\uC790\uAC00 {input[0]}\uC6D0\uC774 \uB429\uB2C8\uB2E4."
   ItemIcon: {fileID: 4495985430209374215, guid: ad8b5e3075d33174bbe4bd3e6fc3c603, type: 3}

@@ -88,80 +88,64 @@
     "kr": "폭탄의 폭팔 범위가 {0}만큼 증가합니다."
   },
   {
-    "ItemID": "BombImmediatelyExplosion_name",
+    "ItemID": "AddExtraScoreTileset_name",
     "kr": "즉발식 폭탄"
   },
   {
-    "ItemID": "BombImmediatelyExplosion_description",
+    "ItemID": "AddExtraScoreTileset_description",
     "kr": "폭탄의 폭발 범위가 {0}만큼 증가하고 폭탄 타일셋이 배치하면 바로 폭발합니다."
   },
   {
-    "ItemID": "BombChainExplosion_name",
+    "ItemID": "AddExtraScoreTilesetII_name",
     "kr": "연쇄 폭파"
   },
   {
-    "ItemID": "BombChainExplosion_description",
+    "ItemID": "AddExtraScoreTilesetII_description",
     "kr": "폭탄의 폭발 범위가 {0}만큼 증가하고 폭탄이 터질때 폭파 범위내의 폭탄이 바로 터집니다."
   },
   {
-    "ItemID": "AddExtraScoreTileset_name",
+    "ItemID": "AddExtraScoreTilesetIII_name",
     "kr": "추가 점수 타일"
   },
   {
-    "ItemID": "AddExtraScoreTileset_description",
+    "ItemID": "AddExtraScoreTilesetIII_description",
     "kr": "추가 점수 타일 등장 확률이 조금 증가합니다."
   },
   {
-    "ItemID": "AddExtraScoreTilesetII_name",
+    "ItemID": "AddMultipleTileset_name",
     "kr": "추가 점수 타일 II"
   },
   {
-    "ItemID": "AddExtraScoreTilesetII_description",
+    "ItemID": "AddMultipleTileset_description",
     "kr": "추가 점수 타일 등장 확률이 증가합니다."
   },
   {
-    "ItemID": "AddExtraScoreTilesetIII_name",
+    "ItemID": "AddMultipleTilesetII_name",
     "kr": "추가 점수 타일 III"
   },
   {
-    "ItemID": "AddExtraScoreTilesetIII_description",
+    "ItemID": "AddMultipleTilesetII_description",
     "kr": "추가 점수 타일 등장 확률이 많이 증가합니다."
   },
   {
-    "ItemID": "AddMultipleTileset_name",
+    "ItemID": "AddGoldTileset_name",
     "kr": "배수 타일"
   },
   {
-    "ItemID": "AddMultipleTileset_description",
+    "ItemID": "AddGoldTileset_description",
     "kr": "배수 타일 등장 확률이 조금 증가합니다."
   },
   {
-    "ItemID": "AddMultipleTilesetII_name",
+    "ItemID": "AddGoldTilesetII_name",
     "kr": "배수 타일 II"
   },
   {
-    "ItemID": "AddMultipleTilesetII_description",
+    "ItemID": "AddGoldTilesetII_description",
     "kr": "배수 타일 등장 확률이 증가합니다."
   },
   {
-    "ItemID": "AddGoldTileset_name",
-    "kr": "골드 타일"
-  },
-  {
-    "ItemID": "AddGoldTileset_description",
-    "kr": "골드 타일 등장 확률이 조금 증가합니다."
-  },
-  {
-    "ItemID": "AddGoldTilesetII_name",
-    "kr": "골드 타일 II"
-  },
-  {
-    "ItemID": "AddGoldTilesetII_description",
-    "kr": "골드 타일 등장 확률이 증가합니다."
-  },
-  {
     "ItemID": "AddGoldTilesetIII_name",
-    "kr": "골드 타일 III"
+    "kr": "골드 타일"
   },
   {
     "ItemID": "AddGoldTilesetIII_description",
@@ -169,31 +153,31 @@
   },
   {
     "ItemID": "GoldTilesetCoinScaledExtraScore_name",
-    "kr": "황금 점수"
+    "kr": "골드 타일 II"
   },
   {
     "ItemID": "GoldTilesetCoinScaledExtraScore_description",
-    "kr": "골드 타일이 지워질때 현재 보유한 코인 수 만큼 추가 점수를 획득합니다."
+    "kr": "골드 타일 등장 확률이 증가합니다."
   },
   {
     "ItemID": "AdditionalInterest_name",
-    "kr": "추가 이자"
+    "kr": "골드 타일 III"
   },
   {
     "ItemID": "AdditionalInterest_description",
-    "kr": "최대 이자가 {input[0]}원이 됩니다."
+    "kr": "골드 타일 등장 확률이 조금 증가합니다."
   },
   {
     "ItemID": "AdditionalInterestII_name",
-    "kr": "추가 이자 II"
+    "kr": "황금 점수"
   },
   {
     "ItemID": "AdditionalInterestII_description",
-    "kr": "최대 이자가 {input[0]}원이 됩니다."
+    "kr": "골드 타일이 지워질때 현재 보유한 코인 수 만큼 추가 점수를 획득합니다."
   },
   {
     "ItemID": "AdditionalInterestIII_name",
-    "kr": "추가 이자 III"
+    "kr": "추가 이자"
   },
   {
     "ItemID": "AdditionalInterestIII_description",
@@ -201,90 +185,106 @@
   },
   {
     "ItemID": "CoinScaledMultiple_name",
-    "kr": "나는 코인이 좋아"
+    "kr": "추가 이자 II"
   },
   {
     "ItemID": "CoinScaledMultiple_description",
-    "kr": "보유한 {1}코인당 모든 점수에 대해 {0}배의 추가 점수를 획득합니다."
+    "kr": "최대 이자가 {input[0]}원이 됩니다."
   },
   {
     "ItemID": "GetTilesetDelete_name",
-    "kr": "타일 삭제"
+    "kr": "추가 이자 III"
   },
   {
     "ItemID": "GetTilesetDelete_description",
-    "kr": "타일 삭제 사용 아이템을 획득합니다."
+    "kr": "최대 이자가 {input[0]}원이 됩니다."
   },
   {
     "ItemID": "GetTilesetReroll_name",
-    "kr": "다시뽑기"
+    "kr": "나는 코인이 좋아"
   },
   {
     "ItemID": "GetTilesetReroll_description",
-    "kr": "타일 다시 뽑기 사용 아이템을 획득합니다."
+    "kr": "보유한 {1}코인당 모든 점수에 대해 {0}배의 추가 점수를 획득합니다."
   },
   {
     "ItemID": "GetRevert_name",
-    "kr": "되돌리기"
+    "kr": "타일 삭제"
   },
   {
     "ItemID": "GetRevert_description",
-    "kr": "되돌리기 사용 아이템을 획득합니다."
+    "kr": "타일 삭제 사용 아이템을 획득합니다."
   },
   {
     "ItemID": "GetTilesetRotate_name",
-    "kr": "회전"
+    "kr": "다시뽑기"
   },
   {
     "ItemID": "GetTilesetRotate_description",
-    "kr": "타일 회전 사용 아이템 획득"
+    "kr": "타일 다시 뽑기 사용 아이템을 획득합니다."
   },
   {
     "ItemID": "GetTilesetChangeOverwrite_name",
-    "kr": "유령 타일 변환"
+    "kr": "되돌리기"
   },
   {
     "ItemID": "GetTilesetChangeOverwrite_description",
-    "kr": "유령 타일 변환 사용 아이템을 획득합니다."
+    "kr": "되돌리기 사용 아이템을 획득합니다."
   },
   {
     "ItemID": "GetTilesetCopy_name",
-    "kr": "복사"
+    "kr": "회전"
   },
   {
     "ItemID": "GetTilesetCopy_description",
-    "kr": "타일 복사 사용 아이템을 획득합니다."
+    "kr": "타일 회전 사용 아이템 획득"
   },
   {
     "ItemID": "DecreaseFieldSize_name",
-    "kr": "크기 감소"
+    "kr": "유령 타일 변환"
   },
   {
     "ItemID": "DecreaseFieldSize_description",
-    "kr": "필드 크기가 {0}만큼 감소하고 모든 점수에 대해 {0}배의 추가 점수를 획득합니다."
+    "kr": "유령 타일 변환 사용 아이템을 획득합니다."
   },
   {
     "ItemID": "DecreaseFieldSizeII_name",
-    "kr": "크기 감소 II"
+    "kr": "복사"
   },
   {
     "ItemID": "DecreaseFieldSizeII_description",
-    "kr": "필드 크기가 {0}만큼 감소하고 모든 점수에 대해 {0}배의 추가 점수를 획득합니다."
+    "kr": "타일 복사 사용 아이템을 획득합니다."
   },
   {
     "ItemID": "FirstTurnMultiple_name",
-    "kr": "시작이 반"
+    "kr": "크기 감소"
   },
   {
     "ItemID": "FirstTurnMultiple_description",
-    "kr": "첫번째 턴 동안 모든 점수에 대해서 {0}배의 추가 점수를 얻습니다."
+    "kr": "필드 크기가 {0}만큼 감소하고 모든 점수에 대해 {0}배의 추가 점수를 획득합니다."
   },
   {
     "ItemID": "FirstTurnMultipleII_name",
-    "kr": "시작이 반II"
+    "kr": "크기 감소 II"
   },
   {
     "ItemID": "FirstTurnMultipleII_description",
+    "kr": "필드 크기가 {0}만큼 감소하고 모든 점수에 대해 {0}배의 추가 점수를 획득합니다."
+  },
+  {
+    "ItemID": "",
+    "kr": "시작이 반"
+  },
+  {
+    "ItemID": "",
+    "kr": "첫번째 턴 동안 모든 점수에 대해서 {0}배의 추가 점수를 얻습니다."
+  },
+  {
+    "ItemID": "",
+    "kr": "시작이 반II"
+  },
+  {
+    "ItemID": "",
     "kr": "첫번째 턴 동안 모든 점수에 대해서 {0}배의 추가 점수를 얻습니다."
   },
   {
