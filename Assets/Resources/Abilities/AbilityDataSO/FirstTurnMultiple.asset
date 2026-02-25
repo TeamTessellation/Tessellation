@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 19
   Rarity: 2
-  ItemName: "\uC2DC\uC791\uC774 \uBC18"
+  ItemName: "\uD06C\uAE30 \uAC10\uC18C"
   ItemID: FirstTurnMultiple
-  Description: "\uCCAB\uBC88\uC9F8 \uD134 \uB3D9\uC548 \uBAA8\uB4E0 \uC810\uC218\uC5D0
-    \uB300\uD574\uC11C 0.50\uBC30\uC758 \uCD94\uAC00 \uC810\uC218\uB97C \uC5BB\uC2B5\uB2C8\uB2E4."
+  Description: "\uD544\uB4DC \uD06C\uAE30\uAC00 0.50\uB9CC\uD07C \uAC10\uC18C\uD558\uACE0
+    \uBAA8\uB4E0 \uC810\uC218\uC5D0 \uB300\uD574 0.50\uBC30\uC758 \uCD94\uAC00 \uC810\uC218\uB97C
+    \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   ItemIcon: {fileID: 5197571774204218685, guid: 395691b8e62f4c449b8a18006ba7d6bf, type: 3}
   input:
   - 0.5

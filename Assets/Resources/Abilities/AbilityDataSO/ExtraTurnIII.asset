@@ -17,7 +17,7 @@ MonoBehaviour:
   ItemName: "\uCD94\uAC00 \uD134 III"
   ItemID: ExtraTurnIII
   Description: "\uD134\uC744 \uCD94\uAC00\uB85C 4\uB9CC\uD07C \uC5BB\uC2B5\uB2C8\uB2E4."
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: -4323456927918328093, guid: b24b5d2c2609448468c694c4bcc3377d, type: 3}
   input:
   - 4
   ItemPrice: 8

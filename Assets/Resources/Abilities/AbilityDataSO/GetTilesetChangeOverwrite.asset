@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 16
   Rarity: 4
-  ItemName: "\uC720\uB839 \uD0C0\uC77C \uBCC0\uD658"
+  ItemName: "\uB418\uB3CC\uB9AC\uAE30"
   ItemID: GetTilesetChangeOverwrite
-  Description: "\uC720\uB839 \uD0C0\uC77C \uBCC0\uD658 \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744
-    \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  Description: "\uB418\uB3CC\uB9AC\uAE30 \uC0AC\uC6A9 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   ItemIcon: {fileID: 9155206088890725700, guid: 958d36e8afebbce4796016ea1f6dc586, type: 3}
   input:
   - 3

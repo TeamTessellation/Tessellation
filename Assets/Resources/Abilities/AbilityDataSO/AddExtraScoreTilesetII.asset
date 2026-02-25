@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.AbilityDataSO
   ItemType: 6
   Rarity: 2
-  ItemName: "\uCD94\uAC00 \uC810\uC218 \uD0C0\uC77C II"
+  ItemName: "\uC5F0\uC1C4 \uD3ED\uD30C"
   ItemID: AddExtraScoreTilesetII
-  Description: "\uCD94\uAC00 \uC810\uC218 \uD0C0\uC77C \uB4F1\uC7A5 \uD655\uB960\uC774
-    \uC99D\uAC00\uD569\uB2C8\uB2E4."
+  Description: "\uD3ED\uD0C4\uC758 \uD3ED\uBC1C \uBC94\uC704\uAC00 6\uB9CC\uD07C
+    \uC99D\uAC00\uD558\uACE0 \uD3ED\uD0C4\uC774 \uD130\uC9C8\uB54C \uD3ED\uD30C \uBC94\uC704\uB0B4\uC758
+    \uD3ED\uD0C4\uC774 \uBC14\uB85C \uD130\uC9D1\uB2C8\uB2E4."
   ItemIcon: {fileID: 21300000, guid: d0fc5aa54cfa45e4d8ea82c04fb0bb52, type: 3}
   input:
   - 6
