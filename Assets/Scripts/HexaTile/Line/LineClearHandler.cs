@@ -69,6 +69,10 @@ public class LineClearHandler
         }
 
         Coordinate correctCoor = start;
+        
+        // 폭탄 타일이라면 라인클리어 판정 제외
+        if (Field.Instance.GetTile(start).Data.Option == TileOption.Boom) return false;
+        
         while (Field.Instance.CheckAbleCoor(correctCoor) && Field.Instance.ClearAble(correctCoor))
         {
             correctCoor += up;
@@ -89,7 +93,7 @@ public class LineClearHandler
 
         if (upOrDown == 1)
             result = correctCoor - down;
-
+        
         return true;
     }
 

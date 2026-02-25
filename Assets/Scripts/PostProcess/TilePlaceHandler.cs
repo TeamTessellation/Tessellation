@@ -184,6 +184,11 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         foreach (var tile in placeEvent.Tiles)
         {
             await tile.TileOptionBase.OnTilePlaced(tile);
+
+            if (tile.Data.Option == TileOption.Boom)
+            {
+                _eventQueue.Enqueue(new TileBurstEvent(placeEvent.Tiles));
+            }
         }
         
         _turnResultInfo.PlacedTiles.AddRange(placeEvent.Tiles);
@@ -219,6 +224,7 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
     {
         foreach (var tile in burstEvent.Tiles)
         {
+            
             await tile.TileOptionBase.OnTileBurst(tile);
         }
         
