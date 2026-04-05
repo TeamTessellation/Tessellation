@@ -1,4 +1,4 @@
-using Core;
+ï»¿using Core;
 using Cysharp.Threading.Tasks;
 using Player;
 using SaveLoad;
@@ -17,12 +17,12 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
     public enum eActiveItemType
     {
         None,
-        Add, // ±¸Çö
-        Delete, // ±¸Çö
+        Add, // ï¿½ï¿½ï¿½ï¿½
+        Delete, // ï¿½ï¿½ï¿½ï¿½
         Overwrite, 
-        Rotate, // ±¸Çö
-        Reroll, // ±¸Çö
-        Revert, // Á¦¿Ü
+        Rotate, // ï¿½ï¿½ï¿½ï¿½
+        Reroll, // ï¿½ï¿½ï¿½ï¿½
+        Revert, // ï¿½ï¿½ï¿½ï¿½
         End
     }
 
@@ -144,20 +144,20 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
         switch (PlayerStatus.Current.inventory.CurrentItem)
         {
-            case eActiveItemType.Add: // Å×½ºÆ® ³¡
+            case eActiveItemType.Add: // ï¿½×½ï¿½Æ® ï¿½ï¿½
                 UseItemAction = AddTileSetItem;
                 break;
-            case eActiveItemType.Delete: // Å×½ºÆ® ³¡
+            case eActiveItemType.Delete: // ï¿½×½ï¿½Æ® ï¿½ï¿½
                 UseItemAction = DeleteTileSetItem;
                 break;
             case eActiveItemType.Rotate:
                 SoundManager.Instance.PlaySfx(SoundReference.ActiveRotate);
                 UseItemAction = RotateTileSetItem;
                 break;
-            case eActiveItemType.Overwrite: // Å×½ºÆ® ³¡
+            case eActiveItemType.Overwrite: // ï¿½×½ï¿½Æ® ï¿½ï¿½
                 UseItemAction = OverwriteSetItem;
                 break;
-            case eActiveItemType.Reroll: // Å×½ºÆ® ³¡
+            case eActiveItemType.Reroll: // ï¿½×½ï¿½Æ® ï¿½ï¿½
                 RerollTileSetItem(null);
                 _readyItem = eActiveItemType.End;
                 HandManager.Instance.RemoveItemIcon();
@@ -217,11 +217,6 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
             HandManager.Instance.SetHand();
     }
 
-    private void BoomItem(HandBox handBox)
-    {
-
-    }
-
     public void PlaceTileSet(Vector2 worldPos, HandBox handBox, List<Tile> tiles)
     {
         _playerInputData = new(tiles);
@@ -243,7 +238,7 @@ public class InputManager : MonoBehaviour, IPlayerTurnLogic, IBasicTurnLogic
 
     public bool IsPlayerCanDoAction()
     {
-        return (HandManager.Instance.HandCount > 0); // ToDo ÇÚµå ¼öÁ¤
+        return (HandManager.Instance.HandCount > 0); // ToDo ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     public async UniTask OnTurnStart(int turnCount, CancellationToken token)

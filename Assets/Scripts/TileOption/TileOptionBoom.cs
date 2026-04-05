@@ -1,7 +1,5 @@
 using Core;
 using Cysharp.Threading.Tasks;
-using Player;
-using UnityEngine;
 
 public class TileOptionBoom : TileOptionBase
 {
@@ -10,16 +8,29 @@ public class TileOptionBoom : TileOptionBase
         int baseScore = (int)ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BasePlaceScore];
         int finalScore = ScoreManager.Instance.CalculateTileScore(eTileEventType.Place, tile, baseScore);
         ScoreManager.Instance.AddCurrentScore(finalScore);
-        
+
         ShowScoreEffect(finalScore, tile);
     }
 
     public override async UniTask OnTileBurst(Tile tile)
     {
-        Debug.Log("우와 타일이 폭발했당");
-        
-        int baseCoin = (int)ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BaseCoinTileValue];
-        PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
-        playerStatus.CurrentCoins += baseCoin;
+        await Field.Instance.SafeRemoveTile(tile.Coor);
+
+        // 6방향 타일 한번에 추가 및 폭발
+        var removeTasks = new UniTask[6];
+        for (int i = 0; i <= (int)Direction.LU; i++)
+        {
+            Coordinate neighborCoor = tile.Coor + (Direction)i;
+
+            if (Field.Instance.CheckAbleCoor(neighborCoor))
+            {
+                Tile neighborTile = Field.Instance.GetTile(neighborCoor);
+                if (neighborTile != null)
+                    await neighborTile.TileOptionBase.OnTileBurst(neighborTile);
+            }
+
+            removeTasks[i] = Field.Instance.SafeRemoveTile(neighborCoor);
+        }
+        await UniTask.WhenAll(removeTasks);
     }
 }

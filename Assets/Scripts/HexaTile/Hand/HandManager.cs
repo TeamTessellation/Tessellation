@@ -11,7 +11,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Player;
 using Sound;
-using Unity.VisualScripting;
 
 public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 {
@@ -172,10 +171,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
         newTileSetData.Offset = 0;
                 
         DeckData newDeckData = new DeckData(newTileSetData);
-
-        // FIXME
-        // 폭탄타일 테스트 용 임시로 넣어두었음.. 위치가 이상하다
-        newDeckData.Count = tileOption == TileOption.Boom ? 100 : amount;
+        newDeckData.Count = amount;
         
         DeckSO.Deck.Add(newDeckData);
     }

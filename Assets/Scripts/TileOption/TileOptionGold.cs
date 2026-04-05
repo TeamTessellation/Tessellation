@@ -38,5 +38,11 @@ public class TileOptionGold : TileOptionBase
         int baseCoin = (int)ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BaseCoinTileValue];
         PlayerStatus playerStatus = GameManager.Instance.PlayerStatus;
         playerStatus.CurrentCoins += baseCoin;
+
+        int baseScore = (int)ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BaseBurstScore];
+        int finalScore = ScoreManager.Instance.CalculateTileScore(eTileEventType.Burst, tile, baseScore);
+        ScoreManager.Instance.AddCurrentScore(finalScore);
+
+        ShowScoreEffect(finalScore, tile);
     }
 }

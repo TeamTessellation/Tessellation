@@ -350,7 +350,7 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
         for (int i = 0; i <= (int)Direction.LU; i++)
         {
             if (CheckAbleCoor(coor + (Direction)i))
-                result[(Direction)i] = GetTile(coor);
+                result[(Direction)i] = GetTile(coor + (Direction)i);
             else
                 result[(Direction)i] = null;
         }

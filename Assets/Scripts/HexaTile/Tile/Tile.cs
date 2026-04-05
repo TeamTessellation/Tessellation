@@ -88,6 +88,9 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
             case TileOption.Double:
                 TileOptionBase = new TileOptionDouble();
                 break;
+            case TileOption.Boom:
+                TileOptionBase = new TileOptionBoom();
+                break;
             default:
                 TileOptionBase = new TileOptionDefault();
                 break;

@@ -1,6 +1,4 @@
-﻿
-
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using Sound;
 
 public class TileOptionBonus : TileOptionBase
@@ -27,10 +25,12 @@ public class TileOptionBonus : TileOptionBase
 
     public override async UniTask OnTileBurst(Tile tile)
     {
-        int baseScore = (int)ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BaseLineClearMultiple];
+        int baseScore = (int)ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BaseBonusScore];
         int finalScore = ScoreManager.Instance.CalculateTileScore(eTileEventType.Burst, tile, baseScore);
         ScoreManager.Instance.AddCurrentScore(finalScore);
-        
+
+        ShowScoreEffect(finalScore, tile);
+
         SoundManager.Instance.PlaySfx(SoundReference.TileBomb);
     }
 }

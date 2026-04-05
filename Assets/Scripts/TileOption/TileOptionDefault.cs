@@ -26,6 +26,10 @@ public class TileOptionDefault : TileOptionBase
 
     public override async UniTask OnTileBurst(Tile tile)
     {
-        ScoreManager.Instance.AddCurrentScore(tile.Data.Score);
+        int baseScore = (int)ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BaseBurstScore];
+        int finalScore = ScoreManager.Instance.CalculateTileScore(eTileEventType.Burst, tile, baseScore);
+        ScoreManager.Instance.AddCurrentScore(finalScore);
+
+        ShowScoreEffect(finalScore, tile);
     }
 }
