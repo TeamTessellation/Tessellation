@@ -162,6 +162,20 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 
     public void AddOptionalDeck(TileOption tileOption, int amount)
     {
+        if (amount <= 0)
+            return;
+
+        DeckData existingDeck = DeckSO.Deck.FirstOrDefault(deck =>
+            deck.TileSet.Data.Count == 1 &&
+            deck.TileSet.Data[0].TileData.Option == tileOption &&
+            deck.TileSet.Data[0].Coor == new Coordinate(0, 0));
+
+        if (existingDeck != null)
+        {
+            existingDeck.Count += amount;
+            return;
+        }
+
         OffsetTileData newOffSetTileData = new OffsetTileData();
         newOffSetTileData.TileData = new TileData(tileOption, 1);
         newOffSetTileData.Coor = new Coordinate(0, 0);
@@ -180,6 +194,9 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
 
     public void RemoveOptionalDeck(TileOption tileOption, int amount)
     {
+        if (amount <= 0)
+            return;
+
         DeckData targetDeck = DeckSO.Deck.FirstOrDefault(deck => 
             deck.TileSet.Data.Count == 1 && 
             deck.TileSet.Data[0].TileData.Option == tileOption &&
