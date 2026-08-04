@@ -44,6 +44,12 @@ jobs:
             exit 1
           fi
 
+          if [[ ! "$PR_TITLE" =~ $title_pattern ]]; then
+            echo "Invalid PR title: $PR_TITLE"
+            echo "Expected: <type>(<optional-scope>): <description>"
+            exit 1
+          fi
+
       - name: Reject tracked signing credentials
         shell: bash
         run: |
@@ -52,12 +58,6 @@ jobs:
           if git ls-files | grep -Eiq '(^|/)(KeyStore/|[^/]+\.(keystore|jks|p12|pem)$)'; then
             echo "Signing credentials must not be tracked by Git."
             git ls-files | grep -Ei '(^|/)(KeyStore/|[^/]+\.(keystore|jks|p12|pem)$)'
-            exit 1
-          fi
-
-          if [[ ! "$PR_TITLE" =~ $title_pattern ]]; then
-            echo "Invalid PR title: $PR_TITLE"
-            echo "Expected: <type>(<optional-scope>): <description>"
             exit 1
           fi
 
