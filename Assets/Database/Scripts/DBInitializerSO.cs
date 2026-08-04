@@ -4,7 +4,9 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Database.DataReader;
 using Database.Generated;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace Database.Generated

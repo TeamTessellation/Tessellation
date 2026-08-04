@@ -1,0 +1,78 @@
+name: Publish to Google Play Internal
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Draft release tag to publish (for example, v1.1.2)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: google-play-internal
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish Approved AAB
+    runs-on: ubuntu-latest
+    environment: google-play-internal
+    steps:
+      - name: Validate tag and download draft AAB
+        id: release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+
+          if [[ ! "$TAG_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid release tag: $TAG_NAME"
+            exit 1
+          fi
+
+          if [[ "$(gh release view "$TAG_NAME" --json isDraft --jq '.isDraft')" != "true" ]]; then
+            echo "Release $TAG_NAME must exist and still be a draft."
+            exit 1
+          fi
+
+          mkdir -p release
+          gh release download "$TAG_NAME" --pattern '*.aab' --dir release
+          mapfile -t bundles < <(find release -maxdepth 1 -type f -name '*.aab' -print)
+          if [[ ${#bundles[@]} -ne 1 ]]; then
+            echo "Expected exactly one release AAB, found ${#bundles[@]}."
+            exit 1
+          fi
+
+          echo "aab_path=${bundles[0]}" >> "$GITHUB_OUTPUT"
+          echo "release_name=$TAG_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+          create_credentials_file: true
+
+      - name: Upload to Google Play internal testing
+        uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1.1.5
+        with:
+          serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
+          packageName: com.tessellation.honeycomb0
+          releaseFiles: ${{ steps.release.outputs.aab_path }}
+          tracks: internal
+          status: completed
+          releaseName: ${{ steps.release.outputs.release_name }}
+
+      - name: Publish GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ inputs.tag }}
+        run: gh release edit "$TAG_NAME" --draft=false

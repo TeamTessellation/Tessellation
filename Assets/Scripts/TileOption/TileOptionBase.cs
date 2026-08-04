@@ -1,5 +1,5 @@
 using Cysharp.Threading.Tasks;
-using System.Drawing;
+using Core;
 using Sound;
 using UnityEngine;
 
@@ -29,5 +29,37 @@ public abstract class TileOptionBase
         
         Debug.Log(pos.ToString());
         EffectManager.Instance.ShowScoreEffect(score, pos);
+    }
+
+    protected async UniTask ApplyScoreRule(eTileEventType eventType, Tile tile)
+    {
+        TileScoreRule rule = TileScoreRules.Get(eventType, tile.Data.Option);
+
+        if (rule.AwardsCoin)
+        {
+            int coin = (int)ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BaseCoinTileValue];
+            GameManager.Instance.PlayerStatus.CurrentCoins += coin;
+        }
+
+        if (rule.AwardsScore)
+        {
+            int baseScore = (int)ScoreManager.Instance.ScoreValues[rule.ScoreType];
+            int finalScore = ScoreManager.Instance.CalculateTileScore(eventType, tile, baseScore);
+            ScoreManager.CurrentScoreChangedEventArgs.CurrentScoreChangeType changeType = eventType switch
+            {
+                eTileEventType.LineClear => ScoreManager.CurrentScoreChangedEventArgs.CurrentScoreChangeType.LineCleared,
+                eTileEventType.Burst => ScoreManager.CurrentScoreChangedEventArgs.CurrentScoreChangeType.Burst,
+                _ => ScoreManager.CurrentScoreChangedEventArgs.CurrentScoreChangeType.Place,
+            };
+            ScoreManager.Instance.AddCurrentScore(finalScore, changeType);
+            ShowScoreEffect(finalScore, tile);
+        }
+
+        if (eventType == eTileEventType.Place)
+            SoundManager.Instance.PlaySfx(SoundReference.TileRelease);
+        else if (eventType == eTileEventType.LineClear && tile.Data.Option == TileOption.Gold)
+            SoundManager.Instance.PlaySfx(SoundReference.TileGold);
+
+        await UniTask.CompletedTask;
     }
 }

@@ -25,4 +25,10 @@ public class GoldToGoldAbility : AbilityBase
 
         return baseScore;
     }
+
+    protected override void OnAbilityRemoved()
+    {
+        _scoreManager?.UnRegisterScoreModifier(ModifyScore);
+        base.OnAbilityRemoved();
+    }
 }
