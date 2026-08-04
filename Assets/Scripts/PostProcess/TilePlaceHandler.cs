@@ -129,6 +129,8 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
 
         List<Tile> targets = resolution.DestroyedCoordinates
             .Where(fieldTiles.ContainsKey)
+            .OrderBy(coordinate => coordinate.Pos.x)
+            .ThenBy(coordinate => coordinate.Pos.y)
             .Select(coordinate => fieldTiles[coordinate])
             .Distinct()
             .ToList();
@@ -169,6 +171,8 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
 
         List<Tile> burstOnlyTiles = allCoordinates
             .Where(coordinate => !lineCoordinates.Contains(coordinate) && fieldTiles.ContainsKey(coordinate))
+            .OrderBy(coordinate => coordinate.Pos.x)
+            .ThenBy(coordinate => coordinate.Pos.y)
             .Select(coordinate => fieldTiles[coordinate])
             .Distinct()
             .ToList();
@@ -197,6 +201,8 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         PlayBombSounds(explosion.DetonatedBombCoordinates.Count);
         List<Tile> allTargets = allCoordinates
             .Where(fieldTiles.ContainsKey)
+            .OrderBy(coordinate => coordinate.Pos.x)
+            .ThenBy(coordinate => coordinate.Pos.y)
             .Select(coordinate => fieldTiles[coordinate])
             .Distinct()
             .ToList();
