@@ -15,20 +15,38 @@ public sealed class BombRules
 
     public void Apply(Abilities.eItemType itemType, int rangeBonus)
     {
-        RangeBonus += Math.Max(0, rangeBonus);
-        if (itemType == Abilities.eItemType.BombImmediatelyExplosion)
-            ImmediateExplosionCount++;
-        if (itemType == Abilities.eItemType.ChainExplosion)
-            ChainExplosionCount++;
+        switch (itemType)
+        {
+            case Abilities.eItemType.IncreaseExplosionRange:
+                RangeBonus += Math.Max(0, rangeBonus);
+                break;
+            case Abilities.eItemType.BombImmediatelyExplosion:
+                RangeBonus += Math.Max(0, rangeBonus);
+                ImmediateExplosionCount++;
+                break;
+            case Abilities.eItemType.ChainExplosion:
+                RangeBonus += Math.Max(0, rangeBonus);
+                ChainExplosionCount++;
+                break;
+        }
     }
 
     public void Remove(Abilities.eItemType itemType, int rangeBonus)
     {
-        RangeBonus = Math.Max(0, RangeBonus - Math.Max(0, rangeBonus));
-        if (itemType == Abilities.eItemType.BombImmediatelyExplosion)
-            ImmediateExplosionCount = Math.Max(0, ImmediateExplosionCount - 1);
-        if (itemType == Abilities.eItemType.ChainExplosion)
-            ChainExplosionCount = Math.Max(0, ChainExplosionCount - 1);
+        switch (itemType)
+        {
+            case Abilities.eItemType.IncreaseExplosionRange:
+                RangeBonus = Math.Max(0, RangeBonus - Math.Max(0, rangeBonus));
+                break;
+            case Abilities.eItemType.BombImmediatelyExplosion:
+                RangeBonus = Math.Max(0, RangeBonus - Math.Max(0, rangeBonus));
+                ImmediateExplosionCount = Math.Max(0, ImmediateExplosionCount - 1);
+                break;
+            case Abilities.eItemType.ChainExplosion:
+                RangeBonus = Math.Max(0, RangeBonus - Math.Max(0, rangeBonus));
+                ChainExplosionCount = Math.Max(0, ChainExplosionCount - 1);
+                break;
+        }
     }
 }
 

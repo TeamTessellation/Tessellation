@@ -78,8 +78,10 @@ namespace Tessellation.Tests.EditMode
 
             object immediate = Enum.Parse(itemType, "BombImmediatelyExplosion");
             object chain = Enum.Parse(itemType, "ChainExplosion");
+            object extraTurn = Enum.Parse(itemType, "ExtraTurn");
             apply.Invoke(rules, new[] { immediate, (object)1 });
             apply.Invoke(rules, new[] { chain, (object)1 });
+            apply.Invoke(rules, new[] { extraTurn, (object)10 });
 
             Assert.That(ReadProperty<int>(rules, "ExplosionRadius"), Is.EqualTo(3));
             Assert.That(ReadProperty<bool>(rules, "ExplodesImmediately"), Is.True);
