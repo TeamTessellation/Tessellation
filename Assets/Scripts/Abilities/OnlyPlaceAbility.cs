@@ -55,5 +55,11 @@ namespace Abilities
             Debug.Log($"실행, Priority : {AbilityPriority}");
             _scoreManager.MultiplyMultiplier(_multiplier);
         }
+
+        protected override void OnAbilityRemoved()
+        {
+            _scoreManager?.UnRegisterScoreModifier(ModifyScore);
+            base.OnAbilityRemoved();
+        }
     }
 }

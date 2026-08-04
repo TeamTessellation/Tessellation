@@ -88,6 +88,9 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
             case TileOption.Double:
                 TileOptionBase = new TileOptionDouble();
                 break;
+            case TileOption.Boom:
+                TileOptionBase = new TileOptionBoom();
+                break;
             default:
                 TileOptionBase = new TileOptionDefault();
                 break;
@@ -98,6 +101,11 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
     {
         _sr.sprite = _defaultSprite;
         IsOverwrite = false;
+        Owner = null;
+        Group = null;
+        _endAction = null;
+        TileOptionBase = null;
+        DOTween.Kill(this);
     }
 
     public async UniTask ActiveEffect(Action endAction, Action<Tile> remainAction)
@@ -113,6 +121,7 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
 
         float progress = effectData.LightStartPower;
         await DOTween.To(() => progress, x => { SetLight(x); progress = x; }, effectData.LightMaxPower, effectData.LightDuration)
+            .SetTarget(this)
             .SetEase(effectData.LightEase)
             .ToUniTask();
 
@@ -122,6 +131,7 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
         if (effectData.WaitForEnd)
         {
             remainAction?.Invoke(this);
+            await OptionActiveEffect();
         }
         else
         {
@@ -146,11 +156,14 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
         _sr.color = effectData.FadeOutColor;
         float progress = 1;
         await DOTween.To(() => progress, x => { _sr.color = new Color(_sr.color.r, _sr.color.g, _sr.color.b, x); progress = x; }, 0, effectData.FadeOutDuration)
+            .SetTarget(this)
             .SetEase(effectData.FadeOutEase)
             .ToUniTask();
 
         _sr.color = new Color(_sr.color.r, _sr.color.g, _sr.color.b, 0);
-        _endAction?.Invoke();
+        Action endAction = _endAction;
+        _endAction = null;
+        endAction?.Invoke();
     }
 
     public async UniTask OptionActiveEffect()
@@ -161,6 +174,7 @@ public class Tile : MonoBehaviour, IPoolAble<TileData>
         _light.color = effectData.LightColor;
         float progress = effectData.LightStartPower;
         await DOTween.To(() => progress, x => { SetLight(x); progress = x; }, effectData.LightMaxPower, effectData.LightDuration)
+            .SetTarget(this)
             .SetEase(effectData.LightEase)
             .ToUniTask();
 

@@ -44,7 +44,11 @@ public class Cell
     /// </summary>
     public void UnSet()
     {
-        if (!IsEmpty) Pool<Tile>.Return(Tile);
+        if (!IsEmpty)
+        {
+            Tile.Owner = null;
+            Pool<Tile>.Return(Tile);
+        }
         Tile = null;
     }
 
@@ -105,6 +109,7 @@ public class Cell
         UnSet();
 
         Tile = tile;
+        tile.Owner = this;
         tile.Coor = Coor;
         tile.transform.SetParent(_cellRoot, true);
         tile.gameObject.transform.position = tile.Coor.ToWorld(Field.Instance.TileOffset);

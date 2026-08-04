@@ -350,7 +350,7 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
         for (int i = 0; i <= (int)Direction.LU; i++)
         {
             if (CheckAbleCoor(coor + (Direction)i))
-                result[(Direction)i] = GetTile(coor);
+                result[(Direction)i] = GetTile(coor + (Direction)i);
             else
                 result[(Direction)i] = null;
         }
@@ -466,8 +466,12 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
     /// <returns>성공 여부</returns>
     public bool TryGetTile(Coordinate coor, out Tile tile)
     {
-        tile = GetTile(coor);
-        return !_allCell[coor].IsEmpty;
+        tile = null;
+        if (!CheckAbleCoor(coor) || !_allCell.TryGetValue(coor, out Cell cell) || cell.IsEmpty)
+            return false;
+
+        tile = cell.Tile;
+        return true;
     }
 
     /// <summary>
@@ -475,7 +479,8 @@ public class Field : MonoBehaviour, ISaveTarget, IEnumerable<Cell>
     /// </summary>
     /// <param name="coor">원하는 위치</param>
     /// <returns>배치 된 타일 (없으면 null)</returns>
-    public Tile GetTile(Coordinate coor) => _allCell[coor].Tile;
+    public Tile GetTile(Coordinate coor) =>
+        CheckAbleCoor(coor) && _allCell.TryGetValue(coor, out Cell cell) ? cell.Tile : null;
 
     public bool ClearAble(Coordinate coor) => (_allCell[coor].Tile != null || _allCell[coor].IsLock);
 
