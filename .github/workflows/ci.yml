@@ -131,8 +131,8 @@ jobs:
           [[ -n "$RELEASE_KEYSTORE_PASS" ]] || missing+=("ANDROID_KEYSTORE_PASS (or KEYSTORE_PASS)")
           [[ -n "$RELEASE_KEYALIAS_PASS" ]] || missing+=("ANDROID_KEYALIAS_PASS (or KEY_ALIAS_PASS)")
 
-          if (( ${#missing[@]} == 3 )) && [[ "$GITHUB_REF" != 'refs/heads/main' ]]; then
-            echo '::notice title=Android test signing::Release signing secrets are not available; the test release APK will use the Unity debug keystore.'
+          if (( ${#missing[@]} == 3 )); then
+            echo '::notice title=Android test signing::Release signing secrets are not available; the CI APK will use the Unity debug keystore. Tagged release builds still require release signing.'
             echo 'available=false' >> "$GITHUB_OUTPUT"
             exit 0
           fi
