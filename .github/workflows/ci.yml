@@ -130,6 +130,38 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-unity-Android-
 
+      - name: Validate Android signing configuration
+        shell: bash
+        env:
+          RELEASE_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 || secrets.KEYSTORE_BASE64 }}
+          RELEASE_KEYSTORE_PASS: ${{ secrets.ANDROID_KEYSTORE_PASS || secrets.KEYSTORE_PASS }}
+          RELEASE_KEYALIAS_NAME: ${{ secrets.ANDROID_KEYALIAS_NAME || secrets.KEY_ALIAS_NAME || 'tessellation' }}
+          RELEASE_KEYALIAS_PASS: ${{ secrets.ANDROID_KEYALIAS_PASS || secrets.KEY_ALIAS_PASS }}
+        run: |
+          missing=()
+          [[ -n "$RELEASE_KEYSTORE_BASE64" ]] || missing+=("ANDROID_KEYSTORE_BASE64 (or KEYSTORE_BASE64)")
+          [[ -n "$RELEASE_KEYSTORE_PASS" ]] || missing+=("ANDROID_KEYSTORE_PASS (or KEYSTORE_PASS)")
+          [[ -n "$RELEASE_KEYALIAS_PASS" ]] || missing+=("ANDROID_KEYALIAS_PASS (or KEY_ALIAS_PASS)")
+
+          if (( ${#missing[@]} )); then
+            printf 'Missing repository secret: %s\n' "${missing[@]}" >&2
+            exit 1
+          fi
+
+          keystore="$RUNNER_TEMP/tessellation-release.keystore"
+          if ! printf '%s' "$RELEASE_KEYSTORE_BASE64" | base64 --decode > "$keystore"; then
+            echo 'The Android keystore secret is not valid Base64.' >&2
+            exit 1
+          fi
+
+          if ! keytool -list \
+            -keystore "$keystore" \
+            -storepass "$RELEASE_KEYSTORE_PASS" \
+            -alias "$RELEASE_KEYALIAS_NAME" >/dev/null 2>&1; then
+            echo 'The Android keystore password or alias does not match the registered keystore.' >&2
+            exit 1
+          fi
+
       - name: Build signed Android release APK
         uses: game-ci/unity-builder@1d4ee0697f193f54668e98961d79907911f4b4f2 # v4.8.1
         env:
@@ -145,10 +177,10 @@ jobs:
           version: 0.0.${{ github.run_number }}
           androidVersionCode: ${{ github.run_number }}
           androidKeystoreName: upload.keystore
-          androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-          androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
-          androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME }}
-          androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
+          androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 || secrets.KEYSTORE_BASE64 }}
+          androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS || secrets.KEYSTORE_PASS }}
+          androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME || secrets.KEY_ALIAS_NAME || 'tessellation' }}
+          androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS || secrets.KEY_ALIAS_PASS }}
           buildsPath: build
 
       - name: Upload Android APK
