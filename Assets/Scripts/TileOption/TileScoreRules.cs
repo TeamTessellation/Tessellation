@@ -1,3 +1,5 @@
+using System;
+
 public readonly struct TileScoreRule
 {
     public bool AwardsScore { get; }
@@ -20,6 +22,19 @@ public readonly struct TileScoreRule
 
 public static class TileScoreRules
 {
+    public static float CalculateLinePhaseMultiplier(
+        int lineCount,
+        int doubleTileCount,
+        float comboStep,
+        float doubleTileMultiplier)
+    {
+        float multiplier = 1f + Math.Max(0, lineCount - 1) * comboStep;
+        for (int i = 0; i < Math.Max(0, doubleTileCount); i++)
+            multiplier *= doubleTileMultiplier;
+
+        return multiplier;
+    }
+
     public static TileScoreRule Get(eTileEventType eventType, TileOption option)
     {
         if (eventType == eTileEventType.Place)

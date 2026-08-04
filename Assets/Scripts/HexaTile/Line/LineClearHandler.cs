@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -121,23 +120,6 @@ public class LineClearHandler
 
         if (tile != null && Field.Instance.CheckAbleCoor(tile.Coor) && Field.Instance.GetTile(tile.Coor) == tile)
             await Field.Instance.SafeRemoveTile(tile.Coor, sfx_pitch: pitch);
-    }
-
-    public async UniTask ClearLineAsync(Line line, float interval = 1f, Action<Tile> remainAction = null,
-        float sfxPitch = 1f)
-    {
-        List<Tile> tiles = GetTilesFromLine(line);
-        foreach (Tile tile in tiles)
-            await tile.TileOptionBase.OnLineCleared(tile);
-        await RemoveTilesAsync(tiles, interval);
-    }
-
-    public async UniTask ClearLinesAsync(List<Line> lines, float interval = 1f)
-    {
-        List<Tile> tiles = GetTilesFromLines(lines);
-        foreach (Tile tile in tiles)
-            await tile.TileOptionBase.OnLineCleared(tile);
-        await RemoveTilesAsync(tiles, interval);
     }
 
     private static void GetDirections(Axis axis, out Direction up, out Direction down)

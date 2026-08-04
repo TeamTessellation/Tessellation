@@ -128,6 +128,23 @@ namespace Tessellation.Tests.EditMode
                 Assert.That(ReadProperty<object>(rule, "ScoreType").ToString(), Is.EqualTo(scoreTypeName));
         }
 
+        [TestCase(1, 0, 1f)]
+        [TestCase(2, 0, 2f)]
+        [TestCase(2, 2, 8f)]
+        [TestCase(3, 1, 6f)]
+        public void LineAndDoubleMultipliersComposeMultiplicatively(
+            int lineCount,
+            int doubleTileCount,
+            float expected)
+        {
+            Type rulesType = GameAssembly.GetType("TileScoreRules", throwOnError: true);
+            object result = rulesType.GetMethod("CalculateLinePhaseMultiplier").Invoke(
+                null,
+                new object[] { lineCount, doubleTileCount, 1f, 2f });
+
+            Assert.That((float)result, Is.EqualTo(expected));
+        }
+
         [Test]
         public void BombTilePrefabUsesBombOptionHandler()
         {

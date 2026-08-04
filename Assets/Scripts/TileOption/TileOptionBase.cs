@@ -55,12 +55,6 @@ public abstract class TileOptionBase
             ShowScoreEffect(finalScore, tile);
         }
 
-        if (rule.AppliesDoubleMultiplier)
-        {
-            float multiplier = ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BaseMultipleTileValue];
-            ScoreManager.Instance.MultiplyMultiplier(multiplier);
-        }
-
         if (eventType == eTileEventType.Place)
             SoundManager.Instance.PlaySfx(SoundReference.TileRelease);
         else if (eventType == eTileEventType.LineClear && tile.Data.Option == TileOption.Gold)

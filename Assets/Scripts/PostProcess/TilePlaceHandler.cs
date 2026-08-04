@@ -177,6 +177,16 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
             .Distinct()
             .ToList();
 
+        int doubleTileCount = lineTiles.Count(tile =>
+            TileScoreRules.Get(eTileEventType.LineClear, tile.Data.Option).AppliesDoubleMultiplier);
+        float phaseMultiplier = TileScoreRules.CalculateLinePhaseMultiplier(
+            lines.Count,
+            doubleTileCount,
+            ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BaseLineClearMultiple],
+            ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BaseMultipleTileValue]);
+        if (!Mathf.Approximately(phaseMultiplier, 1f))
+            ScoreManager.Instance.MultiplyMultiplier(phaseMultiplier);
+
         foreach (Tile tile in lineTiles)
         {
             _turnResultInfo.ClearedTiles.Add(new TileEventRecord(tile));
@@ -187,12 +197,6 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         {
             _turnResultInfo.BurstTiles.Add(new TileEventRecord(tile));
             await tile.TileOptionBase.OnTileBurst(tile);
-        }
-
-        if (lines.Count > 1)
-        {
-            float comboStep = ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BaseLineClearMultiple];
-            ScoreManager.Instance.AddMultiplier(comboStep * (lines.Count - 1));
         }
 
         _turnResultInfo.ClearedLineCount += lines.Count;
