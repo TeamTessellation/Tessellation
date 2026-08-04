@@ -63,6 +63,7 @@ jobs:
 
   unity-tests:
     name: Unity Tests (${{ matrix.displayName }})
+    if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -160,7 +161,11 @@ jobs:
 
   android-release-apk:
     name: Android Release APK
-    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+    if: >-
+      always() &&
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      needs.android-signing.result == 'success' &&
+      (github.event_name == 'workflow_dispatch' || needs.unity-tests.result == 'success')
     needs:
       - unity-tests
       - android-signing

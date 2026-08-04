@@ -68,6 +68,8 @@ GitHub Ruleset에서 다음 값을 적용합니다.
 
 테스트 결과는 14일, Release APK는 14일, 릴리스 AAB는 90일 동안 Actions artifact로 보관합니다. 같은 PR의 이전 실행은 취소하지만 릴리스와 Play 배포는 중간 취소하지 않습니다.
 
+수동 Android 검증은 직전 PR CI가 통과한 동일 SHA에서 순차 실행하며, 이미 완료한 Unity 테스트를 중복 실행하지 않고 APK 빌드만 수행합니다. `main` push에서는 Unity 테스트가 성공한 뒤에만 Android 빌드를 시작합니다.
+
 CI의 테스트 APK는 `Development Build`가 아닌 Release 구성으로 빌드합니다. release keystore Secrets가 모두 등록되어 있으면 IL2CPP·ARM64와 해당 키를 사용합니다. Secrets가 모두 없으면 제한된 GitHub runner에서 빠르게 검증할 수 있도록 Mono·ARMv7과 Unity 기본 debug keystore를 사용합니다. Secrets가 일부만 등록된 잘못된 구성은 실패합니다. `vMAJOR.MINOR.PATCH` 태그 릴리스는 항상 IL2CPP·ARM64 및 release keystore Secrets가 필요합니다.
 
 CI에서 Unity를 실행하려면 Personal 라이선스의 `UNITY_LICENSE`, 또는 Pro 라이선스의 `UNITY_EMAIL`·`UNITY_PASSWORD`·`UNITY_SERIAL` 조합이 필요합니다. 유효한 라이선스가 없으면 Unity 테스트와 빌드는 실패하도록 두어 보호 규칙을 우회하지 않습니다.
