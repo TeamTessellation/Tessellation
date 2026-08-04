@@ -185,9 +185,13 @@ jobs:
         run: |
           sed -i 's/^  androidUseCustomKeystore: 1$/  androidUseCustomKeystore: 0/' ProjectSettings/ProjectSettings.asset
           sed -i 's/^    Android: 1$/    Android: 0/' ProjectSettings/ProjectSettings.asset
+          sed -i 's/^  AndroidTargetArchitectures: 2$/  AndroidTargetArchitectures: 1/' ProjectSettings/ProjectSettings.asset
           find 'Assets/Settings/Build Profiles' -type f -name '*.asset' \
-            -exec sed -i "s/^    - line: '|     Android: 1'$/    - line: '|     Android: 0'/" {} +
+            -exec sed -i \
+              -e "s/^    - line: '|     Android: 1'$/    - line: '|     Android: 0'/" \
+              -e "s/^    - line: '|   AndroidTargetArchitectures: 2'$/    - line: '|   AndroidTargetArchitectures: 1'/" {} +
           grep -q '^  androidUseCustomKeystore: 0$' ProjectSettings/ProjectSettings.asset
+          grep -q '^  AndroidTargetArchitectures: 1$' ProjectSettings/ProjectSettings.asset
           grep -A1 '^  scriptingBackend:$' ProjectSettings/ProjectSettings.asset | grep -q '^    Android: 0$'
 
       - name: Build signed Android release APK
