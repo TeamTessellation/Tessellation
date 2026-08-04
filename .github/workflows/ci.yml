@@ -110,26 +110,11 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
-  android-release-apk:
-    name: Android Release APK
+  android-signing:
+    name: Android Signing
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
-    needs:
-      - unity-tests
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
-        with:
-          fetch-depth: 0
-
-      - name: Cache Unity Library
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
-        with:
-          path: Library
-          key: ${{ runner.os }}-unity-Android-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-unity-Android-
-
       - name: Validate Android signing configuration
         shell: bash
         env:
@@ -144,13 +129,13 @@ jobs:
           [[ -n "$RELEASE_KEYALIAS_PASS" ]] || missing+=("ANDROID_KEYALIAS_PASS (or KEY_ALIAS_PASS)")
 
           if (( ${#missing[@]} )); then
-            printf 'Missing repository secret: %s\n' "${missing[@]}" >&2
+            printf '::error title=Android signing secret missing::Missing repository secret: %s\n' "${missing[@]}"
             exit 1
           fi
 
           keystore="$RUNNER_TEMP/tessellation-release.keystore"
           if ! printf '%s' "$RELEASE_KEYSTORE_BASE64" | base64 --decode > "$keystore"; then
-            echo 'The Android keystore secret is not valid Base64.' >&2
+            echo '::error title=Invalid Android keystore::The Android keystore secret is not valid Base64.'
             exit 1
           fi
 
@@ -158,9 +143,30 @@ jobs:
             -keystore "$keystore" \
             -storepass "$RELEASE_KEYSTORE_PASS" \
             -alias "$RELEASE_KEYALIAS_NAME" >/dev/null 2>&1; then
-            echo 'The Android keystore password or alias does not match the registered keystore.' >&2
+            echo '::error title=Android signing mismatch::The Android keystore password or alias does not match the registered keystore.'
             exit 1
           fi
+
+  android-release-apk:
+    name: Android Release APK
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+    needs:
+      - unity-tests
+      - android-signing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          fetch-depth: 0
+
+      - name: Cache Unity Library
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: Library
+          key: ${{ runner.os }}-unity-Android-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-unity-Android-
 
       - name: Build signed Android release APK
         uses: game-ci/unity-builder@1d4ee0697f193f54668e98961d79907911f4b4f2 # v4.8.1
