@@ -73,10 +73,10 @@ jobs:
           androidExportType: androidAppBundle
           versioning: Tag
           androidKeystoreName: upload.keystore
-          androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-          androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
-          androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME }}
-          androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
+          androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 || secrets.KEYSTORE_BASE64 }}
+          androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS || secrets.KEYSTORE_PASS }}
+          androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME || secrets.KEY_ALIAS_NAME || 'tessellation' }}
+          androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS || secrets.KEY_ALIAS_PASS }}
           buildsPath: build
 
       - name: Locate and verify AAB

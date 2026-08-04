@@ -81,8 +81,9 @@ Repository secrets:
 - `UNITY_SERIAL` (Pro 라이선스 방식에서 사용)
 - `ANDROID_KEYSTORE_BASE64`
 - `ANDROID_KEYSTORE_PASS`
-- `ANDROID_KEYALIAS_NAME`
 - `ANDROID_KEYALIAS_PASS`
+
+키 alias는 저장소의 기존 release key에 맞춰 기본값 `tessellation`을 사용합니다. 다른 alias를 사용한다면 `ANDROID_KEYALIAS_NAME`을 등록합니다. 기존 GameCI 이름인 `KEYSTORE_BASE64`, `KEYSTORE_PASS`, `KEY_ALIAS_NAME`, `KEY_ALIAS_PASS`도 호환됩니다.
 
 `google-play-internal` Environment variables:
 
