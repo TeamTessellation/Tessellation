@@ -1,7 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
 using ExecEvents;
 using Stage;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.EventSystems;
 

@@ -1,9 +1,10 @@
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using TMPro;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
