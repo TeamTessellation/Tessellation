@@ -144,6 +144,8 @@ namespace Tessellation.Tests.EditMode
                 object tileData = Activator.CreateInstance(tileDataType,
                     new[] { Enum.Parse(optionType, "Boom"), (object)1f });
 
+                tileType.GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(tile, null);
                 tileType.GetMethod("Set").Invoke(tile, new[] { tileData });
                 object handler = tileType.GetField("TileOptionBase").GetValue(tile);
                 Assert.That(handler.GetType().Name, Is.EqualTo("TileOptionBoom"));
