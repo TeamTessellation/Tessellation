@@ -4,7 +4,6 @@ using Abilities;
 using Core;
 using Cysharp.Threading.Tasks;
 using Machamy.Utils;
-using NUnit.Framework;
 using Player;
 using SaveLoad;
 using Stage;

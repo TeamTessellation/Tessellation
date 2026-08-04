@@ -5,7 +5,9 @@ using Database;
 using Machamy.Utils;
 using SceneManagement;
 using TMPro;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

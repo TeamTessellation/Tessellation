@@ -1,0 +1,154 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+      - ci/android-release-pipeline
+
+permissions:
+  contents: read
+  checks: write
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  policy:
+    name: Policy
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+
+      - name: Validate branch name and PR title
+        shell: bash
+        env:
+          BRANCH_NAME: ${{ github.head_ref }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          set -euo pipefail
+
+          branch_pattern='^(feat|fix|refactor|perf|docs|test|build|ci|chore|hotfix)/([0-9]+-)?[a-z0-9]+(-[a-z0-9]+)*$'
+          title_pattern='^(feat|fix|refactor|perf|docs|test|build|ci|chore|hotfix)(\([a-z0-9._-]+\))?: .+'
+
+          if [[ "$BRANCH_NAME" != dependabot/* && ! "$BRANCH_NAME" =~ $branch_pattern ]]; then
+            echo "Invalid branch name: $BRANCH_NAME"
+            echo "Expected: <type>/<optional-issue-number>-<kebab-case>"
+            exit 1
+          fi
+
+      - name: Reject tracked signing credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if git ls-files | grep -Eiq '(^|/)(KeyStore/|[^/]+\.(keystore|jks|p12|pem)$)'; then
+            echo "Signing credentials must not be tracked by Git."
+            git ls-files | grep -Ei '(^|/)(KeyStore/|[^/]+\.(keystore|jks|p12|pem)$)'
+            exit 1
+          fi
+
+          if [[ ! "$PR_TITLE" =~ $title_pattern ]]; then
+            echo "Invalid PR title: $PR_TITLE"
+            echo "Expected: <type>(<optional-scope>): <description>"
+            exit 1
+          fi
+
+  unity-tests:
+    name: Unity Tests (${{ matrix.displayName }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - testMode: editmode
+            displayName: EditMode
+          - testMode: playmode
+            displayName: PlayMode
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          fetch-depth: 0
+
+      - name: Cache Unity Library
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: Library
+          key: ${{ runner.os }}-unity-${{ matrix.testMode }}-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-unity-${{ matrix.testMode }}-
+
+      - name: Run Unity tests
+        id: unity-tests
+        uses: game-ci/unity-test-runner@0ff419b913a3630032cbe0de48a0099b5a9f0ed9 # v4.3.1
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          projectPath: .
+          testMode: ${{ matrix.testMode }}
+          artifactsPath: artifacts/${{ matrix.testMode }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          checkName: ${{ matrix.displayName }} Test Results
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: unity-test-results-${{ matrix.testMode }}
+          path: artifacts/${{ matrix.testMode }}
+          if-no-files-found: warn
+          retention-days: 14
+
+  android-release-apk:
+    name: Android Release APK
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+    needs:
+      - unity-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          fetch-depth: 0
+
+      - name: Cache Unity Library
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: Library
+          key: ${{ runner.os }}-unity-Android-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-unity-Android-
+
+      - name: Build signed Android release APK
+        uses: game-ci/unity-builder@1d4ee0697f193f54668e98961d79907911f4b4f2 # v4.8.1
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          projectPath: .
+          targetPlatform: Android
+          androidExportType: androidPackage
+          versioning: Custom
+          version: 0.0.${{ github.run_number }}
+          androidVersionCode: ${{ github.run_number }}
+          androidKeystoreName: upload.keystore
+          androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+          androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME }}
+          androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
+          buildsPath: build
+
+      - name: Upload Android APK
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: android-release-apk-${{ github.sha }}
+          path: build/Android
+          if-no-files-found: error
+          retention-days: 14

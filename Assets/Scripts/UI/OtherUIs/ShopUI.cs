@@ -6,7 +6,6 @@ using Core;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Interaction;
-using NUnit.Framework;
 using Sound;
 using TMPro;
 using Unity.VisualScripting;

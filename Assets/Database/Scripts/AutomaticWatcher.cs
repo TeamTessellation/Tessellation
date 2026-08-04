@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using Database.DataReader;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace Database

@@ -1,0 +1,126 @@
+name: Android Release Build
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-release-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  validate-tag:
+    name: Validate Release Tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          fetch-depth: 0
+
+      - name: Validate semantic version and main ancestry
+        shell: bash
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+
+          if [[ ! "$TAG_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid release tag: $TAG_NAME"
+            exit 1
+          fi
+
+          git fetch --no-tags origin main
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+            echo "Release tags must point to a commit contained in main."
+            exit 1
+          fi
+
+  build-aab:
+    name: Build Signed Android AAB
+    needs:
+      - validate-tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          fetch-depth: 0
+
+      - name: Cache Unity Library
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: Library
+          key: ${{ runner.os }}-unity-Android-release-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-unity-Android-release-
+
+      - name: Build signed Android App Bundle
+        id: build
+        uses: game-ci/unity-builder@1d4ee0697f193f54668e98961d79907911f4b4f2 # v4.8.1
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          projectPath: .
+          targetPlatform: Android
+          androidExportType: androidAppBundle
+          versioning: Tag
+          androidKeystoreName: upload.keystore
+          androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+          androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME }}
+          androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
+          buildsPath: build
+
+      - name: Locate and verify AAB
+        id: artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mapfile -t bundles < <(find build/Android -type f -name '*.aab' -print)
+          if [[ ${#bundles[@]} -ne 1 ]]; then
+            echo "Expected exactly one AAB, found ${#bundles[@]}."
+            exit 1
+          fi
+
+          jarsigner -verify "${bundles[0]}"
+          mkdir -p release
+          destination="release/HoneyComb0-${GITHUB_REF_NAME}.aab"
+          cp "${bundles[0]}" "$destination"
+          echo "path=$destination" >> "$GITHUB_OUTPUT"
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: android-release-${{ github.ref_name }}
+          path: ${{ steps.artifact.outputs.path }}
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Create or update draft GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ github.ref_name }}
+          AAB_PATH: ${{ steps.artifact.outputs.path }}
+        run: |
+          set -euo pipefail
+
+          if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            if [[ "$(gh release view "$TAG_NAME" --json isDraft --jq '.isDraft')" != "true" ]]; then
+              echo "Published release $TAG_NAME is immutable. Create a new patch tag instead."
+              exit 1
+            fi
+            gh release upload "$TAG_NAME" "$AAB_PATH" --clobber
+          else
+            gh release create "$TAG_NAME" "$AAB_PATH" \
+              --draft \
+              --verify-tag \
+              --title "$TAG_NAME" \
+              --generate-notes
+          fi
