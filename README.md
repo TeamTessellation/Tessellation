@@ -67,7 +67,7 @@ GitHub Ruleset에서 다음 값을 적용합니다.
 
 테스트 결과는 14일, Release APK는 14일, 릴리스 AAB는 90일 동안 Actions artifact로 보관합니다. 같은 PR의 이전 실행은 취소하지만 릴리스와 Play 배포는 중간 취소하지 않습니다.
 
-CI에서 Unity를 실행하려면 repository secret `UNITY_LICENSE`가 필요합니다. 라이선스가 없으면 Unity 테스트와 빌드는 실패하도록 두어 보호 규칙을 우회하지 않습니다.
+CI에서 Unity를 실행하려면 Personal 라이선스의 `UNITY_LICENSE`, 또는 Pro 라이선스의 `UNITY_EMAIL`·`UNITY_PASSWORD`·`UNITY_SERIAL` 조합이 필요합니다. 유효한 라이선스가 없으면 Unity 테스트와 빌드는 실패하도록 두어 보호 규칙을 우회하지 않습니다.
 
 ## Android 릴리스
 
@@ -76,6 +76,9 @@ CI에서 Unity를 실행하려면 repository secret `UNITY_LICENSE`가 필요합
 Repository secrets:
 
 - `UNITY_LICENSE`
+- `UNITY_EMAIL` (Pro 라이선스 방식에서 사용)
+- `UNITY_PASSWORD` (Pro 라이선스 방식에서 사용)
+- `UNITY_SERIAL` (Pro 라이선스 방식에서 사용)
 - `ANDROID_KEYSTORE_BASE64`
 - `ANDROID_KEYSTORE_PASS`
 - `ANDROID_KEYALIAS_NAME`
