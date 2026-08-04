@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -151,6 +152,41 @@ namespace Tessellation.Tests.EditMode
             }
         }
 
+        [Test]
+        public void ScoreModifiersComposeInOrderAndCanBeUnregistered()
+        {
+            Type scoreManagerType = GameAssembly.GetType("ScoreManager", throwOnError: true);
+            Type eventType = GameAssembly.GetType("eTileEventType", throwOnError: true);
+            Type tileType = GameAssembly.GetType("Tile", throwOnError: true);
+            Type modifierType = scoreManagerType.GetNestedType("TileScoreModifierDelegate");
+            GameObject owner = new GameObject("ScoreManager test owner");
+            Component scoreManager = owner.AddComponent(scoreManagerType);
+
+            try
+            {
+                Delegate multiply = CreateScoreModifier(modifierType, eventType, tileType, OpCodes.Mul, 2);
+                Delegate add = CreateScoreModifier(modifierType, eventType, tileType, OpCodes.Add, 3);
+                MethodInfo register = scoreManagerType.GetMethod("RegisterScoreModifier");
+                MethodInfo unregister = scoreManagerType.GetMethod("UnRegisterScoreModifier");
+
+                register.Invoke(scoreManager, new object[] { multiply });
+                register.Invoke(scoreManager, new object[] { add });
+
+                object result = scoreManagerType.GetMethod("CalculateTileScore").Invoke(scoreManager,
+                    new[] { Enum.Parse(eventType, "Place"), null, (object)2 });
+                Assert.That(result, Is.EqualTo(7));
+
+                unregister.Invoke(scoreManager, new object[] { multiply });
+                unregister.Invoke(scoreManager, new object[] { add });
+                var modifiers = (ICollection)scoreManagerType.GetField("_tileScoreModifiers").GetValue(scoreManager);
+                Assert.That(modifiers.Count, Is.Zero);
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(owner);
+            }
+        }
+
         private object Resolve(
             IEnumerable<(int x, int y)> occupied,
             IEnumerable<(int x, int y)> bombs,
@@ -188,6 +224,27 @@ namespace Tessellation.Tests.EditMode
         private static T ReadProperty<T>(object value, string propertyName)
         {
             return (T)value.GetType().GetProperty(propertyName).GetValue(value);
+        }
+
+        private static Delegate CreateScoreModifier(
+            Type delegateType,
+            Type eventType,
+            Type tileType,
+            OpCode operation,
+            int operand)
+        {
+            var method = new DynamicMethod(
+                "ScoreModifier",
+                typeof(int),
+                new[] { eventType, tileType, typeof(int) },
+                typeof(BombAndScoreLogicTests).Module,
+                skipVisibility: true);
+            ILGenerator il = method.GetILGenerator();
+            il.Emit(OpCodes.Ldarg_2);
+            il.Emit(OpCodes.Ldc_I4, operand);
+            il.Emit(operation);
+            il.Emit(OpCodes.Ret);
+            return method.CreateDelegate(delegateType);
         }
     }
 }
