@@ -230,7 +230,8 @@ public class TilePlaceHandler : MonoBehaviour, IPlayerInputHandler
         TurnResultInfo info,
         CancellationToken token)
     {
-        await ExecEventBus<TurnResultInfo>.InvokeMerged(info);
+        info.BreakChain = false;
+        await ExecEventBus<TurnResultInfo>.InvokeMerged(info, token);
         if (eventDelegate == null)
             return;
 
