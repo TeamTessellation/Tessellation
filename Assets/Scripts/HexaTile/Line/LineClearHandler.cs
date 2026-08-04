@@ -85,7 +85,13 @@ public class LineClearHandler
 
     public List<Tile> GetTilesFromLines(List<Line> lines)
     {
-        return lines.SelectMany(GetTilesFromLine).Where(tile => tile != null).Distinct().ToList();
+        return lines
+            .SelectMany(GetTilesFromLine)
+            .Where(tile => tile != null)
+            .Distinct()
+            .OrderBy(tile => tile.Coor.Pos.x)
+            .ThenBy(tile => tile.Coor.Pos.y)
+            .ToList();
     }
 
     public async UniTask RemoveTilesAsync(IEnumerable<Tile> tiles, float interval = 0.1f)
