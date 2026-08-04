@@ -45,10 +45,13 @@ public abstract class TileOptionBase
         {
             int baseScore = (int)ScoreManager.Instance.ScoreValues[rule.ScoreType];
             int finalScore = ScoreManager.Instance.CalculateTileScore(eventType, tile, baseScore);
-            ScoreManager.Instance.AddCurrentScore(finalScore,
-                eventType == eTileEventType.LineClear
-                    ? ScoreManager.CurrentScoreChangedEventArgs.CurrentScoreChangeType.LineCleared
-                    : ScoreManager.CurrentScoreChangedEventArgs.CurrentScoreChangeType.Place);
+            ScoreManager.CurrentScoreChangedEventArgs.CurrentScoreChangeType changeType = eventType switch
+            {
+                eTileEventType.LineClear => ScoreManager.CurrentScoreChangedEventArgs.CurrentScoreChangeType.LineCleared,
+                eTileEventType.Burst => ScoreManager.CurrentScoreChangedEventArgs.CurrentScoreChangeType.Burst,
+                _ => ScoreManager.CurrentScoreChangedEventArgs.CurrentScoreChangeType.Place,
+            };
+            ScoreManager.Instance.AddCurrentScore(finalScore, changeType);
             ShowScoreEffect(finalScore, tile);
         }
 

@@ -33,6 +33,7 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
         {
             LineCleared,
             Place,
+            Burst,
         }
         
         public int NewCurrentScore { get; set; }
