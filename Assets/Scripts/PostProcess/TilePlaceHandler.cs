@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using ExecEvents;
 using Player;
 using Sound;
+using Stage;
 using UnityEngine;
 
 [Serializable]
