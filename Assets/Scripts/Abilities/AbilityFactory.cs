@@ -12,9 +12,9 @@ namespace Abilities
             { eItemType.ExtraTurn,                        () => new ExtraTurnAbility() },
             { eItemType.ExtraActiveItemRemainingUses,     () => new ExtraActiveItemAbility() },
             { eItemType.AddBombTileset,                   () => new AdditionalTileAbility() },
-            { eItemType.IncreaseExplosionRange,           () => new OnlyPlaceAbility() }, // NULL
-            { eItemType.BombImmediatelyExplosion,         () => new OnlyPlaceAbility() }, // NULL
-            { eItemType.ChainExplosion,                   () => new OnlyPlaceAbility() }, // NULL
+            { eItemType.IncreaseExplosionRange,           () => new BombModifierAbility() },
+            { eItemType.BombImmediatelyExplosion,         () => new BombModifierAbility() },
+            { eItemType.ChainExplosion,                   () => new BombModifierAbility() },
             { eItemType.AddExtraScoreTileset,             () => new AdditionalTileAbility() },
             { eItemType.AddMultipleScoreTileset,          () => new AdditionalTileAbility() },
             { eItemType.AddGoldTileset,                   () => new AdditionalTileAbility() },

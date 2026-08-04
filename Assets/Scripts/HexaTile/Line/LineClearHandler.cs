@@ -1,205 +1,143 @@
-using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Core;
-using Player;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using static Field;
-using System;
-using Sound;
 
 public class LineClearHandler
 {
-    public List<Line> CheckLineClear(List<Tile> newTile)
+    public List<Line> CheckLineClear(List<Tile> newTiles)
     {
-        HashSet<int> xCheckList = new();
-        HashSet<int> yCheckList = new();
-        HashSet<int> zCheckList = new();
+        var clearLines = new List<Line>();
+        if (newTiles == null || newTiles.Count == 0)
+            return clearLines;
 
-        List<Line> clearLines = new();
+        var checkedLines = new HashSet<(Axis axis, int number)>();
 
-        int upOrDown = UnityEngine.Random.Range(0, 2); // 0 up 1 down
-
-        for (int i = 0; i < newTile.Count; i++)
+        foreach (Tile tile in newTiles.Where(IsStillPlaced))
         {
-            if (!xCheckList.Contains(newTile[i].Coor.Pos3D.y))
-            {
-                CheckAxis(upOrDown, xCheckList, newTile[i].Coor.Pos3D.y, Axis.X, newTile[i], clearLines);
-            }
-            if (!yCheckList.Contains(newTile[i].Coor.Pos3D.x))
-            {
-                CheckAxis(upOrDown, yCheckList, newTile[i].Coor.Pos3D.x, Axis.Y, newTile[i], clearLines);
-            }
-            if (!zCheckList.Contains(newTile[i].Coor.Pos3D.z))
-            {
-                CheckAxis(upOrDown, zCheckList, newTile[i].Coor.Pos3D.z, Axis.Z, newTile[i], clearLines);
-            }
+            CheckAxis(Axis.X, tile.Coor.Pos3D.y, tile.Coor, checkedLines, clearLines);
+            CheckAxis(Axis.Y, tile.Coor.Pos3D.x, tile.Coor, checkedLines, clearLines);
+            CheckAxis(Axis.Z, tile.Coor.Pos3D.z, tile.Coor, checkedLines, clearLines);
         }
 
         return clearLines;
     }
 
-    private void CheckAxis(int upOrDown, HashSet<int> checkList, int key, Axis axis, Tile tile, List<Line> clearLines)
+    private static bool IsStillPlaced(Tile tile)
     {
-        checkList.Add(key);
-        if (CheckLine(upOrDown, axis, tile.Coor, out Coordinate start))
-            clearLines.Add(new(axis, start));
+        if (tile == null || !Field.Instance.CheckAbleCoor(tile.Coor))
+            return false;
+
+        return Field.Instance.GetTile(tile.Coor) == tile;
     }
 
-    private bool CheckLine(int upOrDown, Axis axis, Coordinate start, out Coordinate result)
+    private void CheckAxis(
+        Axis axis,
+        int number,
+        Coordinate coordinate,
+        HashSet<(Axis axis, int number)> checkedLines,
+        List<Line> clearLines)
     {
-        Direction up = Direction.R;
-        Direction down = Direction.L;
-        result = start;
+        if (!checkedLines.Add((axis, number)))
+            return;
 
-        switch (axis)
+        if (TryGetCompleteLine(axis, coordinate, out Coordinate start))
+            clearLines.Add(new Line(axis, start));
+    }
+
+    private bool TryGetCompleteLine(Axis axis, Coordinate coordinate, out Coordinate start)
+    {
+        GetDirections(axis, out Direction up, out Direction down);
+
+        start = coordinate;
+        while (Field.Instance.CheckAbleCoor(start + down))
+            start += down;
+
+        Coordinate current = start;
+        while (Field.Instance.CheckAbleCoor(current))
         {
-            case Axis.X:
-                up = Direction.R;
-                down = Direction.L;
-                break;
-            case Axis.Y:
-                up = Direction.RD;
-                down = Direction.LU;
-                break;
-            case Axis.Z:
-                up = Direction.RU;
-                down = Direction.LD;
-                break;
+            if (!Field.Instance.ClearAble(current))
+                return false;
+            current += up;
         }
 
-        Coordinate correctCoor = start;
-        
-        // 폭탄 타일이라면 라인클리어 판정 제외
-        if (Field.Instance.GetTile(start).Data.Option == TileOption.Boom) return false;
-        
-        while (Field.Instance.CheckAbleCoor(correctCoor) && Field.Instance.ClearAble(correctCoor))
-        {
-            correctCoor += up;
-        }
-        if (correctCoor.CircleRadius <= Field.Instance.Size)
-            return false;
-
-        if (upOrDown == 0)
-            result = correctCoor - up;
-
-        correctCoor = start;
-        while (Field.Instance.CheckAbleCoor(correctCoor) && Field.Instance.ClearAble(correctCoor))
-        {
-            correctCoor += down;
-        }
-        if (correctCoor.CircleRadius <= Field.Instance.Size)
-            return false;
-
-        if (upOrDown == 1)
-            result = correctCoor - down;
-        
         return true;
-    }
-
-    public async UniTask ClearLineAsync(Line line, float interval = 1f, Action<Tile> remainAction = null, float sfxPitch = 1.0f)
-    {
-        
-        Direction up = Direction.R;
-        Direction down = Direction.L;
-
-        switch (line.Axis)
-        {
-            case Axis.X:
-                up = Direction.R;
-                down = Direction.L;
-                break;
-            case Axis.Y:
-                up = Direction.RD;
-                down = Direction.LU;
-                break;
-            case Axis.Z:
-                up = Direction.RU;
-                down = Direction.LD;
-                break;
-        }
-
-        Coordinate upCorrect = line.Start;
-        Coordinate downCorrect = line.Start;
-
-        List<UniTask> allTask = new();
-        
-        allTask.Add(Field.Instance.SafeRemoveTile(line.Start, remainAction, sfxPitch));
-        Cell cell = Instance.GetCellByCoordinate(line.Start);
-        if (cell != null)
-        {
-            await cell.Tile.TileOptionBase.OnLineCleared(cell.Tile);
-        }
-        sfxPitch *= 1.2f;
-        
-        await UniTask.WaitForSeconds(interval);
-        
-        while (Field.Instance.CheckAbleCoor(upCorrect) || Field.Instance.CheckAbleCoor(downCorrect))
-        {
-            upCorrect += up;
-            downCorrect += down;
-            await UniTask.WaitForSeconds(interval);
-            allTask.Add(Field.Instance.SafeRemoveTile(upCorrect, remainAction, sfxPitch));
-            allTask.Add(Field.Instance.SafeRemoveTile(downCorrect, remainAction, sfxPitch));
-
-            Cell UpCell = Instance.GetCellByCoordinate(upCorrect);
-            Cell DownCell = Instance.GetCellByCoordinate(downCorrect);
-            if (UpCell != null)
-            {
-                await UpCell.Tile.TileOptionBase.OnLineCleared(UpCell.Tile);
-            }
-
-            if (DownCell != null)
-            {
-                await DownCell.Tile.TileOptionBase.OnLineCleared(DownCell.Tile);
-            }
-        }
-
-        await allTask;
-
-        EndLineClear(line);
-    }
-    
-    public async UniTask ClearLinesAsync(List<Line> line, float interval = 1f)
-    {
-        List<Tile> remainTile = new();
-        
-        float sfxPitch = 1.0f;
-
-        List<UniTask> lineClearTasks = new();
-
-        for (int i = 0; i < line.Count; i++)
-        {
-            // 콤보점수 추가
-            if (i != 0)
-            {
-                float baseLineClearMultiple =
-                    ScoreManager.Instance.ScoreValues[ScoreManager.ScoreValueType.BaseLineClearMultiple];
-                ScoreManager.Instance.AddMultiplier(baseLineClearMultiple);
-            }
-            
-            lineClearTasks.Add(ClearLineAsync(line[i], interval, (tile) => remainTile.Add(tile), sfxPitch));
-            sfxPitch = Mathf.Min(5f, sfxPitch*1.5f);
-            interval = Mathf.Max(0.05f, interval*0.8f);
-        }
-        await UniTask.WhenAll(lineClearTasks);
-
-        await UniTask.WaitForSeconds(interval);
-        await EndAllLineClear(line, interval, remainTile);
     }
 
     public List<Tile> GetTilesFromLine(Line line)
     {
-        List<Tile> tiles = new List<Tile>();
-        Direction up, down;
-        
-        // 축에 따른 방향 설정
-        switch (line.Axis)
+        GetDirections(line.Axis, out Direction up, out _);
+        var tiles = new List<Tile>();
+        Coordinate current = line.Start;
+
+        while (Field.Instance.CheckAbleCoor(current))
         {
-            case Axis.X:
-                up = Direction.R;
-                down = Direction.L;
-                break;
+            Tile tile = Field.Instance.GetTile(current);
+            if (tile != null)
+                tiles.Add(tile);
+            current += up;
+        }
+
+        return tiles;
+    }
+
+    public List<Tile> GetTilesFromLines(List<Line> lines)
+    {
+        return lines.SelectMany(GetTilesFromLine).Where(tile => tile != null).Distinct().ToList();
+    }
+
+    public async UniTask RemoveTilesAsync(IEnumerable<Tile> tiles, float interval = 0.1f)
+    {
+        var uniqueTiles = tiles
+            .Where(tile => tile != null)
+            .GroupBy(tile => tile.Coor)
+            .Select(group => group.First())
+            .OrderBy(tile => tile.Coor.Pos.x)
+            .ThenBy(tile => tile.Coor.Pos.y)
+            .ToList();
+
+        var tasks = new List<UniTask>(uniqueTiles.Count);
+        for (int i = 0; i < uniqueTiles.Count; i++)
+        {
+            Tile tile = uniqueTiles[i];
+            tasks.Add(RemoveWithDelay(tile, interval * i, Mathf.Min(5f, 1f + i * 0.15f)));
+        }
+
+        await UniTask.WhenAll(tasks);
+    }
+
+    private static async UniTask RemoveWithDelay(Tile tile, float delay, float pitch)
+    {
+        if (delay > 0f)
+            await UniTask.WaitForSeconds(delay);
+
+        if (tile != null && Field.Instance.CheckAbleCoor(tile.Coor) && Field.Instance.GetTile(tile.Coor) == tile)
+            await Field.Instance.SafeRemoveTile(tile.Coor, sfx_pitch: pitch);
+    }
+
+    public async UniTask ClearLineAsync(Line line, float interval = 1f, Action<Tile> remainAction = null,
+        float sfxPitch = 1f)
+    {
+        List<Tile> tiles = GetTilesFromLine(line);
+        foreach (Tile tile in tiles)
+            await tile.TileOptionBase.OnLineCleared(tile);
+        await RemoveTilesAsync(tiles, interval);
+    }
+
+    public async UniTask ClearLinesAsync(List<Line> lines, float interval = 1f)
+    {
+        List<Tile> tiles = GetTilesFromLines(lines);
+        foreach (Tile tile in tiles)
+            await tile.TileOptionBase.OnLineCleared(tile);
+        await RemoveTilesAsync(tiles, interval);
+    }
+
+    private static void GetDirections(Axis axis, out Direction up, out Direction down)
+    {
+        switch (axis)
+        {
             case Axis.Y:
                 up = Direction.RD;
                 down = Direction.LU;
@@ -209,77 +147,9 @@ public class LineClearHandler
                 down = Direction.LD;
                 break;
             default:
-                return tiles; // 빈 리스트 반환
-        }
-        
-        // 시작점 타일 추가
-        Tile startTile = Field.Instance.GetTile(line.Start);
-        if (startTile != null)
-            tiles.Add(startTile);
-        
-        // 위쪽 방향 타일들 수집
-        Coordinate upCoord = line.Start + up;
-        while (Field.Instance.CheckAbleCoor(upCoord))
-        {
-            Tile tile = Field.Instance.GetTile(upCoord);
-            if (tile != null)
-                tiles.Add(tile);
-            else
-                break; // 빈 공간을 만나면 중단
-            upCoord += up;
-        }
-        
-        // 아래쪽 방향 타일들 수집
-        Coordinate downCoord = line.Start + down;
-        while (Field.Instance.CheckAbleCoor(downCoord))
-        {
-            Tile tile = Field.Instance.GetTile(downCoord);
-            if (tile != null)
-                tiles.Add(tile);
-            else
-                break; // 빈 공간을 만나면 중단
-            downCoord += down;
-        }
-        
-        return tiles;
-    }
-    
-    public List<Tile> GetTilesFromLines(List<Line> lines)
-    {
-        HashSet<Tile> tileSet = new HashSet<Tile>();
-        
-        foreach (var line in lines)
-        {
-            List<Tile> lineTiles = GetTilesFromLine(line);
-            foreach (var tile in lineTiles)
-            {
-                tileSet.Add(tile);
-            }
-        }
-        
-        return tileSet.ToList();
-    }
-
-    private void EndLineClear(Line line)
-    {
-        PlayerStatus status = GameManager.Instance.PlayerStatus;
-        status.StageClearedLines += 1;
-        // status.TotalClearedLines += 1; // 집계는 StageManager에서 처리
-    }
-
-    private async UniTask EndAllLineClear(List<Line> line, float interval = 1, List<Tile> remainTile = null)
-    {
-        if (remainTile != null)
-        {
-            List<UniTask> tasks = new();
-
-            for (int i = 0; i < remainTile.Count; i++)
-            {
-                await UniTask.WaitForSeconds(interval);
-                tasks.Add(remainTile[i].OptionActiveEffect());
-            }
-
-            await tasks;
+                up = Direction.R;
+                down = Direction.L;
+                break;
         }
     }
 }

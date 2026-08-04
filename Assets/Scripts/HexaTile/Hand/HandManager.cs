@@ -173,9 +173,7 @@ public class HandManager : MonoBehaviour, IFieldTurnLogic, ISaveTarget
                 
         DeckData newDeckData = new DeckData(newTileSetData);
 
-        // FIXME
-        // 폭탄타일 테스트 용 임시로 넣어두었음.. 위치가 이상하다
-        newDeckData.Count = tileOption == TileOption.Boom ? 100 : amount;
+        newDeckData.Count = amount;
         
         DeckSO.Deck.Add(newDeckData);
     }

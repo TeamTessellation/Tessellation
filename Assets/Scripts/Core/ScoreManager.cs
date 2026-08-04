@@ -124,7 +124,7 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
 
     public void UnRegisterScoreModifier(TileScoreModifierDelegate modifier)
     {
-        if (!_tileScoreModifiers.Contains(modifier))
+        if (_tileScoreModifiers.Contains(modifier))
         {
             _tileScoreModifiers.Remove(modifier);
         }
@@ -137,6 +137,7 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
         TempScore += addScore;
         using var currentEvt = CurrentScoreChangedEventArgs.Get();
         currentEvt.NewCurrentScore = TempScore;
+        currentEvt.ScoreChangeType = scoreChangeType;
         ExecEventBus<CurrentScoreChangedEventArgs>.InvokeMerged(currentEvt).Forget();
     }
 
@@ -172,7 +173,7 @@ public class ScoreManager : Singleton<ScoreManager>, ISaveTarget
         int finalScore = baseScore;
         foreach (var modifier in _tileScoreModifiers)
         {
-            finalScore = modifier.Invoke(tileEventType, tile, baseScore);
+            finalScore = modifier.Invoke(tileEventType, tile, finalScore);
         }
 
         return finalScore;

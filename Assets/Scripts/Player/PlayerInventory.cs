@@ -65,9 +65,13 @@ namespace Player
         /// </summary>
         public void Reset()
         {
-            for (int i = 0; i < _maxAbilityCount; i++)
+            if (_abilities == null)
+                return;
+
+            for (int i = _abilities.Count - 1; i >= 0; i--)
             {
-                RemoveAbilityByIndex(i);
+                if (_abilities[i] != null)
+                    RemoveAbilityByIndex(i);
             }
         }
 
@@ -229,8 +233,8 @@ namespace Player
         
         public void RemoveAbilityByIndex(int slotIdx)
         {
-            if (_abilities[slotIdx] == null) return;
             if (slotIdx < 0 || slotIdx >= _maxAbilityCount) return;
+            if (_abilities[slotIdx] == null) return;
 
             _abilities[slotIdx].Remove(Handler);
             SetAbility(slotIdx, null);
@@ -302,8 +306,16 @@ namespace Player
         {
             if (_abilities == null)
             {
-                _abilities = new List<AbilityBase>(_maxAbilityCount);
+                _abilities = new List<AbilityBase>();
             }
+
+            foreach (AbilityBase ability in _abilities)
+            {
+                ability?.Remove(Handler);
+            }
+
+            while (_abilities.Count < _maxAbilityCount)
+                _abilities.Add(null);
 
             for (int i = 0; i < _maxAbilityCount; i++)
             {
