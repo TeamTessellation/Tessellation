@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Validate branch name and PR title
         shell: bash
@@ -75,12 +75,12 @@ jobs:
             displayName: PlayMode
     steps:
       - name: Check out repository
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
       - name: Cache Unity Library
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: Library
           key: ${{ runner.os }}-unity-${{ matrix.testMode }}-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
@@ -104,7 +104,7 @@ jobs:
 
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: unity-test-results-${{ matrix.testMode }}
           path: artifacts/${{ matrix.testMode }}
@@ -172,12 +172,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
       - name: Cache Unity Library
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: Library
           key: ${{ runner.os }}-unity-Android-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
@@ -201,7 +201,7 @@ jobs:
 
       - name: Build signed Android release APK
         if: needs.android-signing.outputs.available == 'true'
-        uses: game-ci/unity-builder@1d4ee0697f193f54668e98961d79907911f4b4f2 # v4.8.1
+        uses: game-ci/unity-builder@d829bfc901f2347c8fe18898f06712b66916ef42 # v5.0.0
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -223,7 +223,7 @@ jobs:
 
       - name: Build test Android release APK (Mono)
         if: needs.android-signing.outputs.available != 'true'
-        uses: game-ci/unity-builder@1d4ee0697f193f54668e98961d79907911f4b4f2 # v4.8.1
+        uses: game-ci/unity-builder@d829bfc901f2347c8fe18898f06712b66916ef42 # v5.0.0
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -239,7 +239,7 @@ jobs:
           buildsPath: build
 
       - name: Upload Android APK
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: android-release-apk-${{ github.sha }}
           path: build/Android
