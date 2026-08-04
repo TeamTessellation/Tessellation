@@ -68,7 +68,7 @@ GitHub Ruleset에서 다음 값을 적용합니다.
 
 테스트 결과는 14일, Release APK는 14일, 릴리스 AAB는 90일 동안 Actions artifact로 보관합니다. 같은 PR의 이전 실행은 취소하지만 릴리스와 Play 배포는 중간 취소하지 않습니다.
 
-CI 작업 브랜치의 테스트 APK는 `Development Build`가 아닌 Release 구성으로 빌드합니다. release keystore Secrets가 모두 등록되어 있으면 해당 키로 서명하고, 모두 없으면 테스트 배포를 위해 Unity 기본 debug keystore로 서명합니다. `main`과 태그 릴리스에서는 release keystore Secrets가 반드시 필요합니다.
+CI 작업 브랜치의 테스트 APK는 `Development Build`가 아닌 Release 구성으로 빌드합니다. release keystore Secrets가 모두 등록되어 있으면 IL2CPP와 해당 키를 사용합니다. Secrets가 모두 없으면 제한된 GitHub runner에서 빠르게 테스트할 수 있도록 Mono backend와 Unity 기본 debug keystore를 사용합니다. `main`과 태그 릴리스에서는 IL2CPP 및 release keystore Secrets가 반드시 필요합니다.
 
 CI에서 Unity를 실행하려면 Personal 라이선스의 `UNITY_LICENSE`, 또는 Pro 라이선스의 `UNITY_EMAIL`·`UNITY_PASSWORD`·`UNITY_SERIAL` 조합이 필요합니다. 유효한 라이선스가 없으면 Unity 테스트와 빌드는 실패하도록 두어 보호 규칙을 우회하지 않습니다.
 
