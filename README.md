@@ -61,11 +61,14 @@ GitHub Ruleset에서 다음 값을 적용합니다.
 | 시점 | 검사 |
 | --- | --- |
 | `main` 대상 PR | 브랜치명, PR 제목, Unity EditMode/PlayMode 테스트, 전체 스크립트 컴파일 |
+| CI 작업 브랜치 push | 위 테스트 후 Release 구성의 테스트 APK 생성 |
 | `main` 병합 | 위 테스트 후 등록된 release keystore로 서명한 Android APK 생성 |
 | `vMAJOR.MINOR.PATCH` 태그 | 서명된 Android App Bundle 생성 및 Draft GitHub Release 작성 |
 | 승인된 수동 실행 | 기존 Draft AAB를 Google Play 내부 테스트에 게시 |
 
 테스트 결과는 14일, Release APK는 14일, 릴리스 AAB는 90일 동안 Actions artifact로 보관합니다. 같은 PR의 이전 실행은 취소하지만 릴리스와 Play 배포는 중간 취소하지 않습니다.
+
+CI 작업 브랜치의 테스트 APK는 `Development Build`가 아닌 Release 구성으로 빌드합니다. release keystore Secrets가 모두 등록되어 있으면 해당 키로 서명하고, 모두 없으면 테스트 배포를 위해 Unity 기본 debug keystore로 서명합니다. `main`과 태그 릴리스에서는 release keystore Secrets가 반드시 필요합니다.
 
 CI에서 Unity를 실행하려면 Personal 라이선스의 `UNITY_LICENSE`, 또는 Pro 라이선스의 `UNITY_EMAIL`·`UNITY_PASSWORD`·`UNITY_SERIAL` 조합이 필요합니다. 유효한 라이선스가 없으면 Unity 테스트와 빌드는 실패하도록 두어 보호 규칙을 우회하지 않습니다.
 
