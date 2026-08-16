@@ -63,9 +63,7 @@ jobs:
 
   unity-tests:
     name: Unity Tests (${{ matrix.displayName }})
-    # Dependabot pull requests run without access to repository secrets, so the
-    # Unity licence is unavailable and activation can never succeed there.
-    if: github.event_name != 'workflow_dispatch' && github.actor != 'dependabot[bot]'
+    if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -89,8 +87,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-unity-${{ matrix.testMode }}-
 
+      - name: Skip Unity tests for Dependabot
+        if: github.actor == 'dependabot[bot]'
+        shell: bash
+        run: |
+          echo '::notice title=Unity tests skipped::Dependabot runs receive Dependabot secrets rather than repository secrets, so the Unity licence is unavailable and activation cannot succeed. This dependency update is covered by the main push run after merge.'
+
       - name: Run Unity tests
         id: unity-tests
+        # The job itself still runs so that the required check reports a result;
+        # only the Unity execution is skipped. See the note above.
+        if: github.actor != 'dependabot[bot]'
         uses: game-ci/unity-test-runner@0ff419b913a3630032cbe0de48a0099b5a9f0ed9 # v4.3.1
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -105,7 +112,7 @@ jobs:
           checkName: ${{ matrix.displayName }} Test Results
 
       - name: Upload test results
-        if: always()
+        if: always() && github.actor != 'dependabot[bot]'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: unity-test-results-${{ matrix.testMode }}
