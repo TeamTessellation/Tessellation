@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.validate.outputs.version }}
+      version_code: ${{ steps.validate.outputs.version_code }}
     steps:
       - name: Check out repository
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
@@ -43,7 +44,17 @@ jobs:
             exit 1
           fi
 
-          echo "version=${TAG_NAME#v}" >> "$GITHUB_OUTPUT"
+          version="${TAG_NAME#v}"
+          IFS=. read -r major minor patch <<<"$version"
+
+          # Documented in README.md: the Android versionCode is derived from the
+          # tag so that it increases monotonically across releases, which Google
+          # Play requires. 10# forces base 10 for zero-padded components.
+          version_code=$(( 10#$major * 1000000 + 10#$minor * 1000 + 10#$patch ))
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "version_code=$version_code" >> "$GITHUB_OUTPUT"
+          echo "$TAG_NAME -> bundleVersion $version, versionCode $version_code"
 
   android-signing:
     name: Android Signing
@@ -161,7 +172,7 @@ jobs:
           androidExportType: ${{ matrix.exportType }}
           versioning: Custom
           version: ${{ needs.validate-tag.outputs.version }}
-          androidVersionCode: ${{ github.run_number }}
+          androidVersionCode: ${{ needs.validate-tag.outputs.version_code }}
           androidKeystoreName: upload.keystore
           androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 || secrets.KEYSTORE_BASE64 }}
           androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS || secrets.KEYSTORE_PASS }}
@@ -183,7 +194,7 @@ jobs:
           androidExportType: ${{ matrix.exportType }}
           versioning: Custom
           version: ${{ needs.validate-tag.outputs.version }}
-          androidVersionCode: ${{ github.run_number }}
+          androidVersionCode: ${{ needs.validate-tag.outputs.version_code }}
           buildsPath: build
 
       - name: Locate and verify build output
@@ -227,6 +238,9 @@ jobs:
           path: ${{ steps.artifact.outputs.path }}
           if-no-files-found: error
           retention-days: 90
+          # Re-running this job inside the same run would otherwise collide with
+          # the artifact the previous attempt already uploaded.
+          overwrite: true
 
   release:
     name: Attach Artifacts to GitHub Release
