@@ -330,6 +330,27 @@ jobs:
             # APK has already been deleted.
             gh release edit "$TAG_NAME" --draft=true
             gh release upload "$TAG_NAME" "${assets[@]}" --clobber
+
+            # Drop assets an earlier run attached that this build did not produce,
+            # so a release cannot keep serving, say, a signed AAB from a previous
+            # attempt alongside a debug-signed APK from this one.
+            current=()
+            for asset in "${assets[@]}"; do
+              current+=("$(basename "$asset")")
+            done
+            while IFS= read -r existing; do
+              keep=false
+              for name in "${current[@]}"; do
+                if [[ "$existing" == "$name" ]]; then
+                  keep=true
+                  break
+                fi
+              done
+              if [[ "$keep" == false ]]; then
+                echo "Removing stale release asset: $existing"
+                gh release delete-asset "$TAG_NAME" "$existing" --yes
+              fi
+            done < <(gh release view "$TAG_NAME" --json assets --jq '.assets[].name')
           else
             gh release create "$TAG_NAME" "${assets[@]}" \
               --draft \
@@ -341,7 +362,11 @@ jobs:
           # Publish, and reconcile the prerelease flag with the signing state so a
           # re-run after adding signing secrets promotes an earlier debug prerelease
           # instead of leaving it stuck.
-          gh release edit "$TAG_NAME" --draft=false "$prerelease_flag"
+          #
+          # Latest is deliberately withheld here. publish-google-play.yml sets it
+          # once the build has actually shipped to the internal track, so Latest
+          # means "released to Play" rather than "built most recently".
+          gh release edit "$TAG_NAME" --draft=false "$prerelease_flag" --latest=false
 
           echo "### Release assets" >> "$GITHUB_STEP_SUMMARY"
           gh release view "$TAG_NAME" --json assets --jq '.assets[] | "- \(.name) (\(.size) bytes)"' >> "$GITHUB_STEP_SUMMARY"
