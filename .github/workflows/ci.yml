@@ -38,7 +38,16 @@ jobs:
           branch_pattern='^(feat|fix|refactor|perf|docs|test|build|ci|chore|hotfix)/([0-9]+-)?[a-z0-9]+(-[a-z0-9]+)*$'
           title_pattern='^(feat|fix|refactor|perf|docs|test|build|ci|chore|hotfix)(\([a-z0-9._-]+\))?: .+'
 
-          if [[ "$BRANCH_NAME" != dependabot/* && ! "$BRANCH_NAME" =~ $branch_pattern ]]; then
+          if [[ "$BRANCH_NAME" == dependabot/* ]]; then
+            # Dependabot names its own branches and titles its own pull requests.
+            # dependabot.yml asks it for a Conventional Commit prefix, but pull
+            # requests opened before that setting landed keep their old titles and
+            # would otherwise fail this required check forever.
+            echo "Skipping naming policy for Dependabot: $BRANCH_NAME"
+            exit 0
+          fi
+
+          if [[ ! "$BRANCH_NAME" =~ $branch_pattern ]]; then
             echo "Invalid branch name: $BRANCH_NAME"
             echo "Expected: <type>/<optional-issue-number>-<kebab-case>"
             exit 1
