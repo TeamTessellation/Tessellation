@@ -33,12 +33,13 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Leading zeros are rejected because 10#01 and 10#1 collapse to the same
-          # versionCode, and minor/patch are bounded below 1000 because the
-          # versionCode scheme gives each component exactly three digits. Without
-          # both rules distinct tags can produce an identical versionCode.
-          if [[ ! "$TAG_NAME" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
-            echo "Invalid release tag: $TAG_NAME (expected vMAJOR.MINOR.PATCH without leading zeros)"
+          # Leading zeros are rejected because 01 and 1 collapse to the same
+          # versionCode. Component widths are bounded here rather than after
+          # parsing, so the arithmetic below cannot overflow Bash's signed 64-bit
+          # integers and wrap into a value that would pass the range check.
+          if [[ ! "$TAG_NAME" =~ ^v(0|[1-9][0-9]{0,3})\.(0|[1-9][0-9]{0,2})\.(0|[1-9][0-9]{0,2})$ ]]; then
+            echo "Invalid release tag: $TAG_NAME"
+            echo "Expected vMAJOR.MINOR.PATCH with no leading zeros, MAJOR below 10000 and MINOR/PATCH below 1000."
             exit 1
           fi
 
@@ -50,11 +51,6 @@ jobs:
 
           version="${TAG_NAME#v}"
           IFS=. read -r major minor patch <<<"$version"
-
-          if (( minor > 999 || patch > 999 )); then
-            echo "Invalid release tag: $TAG_NAME (minor and patch must be below 1000)"
-            exit 1
-          fi
 
           # Documented in README.md: the Android versionCode is derived from the
           # tag so that it increases monotonically across releases, which Google
