@@ -58,8 +58,15 @@ jobs:
 
           # Documented in README.md: the Android versionCode is derived from the
           # tag so that it increases monotonically across releases, which Google
-          # Play requires. 10# forces base 10 for zero-padded components.
-          version_code=$(( 10#$major * 1000000 + 10#$minor * 1000 + 10#$patch ))
+          # Play requires.
+          version_code=$(( major * 1000000 + minor * 1000 + patch ))
+
+          # Android requires a positive versionCode and Google Play caps it at
+          # 2,100,000,000, so v0.0.0 and anything from v2100.0.0 up are unusable.
+          if (( version_code < 1 || version_code > 2100000000 )); then
+            echo "Invalid release tag: $TAG_NAME (versionCode $version_code is outside the 1..2100000000 range Google Play accepts)"
+            exit 1
+          fi
 
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "version_code=$version_code" >> "$GITHUB_OUTPUT"
