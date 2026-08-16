@@ -92,9 +92,13 @@ jobs:
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: Library
-          key: ${{ runner.os }}-unity-${{ matrix.testMode }}-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
+          # EditMode and PlayMode import the same assets for the same editor
+          # platform, so one cache serves both. Keying them separately stored the
+          # same ~880 MB twice. The two jobs race to save it and the loser logs
+          # "Cache already exists", which is harmless.
+          key: ${{ runner.os }}-unity-tests-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-unity-${{ matrix.testMode }}-
+            ${{ runner.os }}-unity-tests-
 
       - name: Skip Unity tests for Dependabot
         if: github.actor == 'dependabot[bot]'
@@ -198,9 +202,15 @@ jobs:
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: Library
-          key: ${{ runner.os }}-unity-Android-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
+          # The scripting backend belongs in the key: with signing secrets the
+          # build is IL2CPP/ARM64, without them it falls back to Mono/ARMv7, and
+          # the two produce very different Library contents. Sharing one key made
+          # each build restore the other's artefacts and reimport most of them.
+          # The key matches release.yml so a tagged build can start from the cache
+          # main's CI already warmed.
+          key: ${{ runner.os }}-unity-Android-${{ needs.android-signing.outputs.available == 'true' && 'il2cpp' || 'mono' }}-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-unity-Android-
+            ${{ runner.os }}-unity-Android-${{ needs.android-signing.outputs.available == 'true' && 'il2cpp' || 'mono' }}-
 
       - name: Use debug signing for test release APK
         if: needs.android-signing.outputs.available != 'true'
