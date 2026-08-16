@@ -87,8 +87,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-unity-${{ matrix.testMode }}-
 
+      - name: Skip Unity tests for Dependabot
+        if: github.actor == 'dependabot[bot]'
+        shell: bash
+        run: |
+          echo '::notice title=Unity tests skipped::Dependabot runs receive Dependabot secrets rather than repository secrets, so the Unity licence is unavailable and activation cannot succeed. This dependency update is covered by the main push run after merge.'
+
       - name: Run Unity tests
         id: unity-tests
+        # The job itself still runs so that the required check reports a result;
+        # only the Unity execution is skipped. See the note above.
+        if: github.actor != 'dependabot[bot]'
         uses: game-ci/unity-test-runner@0ff419b913a3630032cbe0de48a0099b5a9f0ed9 # v4.3.1
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -103,7 +112,7 @@ jobs:
           checkName: ${{ matrix.displayName }} Test Results
 
       - name: Upload test results
-        if: always()
+        if: always() && github.actor != 'dependabot[bot]'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: unity-test-results-${{ matrix.testMode }}
@@ -133,7 +142,7 @@ jobs:
           [[ -n "$RELEASE_KEYALIAS_PASS" ]] || missing+=("ANDROID_KEYALIAS_PASS (or KEY_ALIAS_PASS)")
 
           if (( ${#missing[@]} == 3 )); then
-            echo '::notice title=Android test signing::Release signing secrets are not available; the CI APK will use the Unity debug keystore. Tagged release builds still require release signing.'
+            echo '::notice title=Android test signing::Release signing secrets are not available; the CI APK will use the Unity debug keystore. Tagged builds fall back the same way and are published as prereleases, which cannot be shipped to Google Play.'
             echo 'available=false' >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -188,16 +197,22 @@ jobs:
         if: needs.android-signing.outputs.available != 'true'
         shell: bash
         run: |
+          # The backend edits are scoped to the line following the scriptingBackend
+          # key: an unscoped substitution would also flip mobileMTRendering, which
+          # is written as an identical "Android: 1".
           sed -i 's/^  androidUseCustomKeystore: 1$/  androidUseCustomKeystore: 0/' ProjectSettings/ProjectSettings.asset
-          sed -i 's/^    Android: 1$/    Android: 0/' ProjectSettings/ProjectSettings.asset
+          sed -i '/^  scriptingBackend:$/,+1 s/^    Android: 1$/    Android: 0/' ProjectSettings/ProjectSettings.asset
           sed -i 's/^  AndroidTargetArchitectures: 2$/  AndroidTargetArchitectures: 1/' ProjectSettings/ProjectSettings.asset
           find 'Assets/Settings/Build Profiles' -type f -name '*.asset' \
             -exec sed -i \
-              -e "s/^    - line: '|     Android: 1'$/    - line: '|     Android: 0'/" \
-              -e "s/^    - line: '|   AndroidTargetArchitectures: 2'$/    - line: '|   AndroidTargetArchitectures: 1'/" {} +
+              -e "/^    - line: '|   scriptingBackend:'\$/,+1 s/^    - line: '|     Android: 1'\$/    - line: '|     Android: 0'/" \
+              -e "s/^    - line: '|   AndroidTargetArchitectures: 2'\$/    - line: '|   AndroidTargetArchitectures: 1'/" {} +
+
           grep -q '^  androidUseCustomKeystore: 0$' ProjectSettings/ProjectSettings.asset
           grep -q '^  AndroidTargetArchitectures: 1$' ProjectSettings/ProjectSettings.asset
           grep -A1 '^  scriptingBackend:$' ProjectSettings/ProjectSettings.asset | grep -q '^    Android: 0$'
+          # Guard the scoping above: unrelated settings must survive untouched.
+          grep -A1 '^  mobileMTRendering:$' ProjectSettings/ProjectSettings.asset | grep -q '^    Android: 1$'
 
       - name: Build signed Android release APK
         if: needs.android-signing.outputs.available == 'true'

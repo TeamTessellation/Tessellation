@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Draft release tag to publish (for example, v1.1.2)'
+        description: 'Release tag whose AAB should be published (for example, v1.1.2)'
         required: true
         type: string
 
@@ -21,8 +21,12 @@ jobs:
     name: Publish Approved AAB
     runs-on: ubuntu-latest
     environment: google-play-internal
+    env:
+      # This job never checks the repository out, so gh has no local git remote
+      # to infer the repository from and needs it passed explicitly.
+      GH_REPO: ${{ github.repository }}
     steps:
-      - name: Validate tag and download draft AAB
+      - name: Validate tag and download release AAB
         id: release
         shell: bash
         env:
@@ -36,8 +40,18 @@ jobs:
             exit 1
           fi
 
-          if [[ "$(gh release view "$TAG_NAME" --json isDraft --jq '.isDraft')" != "true" ]]; then
-            echo "Release $TAG_NAME must exist and still be a draft."
+          if ! gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            echo "Release $TAG_NAME does not exist."
+            exit 1
+          fi
+
+          # A draft means Android Release Build did not finish attaching assets, so
+          # the release may be incomplete. A prerelease is a debug-signed build.
+          # Neither is shippable.
+          state="$(gh release view "$TAG_NAME" --json isDraft,isPrerelease --jq '"\(.isDraft) \(.isPrerelease)"')"
+          if [[ "$state" != 'false false' ]]; then
+            echo "Release $TAG_NAME is not a published, non-prerelease release (isDraft isPrerelease = $state)."
+            echo "Only a completed, release-signed build can be published to Google Play."
             exit 1
           fi
 
@@ -70,9 +84,9 @@ jobs:
           status: completed
           releaseName: ${{ steps.release.outputs.release_name }}
 
-      - name: Publish GitHub Release
+      - name: Record Google Play publication on the release
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NAME: ${{ inputs.tag }}
-        run: gh release edit "$TAG_NAME" --draft=false
+        run: gh release edit "$TAG_NAME" --latest
