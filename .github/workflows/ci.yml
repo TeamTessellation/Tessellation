@@ -190,16 +190,22 @@ jobs:
         if: needs.android-signing.outputs.available != 'true'
         shell: bash
         run: |
+          # The backend edits are scoped to the line following the scriptingBackend
+          # key: an unscoped substitution would also flip mobileMTRendering, which
+          # is written as an identical "Android: 1".
           sed -i 's/^  androidUseCustomKeystore: 1$/  androidUseCustomKeystore: 0/' ProjectSettings/ProjectSettings.asset
-          sed -i 's/^    Android: 1$/    Android: 0/' ProjectSettings/ProjectSettings.asset
+          sed -i '/^  scriptingBackend:$/,+1 s/^    Android: 1$/    Android: 0/' ProjectSettings/ProjectSettings.asset
           sed -i 's/^  AndroidTargetArchitectures: 2$/  AndroidTargetArchitectures: 1/' ProjectSettings/ProjectSettings.asset
           find 'Assets/Settings/Build Profiles' -type f -name '*.asset' \
             -exec sed -i \
-              -e "s/^    - line: '|     Android: 1'$/    - line: '|     Android: 0'/" \
-              -e "s/^    - line: '|   AndroidTargetArchitectures: 2'$/    - line: '|   AndroidTargetArchitectures: 1'/" {} +
+              -e "/^    - line: '|   scriptingBackend:'\$/,+1 s/^    - line: '|     Android: 1'\$/    - line: '|     Android: 0'/" \
+              -e "s/^    - line: '|   AndroidTargetArchitectures: 2'\$/    - line: '|   AndroidTargetArchitectures: 1'/" {} +
+
           grep -q '^  androidUseCustomKeystore: 0$' ProjectSettings/ProjectSettings.asset
           grep -q '^  AndroidTargetArchitectures: 1$' ProjectSettings/ProjectSettings.asset
           grep -A1 '^  scriptingBackend:$' ProjectSettings/ProjectSettings.asset | grep -q '^    Android: 0$'
+          # Guard the scoping above: unrelated settings must survive untouched.
+          grep -A1 '^  mobileMTRendering:$' ProjectSettings/ProjectSettings.asset | grep -q '^    Android: 1$'
 
       - name: Build signed Android release APK
         if: needs.android-signing.outputs.available == 'true'
