@@ -293,14 +293,28 @@ jobs:
             exit 1
           fi
 
+          # An AAB is produced only when release signing is available. Asserting the
+          # exact expected set catches an artifact left behind by an earlier
+          # attempt of this run, which would otherwise be downloaded and published
+          # alongside the current build's output.
+          if [[ "$SIGNING_AVAILABLE" == 'true' ]]; then
+            expected_aab=1
+          else
+            expected_aab=0
+          fi
+
           apk_count=0
+          aab_count=0
           for asset in "${assets[@]}"; do
-            if [[ "$asset" == *.apk ]]; then
-              apk_count=$(( apk_count + 1 ))
-            fi
+            case "$asset" in
+              *.apk) apk_count=$(( apk_count + 1 )) ;;
+              *.aab) aab_count=$(( aab_count + 1 )) ;;
+            esac
           done
-          if (( apk_count != 1 )); then
-            echo "Expected exactly one APK among the release assets, found $apk_count: ${assets[*]}"
+
+          if (( apk_count != 1 || aab_count != expected_aab )); then
+            echo "Unexpected release assets: ${assets[*]}"
+            echo "Expected 1 APK and $expected_aab AAB, found $apk_count APK and $aab_count AAB."
             exit 1
           fi
 
@@ -338,7 +352,14 @@ jobs:
             for asset in "${assets[@]}"; do
               current+=("$(basename "$asset")")
             done
+
+            # Read the existing names through a command substitution rather than a
+            # process substitution: the latter would swallow a gh failure and let
+            # the loop report success without having examined anything.
+            existing_names="$(gh release view "$TAG_NAME" --json assets --jq '.assets[].name')"
+
             while IFS= read -r existing; do
+              [[ -n "$existing" ]] || continue
               keep=false
               for name in "${current[@]}"; do
                 if [[ "$existing" == "$name" ]]; then
@@ -350,7 +371,7 @@ jobs:
                 echo "Removing stale release asset: $existing"
                 gh release delete-asset "$TAG_NAME" "$existing" --yes
               fi
-            done < <(gh release view "$TAG_NAME" --json assets --jq '.assets[].name')
+            done <<< "$existing_names"
           else
             gh release create "$TAG_NAME" "${assets[@]}" \
               --draft \
