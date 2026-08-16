@@ -269,32 +269,33 @@ jobs:
           # publish-google-play.yml can refuse it.
           if [[ "$SIGNING_AVAILABLE" == 'true' ]]; then
             prerelease_flag='--prerelease=false'
-            create_flags=()
           else
             prerelease_flag='--prerelease=true'
-            create_flags=(--prerelease)
           fi
 
+          # Assets are always attached while the release is still a draft, and the
+          # release is only made visible once every upload has succeeded. A failed
+          # upload therefore leaves nothing published rather than a release whose
+          # assets are missing or stale.
           if gh release view "$TAG_NAME" >/dev/null 2>&1; then
             state="$(gh release view "$TAG_NAME" --json isDraft,isPrerelease --jq '"\(.isDraft) \(.isPrerelease)"')"
             if [[ "$state" == 'false false' ]]; then
               echo "::error title=Release is immutable::$TAG_NAME is already a published, non-prerelease release. Create a new patch tag instead of overwriting it."
               exit 1
             fi
-
-            # Reconcile the prerelease flag with the signing state before touching
-            # assets, so a re-run after adding signing secrets promotes the release
-            # instead of leaving it stuck as a prerelease. Any leftover draft from
-            # an earlier run is published, so the APK is actually reachable.
-            gh release edit "$TAG_NAME" "$prerelease_flag" --draft=false
             gh release upload "$TAG_NAME" "${assets[@]}" --clobber
           else
             gh release create "$TAG_NAME" "${assets[@]}" \
+              --draft \
               --verify-tag \
               --title "$TAG_NAME" \
-              --generate-notes \
-              "${create_flags[@]}"
+              --generate-notes
           fi
+
+          # Publish, and reconcile the prerelease flag with the signing state so a
+          # re-run after adding signing secrets promotes an earlier debug prerelease
+          # instead of leaving it stuck.
+          gh release edit "$TAG_NAME" --draft=false "$prerelease_flag"
 
           echo "### Release assets" >> "$GITHUB_STEP_SUMMARY"
           gh release view "$TAG_NAME" --json assets --jq '.assets[] | "- \(.name) (\(.size) bytes)"' >> "$GITHUB_STEP_SUMMARY"
