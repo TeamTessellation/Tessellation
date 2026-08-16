@@ -128,16 +128,24 @@ jobs:
         run: |
           set -euo pipefail
 
+          # Drop the release keystore, switch the scripting backend to Mono and
+          # target ARMv7 only, so the build needs neither signing secrets nor the
+          # IL2CPP toolchain. The backend edits are scoped to the line following
+          # the scriptingBackend key: an unscoped substitution would also flip
+          # mobileMTRendering, which is written as an identical "Android: 1".
           sed -i 's/^  androidUseCustomKeystore: 1$/  androidUseCustomKeystore: 0/' ProjectSettings/ProjectSettings.asset
-          sed -i 's/^    Android: 1$/    Android: 0/' ProjectSettings/ProjectSettings.asset
+          sed -i '/^  scriptingBackend:$/,+1 s/^    Android: 1$/    Android: 0/' ProjectSettings/ProjectSettings.asset
           sed -i 's/^  AndroidTargetArchitectures: 2$/  AndroidTargetArchitectures: 1/' ProjectSettings/ProjectSettings.asset
           find 'Assets/Settings/Build Profiles' -type f -name '*.asset' \
             -exec sed -i \
-              -e "s/^    - line: '|     Android: 1'$/    - line: '|     Android: 0'/" \
-              -e "s/^    - line: '|   AndroidTargetArchitectures: 2'$/    - line: '|   AndroidTargetArchitectures: 1'/" {} +
+              -e "/^    - line: '|   scriptingBackend:'\$/,+1 s/^    - line: '|     Android: 1'\$/    - line: '|     Android: 0'/" \
+              -e "s/^    - line: '|   AndroidTargetArchitectures: 2'\$/    - line: '|   AndroidTargetArchitectures: 1'/" {} +
+
           grep -q '^  androidUseCustomKeystore: 0$' ProjectSettings/ProjectSettings.asset
           grep -q '^  AndroidTargetArchitectures: 1$' ProjectSettings/ProjectSettings.asset
           grep -A1 '^  scriptingBackend:$' ProjectSettings/ProjectSettings.asset | grep -q '^    Android: 0$'
+          # Guard the scoping above: unrelated settings must survive untouched.
+          grep -A1 '^  mobileMTRendering:$' ProjectSettings/ProjectSettings.asset | grep -q '^    Android: 1$'
 
       - name: Build release-signed Android artifact
         if: needs.android-signing.outputs.available == 'true'
@@ -283,6 +291,11 @@ jobs:
               echo "::error title=Release is immutable::$TAG_NAME is already a published, non-prerelease release. Create a new patch tag instead of overwriting it."
               exit 1
             fi
+            # --clobber deletes an asset before uploading its replacement, so the
+            # release is returned to draft for the swap. A failed upload then
+            # leaves a hidden, retryable release rather than a visible one whose
+            # APK has already been deleted.
+            gh release edit "$TAG_NAME" --draft=true
             gh release upload "$TAG_NAME" "${assets[@]}" --clobber
           else
             gh release create "$TAG_NAME" "${assets[@]}" \
