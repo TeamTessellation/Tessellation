@@ -11,3 +11,7 @@ updates:
       github-actions:
         patterns:
           - '*'
+    # Without a prefix Dependabot opens pull requests titled "Bump ...", which the
+    # Policy check rejects for not being a Conventional Commit.
+    commit-message:
+      prefix: build
