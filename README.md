@@ -76,7 +76,7 @@ CI의 테스트 APK는 `Development Build`가 아닌 Release 구성으로 빌드
 
 CI에서 Unity를 실행하려면 Personal 라이선스의 `UNITY_LICENSE`, 또는 Pro 라이선스의 `UNITY_EMAIL`·`UNITY_PASSWORD`·`UNITY_SERIAL` 조합이 필요합니다. 유효한 라이선스가 없으면 Unity 테스트와 빌드는 실패하도록 두어 보호 규칙을 우회하지 않습니다.
 
-예외로 Dependabot PR은 Unity 테스트를 건너뜁니다. Dependabot 실행에는 저장소 Secrets가 전달되지 않아 Unity 라이선스 인증이 구조적으로 불가능하고, 그대로 두면 모든 의존성 PR이 항상 빨간 상태가 되기 때문입니다. 대신 Dependabot PR은 `main` 병합 후 `main` push CI에서 검증됩니다. Dependabot PR에서도 테스트를 돌리려면 같은 Unity 값을 Dependabot secrets로 별도 등록해야 합니다.
+예외로 Dependabot PR은 Unity 테스트를 건너뜁니다. Dependabot 실행에는 저장소 Secrets가 전달되지 않아 Unity 라이선스 인증이 구조적으로 불가능하고, 그대로 두면 모든 의존성 PR이 항상 빨간 상태가 되기 때문입니다. 대신 Dependabot PR은 `main` 병합 후 `main` push CI에서 검증됩니다. Dependabot PR에서도 테스트를 돌리려면 같은 Unity 값을 Dependabot secrets로 등록한 뒤, `ci.yml`의 `unity-tests` 잡에 있는 `github.actor != 'dependabot[bot]'` 조건을 함께 제거해야 합니다. GitHub은 잡 수준 `if`에서 `secrets` 컨텍스트를 제공하지 않아 이 조건을 Secrets 등록 여부에 따라 자동으로 바꿀 수 없습니다.
 
 ## Android 릴리스
 

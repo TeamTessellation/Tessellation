@@ -21,6 +21,10 @@ jobs:
     name: Publish Approved AAB
     runs-on: ubuntu-latest
     environment: google-play-internal
+    env:
+      # This job never checks the repository out, so gh has no local git remote
+      # to infer the repository from and needs it passed explicitly.
+      GH_REPO: ${{ github.repository }}
     steps:
       - name: Validate tag and download release AAB
         id: release
