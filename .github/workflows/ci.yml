@@ -63,7 +63,9 @@ jobs:
 
   unity-tests:
     name: Unity Tests (${{ matrix.displayName }})
-    if: github.event_name != 'workflow_dispatch'
+    # Dependabot pull requests run without access to repository secrets, so the
+    # Unity licence is unavailable and activation can never succeed there.
+    if: github.event_name != 'workflow_dispatch' && github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
