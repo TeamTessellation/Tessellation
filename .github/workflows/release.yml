@@ -16,6 +16,9 @@ jobs:
   validate-tag:
     name: Validate Release Tag
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.validate.outputs.version }}
+      version_code: ${{ steps.validate.outputs.version_code }}
     steps:
       - name: Check out repository
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
@@ -23,14 +26,20 @@ jobs:
           fetch-depth: 0
 
       - name: Validate semantic version and main ancestry
+        id: validate
         shell: bash
         env:
           TAG_NAME: ${{ github.ref_name }}
         run: |
           set -euo pipefail
 
-          if [[ ! "$TAG_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          # Leading zeros are rejected because 01 and 1 collapse to the same
+          # versionCode. Component widths are bounded here rather than after
+          # parsing, so the arithmetic below cannot overflow Bash's signed 64-bit
+          # integers and wrap into a value that would pass the range check.
+          if [[ ! "$TAG_NAME" =~ ^v(0|[1-9][0-9]{0,3})\.(0|[1-9][0-9]{0,2})\.(0|[1-9][0-9]{0,2})$ ]]; then
             echo "Invalid release tag: $TAG_NAME"
+            echo "Expected vMAJOR.MINOR.PATCH with no leading zeros, MAJOR below 10000 and MINOR/PATCH below 1000."
             exit 1
           fi
 
@@ -40,11 +49,88 @@ jobs:
             exit 1
           fi
 
-  build-aab:
-    name: Build Signed Android AAB
+          version="${TAG_NAME#v}"
+          IFS=. read -r major minor patch <<<"$version"
+
+          # Documented in README.md: the Android versionCode is derived from the
+          # tag so that it increases monotonically across releases, which Google
+          # Play requires.
+          version_code=$(( major * 1000000 + minor * 1000 + patch ))
+
+          # Android requires a positive versionCode and Google Play caps it at
+          # 2,100,000,000 inclusive, so v0.0.0 and anything above v2100.0.0 are
+          # unusable.
+          if (( version_code < 1 || version_code > 2100000000 )); then
+            echo "Invalid release tag: $TAG_NAME (versionCode $version_code is outside the 1..2100000000 range Google Play accepts)"
+            exit 1
+          fi
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "version_code=$version_code" >> "$GITHUB_OUTPUT"
+          echo "$TAG_NAME -> bundleVersion $version, versionCode $version_code"
+
+  android-signing:
+    name: Android Signing
+    runs-on: ubuntu-latest
+    outputs:
+      available: ${{ steps.validate.outputs.available }}
+      export_types: ${{ steps.validate.outputs.export_types }}
+    steps:
+      - name: Validate Android signing configuration
+        id: validate
+        shell: bash
+        env:
+          RELEASE_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 || secrets.KEYSTORE_BASE64 }}
+          RELEASE_KEYSTORE_PASS: ${{ secrets.ANDROID_KEYSTORE_PASS || secrets.KEYSTORE_PASS }}
+          RELEASE_KEYALIAS_NAME: ${{ secrets.ANDROID_KEYALIAS_NAME || secrets.KEY_ALIAS_NAME || 'tessellation' }}
+          RELEASE_KEYALIAS_PASS: ${{ secrets.ANDROID_KEYALIAS_PASS || secrets.KEY_ALIAS_PASS }}
+        run: |
+          missing=()
+          [[ -n "$RELEASE_KEYSTORE_BASE64" ]] || missing+=("ANDROID_KEYSTORE_BASE64 (or KEYSTORE_BASE64)")
+          [[ -n "$RELEASE_KEYSTORE_PASS" ]] || missing+=("ANDROID_KEYSTORE_PASS (or KEYSTORE_PASS)")
+          [[ -n "$RELEASE_KEYALIAS_PASS" ]] || missing+=("ANDROID_KEYALIAS_PASS (or KEY_ALIAS_PASS)")
+
+          if (( ${#missing[@]} == 3 )); then
+            echo '::warning title=Debug-signed release::Release signing secrets are not configured; the release APK will be signed with the Unity debug keystore and no Play-ready AAB will be produced. Add ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASS and ANDROID_KEYALIAS_PASS to publish to Google Play.'
+            echo 'available=false' >> "$GITHUB_OUTPUT"
+            echo 'export_types=["androidPackage"]' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if (( ${#missing[@]} )); then
+            printf '::error title=Android signing secret missing::Missing repository secret: %s\n' "${missing[@]}"
+            exit 1
+          fi
+
+          keystore="$RUNNER_TEMP/tessellation-release.keystore"
+          if ! printf '%s' "$RELEASE_KEYSTORE_BASE64" | base64 --decode > "$keystore"; then
+            echo '::error title=Invalid Android keystore::The Android keystore secret is not valid Base64.'
+            exit 1
+          fi
+
+          if ! keytool -list \
+            -keystore "$keystore" \
+            -storepass "$RELEASE_KEYSTORE_PASS" \
+            -alias "$RELEASE_KEYALIAS_NAME" >/dev/null 2>&1; then
+            echo '::error title=Android signing mismatch::The Android keystore password or alias does not match the registered keystore.'
+            exit 1
+          fi
+
+          echo 'available=true' >> "$GITHUB_OUTPUT"
+          echo 'export_types=["androidPackage","androidAppBundle"]' >> "$GITHUB_OUTPUT"
+
+  build:
+    name: Build ${{ matrix.exportType == 'androidPackage' && 'APK' || 'AAB' }}
     needs:
       - validate-tag
+      - android-signing
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        exportType: ${{ fromJSON(needs.android-signing.outputs.export_types) }}
+    env:
+      EXTENSION: ${{ matrix.exportType == 'androidPackage' && 'apk' || 'aab' }}
     steps:
       - name: Check out repository
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
@@ -58,9 +144,35 @@ jobs:
           key: ${{ runner.os }}-unity-Android-release-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-unity-Android-release-
+            ${{ runner.os }}-unity-Android-
 
-      - name: Build signed Android App Bundle
-        id: build
+      - name: Use debug signing for unsigned release build
+        if: needs.android-signing.outputs.available != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # Drop the release keystore, switch the scripting backend to Mono and
+          # target ARMv7 only, so the build needs neither signing secrets nor the
+          # IL2CPP toolchain. The backend edits are scoped to the line following
+          # the scriptingBackend key: an unscoped substitution would also flip
+          # mobileMTRendering, which is written as an identical "Android: 1".
+          sed -i 's/^  androidUseCustomKeystore: 1$/  androidUseCustomKeystore: 0/' ProjectSettings/ProjectSettings.asset
+          sed -i '/^  scriptingBackend:$/,+1 s/^    Android: 1$/    Android: 0/' ProjectSettings/ProjectSettings.asset
+          sed -i 's/^  AndroidTargetArchitectures: 2$/  AndroidTargetArchitectures: 1/' ProjectSettings/ProjectSettings.asset
+          find 'Assets/Settings/Build Profiles' -type f -name '*.asset' \
+            -exec sed -i \
+              -e "/^    - line: '|   scriptingBackend:'\$/,+1 s/^    - line: '|     Android: 1'\$/    - line: '|     Android: 0'/" \
+              -e "s/^    - line: '|   AndroidTargetArchitectures: 2'\$/    - line: '|   AndroidTargetArchitectures: 1'/" {} +
+
+          grep -q '^  androidUseCustomKeystore: 0$' ProjectSettings/ProjectSettings.asset
+          grep -q '^  AndroidTargetArchitectures: 1$' ProjectSettings/ProjectSettings.asset
+          grep -A1 '^  scriptingBackend:$' ProjectSettings/ProjectSettings.asset | grep -q '^    Android: 0$'
+          # Guard the scoping above: unrelated settings must survive untouched.
+          grep -A1 '^  mobileMTRendering:$' ProjectSettings/ProjectSettings.asset | grep -q '^    Android: 1$'
+
+      - name: Build release-signed Android artifact
+        if: needs.android-signing.outputs.available == 'true'
         uses: game-ci/unity-builder@1d4ee0697f193f54668e98961d79907911f4b4f2 # v4.8.1
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -70,8 +182,10 @@ jobs:
         with:
           projectPath: .
           targetPlatform: Android
-          androidExportType: androidAppBundle
-          versioning: Tag
+          androidExportType: ${{ matrix.exportType }}
+          versioning: Custom
+          version: ${{ needs.validate-tag.outputs.version }}
+          androidVersionCode: ${{ needs.validate-tag.outputs.version_code }}
           androidKeystoreName: upload.keystore
           androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 || secrets.KEYSTORE_BASE64 }}
           androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS || secrets.KEYSTORE_PASS }}
@@ -79,51 +193,217 @@ jobs:
           androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS || secrets.KEY_ALIAS_PASS }}
           buildsPath: build
 
-      - name: Locate and verify AAB
+      - name: Build debug-signed Android artifact (Mono)
+        if: needs.android-signing.outputs.available != 'true'
+        uses: game-ci/unity-builder@1d4ee0697f193f54668e98961d79907911f4b4f2 # v4.8.1
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        with:
+          projectPath: .
+          targetPlatform: Android
+          androidExportType: ${{ matrix.exportType }}
+          versioning: Custom
+          version: ${{ needs.validate-tag.outputs.version }}
+          androidVersionCode: ${{ needs.validate-tag.outputs.version_code }}
+          buildsPath: build
+
+      - name: Locate and verify build output
         id: artifact
         shell: bash
+        env:
+          SIGNING_AVAILABLE: ${{ needs.android-signing.outputs.available }}
         run: |
           set -euo pipefail
 
-          mapfile -t bundles < <(find build/Android -type f -name '*.aab' -print)
-          if [[ ${#bundles[@]} -ne 1 ]]; then
-            echo "Expected exactly one AAB, found ${#bundles[@]}."
+          mapfile -t outputs < <(find build/Android -type f -name "*.${EXTENSION}" -print)
+          if [[ ${#outputs[@]} -ne 1 ]]; then
+            echo "Expected exactly one .${EXTENSION}, found ${#outputs[@]}."
+            printf '%s\n' "${outputs[@]:-}"
             exit 1
           fi
 
-          jarsigner -verify "${bundles[0]}"
+          if [[ "$EXTENSION" == 'aab' ]]; then
+            # jarsigner exits 0 for an unsigned archive and merely prints "jar is
+            # unsigned", so the exit code alone proves nothing. -strict is not
+            # usable either: it fails a self-signed upload key on chain validation.
+            if ! jarsigner -verify "${outputs[0]}" | grep -q '^jar verified'; then
+              echo "::error title=Unsigned AAB::${outputs[0]} is not signed."
+              jarsigner -verify "${outputs[0]}"
+              exit 1
+            fi
+          else
+            apksigner="$(find "${ANDROID_HOME:-/usr/local/lib/android/sdk}/build-tools" -name apksigner -type f 2>/dev/null | sort -V | tail -1 || true)"
+            if [[ -n "$apksigner" ]]; then
+              "$apksigner" verify --print-certs "${outputs[0]}"
+            elif [[ "$SIGNING_AVAILABLE" == 'true' ]]; then
+              echo "::error title=apksigner missing::Cannot verify the signature of a release-signed APK."
+              exit 1
+            else
+              echo "::warning title=apksigner missing::Skipping signature verification of the debug-signed APK."
+            fi
+          fi
+
           mkdir -p release
-          destination="release/HoneyComb0-${GITHUB_REF_NAME}.aab"
-          cp "${bundles[0]}" "$destination"
+          destination="release/HoneyComb0-${GITHUB_REF_NAME}.${EXTENSION}"
+          cp "${outputs[0]}" "$destination"
           echo "path=$destination" >> "$GITHUB_OUTPUT"
 
-      - name: Upload release artifact
+      - name: Upload build artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: android-release-${{ github.ref_name }}
+          name: android-release-${{ env.EXTENSION }}-${{ github.ref_name }}
           path: ${{ steps.artifact.outputs.path }}
           if-no-files-found: error
           retention-days: 90
+          # Re-running this job inside the same run would otherwise collide with
+          # the artifact the previous attempt already uploaded.
+          overwrite: true
 
-      - name: Create or update draft GitHub Release
+  release:
+    name: Attach Artifacts to GitHub Release
+    needs:
+      - android-signing
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          pattern: android-release-*-${{ github.ref_name }}
+          path: release
+          merge-multiple: true
+
+      - name: Create or update GitHub Release
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NAME: ${{ github.ref_name }}
-          AAB_PATH: ${{ steps.artifact.outputs.path }}
+          SIGNING_AVAILABLE: ${{ needs.android-signing.outputs.available }}
         run: |
           set -euo pipefail
 
+          mapfile -t assets < <(find release -type f \( -name '*.apk' -o -name '*.aab' \) -print | sort)
+          if (( ${#assets[@]} == 0 )); then
+            echo "No release assets were produced."
+            exit 1
+          fi
+
+          # An AAB is produced only when release signing is available. Asserting the
+          # exact expected set catches an artifact left behind by an earlier
+          # attempt of this run, which would otherwise be downloaded and published
+          # alongside the current build's output.
+          if [[ "$SIGNING_AVAILABLE" == 'true' ]]; then
+            expected_aab=1
+          else
+            expected_aab=0
+          fi
+
+          apk_count=0
+          aab_count=0
+          for asset in "${assets[@]}"; do
+            case "$asset" in
+              *.apk) apk_count=$(( apk_count + 1 )) ;;
+              *.aab) aab_count=$(( aab_count + 1 )) ;;
+            esac
+          done
+
+          if (( apk_count != 1 || aab_count != expected_aab )); then
+            echo "Unexpected release assets: ${assets[*]}"
+            echo "Expected 1 APK and $expected_aab AAB, found $apk_count APK and $aab_count AAB."
+            exit 1
+          fi
+
+          printf 'Attaching release asset: %s\n' "${assets[@]}"
+
+          # A debug-signed build is only ever published as a prerelease, so that
+          # publish-google-play.yml can refuse it.
+          if [[ "$SIGNING_AVAILABLE" == 'true' ]]; then
+            prerelease_flag='--prerelease=false'
+          else
+            prerelease_flag='--prerelease=true'
+          fi
+
+          # Assets are always attached while the release is still a draft, and the
+          # release is only made visible once every upload has succeeded. A failed
+          # upload therefore leaves nothing published rather than a release whose
+          # assets are missing or stale.
           if gh release view "$TAG_NAME" >/dev/null 2>&1; then
-            if [[ "$(gh release view "$TAG_NAME" --json isDraft --jq '.isDraft')" != "true" ]]; then
-              echo "Published release $TAG_NAME is immutable. Create a new patch tag instead."
+            state="$(gh release view "$TAG_NAME" --json isDraft,isPrerelease --jq '"\(.isDraft) \(.isPrerelease)"')"
+            if [[ "$state" == 'false false' ]]; then
+              echo "::error title=Release is immutable::$TAG_NAME is already a published, non-prerelease release. Create a new patch tag instead of overwriting it."
               exit 1
             fi
-            gh release upload "$TAG_NAME" "$AAB_PATH" --clobber
+            # --clobber deletes an asset before uploading its replacement, so the
+            # release is returned to draft for the swap. A failed upload then
+            # leaves a hidden, retryable release rather than a visible one whose
+            # APK has already been deleted.
+            gh release edit "$TAG_NAME" --draft=true
+            gh release upload "$TAG_NAME" "${assets[@]}" --clobber
+
+            # Drop assets an earlier run attached that this build did not produce,
+            # so a release cannot keep serving, say, a signed AAB from a previous
+            # attempt alongside a debug-signed APK from this one.
+            current=()
+            for asset in "${assets[@]}"; do
+              current+=("$(basename "$asset")")
+            done
+
+            # Read the existing names through a command substitution rather than a
+            # process substitution: the latter would swallow a gh failure and let
+            # the loop report success without having examined anything.
+            existing_names="$(gh release view "$TAG_NAME" --json assets --jq '.assets[].name')"
+
+            while IFS= read -r existing; do
+              [[ -n "$existing" ]] || continue
+              keep=false
+              for name in "${current[@]}"; do
+                if [[ "$existing" == "$name" ]]; then
+                  keep=true
+                  break
+                fi
+              done
+              if [[ "$keep" == false ]]; then
+                echo "Removing stale release asset: $existing"
+                gh release delete-asset "$TAG_NAME" "$existing" --yes
+              fi
+            done <<< "$existing_names"
           else
-            gh release create "$TAG_NAME" "$AAB_PATH" \
+            gh release create "$TAG_NAME" "${assets[@]}" \
               --draft \
               --verify-tag \
               --title "$TAG_NAME" \
               --generate-notes
           fi
+
+          # Publish, and reconcile the prerelease flag with the signing state so a
+          # re-run after adding signing secrets promotes an earlier debug prerelease
+          # instead of leaving it stuck.
+          #
+          # Latest is deliberately withheld here. publish-google-play.yml sets it
+          # once the build has actually shipped to the internal track, so Latest
+          # means "released to Play" rather than "built most recently".
+          gh release edit "$TAG_NAME" --draft=false "$prerelease_flag" --latest=false
+
+          echo "### Release assets" >> "$GITHUB_STEP_SUMMARY"
+          gh release view "$TAG_NAME" --json assets --jq '.assets[] | "- \(.name) (\(.size) bytes)"' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Verify the APK is registered on the release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+
+          if ! gh release view "$TAG_NAME" --json assets --jq '.assets[].name' | grep -q '\.apk$'; then
+            echo "::error title=No APK on release::The release $TAG_NAME has no APK asset."
+            gh release view "$TAG_NAME" --json assets
+            exit 1
+          fi
+          echo "APK is registered on release $TAG_NAME."

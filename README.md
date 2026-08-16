@@ -63,16 +63,20 @@ GitHub Ruleset에서 다음 값을 적용합니다.
 | `main` 대상 PR | 브랜치명, PR 제목, Unity EditMode/PlayMode 테스트, 전체 스크립트 컴파일 |
 | CI 작업 브랜치 push | 위 테스트 후 Release 구성의 테스트 APK 생성 |
 | `main` 병합 | 위 테스트 후 Android 검증용 APK 생성 |
-| `vMAJOR.MINOR.PATCH` 태그 | 서명된 Android App Bundle 생성 및 Draft GitHub Release 작성 |
-| 승인된 수동 실행 | 기존 Draft AAB를 Google Play 내부 테스트에 게시 |
+| `vMAJOR.MINOR.PATCH` 태그 | APK 생성 후 GitHub Release에 첨부. release keystore Secrets가 있으면 서명된 AAB도 함께 첨부 |
+| 승인된 수동 실행 | 해당 Release의 AAB를 Google Play 내부 테스트에 게시 |
 
-테스트 결과는 14일, Release APK는 14일, 릴리스 AAB는 90일 동안 Actions artifact로 보관합니다. 같은 PR의 이전 실행은 취소하지만 릴리스와 Play 배포는 중간 취소하지 않습니다.
+테스트 결과는 14일, CI Release APK는 14일, 릴리스 APK·AAB는 90일 동안 Actions artifact로 보관합니다. 같은 PR의 이전 실행은 취소하지만 릴리스와 Play 배포는 중간 취소하지 않습니다.
 
 수동 Android 검증은 직전 PR CI가 통과한 동일 SHA에서 순차 실행하며, 이미 완료한 Unity 테스트를 중복 실행하지 않고 APK 빌드만 수행합니다. `main` push에서는 Unity 테스트가 성공한 뒤에만 Android 빌드를 시작합니다.
 
-CI의 테스트 APK는 `Development Build`가 아닌 Release 구성으로 빌드합니다. release keystore Secrets가 모두 등록되어 있으면 IL2CPP·ARM64와 해당 키를 사용합니다. Secrets가 모두 없으면 제한된 GitHub runner에서 빠르게 검증할 수 있도록 Mono·ARMv7과 Unity 기본 debug keystore를 사용합니다. Secrets가 일부만 등록된 잘못된 구성은 실패합니다. `vMAJOR.MINOR.PATCH` 태그 릴리스는 항상 IL2CPP·ARM64 및 release keystore Secrets가 필요합니다.
+CI의 테스트 APK는 `Development Build`가 아닌 Release 구성으로 빌드합니다. release keystore Secrets가 모두 등록되어 있으면 IL2CPP·ARM64와 해당 키를 사용합니다. Secrets가 모두 없으면 제한된 GitHub runner에서 빠르게 검증할 수 있도록 Mono·ARMv7과 Unity 기본 debug keystore를 사용합니다. Secrets가 일부만 등록된 잘못된 구성은 실패합니다.
+
+`vMAJOR.MINOR.PATCH` 태그 릴리스도 같은 규칙을 따릅니다. release keystore Secrets가 모두 등록되어 있으면 IL2CPP·ARM64로 APK와 AAB를 만들어 정식 Release로 공개합니다. Secrets가 없으면 Mono·ARMv7 debug 서명 APK만 만들어 **prerelease**로 표시하며, 이 빌드는 Google Play에 게시할 수 없습니다. Play 배포까지 하려면 keystore Secrets 등록이 필요합니다.
 
 CI에서 Unity를 실행하려면 Personal 라이선스의 `UNITY_LICENSE`, 또는 Pro 라이선스의 `UNITY_EMAIL`·`UNITY_PASSWORD`·`UNITY_SERIAL` 조합이 필요합니다. 유효한 라이선스가 없으면 Unity 테스트와 빌드는 실패하도록 두어 보호 규칙을 우회하지 않습니다.
+
+예외로 Dependabot PR은 Unity 테스트를 건너뜁니다. Dependabot 실행에는 저장소 Secrets가 전달되지 않아 Unity 라이선스 인증이 구조적으로 불가능하고, 그대로 두면 모든 의존성 PR이 항상 빨간 상태가 되기 때문입니다. 대신 Dependabot PR은 `main` 병합 후 `main` push CI에서 검증됩니다. Dependabot PR에서도 테스트를 돌리려면 같은 Unity 값을 Dependabot secrets로 등록한 뒤, `ci.yml`의 `unity-tests` 잡에 있는 `github.actor != 'dependabot[bot]'` 조건을 함께 제거해야 합니다. GitHub은 잡 수준 `if`에서 `secrets` 컨텍스트를 제공하지 않아 이 조건을 Secrets 등록 여부에 따라 자동으로 바꿀 수 없습니다.
 
 ## Android 릴리스
 
@@ -109,19 +113,21 @@ Environment에는 배포 가능한 관리자만 접근할 수 있게 제한합�
    git push origin v1.1.1
    ```
 
-5. `Android Release Build`가 만든 Draft GitHub Release에서 AAB를 받아 Play Console 내부 테스트 트랙에 최초 한 번 수동 업로드합니다. Google Play API는 콘솔에 패키지가 존재하기 전에는 자동 업로드할 수 없습니다.
+5. `Android Release Build`가 만든 GitHub Release에서 AAB를 받아 Play Console 내부 테스트 트랙에 최초 한 번 수동 업로드합니다. Google Play API는 콘솔에 패키지가 존재하기 전에는 자동 업로드할 수 없습니다.
 6. Android Publisher API, 서비스 계정, Workload Identity Federation을 연결하고 GitHub Environment variables를 등록합니다.
-7. 최초 수동 릴리스의 Draft 상태를 해제합니다. 이후 버전부터 아래 자동 배포 절차를 사용합니다.
+7. 이후 버전부터 아래 자동 배포 절차를 사용합니다.
 
 ### 이후 릴리스
 
 1. 릴리스할 `main` 커밋에 `vMAJOR.MINOR.PATCH` 태그를 push합니다.
-2. `Android Release Build`가 성공하고 Draft Release에 AAB가 첨부됐는지 확인합니다.
+2. `Android Release Build`가 성공하고 Release에 APK가, 서명 Secrets가 있다면 AAB도 첨부됐는지 확인합니다. 워크플로 마지막 단계가 APK 첨부 여부를 직접 검사하므로, 자산 없이 성공하는 일은 없습니다.
 3. GitHub Actions의 `Publish to Google Play Internal`을 열고 `Run workflow`에서 동일한 태그를 입력합니다.
-4. `google-play-internal` 승인을 거치면 Draft에 있던 동일 AAB가 내부 테스트 트랙에 `completed` 상태로 게시됩니다.
-5. Play 업로드가 성공한 경우에만 GitHub Release가 공개 상태로 전환됩니다.
+4. `google-play-internal` 승인을 거치면 같은 AAB가 내부 테스트 트랙에 `completed` 상태로 게시됩니다.
+5. Play 업로드가 성공하면 해당 Release가 최신 정식 릴리스로 표시됩니다.
 
-태그 `vMAJOR.MINOR.PATCH`는 Unity `bundleVersion`의 `MAJOR.MINOR.PATCH`가 됩니다. Android `versionCode`는 `MAJOR × 1,000,000 + MINOR × 1,000 + PATCH`로 계산됩니다. 배포가 실패하면 Draft를 유지한 채 같은 태그로 Publish workflow를 재시도합니다. 이미 배포한 바이너리는 덮어쓰지 말고 수정 후 patch 버전을 올려 새 태그를 만듭니다.
+태그 `vMAJOR.MINOR.PATCH`는 Unity `bundleVersion`의 `MAJOR.MINOR.PATCH`가 됩니다. Android `versionCode`는 `MAJOR × 1,000,000 + MINOR × 1,000 + PATCH`로 계산됩니다.
+
+Release는 자산을 모두 첨부한 뒤에만 공개됩니다. 자산 교체 중에는 Release를 draft로 되돌리므로, 업로드가 실패해도 자산이 빠진 Release가 노출되지 않고 같은 태그로 재실행할 수 있습니다. 이미 공개된 정식 Release는 덮어쓸 수 없으므로, 수정이 필요하면 patch 버전을 올려 새 태그를 만듭니다.
 
 ## 서명 키 보안
 
