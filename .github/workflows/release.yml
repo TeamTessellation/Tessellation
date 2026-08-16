@@ -58,7 +58,8 @@ jobs:
           version_code=$(( major * 1000000 + minor * 1000 + patch ))
 
           # Android requires a positive versionCode and Google Play caps it at
-          # 2,100,000,000, so v0.0.0 and anything from v2100.0.0 up are unusable.
+          # 2,100,000,000 inclusive, so v0.0.0 and anything above v2100.0.0 are
+          # unusable.
           if (( version_code < 1 || version_code > 2100000000 )); then
             echo "Invalid release tag: $TAG_NAME (versionCode $version_code is outside the 1..2100000000 range Google Play accepts)"
             exit 1
