@@ -131,13 +131,34 @@ Release는 자산을 모두 첨부한 뒤에만 공개됩니다. 자산 교체 �
 
 ## 서명 키 보안
 
-과거에 추적된 `KeyStore/Tessellation.keystore`는 폐기 대상입니다. 새 업로드 키를 Secrets에 등록한 뒤 현재 브랜치에서 파일을 제거하고, 팀 작업을 잠시 중단한 상태에서 별도의 mirror clone으로 전체 기록을 정리합니다.
+과거에 추적된 `KeyStore/Tessellation.keystore`는 폐기됐습니다. 이 키는 public 히스토리에 노출됐으므로 절대 재사용하지 않습니다. 현재 업로드 키는 2026-08-16에 새로 생성해 Secrets에 등록한 별개의 키입니다.
+
+2026-08-16에 아래 절차로 히스토리를 정리했습니다.
 
 ```powershell
-git filter-repo --sensitive-data-removal --invert-paths --path KeyStore/Tessellation.keystore
+# 1. mirror clone 과 백업 (되돌릴 유일한 수단)
+git clone --mirror https://github.com/TeamTessellation/Tessellation.git tess-mirror.git
+Copy-Item -Recurse tess-mirror.git tess-backup.git
+
+# 2. 재작성
+cd tess-mirror.git
+git filter-repo --invert-paths --path KeyStore/Tessellation.keystore --force
+
+# 3. main 룰셋의 non_fast_forward 를 잠시 disabled 로 내린 뒤
+git remote add origin https://github.com/TeamTessellation/Tessellation.git
+git push --force --mirror origin
+# 4. 룰셋을 active 로 되돌린다
 ```
 
-기록 정리는 모든 브랜치와 태그의 commit SHA를 바꾸므로 저장소 관리자 한 명이 공지 후 force push해야 합니다. 완료 후 기존 clone은 사용하지 말고 전원이 새로 clone합니다. 키 값, 비밀번호, base64 문자열은 이슈·PR·Actions 로그에 남기지 않습니다.
+`--sensitive-data-removal` 플래그는 `git-filter-repo` 최신 버전에 없습니다. 위 형태를 사용합니다.
+
+주의할 점이 세 가지 있습니다.
+
+- **`refs/pull/*` 는 재작성되지 않습니다.** GitHub이 쓰기를 막는 관리 refs라 push가 거부되고, 옛 커밋이 그대로 고정됩니다. 그래서 새로 clone하면 유출 파일이 없지만, **blob SHA를 직접 지정하면 API로 여전히 접근됩니다.** 완전히 지우려면 GitHub Support에 unreachable object 정리를 요청해야 합니다.
+- **태그 force push 는 `Android Release Build` 를 다시 트리거합니다.** 기존 릴리스의 prerelease 상태가 덮어써질 수 있으니, push 직후 해당 실행을 취소합니다.
+- **모든 commit SHA가 바뀝니다.** 관리자 한 명이 공지 후 진행하고, 완료 뒤 전원이 새로 clone합니다. 기존 clone의 로컬 브랜치는 옛 히스토리를 가리키므로, 그대로 push하면 유출이 되살아납니다.
+
+키 값, 비밀번호, base64 문자열은 이슈·PR·Actions 로그에 남기지 않습니다.
 
 ## 테스트
 
