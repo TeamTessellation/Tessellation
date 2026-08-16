@@ -141,10 +141,14 @@ jobs:
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: Library
-          key: ${{ runner.os }}-unity-Android-release-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
+          # Deliberately the same key ci.yml uses. A tag run can read caches from
+          # the default branch, so sharing the scheme lets a release build start
+          # from the Library main's CI already warmed instead of importing from
+          # scratch. The APK and AAB legs share it too, since only the export type
+          # differs between them.
+          key: ${{ runner.os }}-unity-Android-${{ needs.android-signing.outputs.available == 'true' && 'il2cpp' || 'mono' }}-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-unity-Android-release-
-            ${{ runner.os }}-unity-Android-
+            ${{ runner.os }}-unity-Android-${{ needs.android-signing.outputs.available == 'true' && 'il2cpp' || 'mono' }}-
 
       - name: Use debug signing for unsigned release build
         if: needs.android-signing.outputs.available != 'true'
