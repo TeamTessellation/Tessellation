@@ -41,8 +41,13 @@ jobs:
             exit 1
           fi
 
-          if [[ "$(gh release view "$TAG_NAME" --json isPrerelease --jq '.isPrerelease')" == "true" ]]; then
-            echo "Release $TAG_NAME is a prerelease (debug-signed build) and must not be published to Google Play."
+          # A draft means Android Release Build did not finish attaching assets, so
+          # the release may be incomplete. A prerelease is a debug-signed build.
+          # Neither is shippable.
+          state="$(gh release view "$TAG_NAME" --json isDraft,isPrerelease --jq '"\(.isDraft) \(.isPrerelease)"')"
+          if [[ "$state" != 'false false' ]]; then
+            echo "Release $TAG_NAME is not a published, non-prerelease release (isDraft isPrerelease = $state)."
+            echo "Only a completed, release-signed build can be published to Google Play."
             exit 1
           fi
 
@@ -80,4 +85,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NAME: ${{ inputs.tag }}
-        run: gh release edit "$TAG_NAME" --draft=false --prerelease=false --latest
+        run: gh release edit "$TAG_NAME" --latest
