@@ -33,8 +33,12 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [[ ! "$TAG_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Invalid release tag: $TAG_NAME"
+          # Leading zeros are rejected because 10#01 and 10#1 collapse to the same
+          # versionCode, and minor/patch are bounded below 1000 because the
+          # versionCode scheme gives each component exactly three digits. Without
+          # both rules distinct tags can produce an identical versionCode.
+          if [[ ! "$TAG_NAME" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo "Invalid release tag: $TAG_NAME (expected vMAJOR.MINOR.PATCH without leading zeros)"
             exit 1
           fi
 
@@ -46,6 +50,11 @@ jobs:
 
           version="${TAG_NAME#v}"
           IFS=. read -r major minor patch <<<"$version"
+
+          if (( minor > 999 || patch > 999 )); then
+            echo "Invalid release tag: $TAG_NAME (minor and patch must be below 1000)"
+            exit 1
+          fi
 
           # Documented in README.md: the Android versionCode is derived from the
           # tag so that it increases monotonically across releases, which Google
@@ -213,7 +222,14 @@ jobs:
           fi
 
           if [[ "$EXTENSION" == 'aab' ]]; then
-            jarsigner -verify "${outputs[0]}"
+            # jarsigner exits 0 for an unsigned archive and merely prints "jar is
+            # unsigned", so the exit code alone proves nothing. -strict is not
+            # usable either: it fails a self-signed upload key on chain validation.
+            if ! jarsigner -verify "${outputs[0]}" | grep -q '^jar verified'; then
+              echo "::error title=Unsigned AAB::${outputs[0]} is not signed."
+              jarsigner -verify "${outputs[0]}"
+              exit 1
+            fi
           else
             apksigner="$(find "${ANDROID_HOME:-/usr/local/lib/android/sdk}/build-tools" -name apksigner -type f 2>/dev/null | sort -V | tail -1 || true)"
             if [[ -n "$apksigner" ]]; then
