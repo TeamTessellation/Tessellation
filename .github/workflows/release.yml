@@ -265,22 +265,35 @@ jobs:
 
           printf 'Attaching release asset: %s\n' "${assets[@]}"
 
-          prerelease=()
-          if [[ "$SIGNING_AVAILABLE" != 'true' ]]; then
-            prerelease+=(--prerelease)
+          # A debug-signed build is only ever published as a prerelease, so that
+          # publish-google-play.yml can refuse it.
+          if [[ "$SIGNING_AVAILABLE" == 'true' ]]; then
+            prerelease_flag='--prerelease=false'
+            create_flags=()
+          else
+            prerelease_flag='--prerelease=true'
+            create_flags=(--prerelease)
           fi
 
           if gh release view "$TAG_NAME" >/dev/null 2>&1; then
-            if [[ "$(gh release view "$TAG_NAME" --json isDraft --jq '.isDraft')" != "true" ]]; then
-              echo "Release $TAG_NAME already exists and is published; replacing its assets."
+            state="$(gh release view "$TAG_NAME" --json isDraft,isPrerelease --jq '"\(.isDraft) \(.isPrerelease)"')"
+            if [[ "$state" == 'false false' ]]; then
+              echo "::error title=Release is immutable::$TAG_NAME is already a published, non-prerelease release. Create a new patch tag instead of overwriting it."
+              exit 1
             fi
+
+            # Reconcile the prerelease flag with the signing state before touching
+            # assets, so a re-run after adding signing secrets promotes the release
+            # instead of leaving it stuck as a prerelease. Any leftover draft from
+            # an earlier run is published, so the APK is actually reachable.
+            gh release edit "$TAG_NAME" "$prerelease_flag" --draft=false
             gh release upload "$TAG_NAME" "${assets[@]}" --clobber
           else
             gh release create "$TAG_NAME" "${assets[@]}" \
               --verify-tag \
               --title "$TAG_NAME" \
               --generate-notes \
-              "${prerelease[@]}"
+              "${create_flags[@]}"
           fi
 
           echo "### Release assets" >> "$GITHUB_STEP_SUMMARY"
